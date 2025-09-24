@@ -259,7 +259,7 @@ const CashInEntry = ({ onBack }) => {
               variant="outline"
               size="sm"
               onClick={() => handleQuickAmount(quickAmount)}
-              className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-full px-2 py-0.5 text-xs h-6 whitespace-nowrap"
+              className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-full px-2 py-0.5 text-xs h-5 whitespace-nowrap"
             >
               ₹{quickAmount}
             </Button>
