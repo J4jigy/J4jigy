@@ -48,7 +48,7 @@ const CashInEntry = ({ onBack }) => {
   const [defaultPaymentMode, setDefaultPaymentMode] = useState('Cash');
 
   // Sample data
-  const quickAmounts = [5, 10, 20, 50, 100, 200, 500];
+  const quickAmounts = [1, 2, 5, 10, 20, 50, 100, 200, 500];
   const products = ['Groceries', 'T-Shirts', 'Rice', 'Wheat', 'Sugar', 'Oil', 'Milk', 'Bread'];
   const businessCategories = [
     { name: 'Customers / Debtors', icon: Users },
