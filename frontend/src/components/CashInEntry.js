@@ -279,9 +279,14 @@ const CashInEntry = ({ onBack }) => {
                 activeSlot === idx ? 'bg-blue-700 border-blue-500' : 'bg-slate-800 border-slate-700'
               }`}
             >
-              <div className="flex flex-col items-center">
+              <div className="relative flex flex-col items-center">
                 <User className="w-5 h-5 text-slate-200" />
                 <span className="text-[10px] text-slate-100 mt-0.5">{slot.label}</span>
+                {parseFloat(slot.amount) > 0 && (
+                  <span className="absolute -top-1 -right-1 text-[10px] bg-emerald-600 text-white px-1 py-[1px] rounded">
+                    ₹{slot.amount}
+                  </span>
+                )}
               </div>
             </button>
           ))}
