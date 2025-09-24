@@ -218,14 +218,14 @@ const CashInEntry = ({ onBack }) => {
       {/* Main Content */}
       <div className="flex-1 p-2 space-y-1 overflow-hidden">
         {/* Quick Amount Buttons */}
-        <div className="flex gap-1 justify-center">
+        <div className="flex gap-1 justify-center flex-wrap sm:flex-nowrap overflow-x-auto no-scrollbar">
           {quickAmounts.map((quickAmount) => (
             <Button
               key={quickAmount}
               variant="outline"
               size="sm"
               onClick={() => handleQuickAmount(quickAmount)}
-              className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-full px-2 py-0.5 text-xs h-5"
+              className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-full px-2 py-0.5 text-xs h-6 whitespace-nowrap"
             >
               ₹{quickAmount}
             </Button>
