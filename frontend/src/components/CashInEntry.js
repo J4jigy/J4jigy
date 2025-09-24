@@ -272,10 +272,10 @@ const CashInEntry = ({ onBack }) => {
 
         {/* Action Buttons - increased size for better tap targets */}
         <div className="flex gap-1">
-          <Button className="flex-1 bg-sky-500 hover:bg-sky-600 h-10 text-sm rounded-lg">
+          <Button className="flex-1 bg-sky-500 hover:bg-sky-600 h-12 text-sm rounded-lg">
             Save &amp; New
           </Button>
-          <Button className="flex-1 bg-sky-500 hover:bg-sky-600 h-10 text-sm rounded-lg">
+          <Button className="flex-1 bg-sky-500 hover:bg-sky-600 h-12 text-sm rounded-lg">
             Save
           </Button>
         </div>
