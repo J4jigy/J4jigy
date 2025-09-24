@@ -53,6 +53,28 @@ const CashInEntry = ({ onBack }) => {
   const [soundEffects, setSoundEffects] = useState(true);
   const [defaultPaymentMode, setDefaultPaymentMode] = useState('Cash');
 
+  // load slots from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('cashin_slots');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length === 6) {
+          setSlots(parsed);
+          const activeIndex = parseInt(localStorage.getItem('cashin_active') || '0', 10) || 0;
+          setActiveSlot(activeIndex);
+          setAmount(parsed[activeIndex]?.amount || '0');
+        }
+      } catch {}
+    }
+  }, []);
+
+  // persist slots and active slot
+  useEffect(() => {
+    localStorage.setItem('cashin_slots', JSON.stringify(slots));
+    localStorage.setItem('cashin_active', String(activeSlot));
+  }, [slots, activeSlot]);
+
   // Sample data
   const quickAmounts = [1, 2, 5, 10, 20, 50, 100, 200, 500];
   const products = ['Groceries', 'T-Shirts', 'Rice', 'Wheat', 'Sugar', 'Oil', 'Milk', 'Bread'];
