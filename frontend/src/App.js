@@ -495,7 +495,7 @@ const Dashboard = () => {
                             {tile.name}
                           </p>
                           {tile.subtitle && (
-                            <p className="text-slate-200 text-[11px] font-medium leading-tight">
+                            <p className="text-slate-200 text-[12px] font-medium leading-tight break-words">
                               {tile.subtitle}
                             </p>
                           )}
