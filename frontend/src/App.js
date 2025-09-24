@@ -356,7 +356,7 @@ const Dashboard = () => {
         <Dialog open={showProfileDialog} onOpenChange={setShowProfileDialog}>
           <DialogTrigger asChild>
             <Button variant="ghost" size="sm" data-testid="profile-icon">
-              <User className="w-6 h-6 text-slate-400" />
+              <UserCircle className="w-6 h-6 text-slate-400" />
             </Button>
           </DialogTrigger>
           <DialogContent className="bg-slate-800 border-slate-700">
