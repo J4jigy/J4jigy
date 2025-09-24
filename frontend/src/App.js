@@ -450,7 +450,7 @@ const Dashboard = () => {
                     >
                       <CardContent className="p-3 flex flex-col items-center justify-center min-h-[120px] text-center">
                         <IconComponent className="w-10 h-10 mb-3 text-white drop-shadow-sm" />
-                        <p className="text-white text-xs font-semibold leading-tight tracking-wide uppercase letterspacing-wider px-1">
+                        <p className="tile-text text-white text-xs font-semibold leading-tight tracking-wide uppercase px-1">
                           {tile.name}
                         </p>
                       </CardContent>
