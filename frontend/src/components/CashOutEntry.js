@@ -82,10 +82,10 @@ const CashOutEntry = ({ onBack }) => {
 
   const handleCalculatorInput = (value) => {
     if (value === 'clear') {
-      setAmount('0');
+      setAmountForActive('0');
     } else if (value === 'back') {
       if (amount.length <= 1) {
-        setAmount('0');
+        setAmountForActive('0');
       } else {
         setAmount(amount.slice(0, -1));
       }
