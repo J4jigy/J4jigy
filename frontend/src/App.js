@@ -465,8 +465,8 @@ const Dashboard = () => {
           </TabsList>
 
           {['business', 'finance', 'personal'].map((tab) => (
-            <TabsContent key={tab} value={tab} className="mt-4">
-              <div className="grid grid-cols-3 gap-4" data-testid={`${tab}-grid`}>
+            <TabsContent key={tab} value={tab} className="mt-6">
+              <div className="grid grid-cols-3 gap-3 px-4" data-testid={`${tab}-grid`}>
                 {getTilesForTab(tab).map((tile, index) => {
                   const IconComponent = tile.icon;
                   return (
