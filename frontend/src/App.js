@@ -440,10 +440,28 @@ const Dashboard = () => {
       {/* Tabs */}
       <div className="px-4">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full" data-testid="main-tabs">
-          <TabsList className="grid w-full grid-cols-3 bg-slate-800 border-slate-700">
-            <TabsTrigger value="business" data-testid="business-tab" className="data-[state=active]:bg-slate-700">Business</TabsTrigger>
-            <TabsTrigger value="finance" data-testid="finance-tab" className="data-[state=active]:bg-slate-700">Finance</TabsTrigger>
-            <TabsTrigger value="personal" data-testid="personal-tab" className="data-[state=active]:bg-slate-700">Personal</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3 bg-slate-800/80 border border-slate-700 rounded-lg">
+            <TabsTrigger 
+              value="business" 
+              data-testid="business-tab" 
+              className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md"
+            >
+              Business
+            </TabsTrigger>
+            <TabsTrigger 
+              value="finance" 
+              data-testid="finance-tab" 
+              className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md"
+            >
+              Finance
+            </TabsTrigger>
+            <TabsTrigger 
+              value="personal" 
+              data-testid="personal-tab" 
+              className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md"
+            >
+              Personal
+            </TabsTrigger>
           </TabsList>
 
           {['business', 'finance', 'personal'].map((tab) => (
