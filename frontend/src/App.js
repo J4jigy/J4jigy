@@ -302,7 +302,7 @@ const Dashboard = () => {
     { name: 'Credit Score', subtitle: '', icon: CreditCard, color: 'from-blue-900 to-blue-800' },
     { name: 'Customers', subtitle: 'Debtors', icon: Users, color: 'from-green-900 to-green-800' },
     { name: 'Suppliers', subtitle: 'Creditors', icon: Building, color: 'from-indigo-900 to-indigo-800' },
-    { name: 'Defaulters', subtitle: '', icon: TrendingUp, color: 'from-red-900 to-red-800' },
+    { name: 'Community', subtitle: 'Ratings', icon: Star, color: 'from-yellow-900 to-yellow-800' },
     { name: 'Staff', subtitle: '', icon: Users, color: 'from-purple-900 to-purple-800' },
     { name: 'Add New', subtitle: '', icon: Plus, color: 'from-slate-700 to-slate-600' }
   ];
