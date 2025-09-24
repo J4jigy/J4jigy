@@ -105,20 +105,46 @@ const CashOutEntry = ({ onBack }) => {
   const handleCalculatorInput = (value) => {
     if (value === 'clear') {
       setAmountForActive('0');
-    } else if (value === 'back') {
-      if (amount.length <= 1) {
+      return;
+    }
+    if (value === 'back') {
+      if (amount.length <= 1 || amount === '0' || amount === 'Error') {
         setAmountForActive('0');
       } else {
-        setAmount(amount.slice(0, -1));
+        setAmountForActive(amount.slice(0, -1));
       }
-    } else if (value === '=') {
-      // Handle calculation if needed
-    } else {
-      if (amount === '0' && value !== '.') {
-        setAmount(value);
+      return;
+    }
+    if (value === '=') {
+      try {
+        const sanitized = (amount || '0').replace(/[^0-9+\-*/().]/g, '');
+        if (sanitized && sanitized !== '0') {
+          // eslint-disable-next-line no-new-func
+          let result = Function(`"use strict"; return (${sanitized})`)();
+          if (typeof result === 'number' && isFinite(result)) {
+            // round to 2 decimals for currency-like values
+            const fixed = Math.round((result + Number.EPSILON) * 100) / 100;
+            setAmountForActive(fixed.toString());
+          } else {
+            setAmountForActive('0');
+          }
+        }
+      } catch (e) {
+        setAmountForActive('Error');
+        setTimeout(() => setAmountForActive('0'), 900);
+      }
+      return;
+    }
+
+    // default: append input
+    if (amount === '0' || amount === 'Error') {
+      if (value !== '.') {
+        setAmountForActive(String(value));
       } else {
-        setAmount(amount + value);
+        setAmountForActive('0.');
       }
+    } else {
+      setAmountForActive(amount + String(value));
     }
   };
 
