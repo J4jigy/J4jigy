@@ -250,7 +250,7 @@ const CashInEntry = ({ onBack }) => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 px-2 pt-0 pb-2 space-y-1 overflow-hidden">
+      <div className="flex-1 px-2 pt-1 pb-2 space-y-1 overflow-hidden">
         {/* Quick Amount Buttons */}
         <div className="flex gap-1 justify-center flex-wrap sm:flex-nowrap overflow-x-auto no-scrollbar">
           {quickAmounts.map((quickAmount) => (
