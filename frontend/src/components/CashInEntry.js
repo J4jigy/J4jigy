@@ -259,7 +259,7 @@ const CashInEntry = ({ onBack }) => {
               onClick={() => setPaymentMode(mode)}
               className={`w-full h-12 text-sm sm:text-base rounded-lg ${
                 paymentMode === mode
-                  ? mode === 'Credit' ? 'bg-orange-800 hover:bg-orange-900' 
+                  ? mode === 'Credit' ? 'bg-orange-900 hover:bg-orange-950 ring-1 ring-orange-700' 
                     : mode === 'Cash' ? 'bg-green-600 hover:bg-green-700'
                     : 'bg-orange-600 hover:bg-orange-700'
                   : 'bg-slate-700 hover:bg-slate-600'
