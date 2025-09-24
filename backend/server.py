@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Depends, status, Request, BackgroundTasks
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, status, Request, BackgroundTasks, Query
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
@@ -398,487 +398,85 @@ async def create_default_accounts(user_id: str):
         Account(user_id=user_id, name="Rent Expense", account_type=AccountType.EXPENSE),
     ]
     
-    for account in default_accounts:
-        await db.accounts.insert_one(account.dict())
+    await db.accounts.insert_many([a.dict() for a in default_accounts])
 
-async def create_super_admin():
-    existing_admin = await db.users.find_one({"role": UserRole.SUPER_ADMIN})
-    if not existing_admin:
-        admin_user = User(
-            username="superadmin",
-            email="admin@finsecure.com",
-            business_name="System Administration",
-            role=UserRole.SUPER_ADMIN,
-            is_active=True,
-            is_verified=True,
-            permissions=["*"]  # All permissions
-        )
-        
-        admin_password = hash_password("SecureAdmin@2024!")
-        admin_dict = admin_user.dict()
-        admin_dict["password"] = admin_password
-        
-        await db.users.insert_one(admin_dict)
-        await create_default_accounts(admin_user.id)
-        
-        # Create initial invite codes
-        invite_codes = [
-            InviteCode(code="SECURE2024", created_by=admin_user.id, usage_limit=100),
-            InviteCode(code="ADMIN2024", created_by=admin_user.id, usage_limit=10),
-            InviteCode(code="VIP2024", created_by=admin_user.id, usage_limit=5)
-        ]
-        
-        for invite in invite_codes:
-            await db.invite_codes.insert_one(invite.dict())
+# ===================== New List Endpoints =====================
 
-# API Routes - Enhanced Authentication
-@api_router.post("/auth/register", response_model=TokenResponse)
-@limiter.limit("5/minute")
-async def register_user(request: Request, user_data: UserCreate, background_tasks: BackgroundTasks):
-    try:
-        # Check invite code
-        invite = await db.invite_codes.find_one({
-            "code": user_data.invite_code, 
-            "is_active": True,
-            "$or": [
-                {"expires_at": {"$gt": datetime.now(timezone.utc)}},
-                {"expires_at": None}
-            ]
-        })
-        
-        if not invite or invite["usage_count"] >= invite["usage_limit"]:
-            background_tasks.add_task(
-                log_security_event,
-                "invalid_invite_code",
-                "MEDIUM",
-                None,
-                request.client.host,
-                {"invite_code": user_data.invite_code}
-            )
-            raise HTTPException(status_code=400, detail="Invalid or expired invite code")
-        
-        # Check existing user
-        existing_user = await db.users.find_one({
-            "$or": [{"username": user_data.username}, {"email": user_data.email}]
-        })
-        if existing_user:
-            raise HTTPException(status_code=400, detail="User already exists")
-        
-        # Create user
-        hashed_password = hash_password(user_data.password)
-        user = User(
-            username=user_data.username,
-            email=user_data.email,
-            business_name=user_data.business_name
-        )
-        
-        user_dict = user.dict()
-        user_dict["password"] = hashed_password
-        await db.users.insert_one(user_dict)
-        
-        # Update invite code usage
-        await db.invite_codes.update_one(
-            {"code": user_data.invite_code},
-            {
-                "$inc": {"usage_count": 1},
-                "$push": {"used_by": {"user_id": user.id, "used_at": datetime.now(timezone.utc)}}
-            }
-        )
-        
-        # Create accounts and generate tokens
-        await create_default_accounts(user.id)
-        tokens = generate_tokens(user.id)
-        
-        background_tasks.add_task(log_audit_event, AuditAction.CREATE, "user", user.id, {"action": "registration"}, request)
-        
-        return TokenResponse(**tokens, user=user)
-        
-    except HTTPException:
-        raise
-    except Exception as e:
-        background_tasks.add_task(
-            log_security_event,
-            "registration_error",
-            "HIGH",
-            None,
-            request.client.host,
-            {"error": str(e)}
-        )
-        raise HTTPException(status_code=500, detail="Registration failed")
+class ListItem(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    name: str
+    subtitle: Optional[str] = None
+    amount: Optional[float] = None
+    date: Optional[str] = None  # ISO date string
+    status: Optional[str] = None
 
-@api_router.post("/auth/login", response_model=TokenResponse)
-@limiter.limit("10/minute")
-async def login_user(request: Request, login_data: UserLogin, background_tasks: BackgroundTasks):
-    user_doc = await db.users.find_one({"username": login_data.username})
-    
-    if not user_doc or not verify_password(login_data.password, user_doc["password"]):
-        # Log failed attempt
-        if user_doc:
-            await db.users.update_one(
-                {"username": login_data.username},
-                {"$inc": {"failed_login_attempts": 1}}
-            )
-            
-            # Lock account after 5 failed attempts
-            if user_doc.get("failed_login_attempts", 0) >= 4:  # Will be 5 after increment
-                lock_until = datetime.now(timezone.utc) + timedelta(minutes=30)
-                await db.users.update_one(
-                    {"username": login_data.username},
-                    {"$set": {"locked_until": lock_until}}
-                )
-        
-        background_tasks.add_task(
-            log_security_event,
-            "failed_login",
-            "MEDIUM",
-            user_doc.get("id") if user_doc else None,
-            request.client.host,
-            {"username": login_data.username}
-        )
-        
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-    
-    user = User(**{k: v for k, v in user_doc.items() if k != "password"})
-    
-    # Check if account is locked
-    if user.locked_until and user.locked_until > datetime.now(timezone.utc):
-        raise HTTPException(status_code=423, detail="Account is temporarily locked")
-    
-    # Check 2FA if enabled
-    if user.two_factor_enabled:
-        if not login_data.totp_code:
-            raise HTTPException(status_code=428, detail="2FA code required")
-        
-        if not verify_2fa_token(user.two_factor_secret, login_data.totp_code):
-            background_tasks.add_task(
-                log_security_event,
-                "failed_2fa",
-                "HIGH",
-                user.id,
-                request.client.host,
-                {"username": login_data.username}
-            )
-            raise HTTPException(status_code=401, detail="Invalid 2FA code")
-    
-    # Reset failed attempts and update last login
-    await db.users.update_one(
-        {"username": login_data.username},
-        {
-            "$set": {
-                "last_login": datetime.now(timezone.utc),
-                "failed_login_attempts": 0,
-                "locked_until": None
-            }
-        }
-    )
-    
-    tokens = generate_tokens(user.id)
-    background_tasks.add_task(log_audit_event, AuditAction.LOGIN, "user", user.id, request=request)
-    
-    return TokenResponse(**tokens, user=user)
 
-# Admin Dashboard APIs
-@api_router.get("/admin/dashboard/stats", response_model=DashboardStats)
-async def get_admin_dashboard_stats(current_user: User = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))):
-    total_users = await db.users.count_documents({})
-    active_users = await db.users.count_documents({"is_active": True})
-    total_transactions = await db.transactions.count_documents({})
-    
-    # Calculate total revenue
-    revenue_pipeline = [
-        {"$match": {"transaction_type": "cash_in"}},
-        {"$group": {"_id": None, "total": {"$sum": "$amount"}}}
-    ]
-    revenue_result = await db.transactions.aggregate(revenue_pipeline).to_list(1)
-    total_revenue = revenue_result[0]["total"] if revenue_result else 0
-    
-    # Security events count (last 24 hours)
-    yesterday = datetime.now(timezone.utc) - timedelta(days=1)
-    security_events = await db.security_events.count_documents({"timestamp": {"$gte": yesterday}})
-    failed_logins = await db.security_events.count_documents({
-        "event_type": "failed_login",
-        "timestamp": {"$gte": yesterday}
-    })
-    
-    return DashboardStats(
-        total_users=total_users,
-        active_users=active_users,
-        total_transactions=total_transactions,
-        total_revenue=total_revenue,
-        security_events=security_events,
-        failed_logins=failed_logins
-    )
+def prepare_for_mongo(item: Dict[str, Any]) -> Dict[str, Any]:
+    data = item.copy()
+    if isinstance(data.get('date'), datetime):
+        data['date'] = data['date'].date().isoformat()
+    return data
 
-# Basic API Routes
-@api_router.get("/")
-async def root():
-    return {"message": "Secure Financial Dashboard API"}
 
-@api_router.get("/dashboard/summary", response_model=dict)
-async def get_dashboard_summary(current_user: User = Depends(get_current_user)):
-    # Calculate receivables (what others owe you)
-    receivables_account = await db.accounts.find_one({"user_id": current_user.id, "name": "Accounts Receivable"})
-    receivables = receivables_account["balance"] if receivables_account else 0.0
-    
-    # Calculate payables (what you owe others)
-    payables_account = await db.accounts.find_one({"user_id": current_user.id, "name": "Accounts Payable"})
-    payables = payables_account["balance"] if payables_account else 0.0
-    
-    return {
-        "you_will_give": abs(payables),
-        "you_will_receive": receivables,
-        "net_position": receivables - abs(payables)
-    }
+def serialize_item(doc: Dict[str, Any]) -> Dict[str, Any]:
+    out = {k: v for k, v in doc.items() if k != '_id'}
+    return out
 
-# Transaction APIs
-@api_router.post("/transactions", response_model=Transaction)
-async def create_transaction(transaction_data: dict, current_user: User = Depends(get_current_user)):
-    # Get accounts based on transaction type
-    if transaction_data.get("transaction_type") == "cash_in":
-        cash_account = await db.accounts.find_one({"user_id": current_user.id, "name": "Cash"})
-        revenue_account = await db.accounts.find_one({"user_id": current_user.id, "name": "Sales Revenue"})
-        debit_account_id = cash_account["id"]
-        credit_account_id = revenue_account["id"]
-    else:  # CASH_OUT
-        cash_account = await db.accounts.find_one({"user_id": current_user.id, "name": "Cash"})
-        expense_account = await db.accounts.find_one({"user_id": current_user.id, "name": "Operating Expenses"})
-        debit_account_id = expense_account["id"]
-        credit_account_id = cash_account["id"]
-    
-    # Create transaction
-    transaction = Transaction(
-        user_id=current_user.id,
-        description=transaction_data.get("description"),
-        amount=transaction_data.get("amount"),
-        transaction_type=transaction_data.get("transaction_type"),
-        debit_account=debit_account_id,
-        credit_account=credit_account_id
-    )
-    
-    # Save transaction
-    await db.transactions.insert_one(transaction.dict())
-    
-    # Update account balances (double-entry)
-    if transaction_data.get("transaction_type") == "cash_in":
-        await db.accounts.update_one({"id": debit_account_id}, {"$inc": {"balance": transaction_data.get("amount")}})
-        await db.accounts.update_one({"id": credit_account_id}, {"$inc": {"balance": transaction_data.get("amount")}})
-    else:
-        await db.accounts.update_one({"id": debit_account_id}, {"$inc": {"balance": transaction_data.get("amount")}})
-        await db.accounts.update_one({"id": credit_account_id}, {"$inc": {"balance": -transaction_data.get("amount")}})
-    
-    return transaction
 
-@api_router.get("/transactions", response_model=List[Transaction])
-async def get_transactions(current_user: User = Depends(get_current_user)):
-    transactions = await db.transactions.find({"user_id": current_user.id}).sort("created_at", -1).to_list(100)
-    return [Transaction(**transaction) for transaction in transactions]
-
-@api_router.get("/accounts", response_model=List[Account])
-async def get_accounts(current_user: User = Depends(get_current_user)):
-    accounts = await db.accounts.find({"user_id": current_user.id}).to_list(100)
-    return [Account(**account) for account in accounts]
-
-# Admin Invite Code Management  
-@api_router.post("/admin/invite-codes", response_model=InviteCode)
-async def create_invite_code(current_user: User = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))):
-    invite_code = InviteCode(
-        code=str(uuid.uuid4())[:8].upper(),
-        created_by=current_user.id
-    )
-    
-    await db.invite_codes.insert_one(invite_code.dict())
-    return invite_code
-
-@api_router.get("/admin/invite-codes", response_model=List[InviteCode])
-async def get_invite_codes(current_user: User = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))):
-    invite_codes = await db.invite_codes.find({"created_by": current_user.id}).sort("created_at", -1).to_list(100)
-    return [InviteCode(**invite_code) for invite_code in invite_codes]
-async def get_dashboard_stats(current_user: User = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))):
-    total_users = await db.users.count_documents({})
-    active_users = await db.users.count_documents({"is_active": True})
-    total_transactions = await db.transactions.count_documents({})
-    
-    # Calculate total revenue
-    revenue_pipeline = [
-        {"$match": {"transaction_type": "cash_in"}},
-        {"$group": {"_id": None, "total": {"$sum": "$amount"}}}
-    ]
-    revenue_result = await db.transactions.aggregate(revenue_pipeline).to_list(1)
-    total_revenue = revenue_result[0]["total"] if revenue_result else 0
-    
-    # Security events count (last 24 hours)
-    yesterday = datetime.now(timezone.utc) - timedelta(days=1)
-    security_events = await db.security_events.count_documents({"timestamp": {"$gte": yesterday}})
-    failed_logins = await db.security_events.count_documents({
-        "event_type": "failed_login",
-        "timestamp": {"$gte": yesterday}
-    })
-    
-    return DashboardStats(
-        total_users=total_users,
-        active_users=active_users,
-        total_transactions=total_transactions,
-        total_revenue=total_revenue,
-        security_events=security_events,
-        failed_logins=failed_logins
-    )
-
-@api_router.get("/admin/users")
-async def get_all_users(
-    skip: int = 0,
-    limit: int = 100,
-    search: Optional[str] = None,
-    current_user: User = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
-):
-    query = {}
+async def fetch_list(collection_name: str, user_id: str, search: Optional[str], sort: str, page: int, page_size: int):
+    query: Dict[str, Any] = {"user_id": user_id}
     if search:
-        query = {
-            "$or": [
-                {"username": {"$regex": search, "$options": "i"}},
-                {"email": {"$regex": search, "$options": "i"}},
-                {"business_name": {"$regex": search, "$options": "i"}}
-            ]
-        }
-    
-    users_raw = await db.users.find(query, {"password": 0}).skip(skip).limit(limit).to_list(limit)
-    total = await db.users.count_documents(query)
-    
-    # Clean users data for response (handle missing fields and ObjectId)
-    users = []
-    for user_doc in users_raw:
-        # Remove MongoDB ObjectId
-        if '_id' in user_doc:
-            del user_doc['_id']
-        
-        # Set default values for missing fields
-        user_doc.setdefault('role', 'user' if not user_doc.get('is_admin') else 'admin')
-        user_doc.setdefault('is_active', True)
-        user_doc.setdefault('is_verified', False)
-        user_doc.setdefault('failed_login_attempts', 0)
-        user_doc.setdefault('two_factor_enabled', False)
-        user_doc.setdefault('permissions', [])
-        
-        # Handle datetime fields
-        if 'created_at' not in user_doc:
-            user_doc['created_at'] = datetime.now(timezone.utc).isoformat()
-        elif isinstance(user_doc.get('created_at'), datetime):
-            user_doc['created_at'] = user_doc['created_at'].isoformat()
-            
-        if 'password_changed_at' not in user_doc:
-            user_doc['password_changed_at'] = datetime.now(timezone.utc).isoformat()
-        elif isinstance(user_doc.get('password_changed_at'), datetime):
-            user_doc['password_changed_at'] = user_doc['password_changed_at'].isoformat()
-            
-        if user_doc.get('last_login') and isinstance(user_doc.get('last_login'), datetime):
-            user_doc['last_login'] = user_doc['last_login'].isoformat()
-            
-        if user_doc.get('locked_until') and isinstance(user_doc.get('locked_until'), datetime):
-            user_doc['locked_until'] = user_doc['locked_until'].isoformat()
-            
-        users.append(user_doc)
-    
-    return {"users": users, "total": total}
+        regex = {"$regex": search, "$options": "i"}
+        query["$or"] = [
+            {"name": regex},
+            {"subtitle": regex}
+        ]
 
-@api_router.put("/admin/users/{user_id}/role")
-async def update_user_role(
-    user_id: str,
-    role_data: dict,
-    current_user: User = Depends(require_role([UserRole.SUPER_ADMIN]))
+    sort_map = {
+        'name_asc': ("name", 1),
+        'name_desc': ("name", -1),
+        'amount_asc': ("amount", 1),
+        'amount_desc': ("amount", -1),
+        'newest': ("date", -1),
+        'oldest': ("date", 1)
+    }
+    sort_key, sort_dir = sort_map.get(sort, ("name", 1))
+
+    skip = max(0, (page - 1) * page_size)
+    cursor = db[collection_name].find(query).sort(sort_key, sort_dir).skip(skip).limit(page_size)
+    docs = await cursor.to_list(length=page_size)
+    items = [serialize_item(d) for d in docs]
+    total = await db[collection_name].count_documents(query)
+    return {"items": items, "total": total, "page": page, "page_size": page_size}
+
+
+@api_router.get("/lists/{list_name}")
+async def list_items(
+    list_name: str,
+    request: Request,
+    current_user: User = Depends(get_current_user),
+    search: Optional[str] = Query(default=None),
+    sort: str = Query(default='name_asc'),
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=25, ge=1, le=200)
 ):
-    new_role = role_data.get("role")
-    if new_role not in [r.value for r in UserRole]:
-        raise HTTPException(status_code=400, detail="Invalid role")
-    
-    result = await db.users.update_one(
-        {"id": user_id},
-        {"$set": {"role": new_role}}
-    )
-    
-    if result.modified_count == 0:
-        raise HTTPException(status_code=404, detail="User not found")
-    
-    await log_audit_event(
-        AuditAction.UPDATE,
-        "user_role",
-        current_user.id,
-        {"target_user": user_id, "new_role": new_role}
-    )
-    
-    return {"message": "Role updated successfully"}
+    allowed = {
+        'customers': 'customers',
+        'suppliers': 'suppliers',
+        'staff': 'staff',
+        'purchases': 'purchases',
+        'bills': 'bills',
+        'expenses': 'expenses',
+        'invoices': 'invoices',
+        'ratings': 'ratings'
+    }
+    if list_name not in allowed:
+        raise HTTPException(status_code=404, detail="List not found")
 
-@api_router.get("/admin/audit-logs")
-async def get_audit_logs(
-    skip: int = 0,
-    limit: int = 100,
-    action: Optional[str] = None,
-    user_id: Optional[str] = None,
-    current_user: User = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
-):
-    query = {}
-    if action:
-        query["action"] = action
-    if user_id:
-        query["user_id"] = user_id
-    
-    logs = await db.audit_logs.find(query).sort("timestamp", -1).skip(skip).limit(limit).to_list(limit)
-    total = await db.audit_logs.count_documents(query)
-    
-    return {"logs": logs, "total": total}
+    data = await fetch_list(allowed[list_name], current_user.id, search, sort, page, page_size)
+    await log_audit_event(AuditAction.READ, f"list:{list_name}", current_user.id, {"search": search, "sort": sort}, request, True)
+    return data
 
-@api_router.get("/admin/security-events")
-async def get_security_events(
-    skip: int = 0,
-    limit: int = 100,
-    severity: Optional[str] = None,
-    current_user: User = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))
-):
-    query = {}
-    if severity:
-        query["severity"] = severity
-    
-    events = await db.security_events.find(query).sort("timestamp", -1).skip(skip).limit(limit).to_list(limit)
-    total = await db.security_events.count_documents(query)
-    
-    return {"events": events, "total": total}
-
-# Include the router in the main app
+# Mount the router
 app.include_router(api_router)
-
-# Security Headers Middleware
-@app.middleware("http")
-async def add_security_headers(request: Request, call_next):
-    response = await call_next(request)
-    
-    # Security headers
-    response.headers["X-Content-Type-Options"] = "nosniff"
-    response.headers["X-Frame-Options"] = "DENY"
-    response.headers["X-XSS-Protection"] = "1; mode=block"
-    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
-    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-    response.headers["Content-Security-Policy"] = "default-src 'self'"
-    
-    return response
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
-
-@app.on_event("startup")
-async def startup_event():
-    await create_super_admin()
-    logger.info("Secure Financial Dashboard API started")
-
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()

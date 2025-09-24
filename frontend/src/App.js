@@ -10,11 +10,10 @@ import { Label } from './components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './components/ui/dialog';
 import { Badge } from './components/ui/badge';
 import { Home, UserCircle, Plus, Minus, CreditCard, Users, Building, TrendingUp, FileText, Package, PieChart, BarChart3, Gift, MessageCircle, Send, LogOut, Settings, Shield, ShieldCheck, Star, Truck, ShoppingCart, Zap, Coins, Receipt } from 'lucide-react';
-import ListViewModal from './components/ListViewModal';
-
 import AdminDashboard from './components/AdminDashboard';
 import CashInEntry from './components/CashInEntry';
 import CashOutEntry from './components/CashOutEntry';
+import ListViewModal from './components/ListViewModal';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -245,50 +244,11 @@ const Dashboard = () => {
   const [showProfileDialog, setShowProfileDialog] = useState(false);
   const [showInviteCodesDialog, setShowInviteCodesDialog] = useState(false);
   const [showCashInEntry, setShowCashInEntry] = useState(false);
-  // List modal state and sample data (placeholder until backend wiring)
-  const [listModal, setListModal] = useState({ open: false, title: '', items: [] });
-
-  const openList = (title, items) => setListModal({ open: true, title, items });
-
-  const demoItems = {
-    customers: [
-      { name: 'Aarav Sharma', phone: '98xxxxxx11', amount: 1200, date: '2025-08-02' },
-      { name: 'Vihaan Singh', phone: '98xxxxxx22', amount: 560, date: '2025-08-10' }
-    ],
-    suppliers: [
-      { name: 'ABC Traders', amount: 4500, date: '2025-08-01' },
-      { name: 'Global Credits', amount: 12500, date: '2025-08-12' }
-    ],
-    ratings: [
-      { name: 'Aarav Sharma', subtitle: '4.5 ★', date: '2025-07-12' },
-      { name: 'ABC Traders', subtitle: '4.0 ★', date: '2025-07-15' }
-    ],
-    staff: [
-      { name: 'Rohit', subtitle: 'Attendance 95%', date: '2025-08-07' },
-      { name: 'Anita', subtitle: 'Attendance 92%', date: '2025-08-02' }
-    ],
-    companyPurchase: [
-      { name: 'PO #1001', subtitle: 'Vendor: ABC', amount: 8200, date: '2025-08-03' },
-      { name: 'PO #1002', subtitle: 'Vendor: XYZ', amount: 12950, date: '2025-08-11' }
-    ],
-    billsRecharge: [
-      { name: 'Electricity', subtitle: 'July', amount: 1750, date: '2025-08-01' },
-      { name: 'Mobile', subtitle: 'Prepaid', amount: 299, date: '2025-08-05' }
-    ],
-    otherExpenses: [
-      { name: 'Travel', subtitle: 'Cab', amount: 340, date: '2025-08-09' },
-      { name: 'Office', subtitle: 'Stationery', amount: 220, date: '2025-08-06' }
-    ],
-    billsInvoices: [
-      { name: 'INV-3201', subtitle: 'Customer: RST', amount: 5600, date: '2025-08-08' },
-      { name: 'INV-3202', subtitle: 'Customer: LMN', amount: 8900, date: '2025-08-10' }
-    ]
-  };
-
   const [showCashOutEntry, setShowCashOutEntry] = useState(false);
   const [inviteCodes, setInviteCodes] = useState([]);
   const [newInviteCode, setNewInviteCode] = useState(null);
   const [transactionData, setTransactionData] = useState({ description: '', amount: '' });
+  const [listModal, setListModal] = useState({ open: false, title: '', items: [], defaultSort: 'name_asc' });
   const { user, logout } = useAuth();
 
   useEffect(() => {
@@ -374,6 +334,20 @@ const Dashboard = () => {
       case 'finance': return financeTiles;
       case 'personal': return personalTiles;
       default: return businessTiles;
+    }
+  };
+
+  const [listState, setListState] = useState({ loading: false });
+  const openList = async (title, endpoint, defaultSort = 'name_asc') => {
+    try {
+      setListState({ loading: true });
+      const resp = await axios.get(`${API}${endpoint}`, { params: { sort: defaultSort, page: 1, page_size: 25 } });
+      setListModal({ open: true, title, items: resp.data.items || [], defaultSort });
+    } catch (e) {
+      console.error('Failed to load list', e);
+      setListModal({ open: true, title, items: [], defaultSort });
+    } finally {
+      setListState({ loading: false });
     }
   };
 
@@ -521,27 +495,19 @@ const Dashboard = () => {
               <div className="grid grid-cols-3 gap-3 px-4" data-testid={`${tab}-grid`}>
                 {getTilesForTab(tab).map((tile, index) => {
                   const IconComponent = tile.icon;
-      <ListViewModal 
-        open={listModal.open}
-        onOpenChange={(v) => setListModal(prev => ({ ...prev, open: v }))}
-        title={listModal.title}
-        items={listModal.items}
-      />
-
                   return (
                     <Card 
                       key={index}
                       onClick={() => {
-                        // route to modal list if the tile has a defined mapping
                         const name = `${tile.name} ${tile.subtitle}`.trim().toLowerCase();
-                        if (name.startsWith('customers')) openList('Customers / Debtors', demoItems.customers);
-                        else if (name.startsWith('suppliers')) openList('Suppliers / Creditors', demoItems.suppliers);
-                        else if (name.startsWith('community')) openList('Community Ratings', demoItems.ratings);
-                        else if (name.startsWith('staff')) openList('Staff', demoItems.staff);
-                        else if (name.startsWith('company purchase') || name.startsWith('company')) openList('Company Purchase', demoItems.companyPurchase);
-                        else if (name.startsWith('bills recharge') || tile.name === 'Bills') openList('Bills / Recharge', demoItems.billsRecharge);
-                        else if (name.startsWith('other')) openList('Other Expenses', demoItems.otherExpenses);
-                        else if (name.startsWith('bills &')) openList('Bills & Invoices', demoItems.billsInvoices);
+                        if (name.startsWith('customers')) openList('Customers / Debtors', '/lists/customers', 'name_asc');
+                        else if (name.startsWith('suppliers')) openList('Suppliers / Creditors', '/lists/suppliers', 'name_asc');
+                        else if (name.startsWith('community')) openList('Community Ratings', '/lists/ratings', 'newest');
+                        else if (name.startsWith('staff')) openList('Staff', '/lists/staff', 'name_asc');
+                        else if (name.startsWith('company purchase') || name.starts_with === undefined ? false : name.startsWith('company')) openList('Company Purchase', '/lists/purchases', 'newest');
+                        else if (name.startsWith('bills recharge') || tile.name === 'Bills') openList('Bills / Recharge', '/lists/bills', 'newest');
+                        else if (name.startsWith('other')) openList('Other Expenses', '/lists/expenses', 'newest');
+                        else if (name.startsWith('bills &')) openList('Bills & Invoices', '/lists/invoices', 'newest');
                       }}
                       className={`bg-slate-700/80 border border-slate-600 hover:bg-slate-600 transition-all duration-200 cursor-pointer shadow-xl aspect-square flex items-center justify-center`}
                       data-testid={`${tab}-tile-${index}`}
@@ -611,6 +577,16 @@ const Dashboard = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* List Modal */}
+      <ListViewModal 
+        key={listModal.title}
+        open={listModal.open}
+        onOpenChange={(v) => setListModal(prev => ({ ...prev, open: v }))}
+        title={listModal.title}
+        items={listModal.items}
+        defaultSort={listModal.defaultSort}
+      />
 
       {/* Cash In/Out Buttons */}
       <div className="fixed bottom-6 left-4 right-4">
