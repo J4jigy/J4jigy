@@ -575,48 +575,12 @@ const Dashboard = () => {
               <Button 
                 className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 rounded-xl shadow-lg"
                 data-testid="cash-out-button"
+                onClick={() => setShowCashOutEntry(true)}
               >
                 <Minus className="w-5 h-5 mr-2" />
                 Cash Out
               </Button>
             </DialogTrigger>
-            <DialogContent className="bg-slate-800 border-slate-700">
-              <DialogHeader>
-                <DialogTitle className="text-white">Cash Out Transaction</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="cash-out-description" className="text-slate-200">Description</Label>
-                  <Input
-                    id="cash-out-description"
-                    data-testid="cash-out-description"
-                    value={transactionData.description}
-                    onChange={(e) => setTransactionData(prev => ({ ...prev, description: e.target.value }))}
-                    placeholder="Enter description"
-                    className="bg-slate-700 border-slate-600 text-white"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="cash-out-amount" className="text-slate-200">Amount</Label>
-                  <Input
-                    id="cash-out-amount"
-                    data-testid="cash-out-amount"
-                    type="number"
-                    value={transactionData.amount}
-                    onChange={(e) => setTransactionData(prev => ({ ...prev, amount: e.target.value }))}
-                    placeholder="Enter amount"
-                    className="bg-slate-700 border-slate-600 text-white"
-                  />
-                </div>
-                <Button 
-                  onClick={() => handleTransaction('cash_out')}
-                  className="w-full bg-red-600 hover:bg-red-700"
-                  data-testid="confirm-cash-out"
-                >
-                  Confirm Cash Out
-                </Button>
-              </div>
-            </DialogContent>
           </Dialog>
         </div>
       </div>
