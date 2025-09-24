@@ -743,9 +743,13 @@ async def get_all_users(
     users_raw = await db.users.find(query, {"password": 0}).skip(skip).limit(limit).to_list(limit)
     total = await db.users.count_documents(query)
     
-    # Clean users data for response (handle missing fields for older users)
+    # Clean users data for response (handle missing fields and ObjectId)
     users = []
     for user_doc in users_raw:
+        # Remove MongoDB ObjectId
+        if '_id' in user_doc:
+            del user_doc['_id']
+        
         # Set default values for missing fields
         user_doc.setdefault('role', 'user' if not user_doc.get('is_admin') else 'admin')
         user_doc.setdefault('is_active', True)
@@ -753,10 +757,24 @@ async def get_all_users(
         user_doc.setdefault('failed_login_attempts', 0)
         user_doc.setdefault('two_factor_enabled', False)
         user_doc.setdefault('permissions', [])
+        
+        # Handle datetime fields
         if 'created_at' not in user_doc:
-            user_doc['created_at'] = datetime.now(timezone.utc)
+            user_doc['created_at'] = datetime.now(timezone.utc).isoformat()
+        elif isinstance(user_doc.get('created_at'), datetime):
+            user_doc['created_at'] = user_doc['created_at'].isoformat()
+            
         if 'password_changed_at' not in user_doc:
-            user_doc['password_changed_at'] = datetime.now(timezone.utc)
+            user_doc['password_changed_at'] = datetime.now(timezone.utc).isoformat()
+        elif isinstance(user_doc.get('password_changed_at'), datetime):
+            user_doc['password_changed_at'] = user_doc['password_changed_at'].isoformat()
+            
+        if user_doc.get('last_login') and isinstance(user_doc.get('last_login'), datetime):
+            user_doc['last_login'] = user_doc['last_login'].isoformat()
+            
+        if user_doc.get('locked_until') and isinstance(user_doc.get('locked_until'), datetime):
+            user_doc['locked_until'] = user_doc['locked_until'].isoformat()
+            
         users.append(user_doc)
     
     return {"users": users, "total": total}
