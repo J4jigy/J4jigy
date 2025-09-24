@@ -163,11 +163,11 @@ const CashInEntry = ({ onBack }) => {
 
       {/* Primary Input Section */}
       <div className="p-2 space-y-1">
-        {/* Date & Time */}
+        {/* Date & Time (labels removed as requested) */}
         <div className="grid grid-cols-2 gap-2">
           <div>
-            <Label className="text-slate-300 text-xs">Date</Label>
             <Input
+              aria-label="Date"
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
@@ -175,8 +175,8 @@ const CashInEntry = ({ onBack }) => {
             />
           </div>
           <div>
-            <Label className="text-slate-300 text-xs">Time</Label>
             <Input
+              aria-label="Time"
               type="time"
               value={selectedTime}
               onChange={(e) => setSelectedTime(e.target.value)}
