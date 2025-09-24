@@ -336,6 +336,11 @@ const Dashboard = () => {
     }
   };
 
+  // Show Cash In Entry screen
+  if (showCashInEntry) {
+    return <CashInEntry onBack={() => setShowCashInEntry(false)} />;
+  }
+
   return (
     <div className="min-h-screen bg-slate-900 text-white" data-testid="dashboard">
       {/* Header */}
