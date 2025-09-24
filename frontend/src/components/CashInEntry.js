@@ -99,7 +99,7 @@ const CashInEntry = ({ onBack }) => {
         }
       } catch (error) {
         setAmount('Error');
-        setTimeout(() => setAmount('0'), 1000);
+        setTimeout(() => setAmountForActive('0'), 1000);
       }
     } else {
       if (amount === '0' || amount === 'Error') {
