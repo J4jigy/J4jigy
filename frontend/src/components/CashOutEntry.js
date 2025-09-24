@@ -231,10 +231,22 @@ const CashOutEntry = ({ onBack }) => {
         </div>
         {/* POS multi-customer boxes */}
         <div className="grid grid-cols-6 gap-1">
-          {[...Array(6)].map((_, idx) => (
-            <div key={idx} className="aspect-square bg-slate-800 border border-slate-700 rounded-md flex items-center justify-center">
-              <User className="w-5 h-5 text-slate-300" />
-            </div>
+          {slots.map((slot, idx) => (
+            <button
+              key={slot.id}
+              onClick={() => {
+                setActiveSlot(idx);
+                setAmount(slot.amount);
+              }}
+              className={`aspect-square rounded-md flex items-center justify-center border transition ${
+                activeSlot === idx ? 'bg-blue-700 border-blue-500' : 'bg-slate-800 border-slate-700'
+              }`}
+            >
+              <div className="flex flex-col items-center">
+                <User className="w-5 h-5 text-slate-200" />
+                <span className="text-[10px] text-slate-100 mt-0.5">{slot.label}</span>
+              </div>
+            </button>
           ))}
         </div>
 
