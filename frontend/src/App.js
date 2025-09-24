@@ -521,6 +521,13 @@ const Dashboard = () => {
               <div className="grid grid-cols-3 gap-3 px-4" data-testid={`${tab}-grid`}>
                 {getTilesForTab(tab).map((tile, index) => {
                   const IconComponent = tile.icon;
+      <ListViewModal 
+        open={listModal.open}
+        onOpenChange={(v) => setListModal(prev => ({ ...prev, open: v }))}
+        title={listModal.title}
+        items={listModal.items}
+      />
+
                   return (
                     <Card 
                       key={index}
