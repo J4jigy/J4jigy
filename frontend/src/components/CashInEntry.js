@@ -82,10 +82,10 @@ const CashInEntry = ({ onBack }) => {
 
   const handleCalculatorInput = (value) => {
     if (value === 'clear') {
-      setAmount('0');
+      setAmountForActive('0');
     } else if (value === 'back') {
       if (amount.length <= 1 || amount === '0') {
-        setAmount('0');
+        setAmountForActive('0');
       } else {
         setAmount(amount.slice(0, -1));
       }
@@ -145,7 +145,7 @@ const CashInEntry = ({ onBack }) => {
   };
 
   const resetAmount = () => {
-    setAmount('0');
+    setAmountForActive('0');
   };
 
   return (
