@@ -9,7 +9,8 @@ import { Input } from './components/ui/input';
 import { Label } from './components/ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from './components/ui/dialog';
 import { Badge } from './components/ui/badge';
-import { Home, User, Plus, Minus, CreditCard, Users, Building, TrendingUp, FileText, Package, PieChart, BarChart3, Gift, MessageCircle, Send, LogOut, Settings } from 'lucide-react';
+import { Home, User, Plus, Minus, CreditCard, Users, Building, TrendingUp, FileText, Package, PieChart, BarChart3, Gift, MessageCircle, Send, LogOut, Settings, Shield } from 'lucide-react';
+import AdminDashboard from './components/AdminDashboard';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
