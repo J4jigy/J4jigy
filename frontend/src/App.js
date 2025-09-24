@@ -448,9 +448,11 @@ const Dashboard = () => {
                       className={`bg-gradient-to-br ${tile.color} border-slate-600 hover:scale-105 transition-transform cursor-pointer shadow-lg`}
                       data-testid={`${tab}-tile-${index}`}
                     >
-                      <CardContent className="p-4 flex flex-col items-center justify-center min-h-[120px]">
-                        <IconComponent className="w-8 h-8 mb-2 text-white" />
-                        <p className="text-white text-sm text-center font-medium">{tile.name}</p>
+                      <CardContent className="p-3 flex flex-col items-center justify-center min-h-[120px] text-center">
+                        <IconComponent className="w-10 h-10 mb-3 text-white drop-shadow-sm" />
+                        <p className="text-white text-xs font-semibold leading-tight tracking-wide uppercase letterspacing-wider px-1">
+                          {tile.name}
+                        </p>
                       </CardContent>
                     </Card>
                   );
