@@ -299,30 +299,30 @@ const Dashboard = () => {
   };
 
   const businessTiles = [
-    { name: 'Credit Score', icon: CreditCard, color: 'from-blue-800 to-blue-900' },
-    { name: 'Customers', icon: Users, color: 'from-green-800 to-green-900' },
-    { name: 'Suppliers', icon: Building, color: 'from-orange-800 to-orange-900' },
-    { name: 'Defaulters', icon: TrendingUp, color: 'from-red-800 to-red-900' },
-    { name: 'Staff', icon: Users, color: 'from-purple-800 to-purple-900' },
-    { name: 'Add New', icon: Plus, color: 'from-slate-700 to-slate-800' }
+    { name: 'Credit Score', subtitle: '', icon: CreditCard, color: 'from-blue-900 to-blue-800' },
+    { name: 'Customers', subtitle: 'Debtors', icon: Users, color: 'from-green-900 to-green-800' },
+    { name: 'Suppliers', subtitle: 'Creditors', icon: Building, color: 'from-indigo-900 to-indigo-800' },
+    { name: 'Defaulters', subtitle: '', icon: TrendingUp, color: 'from-red-900 to-red-800' },
+    { name: 'Staff', subtitle: '', icon: Users, color: 'from-purple-900 to-purple-800' },
+    { name: 'Add New', subtitle: '', icon: Plus, color: 'from-slate-700 to-slate-600' }
   ];
 
   const financeTiles = [
-    { name: 'Expenses', icon: FileText, color: 'from-blue-800 to-blue-900' },
-    { name: 'Rent', icon: Building, color: 'from-orange-800 to-orange-900' },
-    { name: 'Other Costs', icon: TrendingUp, color: 'from-red-800 to-red-900' },
-    { name: 'Invoices', icon: FileText, color: 'from-green-800 to-green-900' },
-    { name: 'Stock', icon: Package, color: 'from-purple-800 to-purple-900' },
-    { name: 'Profit/Loss', icon: PieChart, color: 'from-emerald-800 to-emerald-900' },
-    { name: 'Balance Sheet', icon: BarChart3, color: 'from-indigo-800 to-indigo-900' },
-    { name: 'Reports', icon: Plus, color: 'from-slate-700 to-slate-800' },
-    { name: 'Analytics', icon: Plus, color: 'from-slate-700 to-slate-800' }
+    { name: 'Bills', subtitle: 'Recharge', icon: FileText, color: 'from-green-900 to-green-800' },
+    { name: 'Rent', subtitle: '', icon: Building, color: 'from-blue-900 to-blue-800' },
+    { name: 'Other', subtitle: 'Expenses', icon: Package, color: 'from-purple-900 to-purple-800' },
+    { name: 'Bills &', subtitle: 'Invoices', icon: FileText, color: 'from-yellow-900 to-yellow-800' },
+    { name: 'Stock', subtitle: 'Management', icon: Package, color: 'from-orange-900 to-orange-800' },
+    { name: 'Profit', subtitle: 'Loss', icon: TrendingUp, color: 'from-emerald-900 to-emerald-800' },
+    { name: 'Balance', subtitle: 'Sheet', icon: BarChart3, color: 'from-indigo-900 to-indigo-800' },
+    { name: 'Add New', subtitle: '', icon: Plus, color: 'from-slate-700 to-slate-600' },
+    { name: 'Add New', subtitle: '', icon: Plus, color: 'from-slate-700 to-slate-600' }
   ];
 
   const personalTiles = [
-    { name: 'Offers', icon: Gift, color: 'from-pink-800 to-pink-900' },
-    { name: 'Messages', icon: MessageCircle, color: 'from-blue-800 to-blue-900' },
-    { name: 'Settings', icon: Plus, color: 'from-slate-700 to-slate-800' }
+    { name: 'Offers &', subtitle: 'Discounts', icon: Gift, color: 'from-red-900 to-red-800' },
+    { name: 'Chat', subtitle: '', icon: MessageCircle, color: 'from-blue-900 to-blue-800' },
+    { name: 'Add New', subtitle: '', icon: Plus, color: 'from-slate-700 to-slate-600' }
   ];
 
   const getTilesForTab = (tab) => {
