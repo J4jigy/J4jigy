@@ -245,6 +245,46 @@ const Dashboard = () => {
   const [showProfileDialog, setShowProfileDialog] = useState(false);
   const [showInviteCodesDialog, setShowInviteCodesDialog] = useState(false);
   const [showCashInEntry, setShowCashInEntry] = useState(false);
+  // List modal state and sample data (placeholder until backend wiring)
+  const [listModal, setListModal] = useState({ open: false, title: '', items: [] });
+
+  const openList = (title, items) => setListModal({ open: true, title, items });
+
+  const demoItems = {
+    customers: [
+      { name: 'Aarav Sharma', phone: '98xxxxxx11', amount: 1200, date: '2025-08-02' },
+      { name: 'Vihaan Singh', phone: '98xxxxxx22', amount: 560, date: '2025-08-10' }
+    ],
+    suppliers: [
+      { name: 'ABC Traders', amount: 4500, date: '2025-08-01' },
+      { name: 'Global Credits', amount: 12500, date: '2025-08-12' }
+    ],
+    ratings: [
+      { name: 'Aarav Sharma', subtitle: '4.5 ★', date: '2025-07-12' },
+      { name: 'ABC Traders', subtitle: '4.0 ★', date: '2025-07-15' }
+    ],
+    staff: [
+      { name: 'Rohit', subtitle: 'Attendance 95%', date: '2025-08-07' },
+      { name: 'Anita', subtitle: 'Attendance 92%', date: '2025-08-02' }
+    ],
+    companyPurchase: [
+      { name: 'PO #1001', subtitle: 'Vendor: ABC', amount: 8200, date: '2025-08-03' },
+      { name: 'PO #1002', subtitle: 'Vendor: XYZ', amount: 12950, date: '2025-08-11' }
+    ],
+    billsRecharge: [
+      { name: 'Electricity', subtitle: 'July', amount: 1750, date: '2025-08-01' },
+      { name: 'Mobile', subtitle: 'Prepaid', amount: 299, date: '2025-08-05' }
+    ],
+    otherExpenses: [
+      { name: 'Travel', subtitle: 'Cab', amount: 340, date: '2025-08-09' },
+      { name: 'Office', subtitle: 'Stationery', amount: 220, date: '2025-08-06' }
+    ],
+    billsInvoices: [
+      { name: 'INV-3201', subtitle: 'Customer: RST', amount: 5600, date: '2025-08-08' },
+      { name: 'INV-3202', subtitle: 'Customer: LMN', amount: 8900, date: '2025-08-10' }
+    ]
+  };
+
   const [showCashOutEntry, setShowCashOutEntry] = useState(false);
   const [inviteCodes, setInviteCodes] = useState([]);
   const [newInviteCode, setNewInviteCode] = useState(null);
