@@ -307,7 +307,7 @@ const Dashboard = () => {
     { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400', sub: ['Add Customer','Outstanding','Recent','Segments'] },
     { name: 'Suppliers', subtitle: 'Creditors', icon: Truck, iconColor: 'text-indigo-400', sub: ['Add Supplier','Payables','Recent','Ledger'] },
     { name: 'Community', subtitle: 'Ratings', icon: Star, iconColor: 'text-yellow-400', sub: ['Rate Customer','Rate Supplier','View Ratings'] },
-    { name: 'Staff', subtitle: '', icon: Users, iconColor: 'text-purple-400' },
+    { name: 'Staff', subtitle: '', icon: Users, iconColor: 'text-purple-400', sub: ['Add Staff','Roster','Payroll','Attendance'] },
     { name: 'Add New', subtitle: '', icon: Plus, iconColor: 'text-slate-300' }
   ];
 
