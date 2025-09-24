@@ -316,7 +316,7 @@ const Dashboard = () => {
     { name: 'Bills', subtitle: 'Recharge', icon: Zap, iconColor: 'text-green-400' },
     { name: 'Rent', subtitle: '', icon: Building, iconColor: 'text-blue-400' },
     { name: 'Other', subtitle: 'Expenses', icon: Coins, iconColor: 'text-purple-400' },
-    { name: 'Bills &', subtitle: 'Invoices', icon: FileText, iconColor: 'text-yellow-400' },
+    { name: 'Bills &', subtitle: 'Invoices', icon: Receipt, iconColor: 'text-yellow-400' },
     { name: 'Stock', subtitle: 'Management', icon: Package, iconColor: 'text-orange-400' },
     { name: 'Profit', subtitle: 'Loss', icon: TrendingUp, iconColor: 'text-emerald-400' },
     { name: 'Balance', subtitle: 'Sheet', icon: BarChart3, iconColor: 'text-indigo-400' },
