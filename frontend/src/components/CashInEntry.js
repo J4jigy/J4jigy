@@ -116,7 +116,7 @@ const CashInEntry = ({ onBack }) => {
 
   const handleQuickAmount = (quickAmount) => {
     const currentAmount = parseFloat(amount) || 0;
-    setAmount((currentAmount + quickAmount).toString());
+    setAmountForActive((currentAmount + quickAmount).toString());
   };
 
   const handleProductSelect = (product) => {
