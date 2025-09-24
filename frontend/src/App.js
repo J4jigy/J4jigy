@@ -285,10 +285,10 @@ const Dashboard = () => {
     try {
       const response = await axios.post(`${API}/admin/invite-codes`);
       setNewInviteCode(response.data);
-      alert(`New invite code created: ${response.data.code}`);
+      console.log(`New invite code created: ${response.data.code}`);
     } catch (error) {
       console.error('Failed to create invite code:', error);
-      alert('Failed to create invite code');
+      console.error('Failed to create invite code');
     }
   };
 
