@@ -241,15 +241,15 @@ const CashInEntry = ({ onBack }) => {
             >
               ₹{quickAmount}
             </Button>
+          ))}
+        </div>
+
         {/* POS multi-customer boxes */}
         <div className="grid grid-cols-6 gap-1">
           {[...Array(6)].map((_, idx) => (
             <div key={idx} className="aspect-square bg-slate-800 border border-slate-700 rounded-md flex items-center justify-center">
               <User className="w-5 h-5 text-slate-300" />
             </div>
-          ))}
-        </div>
-
           ))}
         </div>
 
