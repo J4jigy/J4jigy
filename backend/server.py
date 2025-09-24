@@ -740,8 +740,24 @@ async def get_all_users(
             ]
         }
     
-    users = await db.users.find(query, {"password": 0}).skip(skip).limit(limit).to_list(limit)
+    users_raw = await db.users.find(query, {"password": 0}).skip(skip).limit(limit).to_list(limit)
     total = await db.users.count_documents(query)
+    
+    # Clean users data for response (handle missing fields for older users)
+    users = []
+    for user_doc in users_raw:
+        # Set default values for missing fields
+        user_doc.setdefault('role', 'user' if not user_doc.get('is_admin') else 'admin')
+        user_doc.setdefault('is_active', True)
+        user_doc.setdefault('is_verified', False)
+        user_doc.setdefault('failed_login_attempts', 0)
+        user_doc.setdefault('two_factor_enabled', False)
+        user_doc.setdefault('permissions', [])
+        if 'created_at' not in user_doc:
+            user_doc['created_at'] = datetime.now(timezone.utc)
+        if 'password_changed_at' not in user_doc:
+            user_doc['password_changed_at'] = datetime.now(timezone.utc)
+        users.append(user_doc)
     
     return {"users": users, "total": total}
 
