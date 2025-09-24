@@ -363,7 +363,7 @@ const Dashboard = () => {
                 )}
               </div>
               
-              {user?.is_admin && (
+              {(user?.is_admin || user?.role === 'admin' || user?.role === 'super_admin') && (
                 <div className="border-t border-slate-600 pt-4">
                   <h4 className="text-white font-semibold mb-3">Admin Panel</h4>
                   <div className="space-y-2">
