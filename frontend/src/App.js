@@ -624,7 +624,7 @@ const Dashboard = () => {
 
 // Main App Component
 function App() {
-  const { token, loading } = useAuth();
+  const { token, loading, user } = useAuth();
 
   if (loading) {
     return (
@@ -638,6 +638,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={!token ? <LoginPage /> : <Navigate to="/" />} />
+        <Route path="/admin" element={token && (user?.role === 'admin' || user?.role === 'super_admin') ? <AdminDashboard user={user} /> : <Navigate to="/login" />} />
         <Route path="/" element={token ? <Dashboard /> : <Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
