@@ -312,6 +312,7 @@ const Dashboard = () => {
   ];
 
   const financeTiles = [
+    { name: "Company", subtitle: "Purchase", icon: Package, iconColor: 'text-orange-400' },
     { name: 'Bills', subtitle: 'Recharge', icon: FileText, iconColor: 'text-green-400' },
     { name: 'Rent', subtitle: '', icon: Building, iconColor: 'text-blue-400' },
     { name: 'Other', subtitle: 'Expenses', icon: Package, iconColor: 'text-purple-400' },
@@ -319,7 +320,6 @@ const Dashboard = () => {
     { name: 'Stock', subtitle: 'Management', icon: Package, iconColor: 'text-orange-400' },
     { name: 'Profit', subtitle: 'Loss', icon: TrendingUp, iconColor: 'text-emerald-400' },
     { name: 'Balance', subtitle: 'Sheet', icon: BarChart3, iconColor: 'text-indigo-400' },
-    { name: 'Add New', subtitle: '', icon: Plus, iconColor: 'text-slate-300' },
     { name: 'Add New', subtitle: '', icon: Plus, iconColor: 'text-slate-300' }
   ];
 
