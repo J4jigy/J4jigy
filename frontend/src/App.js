@@ -524,6 +524,18 @@ const Dashboard = () => {
                   return (
                     <Card 
                       key={index}
+                      onClick={() => {
+                        // route to modal list if the tile has a defined mapping
+                        const name = `${tile.name} ${tile.subtitle}`.trim().toLowerCase();
+                        if (name.startsWith('customers')) openList('Customers / Debtors', demoItems.customers);
+                        else if (name.startsWith('suppliers')) openList('Suppliers / Creditors', demoItems.suppliers);
+                        else if (name.startsWith('community')) openList('Community Ratings', demoItems.ratings);
+                        else if (name.startsWith('staff')) openList('Staff', demoItems.staff);
+                        else if (name.startsWith('company purchase') || name.startsWith('company')) openList('Company Purchase', demoItems.companyPurchase);
+                        else if (name.startsWith('bills recharge') || tile.name === 'Bills') openList('Bills / Recharge', demoItems.billsRecharge);
+                        else if (name.startsWith('other')) openList('Other Expenses', demoItems.otherExpenses);
+                        else if (name.startsWith('bills &')) openList('Bills & Invoices', demoItems.billsInvoices);
+                      }}
                       className={`bg-slate-700/80 border border-slate-600 hover:bg-slate-600 transition-all duration-200 cursor-pointer shadow-xl aspect-square flex items-center justify-center`}
                       data-testid={`${tab}-tile-${index}`}
                     >
