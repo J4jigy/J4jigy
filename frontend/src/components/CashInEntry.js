@@ -148,50 +148,50 @@ const CashInEntry = ({ onBack }) => {
       </div>
 
       {/* Primary Input Section */}
-      <div className="p-2 space-y-1">
+      <div className="p-3 space-y-2">
         {/* Date & Time */}
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-3">
           <div>
-            <Label className="text-slate-300 text-xs">Date</Label>
+            <Label className="text-slate-300 text-sm">Date</Label>
             <Input
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
-              className="bg-slate-800 border-slate-700 text-white h-7 text-xs"
+              className="bg-slate-800 border-slate-700 text-white h-9 text-sm"
             />
           </div>
           <div>
-            <Label className="text-slate-300 text-xs">Time</Label>
+            <Label className="text-slate-300 text-sm">Time</Label>
             <Input
               type="time"
               value={selectedTime}
               onChange={(e) => setSelectedTime(e.target.value)}
-              className="bg-slate-800 border-slate-700 text-white h-7 text-xs"
+              className="bg-slate-800 border-slate-700 text-white h-9 text-sm"
             />
           </div>
         </div>
 
         {/* Customer & Product Dropdowns */}
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-3">
           <Button
             variant="outline"
-            className="bg-slate-800 border-slate-700 text-white justify-start h-auto py-1.5"
+            className="bg-slate-800 border-slate-700 text-white justify-start h-auto py-2.5"
             onClick={() => setShowBusinessModal(true)}
           >
             <div className="text-left">
               <div className="text-xs text-slate-400">Customer/Account</div>
-              <div className="text-xs">{selectedCustomer || 'Select...'}</div>
+              <div className="text-sm">{selectedCustomer || 'Select...'}</div>
             </div>
           </Button>
           
           <Button
             variant="outline"
-            className="bg-slate-800 border-slate-700 text-white justify-start h-auto py-1.5"
+            className="bg-slate-800 border-slate-700 text-white justify-start h-auto py-2.5"
             onClick={() => setShowProductModal(true)}
           >
             <div className="text-left">
               <div className="text-xs text-slate-400">Products</div>
-              <div className="text-xs truncate">
+              <div className="text-sm truncate">
                 {selectedProducts.length > 0 ? selectedProducts.join(', ') : 'Select...'}
               </div>
             </div>
@@ -199,16 +199,16 @@ const CashInEntry = ({ onBack }) => {
         </div>
 
         {/* Business & Finance Tabs */}
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <Button
             onClick={() => setShowBusinessModal(true)}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 rounded-full h-7 text-xs"
+            className="flex-1 bg-blue-600 hover:bg-blue-700 rounded-full h-9 text-sm"
           >
             Business
           </Button>
           <Button
             onClick={() => setShowFinanceModal(true)}
-            className="flex-1 bg-indigo-600 hover:bg-indigo-700 rounded-full h-7 text-xs"
+            className="flex-1 bg-indigo-600 hover:bg-indigo-700 rounded-full h-9 text-sm"
           >
             Finance
           </Button>
@@ -216,16 +216,16 @@ const CashInEntry = ({ onBack }) => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-2 space-y-1 overflow-hidden">
+      <div className="flex-1 p-3 space-y-3 overflow-hidden">
         {/* Quick Amount Buttons */}
-        <div className="flex gap-1 justify-center">
+        <div className="flex gap-2 justify-center">
           {quickAmounts.map((quickAmount) => (
             <Button
               key={quickAmount}
               variant="outline"
               size="sm"
               onClick={() => handleQuickAmount(quickAmount)}
-              className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-full px-2 py-0.5 text-xs h-5"
+              className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-full px-3 py-1 text-xs h-7"
             >
               ₹{quickAmount}
             </Button>
@@ -234,8 +234,8 @@ const CashInEntry = ({ onBack }) => {
 
         {/* Amount Display */}
         <Card className="bg-slate-800 border-slate-700">
-          <CardContent className="p-2 text-center">
-            <div className="text-xl font-bold text-white">
+          <CardContent className="p-4 text-center">
+            <div className="text-3xl font-bold text-white">
               ₹{amount}
             </div>
           </CardContent>
@@ -245,19 +245,19 @@ const CashInEntry = ({ onBack }) => {
         <Button
           onClick={() => setShowBarcodeModal(true)}
           variant="outline"
-          className="w-full bg-slate-800 border-slate-700 text-white hover:bg-slate-700 h-6 text-xs"
+          className="w-full bg-slate-800 border-slate-700 text-white hover:bg-slate-700 h-9 text-sm"
         >
-          <Scan className="w-3 h-3 mr-1" />
+          <Scan className="w-4 h-4 mr-2" />
           Scan Barcode / QR
         </Button>
 
         {/* Payment Mode Tabs */}
-        <div className="flex gap-1 justify-center">
+        <div className="flex gap-2 justify-center">
           {['Credit', 'Cash', 'Online'].map((mode) => (
             <Button
               key={mode}
               onClick={() => setPaymentMode(mode)}
-              className={`px-2 py-0.5 rounded-full text-xs h-6 ${
+              className={`px-4 py-2 rounded-full text-sm h-9 ${
                 paymentMode === mode
                   ? mode === 'Credit' ? 'bg-orange-800 hover:bg-orange-900' 
                     : mode === 'Cash' ? 'bg-green-600 hover:bg-green-700'
@@ -265,56 +265,56 @@ const CashInEntry = ({ onBack }) => {
                   : 'bg-slate-700 hover:bg-slate-600'
               }`}
             >
-              {mode === 'Credit' && <CreditCard className="w-3 h-3 mr-0.5" />}
-              {mode === 'Cash' && <Banknote className="w-3 h-3 mr-0.5" />}
-              {mode === 'Online' && <Smartphone className="w-3 h-3 mr-0.5" />}
+              {mode === 'Credit' && <CreditCard className="w-4 h-4 mr-2" />}
+              {mode === 'Cash' && <Banknote className="w-4 h-4 mr-2" />}
+              {mode === 'Online' && <Smartphone className="w-4 h-4 mr-2" />}
               {mode}
             </Button>
           ))}
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-1">
-          <Button className="flex-1 bg-sky-500 hover:bg-sky-600 h-6 text-xs">
+        <div className="flex gap-3">
+          <Button className="flex-1 bg-sky-500 hover:bg-sky-600 h-9 text-sm">
             Save & Add New
           </Button>
-          <Button className="flex-1 bg-sky-500 hover:bg-sky-600 h-6 text-xs">
+          <Button className="flex-1 bg-sky-500 hover:bg-sky-600 h-9 text-sm">
             Save
           </Button>
         </div>
 
         {/* Calculator */}
         <Card className="bg-slate-800 border-slate-700">
-          <CardContent className="p-1">
-            <div className="grid grid-cols-4 gap-0.5">
+          <CardContent className="p-2">
+            <div className="grid grid-cols-4 gap-1">
               {/* Row 1 */}
-              <Button onClick={() => handleCalculatorInput('7')} className="bg-slate-700 hover:bg-slate-600 text-white h-6 text-xs">7</Button>
-              <Button onClick={() => handleCalculatorInput('8')} className="bg-slate-700 hover:bg-slate-600 text-white h-6 text-xs">8</Button>
-              <Button onClick={() => handleCalculatorInput('9')} className="bg-slate-700 hover:bg-slate-600 text-white h-6 text-xs">9</Button>
-              <Button onClick={() => handleCalculatorInput('/')} className="bg-orange-600 hover:bg-orange-700 text-white h-6 text-xs">÷</Button>
+              <Button onClick={() => handleCalculatorInput('7')} className="bg-slate-700 hover:bg-slate-600 text-white h-10 text-sm">7</Button>
+              <Button onClick={() => handleCalculatorInput('8')} className="bg-slate-700 hover:bg-slate-600 text-white h-10 text-sm">8</Button>
+              <Button onClick={() => handleCalculatorInput('9')} className="bg-slate-700 hover:bg-slate-600 text-white h-10 text-sm">9</Button>
+              <Button onClick={() => handleCalculatorInput('/')} className="bg-orange-600 hover:bg-orange-700 text-white h-10 text-sm">÷</Button>
               
               {/* Row 2 */}
-              <Button onClick={() => handleCalculatorInput('4')} className="bg-slate-700 hover:bg-slate-600 text-white h-6 text-xs">4</Button>
-              <Button onClick={() => handleCalculatorInput('5')} className="bg-slate-700 hover:bg-slate-600 text-white h-6 text-xs">5</Button>
-              <Button onClick={() => handleCalculatorInput('6')} className="bg-slate-700 hover:bg-slate-600 text-white h-6 text-xs">6</Button>
-              <Button onClick={() => handleCalculatorInput('*')} className="bg-orange-600 hover:bg-orange-700 text-white h-6 text-xs">×</Button>
+              <Button onClick={() => handleCalculatorInput('4')} className="bg-slate-700 hover:bg-slate-600 text-white h-10 text-sm">4</Button>
+              <Button onClick={() => handleCalculatorInput('5')} className="bg-slate-700 hover:bg-slate-600 text-white h-10 text-sm">5</Button>
+              <Button onClick={() => handleCalculatorInput('6')} className="bg-slate-700 hover:bg-slate-600 text-white h-10 text-sm">6</Button>
+              <Button onClick={() => handleCalculatorInput('*')} className="bg-orange-600 hover:bg-orange-700 text-white h-10 text-sm">×</Button>
               
               {/* Row 3 */}
-              <Button onClick={() => handleCalculatorInput('1')} className="bg-slate-700 hover:bg-slate-600 text-white h-6 text-xs">1</Button>
-              <Button onClick={() => handleCalculatorInput('2')} className="bg-slate-700 hover:bg-slate-600 text-white h-6 text-xs">2</Button>
-              <Button onClick={() => handleCalculatorInput('3')} className="bg-slate-700 hover:bg-slate-600 text-white h-6 text-xs">3</Button>
-              <Button onClick={() => handleCalculatorInput('-')} className="bg-orange-600 hover:bg-orange-700 text-white h-6 text-xs">−</Button>
+              <Button onClick={() => handleCalculatorInput('1')} className="bg-slate-700 hover:bg-slate-600 text-white h-10 text-sm">1</Button>
+              <Button onClick={() => handleCalculatorInput('2')} className="bg-slate-700 hover:bg-slate-600 text-white h-10 text-sm">2</Button>
+              <Button onClick={() => handleCalculatorInput('3')} className="bg-slate-700 hover:bg-slate-600 text-white h-10 text-sm">3</Button>
+              <Button onClick={() => handleCalculatorInput('-')} className="bg-orange-600 hover:bg-orange-700 text-white h-10 text-sm">−</Button>
               
               {/* Row 4 */}
-              <Button onClick={() => handleCalculatorInput('0')} className="bg-slate-700 hover:bg-slate-600 text-white h-6 text-xs">0</Button>
-              <Button onClick={() => handleCalculatorInput('.')} className="bg-slate-700 hover:bg-slate-600 text-white h-6 text-xs">.</Button>
-              <Button onClick={() => handleCalculatorInput('clear')} className="bg-red-600 hover:bg-red-700 text-white h-6 text-xs">C</Button>
-              <Button onClick={() => handleCalculatorInput('+')} className="bg-orange-600 hover:bg-orange-700 text-white h-6 text-xs">+</Button>
+              <Button onClick={() => handleCalculatorInput('0')} className="bg-slate-700 hover:bg-slate-600 text-white h-10 text-sm">0</Button>
+              <Button onClick={() => handleCalculatorInput('.')} className="bg-slate-700 hover:bg-slate-600 text-white h-10 text-sm">.</Button>
+              <Button onClick={() => handleCalculatorInput('clear')} className="bg-red-600 hover:bg-red-700 text-white h-10 text-sm">C</Button>
+              <Button onClick={() => handleCalculatorInput('+')} className="bg-orange-600 hover:bg-orange-700 text-white h-10 text-sm">+</Button>
               
               {/* Row 5 */}
-              <Button onClick={() => handleCalculatorInput('=')} className="bg-green-600 hover:bg-green-700 text-white h-6 text-xs col-span-3">=</Button>
-              <Button onClick={() => handleCalculatorInput('back')} className="bg-slate-600 hover:bg-slate-500 text-white h-6">
-                <Delete className="w-3 h-3" />
+              <Button onClick={() => handleCalculatorInput('=')} className="bg-green-600 hover:bg-green-700 text-white h-10 text-sm col-span-3">=</Button>
+              <Button onClick={() => handleCalculatorInput('back')} className="bg-slate-600 hover:bg-slate-500 text-white h-10">
+                <Delete className="w-4 h-4" />
               </Button>
             </div>
           </CardContent>
