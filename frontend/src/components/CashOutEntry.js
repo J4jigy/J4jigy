@@ -258,10 +258,10 @@ const CashOutEntry = ({ onBack }) => {
 
         {/* Action Buttons - Red theme for Cash Out, increased size */}
         <div className="flex gap-1">
-          <Button className="flex-1 bg-red-500 hover:bg-red-600 h-10 text-sm rounded-lg">
+          <Button className="flex-1 bg-red-500 hover:bg-red-600 h-12 text-sm rounded-lg">
             Save &amp; New
           </Button>
-          <Button className="flex-1 bg-red-500 hover:bg-red-600 h-10 text-sm rounded-lg">
+          <Button className="flex-1 bg-red-500 hover:bg-red-600 h-12 text-sm rounded-lg">
             Save
           </Button>
         </div>
