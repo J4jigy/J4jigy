@@ -534,7 +534,7 @@ const Dashboard = () => {
                       <Button
                         size="sm"
                         onClick={() => {
-                          const shareUrl = `https://gridfin-dashboard.preview.emergentagent.com/`;
+                          const shareUrl = `https://fintracker-56.preview.emergentagent.com/`;
                           const message = `Join our financial dashboard! Use invite code: ${code.code}\n${shareUrl}`;
                           const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
                           window.open(whatsappUrl, '_blank');
