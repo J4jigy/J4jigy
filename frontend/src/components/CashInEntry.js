@@ -251,13 +251,13 @@ const CashInEntry = ({ onBack }) => {
           Scan QR
         </Button>
 
-        {/* Payment Mode Tabs */}
-        <div className="flex gap-1 justify-center">
+        {/* Payment Mode Tabs - enlarged buttons, full width across screen */}
+        <div className="grid grid-cols-3 gap-2">
           {['Credit', 'Cash', 'Online'].map((mode) => (
             <Button
               key={mode}
               onClick={() => setPaymentMode(mode)}
-              className={`px-2 py-0.5 rounded-full text-xs h-6 ${
+              className={`w-full h-12 text-sm sm:text-base rounded-lg ${
                 paymentMode === mode
                   ? mode === 'Credit' ? 'bg-orange-800 hover:bg-orange-900' 
                     : mode === 'Cash' ? 'bg-green-600 hover:bg-green-700'
