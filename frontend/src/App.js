@@ -276,6 +276,27 @@ const Dashboard = () => {
     }
   };
 
+  const handleCreateInviteCode = async () => {
+    try {
+      const response = await axios.post(`${API}/admin/invite-codes`);
+      setNewInviteCode(response.data);
+      alert(`New invite code created: ${response.data.code}`);
+    } catch (error) {
+      console.error('Failed to create invite code:', error);
+      alert('Failed to create invite code');
+    }
+  };
+
+  const handleViewInviteCodes = async () => {
+    try {
+      const response = await axios.get(`${API}/admin/invite-codes`);
+      setInviteCodes(response.data);
+      setShowInviteCodesDialog(true);
+    } catch (error) {
+      console.error('Failed to fetch invite codes:', error);
+    }
+  };
+
   const businessTiles = [
     { name: 'Credit Score', icon: CreditCard, color: 'from-blue-800 to-blue-900' },
     { name: 'Customers/Debtors', icon: Users, color: 'from-green-800 to-green-900' },
