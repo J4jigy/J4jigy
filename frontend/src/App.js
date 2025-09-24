@@ -461,6 +461,50 @@ const Dashboard = () => {
         </Tabs>
       </div>
 
+      {/* Invite Codes Admin Dialog */}
+      <Dialog open={showInviteCodesDialog} onOpenChange={setShowInviteCodesDialog}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-white">Manage Invite Codes</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 max-h-96 overflow-y-auto">
+            {inviteCodes.map((code, index) => (
+              <Card key={index} className="bg-slate-700 border-slate-600">
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-white font-mono text-lg">{code.code}</p>
+                      <p className="text-slate-400 text-sm">
+                        Created: {new Date(code.created_at).toLocaleDateString()}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Badge className={code.used_by ? 'bg-red-600' : 'bg-green-600'}>
+                        {code.used_by ? 'Used' : 'Active'}
+                      </Badge>
+                      <Button
+                        size="sm"
+                        onClick={() => {
+                          const shareUrl = `https://gridfin-dashboard.preview.emergentagent.com/`;
+                          const message = `Join our financial dashboard! Use invite code: ${code.code}\n${shareUrl}`;
+                          const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+                          window.open(whatsappUrl, '_blank');
+                        }}
+                        className="bg-green-600 hover:bg-green-700"
+                        data-testid={`share-whatsapp-${index}`}
+                      >
+                        <Send className="w-4 h-4 mr-1" />
+                        WhatsApp
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Cash In/Out Buttons */}
       <div className="fixed bottom-6 left-4 right-4">
         <div className="flex gap-4">
