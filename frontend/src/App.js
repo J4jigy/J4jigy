@@ -241,6 +241,7 @@ const Dashboard = () => {
   const [showCashOutDialog, setShowCashOutDialog] = useState(false);
   const [showProfileDialog, setShowProfileDialog] = useState(false);
   const [showInviteCodesDialog, setShowInviteCodesDialog] = useState(false);
+  const [showCashInEntry, setShowCashInEntry] = useState(false);
   const [inviteCodes, setInviteCodes] = useState([]);
   const [newInviteCode, setNewInviteCode] = useState(null);
   const [transactionData, setTransactionData] = useState({ description: '', amount: '' });
