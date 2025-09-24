@@ -318,8 +318,7 @@ const Dashboard = () => {
     { name: 'Bills &', subtitle: 'Invoices', icon: Receipt, iconColor: 'text-yellow-400', sub: ['Create Invoice','View Bills','GST'] },
     { name: 'Stock', subtitle: 'Management', icon: Package, iconColor: 'text-orange-400' },
     { name: 'Profit', subtitle: 'Loss', icon: TrendingUp, iconColor: 'text-emerald-400' },
-    { name: 'Balance', subtitle: 'Sheet', icon: BarChart3, iconColor: 'text-indigo-400' },
-    { name: 'Add New', subtitle: '', icon: Plus, iconColor: 'text-slate-300' }
+    { name: 'Balance', subtitle: 'Sheet', icon: BarChart3, iconColor: 'text-indigo-400' }
   ];
 
   const personalTiles = [
