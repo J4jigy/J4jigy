@@ -340,7 +340,6 @@ const Dashboard = () => {
       <div className="flex items-center justify-between p-4 border-b border-slate-700">
         <div className="flex items-center gap-2">
           <Home className="w-6 h-6 text-blue-400" data-testid="home-icon" />
-          <span className="font-semibold">FinDash</span>
         </div>
         
         <Dialog open={showProfileDialog} onOpenChange={setShowProfileDialog}>
