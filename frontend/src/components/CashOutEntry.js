@@ -202,101 +202,104 @@ const CashOutEntry = ({ onBack }) => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-2 space-y-1 overflow-hidden">
-        {/* Quick Amount Buttons */}
-        <div className="flex gap-1 justify-center">
-          {quickAmounts.map((quickAmount) => (
-            <Button
-              key={quickAmount}
-              variant="outline"
-              size="sm"
-              onClick={() => handleQuickAmount(quickAmount)}
-              className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-full px-2 py-0.5 text-xs h-5"
-            >
-              ₹{quickAmount}
-            </Button>
-          ))}
-        </div>
+      <div className="flex-1 p-2 overflow-hidden flex flex-col">
+        {/* Top controls (fixed height, no scroll) */}
+        <div className="shrink-0 space-y-1">
+          {/* Quick Amount Buttons */}
+          <div className="flex gap-1 justify-center">
+            {quickAmounts.map((quickAmount) => (
+              <Button
+                key={quickAmount}
+                variant="outline"
+                size="sm"
+                onClick={() => handleQuickAmount(quickAmount)}
+                className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-full px-2 py-0.5 text-xs h-5"
+              >
+                ₹{quickAmount}
+              </Button>
+            ))}
+          </div>
 
-        {/* Amount Display - Red accent for Cash Out */}
-        <Card className="bg-slate-800 border-slate-700 border-l-4 border-l-red-500">
-          <CardContent className="p-1 text-center">
-            <div className="text-lg font-bold text-white">
-              ₹{amount}
-            </div>
-          </CardContent>
-        </Card>
+          {/* Amount Display - Red accent for Cash Out */}
+          <Card className="bg-slate-800 border-slate-700 border-l-4 border-l-red-500">
+            <CardContent className="p-1 text-center">
+              <div className="text-lg font-bold text-white">
+                ₹{amount}
+              </div>
+            </CardContent>
+          </Card>
 
-        {/* Scan Barcode Button */}
-        <Button
-          onClick={() => setShowBarcodeModal(true)}
-          variant="outline"
-          className="w-full bg-slate-800 border-slate-700 text-white hover:bg-slate-700 h-6 text-xs"
-        >
-          <Scan className="w-3 h-3 mr-1" />
-          Scan Receipt
-        </Button>
-
-        {/* Payment Mode Tabs */}
-        <div className="flex gap-1 justify-center">
-          {['Credit', 'Cash', 'Online'].map((mode) => (
-            <Button
-              key={mode}
-              onClick={() => setPaymentMode(mode)}
-              className={`px-2 py-0.5 rounded-full text-xs h-6 ${
-                paymentMode === mode
-                  ? mode === 'Credit' ? 'bg-orange-800 hover:bg-orange-900' 
-                    : mode === 'Cash' ? 'bg-green-600 hover:bg-green-700'
-                    : 'bg-orange-600 hover:bg-orange-700'
-                  : 'bg-slate-700 hover:bg-slate-600'
-              }`}
-            >
-              {mode}
-            </Button>
-          ))}
-        </div>
-
-        {/* Action Buttons - Red theme for Cash Out, increased size */}
-        <div className="flex gap-1">
-          <Button className="flex-1 bg-red-500 hover:bg-red-600 h-12 text-sm rounded-lg">
-            Save &amp; New
+          {/* Scan Barcode Button */}
+          <Button
+            onClick={() => setShowBarcodeModal(true)}
+            variant="outline"
+            className="w-full bg-slate-800 border-slate-700 text-white hover:bg-slate-700 h-6 text-xs"
+          >
+            <Scan className="w-3 h-3 mr-1" />
+            Scan Receipt
           </Button>
-          <Button className="flex-1 bg-red-500 hover:bg-red-600 h-12 text-sm rounded-lg">
-            Save
-          </Button>
+
+          {/* Payment Mode Tabs */}
+          <div className="flex gap-1 justify-center">
+            {['Credit', 'Cash', 'Online'].map((mode) => (
+              <Button
+                key={mode}
+                onClick={() => setPaymentMode(mode)}
+                className={`px-2 py-0.5 rounded-full text-xs h-6 ${
+                  paymentMode === mode
+                    ? mode === 'Credit' ? 'bg-orange-800 hover:bg-orange-900' 
+                      : mode === 'Cash' ? 'bg-green-600 hover:bg-green-700'
+                      : 'bg-orange-600 hover:bg-orange-700'
+                    : 'bg-slate-700 hover:bg-slate-600'
+                }`}
+              >
+                {mode}
+              </Button>
+            ))}
+          </div>
+
+          {/* Action Buttons - Red theme for Cash Out, increased size */}
+          <div className="flex gap-1">
+            <Button className="flex-1 bg-red-500 hover:bg-red-600 h-12 text-sm rounded-lg">
+              Save &amp; New
+            </Button>
+            <Button className="flex-1 bg-red-500 hover:bg-red-600 h-12 text-sm rounded-lg">
+              Save
+            </Button>
+          </div>
         </div>
 
-        {/* Calculator */}
-        <Card className="bg-slate-800 border-slate-700">
-          <CardContent className="p-1">
-            <div className="grid grid-cols-4 gap-0.5">
+        {/* Calculator fills the remaining space */}
+        <Card className="bg-slate-800 border-slate-700 flex-1 min-h-0 mt-1">
+          <CardContent className="p-1 h-full">
+            <div className="grid grid-cols-4 grid-rows-5 gap-0.5 h-full">
               {/* Row 1 */}
-              <Button onClick={() => handleCalculatorInput('7')} className="bg-slate-700 hover:bg-slate-600 text-white h-7 text-xs">7</Button>
-              <Button onClick={() => handleCalculatorInput('8')} className="bg-slate-700 hover:bg-slate-600 text-white h-7 text-xs">8</Button>
-              <Button onClick={() => handleCalculatorInput('9')} className="bg-slate-700 hover:bg-slate-600 text-white h-7 text-xs">9</Button>
-              <Button onClick={() => handleCalculatorInput('/')} className="bg-orange-600 hover:bg-orange-700 text-white h-7 text-xs">÷</Button>
+              <Button onClick={() => handleCalculatorInput('7')} className="bg-slate-700 hover:bg-slate-600 text-white h-full text-sm">7</Button>
+              <Button onClick={() => handleCalculatorInput('8')} className="bg-slate-700 hover:bg-slate-600 text-white h-full text-sm">8</Button>
+              <Button onClick={() => handleCalculatorInput('9')} className="bg-slate-700 hover:bg-slate-600 text-white h-full text-sm">9</Button>
+              <Button onClick={() => handleCalculatorInput('/')} className="bg-orange-600 hover:bg-orange-700 text-white h-full text-sm">÷</Button>
               
               {/* Row 2 */}
-              <Button onClick={() => handleCalculatorInput('4')} className="bg-slate-700 hover:bg-slate-600 text-white h-7 text-xs">4</Button>
-              <Button onClick={() => handleCalculatorInput('5')} className="bg-slate-700 hover:bg-slate-600 text-white h-7 text-xs">5</Button>
-              <Button onClick={() => handleCalculatorInput('6')} className="bg-slate-700 hover:bg-slate-600 text-white h-7 text-xs">6</Button>
-              <Button onClick={() => handleCalculatorInput('*')} className="bg-orange-600 hover:bg-orange-700 text-white h-7 text-xs">×</Button>
+              <Button onClick={() => handleCalculatorInput('4')} className="bg-slate-700 hover:bg-slate-600 text-white h-full text-sm">4</Button>
+              <Button onClick={() => handleCalculatorInput('5')} className="bg-slate-700 hover:bg-slate-600 text-white h-full text-sm">5</Button>
+              <Button onClick={() => handleCalculatorInput('6')} className="bg-slate-700 hover:bg-slate-600 text-white h-full text-sm">6</Button>
+              <Button onClick={() => handleCalculatorInput('*')} className="bg-orange-600 hover:bg-orange-700 text-white h-full text-sm">×</Button>
               
               {/* Row 3 */}
-              <Button onClick={() => handleCalculatorInput('1')} className="bg-slate-700 hover:bg-slate-600 text-white h-7 text-xs">1</Button>
-              <Button onClick={() => handleCalculatorInput('2')} className="bg-slate-700 hover:bg-slate-600 text-white h-7 text-xs">2</Button>
-              <Button onClick={() => handleCalculatorInput('3')} className="bg-slate-700 hover:bg-slate-600 text-white h-7 text-xs">3</Button>
-              <Button onClick={() => handleCalculatorInput('-')} className="bg-orange-600 hover:bg-orange-700 text-white h-7 text-xs">−</Button>
+              <Button onClick={() => handleCalculatorInput('1')} className="bg-slate-700 hover:bg-slate-600 text-white h-full text-sm">1</Button>
+              <Button onClick={() => handleCalculatorInput('2')} className="bg-slate-700 hover:bg-slate-600 text-white h-full text-sm">2</Button>
+              <Button onClick={() => handleCalculatorInput('3')} className="bg-slate-700 hover:bg-slate-600 text-white h-full text-sm">3</Button>
+              <Button onClick={() => handleCalculatorInput('-')} className="bg-orange-600 hover:bg-orange-700 text-white h-full text-sm">−</Button>
               
               {/* Row 4 */}
-              <Button onClick={() => handleCalculatorInput('0')} className="bg-slate-700 hover:bg-slate-600 text-white h-7 text-xs">0</Button>
-              <Button onClick={() => handleCalculatorInput('.')} className="bg-slate-700 hover:bg-slate-600 text-white h-7 text-xs">.</Button>
-              <Button onClick={() => handleCalculatorInput('clear')} className="bg-red-600 hover:bg-red-700 text-white h-7 text-xs">C</Button>
-              <Button onClick={() => handleCalculatorInput('+')} className="bg-orange-600 hover:bg-orange-700 text-white h-7 text-xs">+</Button>
+              <Button onClick={() => handleCalculatorInput('0')} className="bg-slate-700 hover:bg-slate-600 text-white h-full text-sm">0</Button>
+              <Button onClick={() => handleCalculatorInput('.')} className="bg-slate-700 hover:bg-slate-600 text-white h-full text-sm">.</Button>
+              <Button onClick={() => handleCalculatorInput('clear')} className="bg-red-600 hover:bg-red-700 text-white h-full text-sm">C</Button>
+              <Button onClick={() => handleCalculatorInput('+')} className="bg-orange-600 hover:bg-orange-700 text-white h-full text-sm">+</Button>
               
               {/* Row 5 */}
-              <Button onClick={() => handleCalculatorInput('=')} className="bg-green-600 hover:bg-green-700 text-white h-7 text-xs col-span-3">=</Button>
-              <Button onClick={() => handleCalculatorInput('back')} className="bg-slate-600 hover:bg-slate-500 text-white h-7">
+              <Button onClick={() => handleCalculatorInput('=')} className="bg-green-600 hover:bg-green-700 text-white h-full text-sm col-span-3">=</Button>
+              <Button onClick={() => handleCalculatorInput('back')} className="bg-slate-600 hover:bg-slate-500 text-white h-full">
                 <Delete className="w-3 h-3" />
               </Button>
             </div>
