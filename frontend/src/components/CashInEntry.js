@@ -249,8 +249,8 @@ const CashInEntry = ({ onBack }) => {
           variant="outline"
           className="w-full bg-slate-800 border-slate-700 text-white hover:bg-slate-700 h-6 text-xs"
         >
-          <Scan className="w-3 h-3 mr-1" />
-          Scan QR
+          <Barcode className="w-3 h-3 mr-1" />
+          Scan Barcode
         </Button>
 
         {/* Payment Mode Tabs - enlarged buttons, full width across screen */}
