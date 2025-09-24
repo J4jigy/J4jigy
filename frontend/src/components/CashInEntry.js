@@ -370,7 +370,7 @@ const CashInEntry = ({ onBack }) => {
               
               {/* Row 5 */}
               <Button onClick={() => handleCalculatorInput('=')} className="bg-green-600 hover:bg-green-700 text-white h-10 text-base font-semibold col-span-3">=</Button>
-              <Button onClick={() => handleCalculatorInput('back')} className="bg-slate-600 hover:bg-slate-500 text-white h-12">
+              <Button onClick={() => handleCalculatorInput('back')} className="bg-slate-600 hover:bg-slate-500 text-white h-10">
                 <Delete className="w-5 h-5" />
               </Button>
             </div>
