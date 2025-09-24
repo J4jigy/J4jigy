@@ -491,7 +491,7 @@ const Dashboard = () => {
                       <CardContent className="p-3 flex flex-col items-center justify-center text-center relative w-full h-full">
                         <IconComponent className={`w-8 h-8 mb-2 ${tile.iconColor}`} />
                         <div className="text-center">
-                          <p className="text-white text-sm font-semibold leading-tight mb-0">
+                          <p className="text-white text-[13px] font-semibold leading-tight mb-0">
                             {tile.name}
                           </p>
                           {tile.subtitle && (
