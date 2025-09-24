@@ -577,6 +577,38 @@ async def login_user(request: Request, login_data: UserLogin, background_tasks: 
     
     return TokenResponse(**tokens, user=user)
 
+# Admin Dashboard APIs
+@api_router.get("/admin/dashboard/stats", response_model=DashboardStats)
+async def get_admin_dashboard_stats(current_user: User = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))):
+    total_users = await db.users.count_documents({})
+    active_users = await db.users.count_documents({"is_active": True})
+    total_transactions = await db.transactions.count_documents({})
+    
+    # Calculate total revenue
+    revenue_pipeline = [
+        {"$match": {"transaction_type": "cash_in"}},
+        {"$group": {"_id": None, "total": {"$sum": "$amount"}}}
+    ]
+    revenue_result = await db.transactions.aggregate(revenue_pipeline).to_list(1)
+    total_revenue = revenue_result[0]["total"] if revenue_result else 0
+    
+    # Security events count (last 24 hours)
+    yesterday = datetime.now(timezone.utc) - timedelta(days=1)
+    security_events = await db.security_events.count_documents({"timestamp": {"$gte": yesterday}})
+    failed_logins = await db.security_events.count_documents({
+        "event_type": "failed_login",
+        "timestamp": {"$gte": yesterday}
+    })
+    
+    return DashboardStats(
+        total_users=total_users,
+        active_users=active_users,
+        total_transactions=total_transactions,
+        total_revenue=total_revenue,
+        security_events=security_events,
+        failed_logins=failed_logins
+    )
+
 # Basic API Routes
 @api_router.get("/")
 async def root():
