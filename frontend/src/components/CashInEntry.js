@@ -196,7 +196,7 @@ const CashInEntry = ({ onBack }) => {
       </div>
 
       {/* Primary Input Section */}
-      <div className="px-2 pt-2 pb-3 space-y-1">
+      <div className="px-2 pt-2 pb-2.5 space-y-1">
         {/* Date & Time (labels removed as requested) */}
         <div className="grid grid-cols-2 gap-2">
           <div>
