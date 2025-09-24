@@ -333,7 +333,36 @@ const Dashboard = () => {
                 <p className="text-slate-200">Username: {user?.username}</p>
                 <p className="text-slate-200">Business: {user?.business_name}</p>
                 <p className="text-slate-200">Email: {user?.email}</p>
+                {user?.is_admin && (
+                  <Badge className="mt-2 bg-gold-600 text-gold-100">Admin</Badge>
+                )}
               </div>
+              
+              {user?.is_admin && (
+                <div className="border-t border-slate-600 pt-4">
+                  <h4 className="text-white font-semibold mb-3">Admin Panel</h4>
+                  <div className="space-y-2">
+                    <Button 
+                      onClick={() => handleCreateInviteCode()}
+                      className="w-full bg-blue-600 hover:bg-blue-700"
+                      data-testid="create-invite-button"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Create Invite Code
+                    </Button>
+                    <Button 
+                      onClick={() => handleViewInviteCodes()}
+                      variant="outline" 
+                      className="w-full border-slate-600 text-slate-200"
+                      data-testid="view-invites-button"
+                    >
+                      <Settings className="w-4 h-4 mr-2" />
+                      View Invite Codes
+                    </Button>
+                  </div>
+                </div>
+              )}
+              
               <Button 
                 onClick={logout} 
                 variant="destructive" 
