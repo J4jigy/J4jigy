@@ -303,7 +303,7 @@ const CashOutEntry = ({ onBack }) => {
             <Button
               key={mode}
               onClick={() => setPaymentMode(mode)}
-              className={`w-full h-12 text-sm sm:text-base rounded-lg ${
+              className={`w-full h-10 text-xs sm:text-sm rounded-md ${
                 paymentMode === mode
                   ? mode === 'Credit' ? 'bg-orange-900 hover:bg-orange-950 ring-1 ring-orange-700' 
                     : mode === 'Cash' ? 'bg-green-600 hover:bg-green-700'
