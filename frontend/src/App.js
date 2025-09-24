@@ -305,7 +305,7 @@ const Dashboard = () => {
   const businessTiles = [
     { name: 'Credit Score', subtitle: '', icon: ShieldCheck, iconColor: 'text-blue-400' },
     { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400' },
-    { name: 'Suppliers', subtitle: 'Creditors', icon: Building, iconColor: 'text-indigo-400' },
+    { name: 'Suppliers', subtitle: 'Creditors', icon: Truck, iconColor: 'text-indigo-400' },
     { name: 'Community', subtitle: 'Ratings', icon: Star, iconColor: 'text-yellow-400' },
     { name: 'Staff', subtitle: '', icon: Users, iconColor: 'text-purple-400' },
     { name: 'Add New', subtitle: '', icon: Plus, iconColor: 'text-slate-300' }
