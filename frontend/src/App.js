@@ -322,9 +322,8 @@ const Dashboard = () => {
   ];
 
   const personalTiles = [
-    { name: 'Offers &', subtitle: 'Discounts', icon: Gift, iconColor: 'text-red-400' },
-    { name: 'Chat', subtitle: '', icon: MessageCircle, iconColor: 'text-blue-400' },
-    { name: 'Add New', subtitle: '', icon: Plus, iconColor: 'text-slate-300' }
+    { name: 'Offers &', subtitle: 'Discounts', icon: Gift, iconColor: 'text-red-400', sub: ['Coupons','Redeem','History'] },
+    { name: 'Chat', subtitle: '', icon: MessageCircle, iconColor: 'text-blue-400', sub: ['Support','Broadcast','Contacts'] }
   ];
 
   const getTilesForTab = (tab) => {
