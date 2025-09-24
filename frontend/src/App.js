@@ -368,6 +368,14 @@ const Dashboard = () => {
                   <h4 className="text-white font-semibold mb-3">Admin Panel</h4>
                   <div className="space-y-2">
                     <Button 
+                      onClick={() => window.location.href = '/admin'}
+                      className="w-full bg-purple-600 hover:bg-purple-700"
+                      data-testid="admin-dashboard-button"
+                    >
+                      <Shield className="w-4 h-4 mr-2" />
+                      Security Dashboard
+                    </Button>
+                    <Button 
                       onClick={() => handleCreateInviteCode()}
                       className="w-full bg-blue-600 hover:bg-blue-700"
                       data-testid="create-invite-button"
