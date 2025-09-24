@@ -577,8 +577,90 @@ async def login_user(request: Request, login_data: UserLogin, background_tasks: 
     
     return TokenResponse(**tokens, user=user)
 
-# Admin Dashboard APIs
-@api_router.get("/admin/dashboard/stats", response_model=DashboardStats)
+# Basic API Routes
+@api_router.get("/")
+async def root():
+    return {"message": "Secure Financial Dashboard API"}
+
+@api_router.get("/dashboard/summary", response_model=dict)
+async def get_dashboard_summary(current_user: User = Depends(get_current_user)):
+    # Calculate receivables (what others owe you)
+    receivables_account = await db.accounts.find_one({"user_id": current_user.id, "name": "Accounts Receivable"})
+    receivables = receivables_account["balance"] if receivables_account else 0.0
+    
+    # Calculate payables (what you owe others)
+    payables_account = await db.accounts.find_one({"user_id": current_user.id, "name": "Accounts Payable"})
+    payables = payables_account["balance"] if payables_account else 0.0
+    
+    return {
+        "you_will_give": abs(payables),
+        "you_will_receive": receivables,
+        "net_position": receivables - abs(payables)
+    }
+
+# Transaction APIs
+@api_router.post("/transactions", response_model=Transaction)
+async def create_transaction(transaction_data: dict, current_user: User = Depends(get_current_user)):
+    # Get accounts based on transaction type
+    if transaction_data.get("transaction_type") == "cash_in":
+        cash_account = await db.accounts.find_one({"user_id": current_user.id, "name": "Cash"})
+        revenue_account = await db.accounts.find_one({"user_id": current_user.id, "name": "Sales Revenue"})
+        debit_account_id = cash_account["id"]
+        credit_account_id = revenue_account["id"]
+    else:  # CASH_OUT
+        cash_account = await db.accounts.find_one({"user_id": current_user.id, "name": "Cash"})
+        expense_account = await db.accounts.find_one({"user_id": current_user.id, "name": "Operating Expenses"})
+        debit_account_id = expense_account["id"]
+        credit_account_id = cash_account["id"]
+    
+    # Create transaction
+    transaction = Transaction(
+        user_id=current_user.id,
+        description=transaction_data.get("description"),
+        amount=transaction_data.get("amount"),
+        transaction_type=transaction_data.get("transaction_type"),
+        debit_account=debit_account_id,
+        credit_account=credit_account_id
+    )
+    
+    # Save transaction
+    await db.transactions.insert_one(transaction.dict())
+    
+    # Update account balances (double-entry)
+    if transaction_data.get("transaction_type") == "cash_in":
+        await db.accounts.update_one({"id": debit_account_id}, {"$inc": {"balance": transaction_data.get("amount")}})
+        await db.accounts.update_one({"id": credit_account_id}, {"$inc": {"balance": transaction_data.get("amount")}})
+    else:
+        await db.accounts.update_one({"id": debit_account_id}, {"$inc": {"balance": transaction_data.get("amount")}})
+        await db.accounts.update_one({"id": credit_account_id}, {"$inc": {"balance": -transaction_data.get("amount")}})
+    
+    return transaction
+
+@api_router.get("/transactions", response_model=List[Transaction])
+async def get_transactions(current_user: User = Depends(get_current_user)):
+    transactions = await db.transactions.find({"user_id": current_user.id}).sort("created_at", -1).to_list(100)
+    return [Transaction(**transaction) for transaction in transactions]
+
+@api_router.get("/accounts", response_model=List[Account])
+async def get_accounts(current_user: User = Depends(get_current_user)):
+    accounts = await db.accounts.find({"user_id": current_user.id}).to_list(100)
+    return [Account(**account) for account in accounts]
+
+# Admin Invite Code Management  
+@api_router.post("/admin/invite-codes", response_model=InviteCode)
+async def create_invite_code(current_user: User = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))):
+    invite_code = InviteCode(
+        code=str(uuid.uuid4())[:8].upper(),
+        created_by=current_user.id
+    )
+    
+    await db.invite_codes.insert_one(invite_code.dict())
+    return invite_code
+
+@api_router.get("/admin/invite-codes", response_model=List[InviteCode])
+async def get_invite_codes(current_user: User = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))):
+    invite_codes = await db.invite_codes.find({"created_by": current_user.id}).sort("created_at", -1).to_list(100)
+    return [InviteCode(**invite_code) for invite_code in invite_codes]
 async def get_dashboard_stats(current_user: User = Depends(require_role([UserRole.ADMIN, UserRole.SUPER_ADMIN]))):
     total_users = await db.users.count_documents({})
     active_users = await db.users.count_documents({"is_active": True})
