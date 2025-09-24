@@ -299,29 +299,29 @@ const Dashboard = () => {
 
   const businessTiles = [
     { name: 'Credit Score', icon: CreditCard, color: 'from-blue-800 to-blue-900' },
-    { name: 'Customers/Debtors', icon: Users, color: 'from-green-800 to-green-900' },
-    { name: 'Suppliers/Creditors', icon: Building, color: 'from-orange-800 to-orange-900' },
+    { name: 'Customers', icon: Users, color: 'from-green-800 to-green-900' },
+    { name: 'Suppliers', icon: Building, color: 'from-orange-800 to-orange-900' },
     { name: 'Defaulters', icon: TrendingUp, color: 'from-red-800 to-red-900' },
     { name: 'Staff', icon: Users, color: 'from-purple-800 to-purple-900' },
-    { name: 'Empty Tile', icon: Plus, color: 'from-slate-700 to-slate-800' }
+    { name: 'Add New', icon: Plus, color: 'from-slate-700 to-slate-800' }
   ];
 
   const financeTiles = [
-    { name: 'Bills/Expenses', icon: FileText, color: 'from-blue-800 to-blue-900' },
+    { name: 'Expenses', icon: FileText, color: 'from-blue-800 to-blue-900' },
     { name: 'Rent', icon: Building, color: 'from-orange-800 to-orange-900' },
-    { name: 'Other Expenses', icon: TrendingUp, color: 'from-red-800 to-red-900' },
-    { name: 'Bills & Invoices', icon: FileText, color: 'from-green-800 to-green-900' },
-    { name: 'Stock Management', icon: Package, color: 'from-purple-800 to-purple-900' },
+    { name: 'Other Costs', icon: TrendingUp, color: 'from-red-800 to-red-900' },
+    { name: 'Invoices', icon: FileText, color: 'from-green-800 to-green-900' },
+    { name: 'Stock', icon: Package, color: 'from-purple-800 to-purple-900' },
     { name: 'Profit/Loss', icon: PieChart, color: 'from-emerald-800 to-emerald-900' },
     { name: 'Balance Sheet', icon: BarChart3, color: 'from-indigo-800 to-indigo-900' },
-    { name: 'Empty Tile', icon: Plus, color: 'from-slate-700 to-slate-800' },
-    { name: 'Empty Tile', icon: Plus, color: 'from-slate-700 to-slate-800' }
+    { name: 'Reports', icon: Plus, color: 'from-slate-700 to-slate-800' },
+    { name: 'Analytics', icon: Plus, color: 'from-slate-700 to-slate-800' }
   ];
 
   const personalTiles = [
-    { name: 'Offers & Discounts', icon: Gift, color: 'from-pink-800 to-pink-900' },
-    { name: 'Chat', icon: MessageCircle, color: 'from-blue-800 to-blue-900' },
-    { name: 'Empty Tile', icon: Plus, color: 'from-slate-700 to-slate-800' }
+    { name: 'Offers', icon: Gift, color: 'from-pink-800 to-pink-900' },
+    { name: 'Messages', icon: MessageCircle, color: 'from-blue-800 to-blue-900' },
+    { name: 'Settings', icon: Plus, color: 'from-slate-700 to-slate-800' }
   ];
 
   const getTilesForTab = (tab) => {
