@@ -303,30 +303,30 @@ const Dashboard = () => {
   };
 
   const businessTiles = [
-    { name: 'Credit Score', subtitle: '', icon: CreditCard, color: 'from-blue-900 to-blue-800' },
-    { name: 'Customers', subtitle: 'Debtors', icon: Users, color: 'from-green-900 to-green-800' },
-    { name: 'Suppliers', subtitle: 'Creditors', icon: Building, color: 'from-indigo-900 to-indigo-800' },
-    { name: 'Community', subtitle: 'Ratings', icon: Star, color: 'from-yellow-900 to-yellow-800' },
-    { name: 'Staff', subtitle: '', icon: Users, color: 'from-purple-900 to-purple-800' },
-    { name: 'Add New', subtitle: '', icon: Plus, color: 'from-slate-700 to-slate-600' }
+    { name: 'Credit Score', subtitle: '', icon: CreditCard, iconColor: 'text-blue-400' },
+    { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400' },
+    { name: 'Suppliers', subtitle: 'Creditors', icon: Building, iconColor: 'text-indigo-400' },
+    { name: 'Community', subtitle: 'Ratings', icon: Star, iconColor: 'text-yellow-400' },
+    { name: 'Staff', subtitle: '', icon: Users, iconColor: 'text-purple-400' },
+    { name: 'Add New', subtitle: '', icon: Plus, iconColor: 'text-slate-300' }
   ];
 
   const financeTiles = [
-    { name: 'Bills', subtitle: 'Recharge', icon: FileText, color: 'from-green-900 to-green-800' },
-    { name: 'Rent', subtitle: '', icon: Building, color: 'from-blue-900 to-blue-800' },
-    { name: 'Other', subtitle: 'Expenses', icon: Package, color: 'from-purple-900 to-purple-800' },
-    { name: 'Bills &', subtitle: 'Invoices', icon: FileText, color: 'from-yellow-900 to-yellow-800' },
-    { name: 'Stock', subtitle: 'Management', icon: Package, color: 'from-orange-900 to-orange-800' },
-    { name: 'Profit', subtitle: 'Loss', icon: TrendingUp, color: 'from-emerald-900 to-emerald-800' },
-    { name: 'Balance', subtitle: 'Sheet', icon: BarChart3, color: 'from-indigo-900 to-indigo-800' },
-    { name: 'Add New', subtitle: '', icon: Plus, color: 'from-slate-700 to-slate-600' },
-    { name: 'Add New', subtitle: '', icon: Plus, color: 'from-slate-700 to-slate-600' }
+    { name: 'Bills', subtitle: 'Recharge', icon: FileText, iconColor: 'text-green-400' },
+    { name: 'Rent', subtitle: '', icon: Building, iconColor: 'text-blue-400' },
+    { name: 'Other', subtitle: 'Expenses', icon: Package, iconColor: 'text-purple-400' },
+    { name: 'Bills &', subtitle: 'Invoices', icon: FileText, iconColor: 'text-yellow-400' },
+    { name: 'Stock', subtitle: 'Management', icon: Package, iconColor: 'text-orange-400' },
+    { name: 'Profit', subtitle: 'Loss', icon: TrendingUp, iconColor: 'text-emerald-400' },
+    { name: 'Balance', subtitle: 'Sheet', icon: BarChart3, iconColor: 'text-indigo-400' },
+    { name: 'Add New', subtitle: '', icon: Plus, iconColor: 'text-slate-300' },
+    { name: 'Add New', subtitle: '', icon: Plus, iconColor: 'text-slate-300' }
   ];
 
   const personalTiles = [
-    { name: 'Offers &', subtitle: 'Discounts', icon: Gift, color: 'from-red-900 to-red-800' },
-    { name: 'Chat', subtitle: '', icon: MessageCircle, color: 'from-blue-900 to-blue-800' },
-    { name: 'Add New', subtitle: '', icon: Plus, color: 'from-slate-700 to-slate-600' }
+    { name: 'Offers &', subtitle: 'Discounts', icon: Gift, iconColor: 'text-red-400' },
+    { name: 'Chat', subtitle: '', icon: MessageCircle, iconColor: 'text-blue-400' },
+    { name: 'Add New', subtitle: '', icon: Plus, iconColor: 'text-slate-300' }
   ];
 
   const getTilesForTab = (tab) => {
@@ -485,17 +485,17 @@ const Dashboard = () => {
                   return (
                     <Card 
                       key={index}
-                      className={`bg-gradient-to-br ${tile.color} border border-slate-600/50 hover:scale-[1.02] transition-all duration-200 cursor-pointer shadow-xl`}
+                      className={`bg-slate-700/80 border border-slate-600 hover:bg-slate-600 transition-all duration-200 cursor-pointer shadow-xl aspect-square flex items-center justify-center`}
                       data-testid={`${tab}-tile-${index}`}
                     >
-                      <CardContent className="p-4 flex flex-col items-center justify-center min-h-[120px] text-center relative">
-                        <IconComponent className="w-8 h-8 mb-3 text-white/90" />
+                      <CardContent className="p-3 flex flex-col items-center justify-center text-center relative w-full h-full">
+                        <IconComponent className={`w-8 h-8 mb-2 ${tile.iconColor}`} />
                         <div className="text-center">
                           <p className="text-white text-sm font-semibold leading-tight mb-0">
                             {tile.name}
                           </p>
                           {tile.subtitle && (
-                            <p className="text-white/80 text-xs font-medium leading-tight">
+                            <p className="text-slate-200 text-xs font-medium leading-tight">
                               {tile.subtitle}
                             </p>
                           )}

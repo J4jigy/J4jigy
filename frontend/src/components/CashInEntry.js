@@ -212,21 +212,7 @@ const CashInEntry = ({ onBack }) => {
           </Button>
         </div>
 
-        {/* Business & Finance Tabs */}
-        <div className="flex gap-2">
-          <Button
-            onClick={() => setShowBusinessModal(true)}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 rounded-full h-6 text-xs"
-          >
-            Business
-          </Button>
-          <Button
-            onClick={() => setShowFinanceModal(true)}
-            className="flex-1 bg-indigo-600 hover:bg-indigo-700 rounded-full h-6 text-xs"
-          >
-            Finance
-          </Button>
-        </div>
+        {/* Removed Business & Finance tabs as requested */}
       </div>
 
       {/* Main Content */}
@@ -248,7 +234,7 @@ const CashInEntry = ({ onBack }) => {
 
         {/* Amount Display */}
         <Card className="bg-slate-800 border-slate-700">
-          <CardContent className="p-2 text-center">
+          <CardContent className="p-1 text-center">
             <div className="text-lg font-bold text-white">
               ₹{amount}
             </div>
@@ -259,7 +245,7 @@ const CashInEntry = ({ onBack }) => {
         <Button
           onClick={() => setShowBarcodeModal(true)}
           variant="outline"
-          className="w-full bg-slate-800 border-slate-700 text-white hover:bg-slate-700 h-5 text-xs"
+          className="w-full bg-slate-800 border-slate-700 text-white hover:bg-slate-700 h-6 text-xs"
         >
           <Scan className="w-3 h-3 mr-1" />
           Scan QR
@@ -271,7 +257,7 @@ const CashInEntry = ({ onBack }) => {
             <Button
               key={mode}
               onClick={() => setPaymentMode(mode)}
-              className={`px-2 py-0.5 rounded-full text-xs h-5 ${
+              className={`px-2 py-0.5 rounded-full text-xs h-6 ${
                 paymentMode === mode
                   ? mode === 'Credit' ? 'bg-orange-800 hover:bg-orange-900' 
                     : mode === 'Cash' ? 'bg-green-600 hover:bg-green-700'
@@ -284,12 +270,12 @@ const CashInEntry = ({ onBack }) => {
           ))}
         </div>
 
-        {/* Action Buttons */}
+        {/* Action Buttons - increased size for better tap targets */}
         <div className="flex gap-1">
-          <Button className="flex-1 bg-sky-500 hover:bg-sky-600 h-6 text-xs">
-            Save & New
+          <Button className="flex-1 bg-sky-500 hover:bg-sky-600 h-10 text-sm rounded-lg">
+            Save &amp; New
           </Button>
-          <Button className="flex-1 bg-sky-500 hover:bg-sky-600 h-6 text-xs">
+          <Button className="flex-1 bg-sky-500 hover:bg-sky-600 h-10 text-sm rounded-lg">
             Save
           </Button>
         </div>
