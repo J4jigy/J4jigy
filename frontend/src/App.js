@@ -413,23 +413,23 @@ const Dashboard = () => {
       {/* Summary Section */}
       <div className="p-4" data-testid="summary-section">
         <div className="grid grid-cols-2 gap-4 mb-6">
-          <Card className="bg-gradient-to-r from-red-900 to-red-800 border-red-700">
+          <Card className="bg-gradient-to-br from-red-800 to-red-900 border border-red-700/50 shadow-xl">
             <CardContent className="p-4">
               <div className="text-center">
-                <p className="text-red-100 text-sm">You will Give</p>
-                <p className="text-2xl font-bold text-white" data-testid="total-payables">
-                  Rs. {summary.you_will_give.toLocaleString()}
+                <p className="text-red-100 text-xs font-medium mb-1">You will Give</p>
+                <p className="text-xl font-bold text-white" data-testid="total-payables">
+                  ₹ {summary.you_will_give.toLocaleString()}
                 </p>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-r from-green-900 to-green-800 border-green-700">
+          <Card className="bg-gradient-to-br from-green-800 to-green-900 border border-green-700/50 shadow-xl">
             <CardContent className="p-4">
               <div className="text-center">
-                <p className="text-green-100 text-sm">You will Receive</p>
-                <p className="text-2xl font-bold text-white" data-testid="total-receivables">
-                  Rs. {summary.you_will_receive.toLocaleString()}
+                <p className="text-green-100 text-xs font-medium mb-1">You will Receive</p>
+                <p className="text-xl font-bold text-white" data-testid="total-receivables">
+                  ₹ {summary.you_will_receive.toLocaleString()}
                 </p>
               </div>
             </CardContent>
