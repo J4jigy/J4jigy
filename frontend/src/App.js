@@ -343,6 +343,11 @@ const Dashboard = () => {
     return <CashInEntry onBack={() => setShowCashInEntry(false)} />;
   }
 
+  // Show Cash Out Entry screen
+  if (showCashOutEntry) {
+    return <CashOutEntry onBack={() => setShowCashOutEntry(false)} />;
+  }
+
   return (
     <div className="min-h-screen bg-slate-900 text-white" data-testid="dashboard">
       {/* Header */}
