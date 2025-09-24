@@ -478,5 +478,61 @@ async def list_items(
     await log_audit_event(AuditAction.READ, f"list:{list_name}", current_user.id, {"search": search, "sort": sort}, request, True)
     return data
 
+
+# ===================== Auth + Summary Minimal Endpoints (restore) =====================
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+@api_router.post("/auth/login", response_model=TokenResponse)
+async def auth_login(payload: LoginRequest, request: Request):
+    user_doc = await db.users.find_one({"username": payload.username})
+    if not user_doc:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    hashed = user_doc.get("password")
+    if not hashed or not verify_password(payload.password, hashed):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    user = User(**{k: v for k, v in user_doc.items() if k != "password"})
+    tokens = generate_tokens(user.id)
+
+    await log_audit_event(AuditAction.LOGIN, "auth:login", user.id, {"username": user.username}, request, True)
+
+    return TokenResponse(
+        access_token=tokens["access_token"],
+        refresh_token=tokens["refresh_token"],
+        expires_in=tokens["expires_in"],
+        user=user
+    )
+
+class DashboardSummary(BaseModel):
+    you_will_give: float = 0.0
+    you_will_receive: float = 0.0
+    net_position: float = 0.0
+
+@api_router.get("/dashboard/summary", response_model=DashboardSummary)
+async def dashboard_summary(current_user: User = Depends(get_current_user)):
+    # Compute sums from transactions collection if available
+    you_will_give = 0.0
+    you_will_receive = 0.0
+    try:
+        pipeline = [
+            {"$match": {"user_id": current_user.id}},
+            {"$group": {"_id": "$transaction_type", "total": {"$sum": "$amount"}}}
+        ]
+        cursor = db.transactions.aggregate(pipeline)
+        async for doc in cursor:
+            if doc["_id"] == TransactionType.CASH_OUT:
+                you_will_give = float(doc["total"] or 0)
+            elif doc["_id"] == TransactionType.CASH_IN:
+                you_will_receive = float(doc["total"] or 0)
+    except Exception:
+        # Fallback to zeros if collection missing
+        pass
+
+    net = you_will_receive - you_will_give
+    return DashboardSummary(you_will_give=you_will_give, you_will_receive=you_will_receive, net_position=net)
+
 # Mount the router
 app.include_router(api_router)
