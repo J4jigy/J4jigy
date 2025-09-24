@@ -91,16 +91,16 @@ const CashOutEntry = ({ onBack }) => {
   ];
   
   const sampleNames = [
+    'Aarav Sharma', 'Vivaan Patel', 'Aditya Kumar', 'Vihaan Singh', 'Arjun Gupta',
+    'Sai Krishna', 'Reyansh Agarwal', 'Ayaan Shah', 'Krishna Reddy', 'Ishaan Jain',
+    'Shaurya Yadav', 'Atharv Mehta', 'Rudra Verma', 'Aadhya Mishra', 'Kiara Nair'
+  ];
+
   // Update amount should reflect active slot as well
   const setAmountForActive = (val) => {
     setAmount(val);
     setSlots(prev => prev.map((s, idx) => idx === activeSlot ? { ...s, amount: val } : s));
   };
-
-    'Aarav Sharma', 'Vivaan Patel', 'Aditya Kumar', 'Vihaan Singh', 'Arjun Gupta',
-    'Sai Krishna', 'Reyansh Agarwal', 'Ayaan Shah', 'Krishna Reddy', 'Ishaan Jain',
-    'Shaurya Yadav', 'Atharv Mehta', 'Rudra Verma', 'Aadhya Mishra', 'Kiara Nair'
-  ];
 
   const handleCalculatorInput = (value) => {
     if (value === 'clear') {
