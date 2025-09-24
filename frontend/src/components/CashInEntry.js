@@ -68,6 +68,12 @@ const CashInEntry = ({ onBack }) => {
     { name: 'Other Expenses', icon: FileText }
   ];
   
+  // Update amount should reflect active slot as well
+  const setAmountForActive = (val) => {
+    setAmount(val);
+    setSlots(prev => prev.map((s, idx) => idx === activeSlot ? { ...s, amount: val } : s));
+  };
+
   const sampleNames = [
     'Aarav Sharma', 'Vivaan Patel', 'Aditya Kumar', 'Vihaan Singh', 'Arjun Gupta',
     'Sai Krishna', 'Reyansh Agarwal', 'Ayaan Shah', 'Krishna Reddy', 'Ishaan Jain',
