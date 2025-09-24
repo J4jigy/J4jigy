@@ -17,9 +17,11 @@ import {
   Banknote,
   Smartphone,
   Users,
+  User,
   Building,
   FileText,
-  Package
+  Package,
+  Barcode
 } from 'lucide-react';
 
 const CashInEntry = ({ onBack }) => {
