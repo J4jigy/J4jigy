@@ -454,14 +454,21 @@ const Dashboard = () => {
                   return (
                     <Card 
                       key={index}
-                      className={`bg-gradient-to-br ${tile.color} border-slate-600 hover:scale-105 transition-transform cursor-pointer shadow-lg`}
+                      className={`bg-gradient-to-br ${tile.color} border border-slate-600/50 hover:scale-[1.02] transition-all duration-200 cursor-pointer shadow-xl`}
                       data-testid={`${tab}-tile-${index}`}
                     >
-                      <CardContent className="p-3 flex flex-col items-center justify-center min-h-[120px] text-center">
-                        <IconComponent className="w-10 h-10 mb-3 text-white drop-shadow-sm" />
-                        <p className="tile-text text-white text-xs font-semibold leading-tight tracking-wide uppercase px-1">
-                          {tile.name}
-                        </p>
+                      <CardContent className="p-4 flex flex-col items-center justify-center min-h-[120px] text-center relative">
+                        <IconComponent className="w-8 h-8 mb-3 text-white/90" />
+                        <div className="text-center">
+                          <p className="text-white text-sm font-semibold leading-tight mb-0">
+                            {tile.name}
+                          </p>
+                          {tile.subtitle && (
+                            <p className="text-white/80 text-xs font-medium leading-tight">
+                              {tile.subtitle}
+                            </p>
+                          )}
+                        </div>
                       </CardContent>
                     </Card>
                   );
