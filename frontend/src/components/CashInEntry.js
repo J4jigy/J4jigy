@@ -72,16 +72,30 @@ const CashInEntry = ({ onBack }) => {
     if (value === 'clear') {
       setAmount('0');
     } else if (value === 'back') {
-      if (amount.length <= 1) {
+      if (amount.length <= 1 || amount === '0') {
         setAmount('0');
       } else {
         setAmount(amount.slice(0, -1));
       }
     } else if (value === '=') {
-      // Handle calculation if needed
+      try {
+        // Safe evaluation for basic math operations
+        const sanitizedAmount = amount.replace(/[^0-9+\-*/().]/g, '');
+        if (sanitizedAmount && sanitizedAmount !== '0') {
+          const result = Function(`"use strict"; return (${sanitizedAmount})`)();
+          setAmount(result.toString());
+        }
+      } catch (error) {
+        setAmount('Error');
+        setTimeout(() => setAmount('0'), 1000);
+      }
     } else {
-      if (amount === '0' && value !== '.') {
-        setAmount(value);
+      if (amount === '0' || amount === 'Error') {
+        if (value !== '.') {
+          setAmount(value);
+        } else {
+          setAmount('0.');
+        }
       } else {
         setAmount(amount + value);
       }
