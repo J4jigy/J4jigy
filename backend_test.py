@@ -357,6 +357,7 @@ def run_all_tests():
         test_user_login,
         test_dashboard_summary,
         test_list_endpoints,
+        test_missing_endpoints,
     ]
     
     for test_func in tests:
