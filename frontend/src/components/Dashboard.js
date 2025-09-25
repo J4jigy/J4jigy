@@ -95,10 +95,13 @@ export default function Dashboard({ user, logout }) {
       const newBusiness = {
         id: businesses.length + 1,
         name: newBusinessName.trim(),
-        type: newBusinessType
+        type: newBusinessType,
+        gstNumber: newBusinessGST.trim(),
+        address: newBusinessAddress.trim(),
+        phone: newBusinessPhone.trim()
       };
       setBusinesses(prev => [...prev, newBusiness]);
-      // Form reset and dialog close handled by onClick with setTimeout
+      // Form reset handled by onClick with setTimeout
     }
   };
 
