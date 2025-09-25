@@ -538,10 +538,6 @@ const CashInEntry = ({ onBack }) => {
                 <Plus className="w-4 h-4 mr-2" />
                 Add New Product
               </Button>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                <Plus className="w-4 h-4 mr-2" />
-                Add Expense
-              </Button>
             </div>
             {products.map((product) => (
               <div key={product} className="flex items-center justify-between">
