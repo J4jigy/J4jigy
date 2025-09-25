@@ -565,13 +565,11 @@ const CashOutEntry = ({ onBack }) => {
             {products.map((product) => (
               <div key={product} className="flex items-center justify-between">
                 <span className="text-white">{product}</span>
-                <Button
-                  onClick={() => handleProductSelect(product)}
-                  className={selectedProducts.includes(product) ? 'bg-green-600' : 'bg-slate-600'}
-                  size="sm"
-                >
-                  {selectedProducts.includes(product) ? 'Qty +' : 'Qty +'}
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button onClick={() => decQty(product)} className="bg-slate-600" size="sm">−</Button>
+                  <span className="text-white text-sm min-w-[24px] text-center">{selectedItems[product] || 0}</span>
+                  <Button onClick={() => incQty(product)} className="bg-green-600" size="sm">+</Button>
+                </div>
               </div>
             ))}
           </div>
