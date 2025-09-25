@@ -427,6 +427,35 @@ export default function Dashboard({ user, logout }) {
                 </SelectContent>
               </Select>
             </div>
+            <div>
+              <Label className="text-slate-200">GST Number</Label>
+              <Input
+                value={newBusinessGST}
+                onChange={(e) => setNewBusinessGST(e.target.value)}
+                className="bg-slate-700 border-slate-600 text-white mt-1"
+                placeholder="Enter GST number (optional)"
+              />
+            </div>
+            <div>
+              <Label className="text-slate-200">Phone Number</Label>
+              <Input
+                value={newBusinessPhone}
+                onChange={(e) => setNewBusinessPhone(e.target.value)}
+                className="bg-slate-700 border-slate-600 text-white mt-1"
+                placeholder="Enter phone number"
+                type="tel"
+              />
+            </div>
+            <div>
+              <Label className="text-slate-200">Address</Label>
+              <textarea
+                value={newBusinessAddress}
+                onChange={(e) => setNewBusinessAddress(e.target.value)}
+                className="w-full bg-slate-700 border border-slate-600 text-white mt-1 p-2 rounded-md resize-none"
+                placeholder="Enter business address"
+                rows={3}
+              />
+            </div>
             <div className="flex gap-2">
               <Button
                 onClick={() => {
