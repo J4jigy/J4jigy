@@ -27,7 +27,12 @@ import {
 const CashInEntry = ({ onBack }) => {
   const [amount, setAmount] = useState('0');
   // POS multi-customer slots
-  const initialSlots = Array.from({ length: 6 }, (_, i) => ({ id: i, label: `C${i + 1}`, amount: '0' }));
+  const initialSlots = Array.from({ length: 6 }, (_, i) => ({ 
+    id: i, 
+    label: `C${i + 1}`, 
+    amount: '0',
+    paymentMode: 'Cash'
+  }));
   const [slots, setSlots] = useState(initialSlots);
   const [activeSlot, setActiveSlot] = useState(0);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
