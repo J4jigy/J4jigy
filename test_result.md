@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Compile error preventing login page from rendering - duplicate expenseMeasurement variable declaration in CashOutEntry.js"
+user_problem_statement: "Test the newly implemented Reset Quantity functionality in both Cash In and Cash Out screens"
 
 backend:
   - task: "Backend services running"
