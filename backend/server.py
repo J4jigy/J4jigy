@@ -686,6 +686,12 @@ class TransactionCreate(BaseModel):
     debit_account: str = "Cash"
     credit_account: str = "General"
 
+class CashTransactionCreate(BaseModel):
+    description: str
+    amount: float
+    debit_account: str = "Cash"
+    credit_account: str = "General"
+
 @api_router.post("/transactions", response_model=Transaction)
 async def create_transaction(
     transaction: TransactionCreate,
