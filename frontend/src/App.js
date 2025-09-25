@@ -310,7 +310,7 @@ const LoginPage = () => {
 // Dashboard and other components remain unchanged (omitted for brevity)
 
 function AppRoutes() {
-  const { token, loading, user } = useAuth();
+  const { token, loading, user, logout } = useAuth();
 
   if (loading) {
     return (
