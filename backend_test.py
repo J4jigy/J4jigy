@@ -236,6 +236,7 @@ def test_list_endpoints():
     list_names = ["customers", "suppliers", "staff", "purchases", "bills", "expenses", "invoices", "ratings"]
     
     passed_lists = 0
+    failed_lists = []
     for list_name in list_names:
         response = make_request("GET", f"/lists/{list_name}", headers=headers)
         
@@ -244,14 +245,53 @@ def test_list_endpoints():
         elif response and response.status_code == 401:
             results.add_fail(f"List Endpoint ({list_name})", "Authentication failed")
             return False
+        elif response and response.status_code == 500:
+            failed_lists.append(f"{list_name} (Internal Server Error)")
         # Note: Some lists might return empty results or 404, which is acceptable
     
-    if passed_lists > 0:
+    if failed_lists:
+        results.add_fail("List Endpoints", f"Internal server errors: {', '.join(failed_lists)}")
+        return False
+    elif passed_lists > 0:
         results.add_pass(f"List Endpoints ({passed_lists}/{len(list_names)} accessible)")
         return True
     else:
         results.add_fail("List Endpoints", "No list endpoints accessible")
         return False
+
+def test_missing_endpoints():
+    """Test for missing critical endpoints"""
+    print("\n🔍 Testing Missing Critical Endpoints...")
+    
+    if not auth_token:
+        results.add_fail("Missing Endpoints Check", "No auth token available")
+        return False
+    
+    headers = {"Authorization": f"Bearer {auth_token}"}
+    missing_endpoints = []
+    
+    # Test transaction endpoints that should exist for a financial dashboard
+    critical_endpoints = [
+        ("/transactions", "GET", "Transaction List"),
+        ("/transactions", "POST", "Create Transaction"),
+        ("/transactions/cash-in", "POST", "Cash In Transaction"),
+        ("/transactions/cash-out", "POST", "Cash Out Transaction"),
+        ("/admin/invites", "GET", "Admin Invite Management"),
+        ("/admin/users", "GET", "Admin User Management"),
+        ("/accounts", "GET", "Account Management")
+    ]
+    
+    for endpoint, method, description in critical_endpoints:
+        response = make_request(method, endpoint, headers=headers)
+        if not response or response.status_code == 404:
+            missing_endpoints.append(f"{method} {endpoint} ({description})")
+    
+    if missing_endpoints:
+        results.add_fail("Missing Critical Endpoints", f"Missing: {', '.join(missing_endpoints)}")
+        return False
+    else:
+        results.add_pass("All Critical Endpoints Present")
+        return True
 
 def test_cors_headers():
     """Test CORS headers are properly set"""
