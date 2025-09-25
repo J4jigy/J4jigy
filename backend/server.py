@@ -524,12 +524,27 @@ class LoginRequest(BaseModel):
     password: str
 
 @api_router.post("/auth/login", response_model=TokenResponse)
-async def auth_login(payload: LoginRequest, request: Request):
-    user_doc = await db.users.find_one({"username": payload.username})
+async def auth_login(request: Request):
+    content_type = request.headers.get('content-type', '')
+    username = None
+    password = None
+    if content_type.startswith('application/x-www-form-urlencoded'):
+        form = await request.form()
+        username = form.get('username')
+        password = form.get('password')
+    else:
+        data = await request.json()
+        username = data.get('username')
+        password = data.get('password')
+
+    if not username or not password:
+        raise HTTPException(status_code=400, detail="Missing credentials")
+
+    user_doc = await db.users.find_one({"username": username})
     if not user_doc:
         raise HTTPException(status_code=401, detail="Invalid credentials")
     hashed = user_doc.get("password")
-    if not hashed or not verify_password(payload.password, hashed):
+    if not hashed or not verify_password(password, hashed):
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
     user = User(**{k: v for k, v in user_doc.items() if k != "password"})
