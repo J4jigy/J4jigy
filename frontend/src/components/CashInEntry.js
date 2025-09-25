@@ -181,6 +181,10 @@ const CashInEntry = ({ onBack }) => {
     setAmountForActive('0');
   };
 
+  const resetQuantities = () => {
+    setSelectedItems({});
+  };
+
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col max-h-screen overflow-hidden">
       {/* Header */}
