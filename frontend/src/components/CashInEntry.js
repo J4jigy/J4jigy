@@ -370,6 +370,7 @@ const CashInEntry = ({ onBack }) => {
               <div className="relative flex flex-col items-center">
                 <User className="w-5 h-5 text-slate-200" />
                 <span className="text-[10px] text-slate-100 mt-0.5">{slot.label}</span>
+                {/* Amount Badge - Top Right */}
                 {parseFloat(slot.amount) > 0 && (
                   <span className={`absolute -top-1 -right-1 text-[10px] px-1 py-[1px] rounded font-bold ${
                     activeSlot === idx 
