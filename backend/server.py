@@ -479,9 +479,15 @@ async def list_items(
     search: Optional[str] = Query(default=None),
 
 @api_router.options("/auth/login")
-async def options_login():
-    # Explicitly handle CORS preflight for login
-    return Response(status_code=204)
+async def options_login(origin: Optional[str] = None, access_control_request_headers: Optional[str] = None, access_control_request_method: Optional[str] = None):
+    resp = Response(status_code=204)
+    if origin:
+        resp.headers["Access-Control-Allow-Origin"] = origin
+        resp.headers["Vary"] = "Origin"
+    resp.headers["Access-Control-Allow-Methods"] = access_control_request_method or "POST, OPTIONS"
+    resp.headers["Access-Control-Allow-Headers"] = access_control_request_headers or "*"
+    resp.headers["Access-Control-Allow-Credentials"] = "true"
+    return resp
 
     sort: str = Query(default='name_asc'),
     page: int = Query(default=1, ge=1),
