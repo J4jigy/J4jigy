@@ -84,6 +84,29 @@ app.add_middleware(
 api_router = APIRouter(prefix="/api")
 security = HTTPBearer()
 
+# Global CORS safety net to ensure headers on all responses and handle OPTIONS
+@app.middleware("http")
+async def cors_safety_net(request: Request, call_next):
+    origin = request.headers.get("origin")
+    # Handle preflight universally
+    if request.method == "OPTIONS":
+        resp = Response(status_code=204)
+        if origin:
+            resp.headers["Access-Control-Allow-Origin"] = origin
+            resp.headers["Vary"] = "Origin"
+        resp.headers["Access-Control-Allow-Methods"] = request.headers.get("access-control-request-method", "GET, POST, PUT, PATCH, DELETE, OPTIONS")
+        resp.headers["Access-Control-Allow-Headers"] = request.headers.get("access-control-request-headers", "Authorization, Content-Type, *")
+        resp.headers["Access-Control-Allow-Credentials"] = "true"
+        return resp
+
+    response = await call_next(request)
+    if origin:
+        response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers["Vary"] = "Origin"
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+    return response
+
+
 # Enums
 class UserRole(str, Enum):
     SUPER_ADMIN = "super_admin"
