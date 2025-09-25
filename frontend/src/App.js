@@ -125,7 +125,16 @@ const LoginPage = () => {
       }
       login(response.data.user, response.data.access_token);
     } catch (error) {
-      setError(error.response?.data?.detail || 'An error occurred');
+      const detail = error.response?.data?.detail;
+      const status = error.response?.status;
+      const statusText = error.response?.statusText;
+      const message = detail || (status ? `${status} ${statusText || ''}`.trim() : (error.message || 'An error occurred'));
+      setError(message);
+      if (error.response) {
+        console.error('Login error response:', error.response);
+      } else {
+        console.error('Login error:', error);
+      }
     } finally {
       setLoading(false);
     }
