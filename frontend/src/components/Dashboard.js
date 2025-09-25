@@ -95,9 +95,7 @@ export default function Dashboard({ user, logout }) {
         type: newBusinessType
       };
       setBusinesses(prev => [...prev, newBusiness]);
-      setNewBusinessName('');
-      setNewBusinessType('Retail');
-      setShowAddBusinessDialog(false); // Close dialog after successful addition
+      // Form reset and dialog close handled by onClick with setTimeout
     }
   };
 
