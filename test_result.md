@@ -345,8 +345,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Add new business functionality - dialog closure issue"
-    - "Business deletion functionality - modal overlay issue"
+    - "To Do List tile in Personal tab"
+    - "To Do List page functionality"
+    - "To Do List route protection"
   stuck_tasks:
     - "Add new business functionality"
     - "Business deletion functionality"
