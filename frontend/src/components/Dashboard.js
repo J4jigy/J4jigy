@@ -95,7 +95,7 @@ export default function Dashboard({ user, logout }) {
       setBusinesses(prev => [...prev, newBusiness]);
       setNewBusinessName('');
       setNewBusinessType('Retail');
-      setShowAddBusinessDialog(false);
+      setShowAddBusinessDialog(false); // Close dialog after successful addition
     }
   };
 
