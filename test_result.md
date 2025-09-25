@@ -318,7 +318,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Delete confirmation functionality testing completed successfully for both Cash In and Cash Out screens"
+    - "Business switcher in header"
+    - "Switch Business dialog functionality"
+    - "Business switching functionality"
+    - "Add new business functionality"
+    - "Business deletion functionality"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
