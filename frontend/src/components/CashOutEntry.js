@@ -33,7 +33,22 @@ const CashOutEntry = ({ onBack }) => {
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [selectedTime, setSelectedTime] = useState(new Date().toTimeString().slice(0, 5));
   const [selectedCustomer, setSelectedCustomer] = useState('');
-  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [selectedItems, setSelectedItems] = useState({});
+
+  const incQty = (name) => {
+    setSelectedItems(prev => ({ ...prev, [name]: (prev[name] || 0) + 1 }));
+  };
+  const decQty = (name) => {
+    setSelectedItems(prev => {
+      const curr = prev[name] || 0;
+      if (curr <= 1) {
+        const copy = { ...prev };
+        delete copy[name];
+        return copy;
+      }
+      return { ...prev, [name]: curr - 1 };
+    });
+  };
   const [paymentMode, setPaymentMode] = useState('Cash');
   
   // Modal states
