@@ -42,11 +42,8 @@ const CashOutEntry = ({ onBack }) => {
     setSelectedItems(prev => ({ ...prev, [name]: (prev[name] || 0) + 1 }));
   };
   const decQty = (name) => {
-  const [expenseQty, setExpenseQty] = useState(1);
-
     setSelectedItems(prev => {
       const curr = prev[name] || 0;
-
       if (curr <= 1) {
         const copy = { ...prev };
         delete copy[name];
@@ -55,6 +52,9 @@ const CashOutEntry = ({ onBack }) => {
       return { ...prev, [name]: curr - 1 };
     });
   };
+  // Measurement for Add New Expense modal
+  const [expenseMeasurement, setExpenseMeasurement] = useState('Piece');
+  const [expenseQty, setExpenseQty] = useState(1);
   const [paymentMode, setPaymentMode] = useState('Cash');
   
   // Modal states
