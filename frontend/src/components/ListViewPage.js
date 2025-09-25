@@ -67,7 +67,7 @@ export default function ListViewPage() {
 
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // ignore deps warning intentionally to avoid extra fetches
   }, [key, sort, page, pageSize]);
 
   // Debounce search
@@ -77,7 +77,7 @@ export default function ListViewPage() {
       fetchData();
     }, 350);
     return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // ignore deps warning intentionally to avoid extra fetches
   }, [search]);
 
   const totalPages = useMemo(() => Math.max(1, Math.ceil(total / pageSize)), [total, pageSize]);
