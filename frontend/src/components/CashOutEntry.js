@@ -789,6 +789,34 @@ const CashOutEntry = ({ onBack }) => {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Delete Confirmation Modal */}
+      <Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
+        <DialogContent className="bg-slate-800 border-slate-700">
+          <DialogHeader>
+            <DialogTitle className="text-white">Confirm Delete</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p className="text-slate-200">
+              {deleteAction?.message}
+            </p>
+            <div className="flex gap-2">
+              <Button 
+                onClick={executeDelete}
+                className="flex-1 bg-red-600 hover:bg-red-700"
+              >
+                Yes, Delete
+              </Button>
+              <Button 
+                onClick={cancelDelete}
+                className="flex-1 bg-slate-600 hover:bg-slate-500"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
