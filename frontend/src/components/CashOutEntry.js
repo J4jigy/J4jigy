@@ -559,7 +559,7 @@ const CashOutEntry = ({ onBack }) => {
                   className={selectedProducts.includes(product) ? 'bg-green-600' : 'bg-slate-600'}
                   size="sm"
                 >
-                  {selectedProducts.includes(product) ? '✓' : '+'}
+                  {selectedProducts.includes(product) ? 'Qty +' : 'Qty +'}
                 </Button>
               </div>
             ))}
