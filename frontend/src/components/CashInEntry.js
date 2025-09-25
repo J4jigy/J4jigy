@@ -592,43 +592,45 @@ const CashInEntry = ({ onBack }) => {
 
       {/* Product Modal */}
       <Dialog open={showProductModal} onOpenChange={setShowProductModal}>
-        <DialogContent className="bg-slate-800 border-slate-700">
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-sm w-full mx-4 max-h-[80vh]">
           <DialogHeader>
-            <DialogTitle className="text-white">Select Products</DialogTitle>
+            <DialogTitle className="text-white text-lg">Select Products</DialogTitle>
           </DialogHeader>
-          <div className="space-y-2">
-            <div className="flex gap-2 mb-4">
+          <div className="space-y-2 max-h-[60vh] overflow-y-auto">
+            <div className="flex flex-col gap-2 mb-3">
               <Button
                 onClick={() => {
                   setShowProductModal(false);
                   setShowAddProductModal(true);
                 }}
-                className="bg-green-600 hover:bg-green-700 text-white"
+                className="bg-green-600 hover:bg-green-700 text-white h-8 text-sm"
               >
-                <Plus className="w-4 h-4 mr-2" />
+                <Plus className="w-3 h-3 mr-2" />
                 Add New Product
               </Button>
-              <Button
-                onClick={resetQuantities}
-                className="bg-orange-600 hover:bg-orange-700 text-white"
-              >
-                Reset Quantity
-              </Button>
-              <Button
-                onClick={confirmDeleteAllProducts}
-                className="bg-red-600 hover:bg-red-700 text-white"
-              >
-                Delete Product
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  onClick={resetQuantities}
+                  className="bg-orange-600 hover:bg-orange-700 text-white flex-1 h-8 text-sm"
+                >
+                  Reset Quantity
+                </Button>
+                <Button
+                  onClick={confirmDeleteAllProducts}
+                  className="bg-red-600 hover:bg-red-700 text-white flex-1 h-8 text-sm"
+                >
+                  Delete Product
+                </Button>
+              </div>
             </div>
             {products.map((product) => (
-              <div key={product} className="flex items-center justify-between">
-                <span className="text-white">{product}</span>
-                <div className="flex items-center gap-2">
-                  <Button onClick={() => decQty(product)} className="bg-slate-600" size="sm">−</Button>
-                  <span className="text-white text-sm min-w-[24px] text-center">{selectedItems[product] || 0}</span>
-                  <Button onClick={() => incQty(product)} className="bg-green-600" size="sm">+</Button>
-                  <Button onClick={() => confirmDeleteProduct(product)} className="bg-red-500 hover:bg-red-600" size="sm">✕</Button>
+              <div key={product} className="flex items-center justify-between bg-slate-700 p-2 rounded">
+                <span className="text-white text-sm">{product}</span>
+                <div className="flex items-center gap-1">
+                  <Button onClick={() => decQty(product)} className="bg-slate-600 w-7 h-7" size="sm">−</Button>
+                  <span className="text-white text-sm min-w-[20px] text-center">{selectedItems[product] || 0}</span>
+                  <Button onClick={() => incQty(product)} className="bg-green-600 w-7 h-7" size="sm">+</Button>
+                  <Button onClick={() => confirmDeleteProduct(product)} className="bg-red-500 hover:bg-red-600 w-7 h-7" size="sm">✕</Button>
                 </div>
               </div>
             ))}
