@@ -110,7 +110,15 @@ export default function Dashboard({ user, logout }) {
       if (activeBusiness.id === businessId) {
         setActiveBusiness(updatedBusinesses[0]);
       }
+      
+      setShowDeleteConfirmDialog(false);
+      setBusinessToDelete(null);
     }
+  };
+
+  const confirmDeleteBusiness = (businessId, businessName) => {
+    setBusinessToDelete({ id: businessId, name: businessName });
+    setShowDeleteConfirmDialog(true);
   };
 
   const businessTiles = [
