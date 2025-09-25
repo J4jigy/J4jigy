@@ -67,6 +67,17 @@ app.add_middleware(
     allowed_hosts=["*"]  # Configure for production
 )
 
+
+# CORS (allow frontend hosts)
+allowed_origins = os.environ.get('ALLOWED_ORIGINS', 'http://localhost:3000,https://fintracker-56.preview.emergentagent.com').split(',')
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[o.strip() for o in allowed_origins if o.strip()],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 security = HTTPBearer()
