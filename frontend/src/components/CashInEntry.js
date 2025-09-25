@@ -187,6 +187,47 @@ const CashInEntry = ({ onBack }) => {
     setSelectedItems({});
   };
 
+  const confirmDeleteProduct = (productToDelete) => {
+    setDeleteAction({
+      type: 'individual',
+      item: productToDelete,
+      message: `Are you sure you want to delete "${productToDelete}"?`
+    });
+    setShowDeleteConfirm(true);
+  };
+
+  const confirmDeleteAllProducts = () => {
+    setDeleteAction({
+      type: 'all',
+      message: 'Are you sure you want to delete all products?'
+    });
+    setShowDeleteConfirm(true);
+  };
+
+  const executeDelete = () => {
+    if (deleteAction?.type === 'individual') {
+      // Delete individual product
+      const productToDelete = deleteAction.item;
+      setProducts(prev => prev.filter(product => product !== productToDelete));
+      setSelectedItems(prev => {
+        const updated = { ...prev };
+        delete updated[productToDelete];
+        return updated;
+      });
+    } else if (deleteAction?.type === 'all') {
+      // Delete all products
+      setProducts([]);
+      setSelectedItems({});
+    }
+    setShowDeleteConfirm(false);
+    setDeleteAction(null);
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteConfirm(false);
+    setDeleteAction(null);
+  };
+
   const deleteProduct = (productToDelete) => {
     setProducts(prev => prev.filter(product => product !== productToDelete));
     // Also remove from selected items if it was selected
