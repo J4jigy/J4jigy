@@ -52,8 +52,6 @@ const CashOutEntry = ({ onBack }) => {
       return { ...prev, [name]: curr - 1 };
     });
   };
-  // Measurement for Add New Expense modal
-  const [expenseMeasurement, setExpenseMeasurement] = useState('Piece');
   const [expenseQty, setExpenseQty] = useState(1);
   const [paymentMode, setPaymentMode] = useState('Cash');
   
