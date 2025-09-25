@@ -467,6 +467,11 @@ async def fetch_list(collection_name: str, user_id: str, search: Optional[str], 
 
 
 @api_router.get("/lists/{list_name}")
+
+@api_router.options("/{path:path}")
+async def api_options_catch_all(path: str):
+    return Response(status_code=204)
+
 async def list_items(
     list_name: str,
     request: Request,
