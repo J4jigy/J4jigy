@@ -263,7 +263,9 @@ const CashOutEntry = ({ onBack }) => {
             <div className="text-left">
               <div className="text-xs text-slate-400">Expenses</div>
               <div className="text-xs truncate">
-                {selectedProducts.length > 0 ? selectedProducts.join(', ') : 'Select...'}
+                {Object.keys(selectedItems).length > 0 
+                  ? Object.entries(selectedItems).map(([name, qty]) => `${name} x${qty}`).join(', ')
+                  : 'Select...'}
               </div>
             </div>
           </Button>
