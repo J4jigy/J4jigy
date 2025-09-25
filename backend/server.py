@@ -23,6 +23,7 @@ import pyotp
 import qrcode
 import io
 import base64
+from PIL import Image
 from cryptography.fernet import Fernet
 import re
 
@@ -63,7 +64,6 @@ app.add_middleware(
     allowed_hosts=["*"]  # Configure for production
 )
 
-
 # CORS (allow frontend hosts)
 allowed_origins = os.environ.get('ALLOWED_ORIGINS', 'http://localhost:3000,https://fintracker-56.preview.emergentagent.com').split(',')
 app.add_middleware(
@@ -101,7 +101,6 @@ async def cors_safety_net(request: Request, call_next):
         response.headers["Vary"] = "Origin"
         response.headers["Access-Control-Allow-Credentials"] = "true"
     return response
-
 
 # Enums
 class UserRole(str, Enum):
@@ -432,57 +431,7 @@ async def create_default_accounts(user_id: str):
     
     await db.accounts.insert_many([a.dict() for a in default_accounts])
 
-# ===================== New List Endpoints =====================
-
-class ListItem(BaseModel):
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    user_id: str
-    name: str
-    subtitle: Optional[str] = None
-    amount: Optional[float] = None
-    date: Optional[str] = None  # ISO date string
-    status: Optional[str] = None
-
-
-def prepare_for_mongo(item: Dict[str, Any]) -> Dict[str, Any]:
-    data = item.copy()
-    if isinstance(data.get('date'), datetime):
-        data['date'] = data['date'].date().isoformat()
-    return data
-
-
-def serialize_item(doc: Dict[str, Any]) -> Dict[str, Any]:
-    out = {k: v for k, v in doc.items() if k != '_id'}
-    return out
-
-
-async def fetch_list(collection_name: str, user_id: str, search: Optional[str], sort: str, page: int, page_size: int):
-    query: Dict[str, Any] = {"user_id": user_id}
-    if search:
-        regex = {"$regex": search, "$options": "i"}
-        query["$or"] = [
-            {"name": regex},
-            {"subtitle": regex}
-        ]
-
-    sort_map = {
-        'name_asc': ("name", 1),
-        'name_desc': ("name", -1),
-        'amount_asc': ("amount", 1),
-        'amount_desc': ("amount", -1),
-        'newest': ("date", -1),
-        'oldest': ("date", 1)
-    }
-    sort_key, sort_dir = sort_map.get(sort, ("name", 1))
-
-    skip = max(0, (page - 1) * page_size)
-    cursor = db[collection_name].find(query).sort(sort_key, sort_dir).skip(skip).limit(page_size)
-    docs = await cursor.to_list(length=page_size)
-    items = [serialize_item(d) for d in docs]
-    total = await db[collection_name].count_documents(query)
-    return {"items": items, "total": total, "page": page, "page_size": page_size}
-
-
+# ===================== List Endpoints =====================
 from fastapi import Header
 
 @api_router.options("/{path:path}")
@@ -530,6 +479,47 @@ async def list_items(
     data = await fetch_list(allowed[list_name], current_user.id, search, sort, page, page_size)
     await log_audit_event(AuditAction.READ, f"list:{list_name}", current_user.id, {"search": search, "sort": sort}, request, True)
     return data
+
+# ===================== Auth + Summary Endpoints =====================
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+@api_router.post("/auth/login", response_model=TokenResponse)
+async def auth_login(request: Request):
+    content_type = request.headers.get('content-type', '')
+    username = None
+    password = None
+    if content_type.startswith('application/x-www-form-urlencoded'):
+        form = await request.form()
+        username = form.get('username')
+        password = form.get('password')
+    else:
+        data = await request.json()
+        username = data.get('username')
+        password = data.get('password')
+
+    if not username or not password:
+        raise HTTPException(status_code=400, detail="Missing credentials")
+
+    user_doc = await db.users.find_one({"username": username})
+    if not user_doc:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    hashed = user_doc.get("password")
+    if not hashed or not verify_password(password, hashed):
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    user = User(**{k: v for k, v in user_doc.items() if k != "password"})
+    tokens = generate_tokens(user.id)
+
+    await log_audit_event(AuditAction.LOGIN, "auth:login", user.id, {"username": user.username}, request, True)
+
+    return TokenResponse(
+        access_token=tokens["access_token"],
+        refresh_token=tokens["refresh_token"],
+        expires_in=tokens["expires_in"],
+        user=user
+    )
 
 class RegisterRequest(BaseModel):
     username: str
@@ -605,54 +595,6 @@ async def auth_register(payload: RegisterRequest, request: Request):
         user=user
     )
 
-# Catch-all OPTIONS to satisfy any preflight
-@app.options("/{path:path}")
-async def catch_all_options(path: str):
-    return Response(status_code=204)
-
-
-# ===================== Auth + Summary Minimal Endpoints (restore) =====================
-
-class LoginRequest(BaseModel):
-    username: str
-    password: str
-
-@api_router.post("/auth/login", response_model=TokenResponse)
-async def auth_login(request: Request):
-    content_type = request.headers.get('content-type', '')
-    username = None
-    password = None
-    if content_type.startswith('application/x-www-form-urlencoded'):
-        form = await request.form()
-        username = form.get('username')
-        password = form.get('password')
-    else:
-        data = await request.json()
-        username = data.get('username')
-        password = data.get('password')
-
-    if not username or not password:
-        raise HTTPException(status_code=400, detail="Missing credentials")
-
-    user_doc = await db.users.find_one({"username": username})
-    if not user_doc:
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-    hashed = user_doc.get("password")
-    if not hashed or not verify_password(password, hashed):
-        raise HTTPException(status_code=401, detail="Invalid credentials")
-
-    user = User(**{k: v for k, v in user_doc.items() if k != "password"})
-    tokens = generate_tokens(user.id)
-
-    await log_audit_event(AuditAction.LOGIN, "auth:login", user.id, {"username": user.username}, request, True)
-
-    return TokenResponse(
-        access_token=tokens["access_token"],
-        refresh_token=tokens["refresh_token"],
-        expires_in=tokens["expires_in"],
-        user=user
-    )
-
 class DashboardSummary(BaseModel):
     you_will_give: float = 0.0
     you_will_receive: float = 0.0
@@ -680,6 +622,11 @@ async def dashboard_summary(current_user: User = Depends(get_current_user)):
 
     net = you_will_receive - you_will_give
     return DashboardSummary(you_will_give=you_will_give, you_will_receive=you_will_receive, net_position=net)
+
+# Health/Ping endpoint
+@api_router.get("/ping")
+async def ping():
+    return {"status": "ok", "time": datetime.now(timezone.utc).isoformat()}
 
 # Mount the router
 app.include_router(api_router)
