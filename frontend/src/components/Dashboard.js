@@ -458,15 +458,10 @@ export default function Dashboard({ user, logout }) {
           </div>
         </DialogContent>
       </Dialog>
+
       {/* Cash In/Out Floating Buttons */}
       <div className="fixed bottom-6 left-4 right-4">
-        <div className="flex gap-4">${
-          businessToDelete && `
-            <div className="business-delete-info hidden">
-              <span>${businessToDelete.name}</span>
-            </div>
-          `
-        }
+        <div className="flex gap-4">
           <Button 
             className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 rounded-xl shadow-lg"
             onClick={() => navigate('/cash-in')}
