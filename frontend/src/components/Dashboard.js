@@ -76,6 +76,40 @@ export default function Dashboard({ user, logout }) {
     }
   };
 
+  // Business management functions
+  const handleBusinessSwitch = (business) => {
+    setActiveBusiness(business);
+    setShowBusinessDialog(false);
+    // Refresh summary data for the selected business
+    fetchSummary();
+  };
+
+  const handleAddBusiness = () => {
+    if (newBusinessName.trim()) {
+      const newBusiness = {
+        id: businesses.length + 1,
+        name: newBusinessName.trim(),
+        type: newBusinessType
+      };
+      setBusinesses(prev => [...prev, newBusiness]);
+      setNewBusinessName('');
+      setNewBusinessType('Retail');
+      setShowAddBusinessDialog(false);
+    }
+  };
+
+  const handleDeleteBusiness = (businessId) => {
+    if (businesses.length > 1) { // Prevent deleting the last business
+      const updatedBusinesses = businesses.filter(b => b.id !== businessId);
+      setBusinesses(updatedBusinesses);
+      
+      // If deleted business was active, switch to first business
+      if (activeBusiness.id === businessId) {
+        setActiveBusiness(updatedBusinesses[0]);
+      }
+    }
+  };
+
   const businessTiles = [
     { name: 'Credit Score', subtitle: '', icon: ShieldCheck, iconColor: 'text-blue-400' },
     { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400' },
