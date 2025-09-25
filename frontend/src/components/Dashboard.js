@@ -355,6 +355,64 @@ export default function Dashboard({ user, logout }) {
         </DialogContent>
       </Dialog>
 
+      {/* Add New Business Dialog */}
+      <Dialog open={showAddBusinessDialog} onOpenChange={setShowAddBusinessDialog}>
+        <DialogContent className="bg-slate-800 border-slate-700">
+          <DialogHeader>
+            <DialogTitle className="text-white">Add New Business</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label className="text-slate-200">Business Name</Label>
+              <Input
+                value={newBusinessName}
+                onChange={(e) => setNewBusinessName(e.target.value)}
+                className="bg-slate-700 border-slate-600 text-white mt-1"
+                placeholder="Enter business name"
+              />
+            </div>
+            <div>
+              <Label className="text-slate-200">Business Type</Label>
+              <Select value={newBusinessType} onValueChange={setNewBusinessType}>
+                <SelectTrigger className="bg-slate-700 border-slate-600 text-white mt-1">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Retail">Retail</SelectItem>
+                  <SelectItem value="E-commerce">E-commerce</SelectItem>
+                  <SelectItem value="Services">Services</SelectItem>
+                  <SelectItem value="Manufacturing">Manufacturing</SelectItem>
+                  <SelectItem value="Restaurant">Restaurant</SelectItem>
+                  <SelectItem value="Consulting">Consulting</SelectItem>
+                  <SelectItem value="Healthcare">Healthcare</SelectItem>
+                  <SelectItem value="Technology">Technology</SelectItem>
+                  <SelectItem value="Other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                onClick={handleAddBusiness}
+                className="flex-1 bg-green-600 hover:bg-green-700"
+                disabled={!newBusinessName.trim()}
+              >
+                Add Business
+              </Button>
+              <Button
+                onClick={() => {
+                  setShowAddBusinessDialog(false);
+                  setNewBusinessName('');
+                  setNewBusinessType('Retail');
+                }}
+                variant="outline"
+                className="flex-1 border-slate-600 text-slate-200"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
       {/* Cash In/Out Floating Buttons */}
       <div className="fixed bottom-6 left-4 right-4">
         <div className="flex gap-4">
