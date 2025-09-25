@@ -592,6 +592,9 @@ def run_all_tests():
         test_user_login,
         test_dashboard_summary,
         test_list_endpoints,
+        test_transaction_apis,
+        test_admin_apis,
+        test_account_management_apis,
         test_missing_endpoints,
     ]
     
