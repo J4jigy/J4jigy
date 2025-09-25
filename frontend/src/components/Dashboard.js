@@ -45,15 +45,16 @@ export default function Dashboard({ user, logout }) {
   
   const navigate = useNavigate();
 
+  const fetchSummary = async () => {
+    try {
+      const resp = await axios.get(`${API}/dashboard/summary`);
+      setSummary(resp.data);
+    } catch (e) {
+      // ignore summary errors to avoid blocking dashboard
+    }
+  };
+
   useEffect(() => {
-    const fetchSummary = async () => {
-      try {
-        const resp = await axios.get(`${API}/dashboard/summary`);
-        setSummary(resp.data);
-      } catch (e) {
-        // ignore summary errors to avoid blocking dashboard
-      }
-    };
     fetchSummary();
   }, []);
 
