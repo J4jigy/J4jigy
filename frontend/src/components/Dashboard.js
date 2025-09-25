@@ -163,6 +163,65 @@ export default function Dashboard({ user, logout }) {
         <div className="flex items-center gap-2">
           <Home className="w-6 h-6 text-blue-400" />
         </div>
+        
+        {/* Business Switcher */}
+        <div className="flex-1 flex justify-center">
+          <Dialog open={showBusinessDialog} onOpenChange={setShowBusinessDialog}>
+            <DialogTrigger asChild>
+              <Button variant="ghost" className="text-white hover:bg-slate-700 flex items-center gap-2">
+                <Building className="w-4 h-4 text-orange-400" />
+                <span className="font-medium">{activeBusiness.name}</span>
+                <ChevronDown className="w-4 h-4" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="bg-slate-800 border-slate-700">
+              <DialogHeader>
+                <DialogTitle className="text-white">Switch Business</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  {businesses.map((business) => (
+                    <div key={business.id} className="flex items-center justify-between">
+                      <Button
+                        onClick={() => handleBusinessSwitch(business)}
+                        variant={activeBusiness.id === business.id ? "default" : "ghost"}
+                        className={`flex-1 justify-start mr-2 ${
+                          activeBusiness.id === business.id 
+                            ? 'bg-blue-600 hover:bg-blue-700' 
+                            : 'text-slate-200 hover:bg-slate-700'
+                        }`}
+                      >
+                        <Building className="w-4 h-4 mr-2" />
+                        <div className="text-left">
+                          <div className="font-medium">{business.name}</div>
+                          <div className="text-xs opacity-70">{business.type}</div>
+                        </div>
+                      </Button>
+                      {businesses.length > 1 && (
+                        <Button
+                          onClick={() => handleDeleteBusiness(business.id)}
+                          variant="ghost"
+                          size="sm"
+                          className="text-red-400 hover:bg-red-900/20"
+                        >
+                          <Minus className="w-4 h-4" />
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <Button
+                  onClick={() => setShowAddBusinessDialog(true)}
+                  className="w-full bg-green-600 hover:bg-green-700"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add New Business
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
+
         <Dialog open={showProfileDialog} onOpenChange={setShowProfileDialog}>
           <DialogTrigger asChild>
             <Button variant="ghost" size="sm" data-testid="profile-icon">
