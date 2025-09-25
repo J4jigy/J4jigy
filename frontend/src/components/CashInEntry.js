@@ -413,7 +413,7 @@ const CashInEntry = ({ onBack }) => {
           {['Credit', 'Cash', 'Online'].map((mode) => (
             <Button
               key={mode}
-              onClick={() => setPaymentMode(mode)}
+              onClick={() => setPaymentModeForActive(mode)}
               className={`w-full h-10 text-xs sm:text-sm rounded-md ${
                 paymentMode === mode
                   ? mode === 'Credit' ? 'bg-orange-900 hover:bg-orange-950 ring-1 ring-orange-700' 
