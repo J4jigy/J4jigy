@@ -73,9 +73,11 @@ allowed_origins = os.environ.get('ALLOWED_ORIGINS', 'http://localhost:3000,https
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[o.strip() for o in allowed_origins if o.strip()],
+    allow_origin_regex=r"https?://.*",
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
+    expose_headers=["*"]
 )
 
 # Create a router with the /api prefix
