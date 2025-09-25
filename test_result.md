@@ -389,17 +389,41 @@ test_plan:
           agent: "testing"
           comment: "✅ SHRUNKEN PRODUCT SELECTION MODAL VERIFIED: Comprehensive testing completed successfully. Modal uses max-w-sm (384px width) with proper responsive design (w-full mx-4). Button layout verified: 'Add New Product' button full width at top (h-8, text-sm), 'Reset Quantity' and 'Delete Product' buttons side by side below (flex-1, h-8). Scrollable content area confirmed (max-h-[60vh] overflow-y-auto). Enhanced product items with bg-slate-700 p-2 rounded styling. Compact quantity controls (w-7 h-7 buttons, gap-1) and text-sm sizing. Modal fits entirely within viewport bounds without horizontal overflow. All functionality preserved while maintaining smaller footprint."
 
-  - task: "Shrunken Expense Selection modal"
+  - task: "To Do List tile in Personal tab"
     implemented: true
-    working: true
-    file: "CashOutEntry.js"
+    working: "NA"
+    file: "Dashboard.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
-        - working: true
-          agent: "testing"
-          comment: "✅ SHRUNKEN EXPENSE SELECTION MODAL VERIFIED: Comprehensive testing completed successfully. Modal uses max-w-sm (384px width) with proper responsive design (w-full mx-4). Button layout verified: 'Add New Expense' button full width at top (h-8, text-sm), 'Reset Quantity' and 'Delete Expense' buttons side by side below (flex-1, h-8). Scrollable content area confirmed (max-h-[60vh] overflow-y-auto). Enhanced expense items with bg-slate-700 p-2 rounded styling. Compact quantity controls (w-7 h-7 buttons, gap-1) and text-sm sizing. Individual delete buttons (✕) present and compact. Modal fits entirely within viewport bounds without horizontal overflow. All functionality preserved while maintaining smaller footprint."
+        - working: "NA"
+          agent: "main"
+          comment: "Added 'To Do List' tile to personalTiles array with CheckSquare icon (green color) positioned next to Chat tile. Tile navigation implemented to redirect to /todo route."
+
+  - task: "To Do List page functionality"
+    implemented: true
+    working: "NA"
+    file: "ToDoList.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented complete ToDoList component with header (back button, title, Add Task button), task statistics (Total, Completed, Pending, Progress %), sample tasks with different completion states, search functionality, sorting (Newest/Oldest/Pending/Completed), task completion toggle, and full CRUD operations (Create, Read, Update, Delete). Dark theme styling consistent with app design."
+
+  - task: "To Do List route protection"
+    implemented: true
+    working: "NA"
+    file: "App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Added /todo route in App.js with proper authentication protection. Route redirects to /login if user is not authenticated, otherwise renders ToDoList component."
 
 agent_communication:
     - agent: "main"
