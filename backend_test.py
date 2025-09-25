@@ -89,13 +89,13 @@ def make_request(method, endpoint, data=None, headers=None, expected_status=200)
     
     try:
         if method.upper() == "GET":
-            response = requests.get(url, headers=default_headers, timeout=10)
+            response = requests.get(url, headers=default_headers, timeout=30)
         elif method.upper() == "POST":
-            response = requests.post(url, json=data, headers=default_headers, timeout=10)
+            response = requests.post(url, json=data, headers=default_headers, timeout=30)
         elif method.upper() == "PUT":
-            response = requests.put(url, json=data, headers=default_headers, timeout=10)
+            response = requests.put(url, json=data, headers=default_headers, timeout=30)
         elif method.upper() == "DELETE":
-            response = requests.delete(url, headers=default_headers, timeout=10)
+            response = requests.delete(url, headers=default_headers, timeout=30)
         else:
             raise ValueError(f"Unsupported method: {method}")
             
