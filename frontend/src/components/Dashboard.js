@@ -471,7 +471,14 @@ export default function Dashboard({ user, logout }) {
                 Add Business
               </Button>
               <Button
-                onClick={() => setShowAddBusinessDialog(false)}
+                onClick={() => {
+                  setShowAddBusinessDialog(false);
+                  setNewBusinessName('');
+                  setNewBusinessType('Retail');
+                  setNewBusinessGST('');
+                  setNewBusinessAddress('');
+                  setNewBusinessPhone('');
+                }}
                 variant="outline"
                 className="flex-1 border-slate-600 text-slate-200"
               >
