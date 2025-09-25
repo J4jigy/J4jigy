@@ -111,11 +111,86 @@ backend:
     file: "server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: true
           agent: "main"
           comment: "Backend services restarted successfully after compile fix"
+        - working: true
+          agent: "testing"
+          comment: "Backend API health check passes. Server running on correct URL and responding properly."
+
+  - task: "Authentication APIs"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "Login and registration endpoints working. JWT authentication properly blocks unauthorized access (403). Token generation and validation working correctly."
+
+  - task: "Dashboard Summary API"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "Dashboard summary endpoint returns correct data structure with you_will_give, you_will_receive, and net_position fields."
+
+  - task: "List endpoints functionality"
+    implemented: true
+    working: false
+    file: "server.py"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: false
+          agent: "testing"
+          comment: "CRITICAL: All list endpoints (/api/lists/*) return 500 Internal Server Error. Backend logs show 'NameError: name fetch_list is not defined' at line 479. The fetch_list function is missing from the implementation."
+
+  - task: "Transaction APIs"
+    implemented: false
+    working: "NA"
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "testing"
+          comment: "CRITICAL: No transaction endpoints implemented. Missing GET/POST /api/transactions, /api/transactions/cash-in, /api/transactions/cash-out. Transaction model exists but no API endpoints to create or retrieve transactions."
+
+  - task: "Admin APIs"
+    implemented: false
+    working: "NA"
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "testing"
+          comment: "CRITICAL: No admin endpoints implemented. Missing /api/admin/invites, /api/admin/users for invite and user management."
+
+  - task: "Account Management APIs"
+    implemented: false
+    working: "NA"
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "testing"
+          comment: "CRITICAL: No account management endpoints. Missing /api/accounts for managing user accounts despite Account model being defined."
 
 frontend:
   - task: "Fix compile error in CashOutEntry.js"
