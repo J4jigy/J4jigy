@@ -353,9 +353,18 @@ const CashInEntry = ({ onBack }) => {
                 <User className="w-5 h-5 text-slate-200" />
                 <span className="text-[10px] text-slate-100 mt-0.5">{slot.label}</span>
                 {parseFloat(slot.amount) > 0 && (
-                  <span className="absolute -top-1 -right-1 text-[10px] bg-emerald-600 text-white px-1 py-[1px] rounded">
+                  <span className={`absolute -top-1 -right-1 text-[10px] px-1 py-[1px] rounded font-bold ${
+                    activeSlot === idx 
+                      ? 'bg-yellow-500 text-black text-xs' 
+                      : 'bg-emerald-600 text-white'
+                  }`}>
                     ₹{slot.amount}
                   </span>
+                )}
+                {activeSlot === idx && parseFloat(slot.amount) > 0 && (
+                  <div className="absolute -bottom-2 text-[8px] bg-blue-600 text-white px-1 py-0.5 rounded whitespace-nowrap">
+                    Total: ₹{slot.amount}
+                  </div>
                 )}
               </div>
             </button>
