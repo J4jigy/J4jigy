@@ -64,6 +64,8 @@ const CashOutEntry = ({ onBack }) => {
   const [showAddProductModal, setShowAddProductModal] = useState(false);
   const [showBarcodeModal, setShowBarcodeModal] = useState(false);
   const [showCategoryList, setShowCategoryList] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleteAction, setDeleteAction] = useState(null);
   
   const [selectedCategory, setSelectedCategory] = useState('');
   const [newEntryTitle, setNewEntryTitle] = useState('');
