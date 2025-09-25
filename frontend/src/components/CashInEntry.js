@@ -555,6 +555,12 @@ const CashInEntry = ({ onBack }) => {
                 <Plus className="w-4 h-4 mr-2" />
                 Add New Product
               </Button>
+              <Button
+                onClick={resetQuantities}
+                className="bg-orange-600 hover:bg-orange-700 text-white"
+              >
+                Reset Quantity
+              </Button>
             </div>
             {products.map((product) => (
               <div key={product} className="flex items-center justify-between">
