@@ -470,6 +470,12 @@ async def list_items(
     request: Request,
     current_user: User = Depends(get_current_user),
     search: Optional[str] = Query(default=None),
+
+@api_router.options("/auth/login")
+async def options_login():
+    # Explicitly handle CORS preflight for login
+    return Response(status_code=204)
+
     sort: str = Query(default='name_asc'),
     page: int = Query(default=1, ge=1),
     page_size: int = Query(default=25, ge=1, le=200)
