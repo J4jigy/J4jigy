@@ -677,6 +677,309 @@ async def dashboard_summary(current_user: User = Depends(get_current_user)):
     net = you_will_receive - you_will_give
     return DashboardSummary(you_will_give=you_will_give, you_will_receive=you_will_receive, net_position=net)
 
+# ===================== Transaction Endpoints =====================
+
+class TransactionCreate(BaseModel):
+    description: str
+    amount: float
+    transaction_type: TransactionType
+    debit_account: str = "Cash"
+    credit_account: str = "General"
+
+@api_router.post("/transactions", response_model=Transaction)
+async def create_transaction(
+    transaction: TransactionCreate,
+    request: Request,
+    current_user: User = Depends(get_current_user)
+):
+    """Create a new transaction"""
+    try:
+        # Create transaction document
+        transaction_doc = {
+            "id": str(uuid.uuid4()),
+            "user_id": current_user.id,
+            "description": transaction.description,
+            "amount": transaction.amount,
+            "transaction_type": transaction.transaction_type,
+            "debit_account": transaction.debit_account,
+            "credit_account": transaction.credit_account,
+            "created_at": datetime.now(timezone.utc),
+            "status": "completed"
+        }
+        
+        # Insert into database
+        await db.transactions.insert_one(transaction_doc)
+        
+        # Log audit event
+        await log_audit_event(
+            AuditAction.CREATE,
+            "transaction",
+            current_user.id,
+            {"amount": transaction.amount, "type": transaction.transaction_type},
+            request,
+            True
+        )
+        
+        return Transaction(**transaction_doc)
+        
+    except Exception as e:
+        await log_audit_event(
+            AuditAction.CREATE,
+            "transaction",
+            current_user.id,
+            {"error": str(e)},
+            request,
+            False
+        )
+        raise HTTPException(status_code=500, detail="Failed to create transaction")
+
+@api_router.get("/transactions")
+async def get_transactions(
+    current_user: User = Depends(get_current_user),
+    transaction_type: Optional[TransactionType] = Query(default=None),
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=25, ge=1, le=200)
+):
+    """Get user's transactions with pagination"""
+    try:
+        # Build query
+        query = {"user_id": current_user.id}
+        if transaction_type:
+            query["transaction_type"] = transaction_type
+        
+        # Get total count
+        total = await db.transactions.count_documents(query)
+        
+        # Get paginated results
+        skip = (page - 1) * page_size
+        cursor = db.transactions.find(query).sort("created_at", -1).skip(skip).limit(page_size)
+        transactions = await cursor.to_list(length=None)
+        
+        # Convert ObjectId to string
+        for transaction in transactions:
+            if "_id" in transaction:
+                del transaction["_id"]
+        
+        return {
+            "transactions": transactions,
+            "total": total,
+            "page": page,
+            "page_size": page_size,
+            "total_pages": (total + page_size - 1) // page_size
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Failed to fetch transactions")
+
+@api_router.post("/transactions/cash-in", response_model=Transaction)
+async def create_cash_in(
+    transaction: TransactionCreate,
+    request: Request,
+    current_user: User = Depends(get_current_user)
+):
+    """Create a cash-in transaction"""
+    transaction.transaction_type = TransactionType.CASH_IN
+    return await create_transaction(transaction, request, current_user)
+
+@api_router.post("/transactions/cash-out", response_model=Transaction)
+async def create_cash_out(
+    transaction: TransactionCreate,
+    request: Request,
+    current_user: User = Depends(get_current_user)
+):
+    """Create a cash-out transaction"""
+    transaction.transaction_type = TransactionType.CASH_OUT
+    return await create_transaction(transaction, request, current_user)
+
+# ===================== Admin Endpoints =====================
+
+@api_router.get("/admin/users")
+async def get_admin_users(
+    current_user: User = Depends(get_current_user),
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=25, ge=1, le=200)
+):
+    """Get all users (admin only)"""
+    if current_user.role != UserRole.ADMIN:
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    try:
+        # Get total count
+        total = await db.users.count_documents({})
+        
+        # Get paginated results
+        skip = (page - 1) * page_size
+        cursor = db.users.find({}).sort("created_at", -1).skip(skip).limit(page_size)
+        users = await cursor.to_list(length=None)
+        
+        # Remove sensitive data and convert ObjectId
+        for user in users:
+            if "_id" in user:
+                del user["_id"]
+            if "password_hash" in user:
+                del user["password_hash"]
+        
+        return {
+            "users": users,
+            "total": total,
+            "page": page,
+            "page_size": page_size,
+            "total_pages": (total + page_size - 1) // page_size
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Failed to fetch users")
+
+@api_router.get("/admin/invites")
+async def get_admin_invites(
+    current_user: User = Depends(get_current_user),
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=25, ge=1, le=200)
+):
+    """Get all invite codes (admin only)"""
+    if current_user.role != UserRole.ADMIN:
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    try:
+        # Get total count
+        total = await db.invite_codes.count_documents({})
+        
+        # Get paginated results
+        skip = (page - 1) * page_size
+        cursor = db.invite_codes.find({}).sort("created_at", -1).skip(skip).limit(page_size)
+        invites = await cursor.to_list(length=None)
+        
+        # Convert ObjectId to string
+        for invite in invites:
+            if "_id" in invite:
+                invite["id"] = str(invite["_id"])
+                del invite["_id"]
+        
+        return {
+            "invites": invites,
+            "total": total,
+            "page": page,
+            "page_size": page_size,
+            "total_pages": (total + page_size - 1) // page_size
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Failed to fetch invites")
+
+@api_router.post("/admin/invites")
+async def create_invite(
+    current_user: User = Depends(get_current_user),
+    expires_in_days: int = Query(default=30, ge=1, le=365)
+):
+    """Create a new invite code (admin only)"""
+    if current_user.role != UserRole.ADMIN:
+        raise HTTPException(status_code=403, detail="Admin access required")
+    
+    try:
+        invite_code = {
+            "id": str(uuid.uuid4()),
+            "code": str(uuid.uuid4())[:8].upper(),
+            "created_by": current_user.id,
+            "created_at": datetime.now(timezone.utc),
+            "expires_at": datetime.now(timezone.utc) + timedelta(days=expires_in_days),
+            "max_uses": 1,
+            "current_uses": 0,
+            "is_active": True
+        }
+        
+        await db.invite_codes.insert_one(invite_code)
+        
+        # Remove ObjectId for response
+        if "_id" in invite_code:
+            del invite_code["_id"]
+        
+        return invite_code
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Failed to create invite")
+
+# ===================== Account Management Endpoints =====================
+
+@api_router.get("/accounts")
+async def get_accounts(
+    current_user: User = Depends(get_current_user),
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=25, ge=1, le=200)
+):
+    """Get user's accounts"""
+    try:
+        # Get total count
+        query = {"user_id": current_user.id}
+        total = await db.accounts.count_documents(query)
+        
+        # Get paginated results
+        skip = (page - 1) * page_size
+        cursor = db.accounts.find(query).sort("created_at", -1).skip(skip).limit(page_size)
+        accounts = await cursor.to_list(length=None)
+        
+        # Convert ObjectId to string
+        for account in accounts:
+            if "_id" in account:
+                account["id"] = str(account["_id"])
+                del account["_id"]
+        
+        return {
+            "accounts": accounts,
+            "total": total,
+            "page": page,
+            "page_size": page_size,
+            "total_pages": (total + page_size - 1) // page_size
+        }
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Failed to fetch accounts")
+
+@api_router.post("/accounts")
+async def create_account(
+    account_data: dict,
+    request: Request,
+    current_user: User = Depends(get_current_user)
+):
+    """Create a new account"""
+    try:
+        account_doc = {
+            "id": str(uuid.uuid4()),
+            "user_id": current_user.id,
+            "name": account_data.get("name", ""),
+            "account_type": account_data.get("account_type", "asset"),
+            "balance": account_data.get("balance", 0.0),
+            "created_at": datetime.now(timezone.utc)
+        }
+        
+        await db.accounts.insert_one(account_doc)
+        
+        # Log audit event
+        await log_audit_event(
+            AuditAction.CREATE,
+            "account",
+            current_user.id,
+            {"name": account_doc["name"]},
+            request,
+            True
+        )
+        
+        # Remove ObjectId for response
+        if "_id" in account_doc:
+            del account_doc["_id"]
+        
+        return account_doc
+        
+    except Exception as e:
+        await log_audit_event(
+            AuditAction.CREATE,
+            "account",
+            current_user.id,
+            {"error": str(e)},
+            request,
+            False
+        )
+        raise HTTPException(status_code=500, detail="Failed to create account")
+
 # Health/Ping endpoint
 @api_router.get("/ping")
 async def ping():
