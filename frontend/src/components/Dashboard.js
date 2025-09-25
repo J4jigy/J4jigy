@@ -44,6 +44,9 @@ export default function Dashboard({ user, logout }) {
   const [businessToDelete, setBusinessToDelete] = useState(null);
   const [newBusinessName, setNewBusinessName] = useState('');
   const [newBusinessType, setNewBusinessType] = useState('Retail');
+  const [newBusinessGST, setNewBusinessGST] = useState('');
+  const [newBusinessAddress, setNewBusinessAddress] = useState('');
+  const [newBusinessPhone, setNewBusinessPhone] = useState('');
   
   const navigate = useNavigate();
 
