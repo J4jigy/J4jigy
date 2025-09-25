@@ -361,6 +361,7 @@ const CashInEntry = ({ onBack }) => {
               onClick={() => {
                 setActiveSlot(idx);
                 setAmount(slot.amount);
+                setPaymentMode(slot.paymentMode || 'Cash');
               }}
               className={`aspect-square rounded-md flex items-center justify-center border transition ${
                 activeSlot === idx ? 'bg-blue-700 border-blue-500' : 'bg-slate-800 border-slate-700'
