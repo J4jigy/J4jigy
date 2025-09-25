@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the newly implemented Delete Product and Delete Expense functionality in both Cash In and Cash Out screens"
+user_problem_statement: "Test the newly implemented business switching functionality on the dashboard"
 
 backend:
   - task: "Backend services running"
