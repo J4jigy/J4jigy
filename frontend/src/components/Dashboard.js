@@ -426,9 +426,47 @@ export default function Dashboard({ user, logout }) {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Delete Business Confirmation Dialog */}
+      <Dialog open={showDeleteConfirmDialog} onOpenChange={setShowDeleteConfirmDialog}>
+        <DialogContent className="bg-slate-800 border-slate-700">
+          <DialogHeader>
+            <DialogTitle className="text-white">Delete Business</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p className="text-slate-200">
+              Are you sure you want to delete "{businessToDelete?.name}"? This action cannot be undone.
+            </p>
+            <div className="flex gap-2">
+              <Button
+                onClick={() => businessToDelete && handleDeleteBusiness(businessToDelete.id)}
+                className="flex-1 bg-red-600 hover:bg-red-700"
+              >
+                Yes, Delete
+              </Button>
+              <Button
+                onClick={() => {
+                  setShowDeleteConfirmDialog(false);
+                  setBusinessToDelete(null);
+                }}
+                variant="outline"
+                className="flex-1 border-slate-600 text-slate-200"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
       {/* Cash In/Out Floating Buttons */}
       <div className="fixed bottom-6 left-4 right-4">
-        <div className="flex gap-4">
+        <div className="flex gap-4">${
+          businessToDelete && `
+            <div className="business-delete-info hidden">
+              <span>${businessToDelete.name}</span>
+            </div>
+          `
+        }
           <Button 
             className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 rounded-xl shadow-lg"
             onClick={() => navigate('/cash-in')}
