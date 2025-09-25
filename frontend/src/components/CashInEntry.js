@@ -82,10 +82,16 @@ const CashInEntry = ({ onBack }) => {
       try {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length === 6) {
-          setSlots(parsed);
+          // Ensure each slot has paymentMode property
+          const slotsWithPaymentMode = parsed.map(slot => ({
+            ...slot,
+            paymentMode: slot.paymentMode || 'Cash'
+          }));
+          setSlots(slotsWithPaymentMode);
           const activeIndex = parseInt(localStorage.getItem('cashin_active') || '0', 10) || 0;
           setActiveSlot(activeIndex);
-          setAmount(parsed[activeIndex]?.amount || '0');
+          setAmount(slotsWithPaymentMode[activeIndex]?.amount || '0');
+          setPaymentMode(slotsWithPaymentMode[activeIndex]?.paymentMode || 'Cash');
         }
       } catch {}
     }
