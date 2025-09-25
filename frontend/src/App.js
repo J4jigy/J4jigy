@@ -14,6 +14,8 @@ import AdminDashboard from './components/AdminDashboard';
 import CashInEntry from './components/CashInEntry';
 import CashOutEntry from './components/CashOutEntry';
 import ListViewPage from './components/ListViewPage';
+import Dashboard from './components/Dashboard';
+
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 // Prefer same-origin when backend origin matches current origin to avoid CORS; use same-origin on preview by default
