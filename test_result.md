@@ -377,6 +377,30 @@ test_plan:
           agent: "testing"
           comment: "✅ SHRUNKEN ADD NEW EXPENSE MODAL VERIFIED: Modal uses max-w-sm (384px width) with proper responsive design (w-full mx-4). All form fields visible and functional: Expense Name field, Amount and Category in 2-column layout, Measurement and Quantity (with +/- buttons) in 2-column layout, Description field, Reference Number field, Add Receipt button, Save Expense button. All inputs use h-8 height and text-sm font size. Modal fits entirely within viewport without horizontal overflow. Compact layout with space-y-3 and gap-3 spacing. All functionality preserved while maintaining smaller footprint. Minor: Modal overlay intercepts some button clicks but core functionality works."
 
+  - task: "Shrunken Product Selection modal"
+    implemented: true
+    working: true
+    file: "CashInEntry.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ SHRUNKEN PRODUCT SELECTION MODAL VERIFIED: Comprehensive testing completed successfully. Modal uses max-w-sm (384px width) with proper responsive design (w-full mx-4). Button layout verified: 'Add New Product' button full width at top (h-8, text-sm), 'Reset Quantity' and 'Delete Product' buttons side by side below (flex-1, h-8). Scrollable content area confirmed (max-h-[60vh] overflow-y-auto). Enhanced product items with bg-slate-700 p-2 rounded styling. Compact quantity controls (w-7 h-7 buttons, gap-1) and text-sm sizing. Modal fits entirely within viewport bounds without horizontal overflow. All functionality preserved while maintaining smaller footprint."
+
+  - task: "Shrunken Expense Selection modal"
+    implemented: true
+    working: true
+    file: "CashOutEntry.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ SHRUNKEN EXPENSE SELECTION MODAL VERIFIED: Comprehensive testing completed successfully. Modal uses max-w-sm (384px width) with proper responsive design (w-full mx-4). Button layout verified: 'Add New Expense' button full width at top (h-8, text-sm), 'Reset Quantity' and 'Delete Expense' buttons side by side below (flex-1, h-8). Scrollable content area confirmed (max-h-[60vh] overflow-y-auto). Enhanced expense items with bg-slate-700 p-2 rounded styling. Compact quantity controls (w-7 h-7 buttons, gap-1) and text-sm sizing. Individual delete buttons (✕) present and compact. Modal fits entirely within viewport bounds without horizontal overflow. All functionality preserved while maintaining smaller footprint."
+
 agent_communication:
     - agent: "main"
       message: "Fixed compile error in CashOutEntry.js by removing duplicate expenseMeasurement declaration. App now loads successfully. Ready for backend testing."
@@ -400,3 +424,5 @@ agent_communication:
       message: "❌ FIX VERIFICATION FAILED: Both attempted fixes are still not working. 1) Add New Business dialog does NOT auto-close despite setShowAddBusinessDialog(false) implementation - dialog remains visible 2+ seconds after clicking Add Business. Business is added successfully but state change not taking effect. 2) Business deletion modal overlay issue persists - e.stopPropagation() did not resolve the pointer event interception. Modal backdrop still blocks delete button interactions with timeout errors. CRITICAL: Both fixes need deeper investigation - the root causes are not addressed by current implementations."
     - agent: "testing"
       message: "SHRUNKEN MODAL TESTING COMPLETE: ✅ Successfully tested both shrunken modals. ADD NEW PRODUCT MODAL: 384px width (max-w-sm), all fields functional (Selling Price, Cost Price, Quantity, Measurement, HSN Code, Add Barcode, Save Product), proper 2-column layouts, h-8 input heights, fits within viewport. ADD NEW EXPENSE MODAL: 384px width (max-w-sm), all fields functional (Expense Name, Amount, Category, Measurement, Quantity with +/- buttons, Description, Reference Number, Add Receipt, Save Expense), proper 2-column layouts, h-8 input heights, fits within viewport. Both modals maintain full functionality while being compact and responsive. Size optimizations working as designed."
+    - agent: "testing"
+      message: "SHRUNKEN SELECTION MODAL TESTING COMPLETE: ✅ Successfully tested both shrunken SELECTION modals (Product Selection and Expense Selection). PRODUCT SELECTION MODAL: 384px width (max-w-sm), vertical button layout verified ('Add New Product' full width, 'Reset Quantity' and 'Delete Product' side by side), enhanced styling (bg-slate-700 p-2 rounded), compact controls (w-7 h-7), scrollable content (max-h-[60vh]), fits within viewport. EXPENSE SELECTION MODAL: 384px width (max-w-sm), vertical button layout verified ('Add New Expense' full width, 'Reset Quantity' and 'Delete Expense' side by side), enhanced styling (bg-slate-700 p-2 rounded), compact controls (w-7 h-7), individual delete buttons (✕), scrollable content (max-h-[60vh]), fits within viewport. Both selection modals maintain full functionality while being compact and responsive. All size optimizations working as designed."
