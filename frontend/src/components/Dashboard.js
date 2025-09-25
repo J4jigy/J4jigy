@@ -199,10 +199,13 @@ export default function Dashboard({ user, logout }) {
                       </Button>
                       {businesses.length > 1 && (
                         <Button
-                          onClick={() => handleDeleteBusiness(business.id)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteBusiness(business.id);
+                          }}
                           variant="ghost"
                           size="sm"
-                          className="text-red-400 hover:bg-red-900/20"
+                          className="text-red-400 hover:bg-red-900/20 z-50"
                         >
                           <Minus className="w-4 h-4" />
                         </Button>
