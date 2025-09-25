@@ -201,6 +201,16 @@ const CashOutEntry = ({ onBack }) => {
     setSelectedItems({});
   };
 
+  const deleteExpense = (expenseToDelete) => {
+    setExpenses(prev => prev.filter(expense => expense !== expenseToDelete));
+    // Also remove from selected items if it was selected
+    setSelectedItems(prev => {
+      const updated = { ...prev };
+      delete updated[expenseToDelete];
+      return updated;
+    });
+  };
+
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col max-h-screen overflow-hidden">
       {/* Header - Red theme for Cash Out */}
