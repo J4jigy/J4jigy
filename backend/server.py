@@ -489,6 +489,12 @@ async def options_login():
         'purchases': 'purchases',
         'bills': 'bills',
         'expenses': 'expenses',
+
+# Catch-all OPTIONS to satisfy any preflight
+@app.options("/{path:path}")
+async def catch_all_options(path: str):
+    return Response(status_code=204)
+
         'invoices': 'invoices',
         'ratings': 'ratings'
     }
