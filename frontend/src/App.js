@@ -116,15 +116,29 @@ const LoginPage = () => {
         : formData;
 
       let response;
-      if (isLogin) {
-        const form = new URLSearchParams();
-        form.append('username', formData.username);
-        form.append('password', formData.password);
-        response = await axios.post(`${API}${endpoint}`, form, {
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
-      } else {
-        response = await axios.post(`${API}${endpoint}`, payload);
+      const doLogin = async (base) => {
+        if (isLogin) {
+          const form = new URLSearchParams();
+          form.append('username', formData.username);
+          form.append('password', formData.password);
+          return axios.post(`${base}${endpoint}`, form, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+        } else {
+          return axios.post(`${base}${endpoint}`, payload);
+        }
+      };
+
+      // Primary try: same-origin or env-based API
+      try {
+        response = await doLogin(API);
+      } catch (e1) {
+        // Fallback: explicitly use env backend URL if available and not already used
+        const be = process.env.REACT_APP_BACKEND_URL;
+        const alreadySame = API === '/api' && typeof window !== 'undefined' && be && new URL(be).origin === window.location.origin;
+        if (be && !alreadySame) {
+          response = await doLogin(`${be}/api`);
+        } else {
+          throw e1;
+        }
       }
       login(response.data.user, response.data.access_token);
     } catch (error) {
