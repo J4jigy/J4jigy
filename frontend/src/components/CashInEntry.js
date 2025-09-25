@@ -33,7 +33,7 @@ const CashInEntry = ({ onBack }) => {
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [selectedTime, setSelectedTime] = useState(new Date().toTimeString().slice(0, 5));
   const [selectedCustomer, setSelectedCustomer] = useState('');
-  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [selectedItems, setSelectedItems] = useState({});
   const [paymentMode, setPaymentMode] = useState('Cash');
   
   // Modal states
