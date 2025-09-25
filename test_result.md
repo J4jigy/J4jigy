@@ -270,8 +270,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Delete Product functionality in Cash In Products modal"
-    - "Delete Expense functionality in Cash Out Expenses modal"
+    - "Delete Product and Delete Expense functionality testing completed successfully"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
