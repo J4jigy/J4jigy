@@ -379,10 +379,10 @@ const CashInEntry = ({ onBack }) => {
                     ₹{slot.amount}
                   </span>
                 )}
-                {/* Enhanced Total Amount Display for Active Slot */}
+                {/* Enhanced Total Amount Display for Active Slot - Always Visible */}
                 {activeSlot === idx && (
-                  <div className="absolute -bottom-3 text-[10px] bg-blue-600 text-white px-2 py-1 rounded font-bold whitespace-nowrap border border-blue-400">
-                    Total: ₹{slot.amount}
+                  <div className="absolute -bottom-4 text-[11px] bg-gradient-to-r from-blue-600 to-blue-700 text-white px-3 py-1.5 rounded-lg font-bold whitespace-nowrap border border-blue-400 shadow-lg">
+                    Total: ₹{slot.amount || '0'}
                   </div>
                 )}
               </div>
