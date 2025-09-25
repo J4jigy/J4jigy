@@ -478,14 +478,20 @@ async def list_items(
     current_user: User = Depends(get_current_user),
     search: Optional[str] = Query(default=None),
 
+from fastapi import Header
+
 @api_router.options("/auth/login")
-async def options_login(origin: Optional[str] = None, access_control_request_headers: Optional[str] = None, access_control_request_method: Optional[str] = None):
+async def options_login(
+    origin: Optional[str] = Header(default=None),
+    access_control_request_headers: Optional[str] = Header(default=None),
+    access_control_request_method: Optional[str] = Header(default=None),
+):
     resp = Response(status_code=204)
     if origin:
         resp.headers["Access-Control-Allow-Origin"] = origin
         resp.headers["Vary"] = "Origin"
     resp.headers["Access-Control-Allow-Methods"] = access_control_request_method or "POST, OPTIONS"
-    resp.headers["Access-Control-Allow-Headers"] = access_control_request_headers or "*"
+    resp.headers["Access-Control-Allow-Headers"] = access_control_request_headers or "Authorization, Content-Type, *"
     resp.headers["Access-Control-Allow-Credentials"] = "true"
     return resp
 
