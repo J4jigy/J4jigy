@@ -488,19 +488,11 @@ async def fetch_list(collection_name: str, user_id: str, search: Optional[str], 
     return {"items": items, "total": total, "page": page, "page_size": page_size}
 
 
-@api_router.get("/lists/{list_name}")
+from fastapi import Header
 
 @api_router.options("/{path:path}")
 async def api_options_catch_all(path: str):
     return Response(status_code=204)
-
-async def list_items(
-    list_name: str,
-    request: Request,
-    current_user: User = Depends(get_current_user),
-    search: Optional[str] = Query(default=None),
-
-from fastapi import Header
 
 @api_router.options("/auth/login")
 async def options_login(
@@ -517,6 +509,12 @@ async def options_login(
     resp.headers["Access-Control-Allow-Credentials"] = "true"
     return resp
 
+@api_router.get("/lists/{list_name}")
+async def list_items(
+    list_name: str,
+    request: Request,
+    current_user: User = Depends(get_current_user),
+    search: Optional[str] = Query(default=None),
     sort: str = Query(default='name_asc'),
     page: int = Query(default=1, ge=1),
     page_size: int = Query(default=25, ge=1, le=200)
@@ -528,7 +526,15 @@ async def options_login(
         'purchases': 'purchases',
         'bills': 'bills',
         'expenses': 'expenses',
+        'invoices': 'invoices',
+        'ratings': 'ratings'
+    }
+    if list_name not in allowed:
+        raise HTTPException(status_code=404, detail="List not found")
 
+    data = await fetch_list(allowed[list_name], current_user.id, search, sort, page, page_size)
+    await log_audit_event(AuditAction.READ, f"list:{list_name}", current_user.id, {"search": search, "sort": sort}, request, True)
+    return data
 
 class RegisterRequest(BaseModel):
     username: str
