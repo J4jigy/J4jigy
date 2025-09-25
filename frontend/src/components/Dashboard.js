@@ -141,6 +141,7 @@ export default function Dashboard({ user, logout }) {
   const personalTiles = [
     { name: 'Offers &', subtitle: 'Discounts', icon: Gift, iconColor: 'text-red-400' },
     { name: 'Chat', subtitle: '', icon: MessageCircle, iconColor: 'text-blue-400' },
+    { name: 'To Do List', subtitle: '', icon: CheckSquare, iconColor: 'text-green-400' },
   ];
 
   const getTilesForTab = (tab) => {
