@@ -140,8 +140,6 @@ class AuditAction(str, Enum):
 class PasswordPolicy(BaseModel):
     min_length: int = 12
     require_uppercase: bool = True
-from fastapi.responses import Response
-
     require_lowercase: bool = True
     require_numbers: bool = True
     require_special: bool = True
