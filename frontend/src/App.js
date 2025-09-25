@@ -17,7 +17,17 @@ import CashOutEntry from './components/CashOutEntry';
 import ListViewPage from './components/ListViewPage';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// Prefer same-origin when backend origin matches current origin to avoid CORS
+let API = `${BACKEND_URL}/api`;
+try {
+  const loc = typeof window !== 'undefined' ? window.location.origin : null;
+  if (loc && BACKEND_URL && new URL(BACKEND_URL).origin === loc) {
+    API = '/api';
+  }
+} catch (_) {
+  // fallback to env URL
+}
+
 
 // Auth Context
 const AuthContext = React.createContext();
