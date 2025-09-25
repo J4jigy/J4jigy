@@ -645,6 +645,33 @@ const CashOutEntry = ({ onBack }) => {
                 </Select>
               </div>
             </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label className="text-slate-200">Measurement</Label>
+                <Select value={expenseMeasurement} onValueChange={setExpenseMeasurement}>
+                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Piece">Piece</SelectItem>
+                    <SelectItem value="Kg">Kg</SelectItem>
+                    <SelectItem value="Grams">Grams</SelectItem>
+                    <SelectItem value="Ltr">Ltr</SelectItem>
+                    <SelectItem value="Meter">Meter</SelectItem>
+                    <SelectItem value="Feet">Feet</SelectItem>
+                    <SelectItem value="Pack">Pack</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label className="text-slate-200">Quantity</Label>
+                <div className="flex items-center gap-2">
+                  <Button onClick={() => setExpenseMeasurement(expenseMeasurement)} className="bg-slate-600" size="sm">−</Button>
+                  <span className="text-white text-sm">{expenseMeasurement}</span>
+                  <Button onClick={() => setExpenseMeasurement(expenseMeasurement)} className="bg-slate-600" size="sm">+</Button>
+                </div>
+              </div>
+            </div>
             <div>
               <Label className="text-slate-200">Description</Label>
               <Input className="bg-slate-700 border-slate-600 text-white" placeholder="Enter description" />
