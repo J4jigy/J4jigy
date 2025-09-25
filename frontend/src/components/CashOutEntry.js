@@ -42,6 +42,8 @@ const CashOutEntry = ({ onBack }) => {
     setSelectedItems(prev => ({ ...prev, [name]: (prev[name] || 0) + 1 }));
   };
   const decQty = (name) => {
+  const [expenseQty, setExpenseQty] = useState(1);
+
     setSelectedItems(prev => {
       const curr = prev[name] || 0;
 
