@@ -377,7 +377,14 @@ export default function Dashboard({ user, logout }) {
       </Dialog>
 
       {/* Add New Business Dialog */}
-      <Dialog open={showAddBusinessDialog} onOpenChange={setShowAddBusinessDialog}>
+      <Dialog open={showAddBusinessDialog} onOpenChange={(open) => {
+        setShowAddBusinessDialog(open);
+        if (!open) {
+          // Reset form when dialog closes
+          setNewBusinessName('');
+          setNewBusinessType('Retail');
+        }
+      }}>
         <DialogContent className="bg-slate-800 border-slate-700">
           <DialogHeader>
             <DialogTitle className="text-white">Add New Business</DialogTitle>
@@ -413,18 +420,20 @@ export default function Dashboard({ user, logout }) {
             </div>
             <div className="flex gap-2">
               <Button
-                onClick={handleAddBusiness}
+                onClick={() => {
+                  handleAddBusiness();
+                  // Force close the dialog after adding
+                  setTimeout(() => {
+                    setShowAddBusinessDialog(false);
+                  }, 100);
+                }}
                 className="flex-1 bg-green-600 hover:bg-green-700"
                 disabled={!newBusinessName.trim()}
               >
                 Add Business
               </Button>
               <Button
-                onClick={() => {
-                  setShowAddBusinessDialog(false);
-                  setNewBusinessName('');
-                  setNewBusinessType('Retail');
-                }}
+                onClick={() => setShowAddBusinessDialog(false)}
                 variant="outline"
                 className="flex-1 border-slate-600 text-slate-200"
               >
