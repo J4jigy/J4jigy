@@ -1,8 +1,7 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Depends, status, Request, BackgroundTasks, Query
+from fastapi import FastAPI, APIRouter, HTTPException, Depends, Request, Query
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from fastapi.responses import JSONResponse
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
@@ -10,9 +9,7 @@ from slowapi.middleware import SlowAPIMiddleware
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
-import logging
 import secrets
-import hashlib
 from pathlib import Path
 from pydantic import BaseModel, Field, validator, EmailStr
 from typing import List, Optional, Dict, Any
@@ -25,9 +22,6 @@ import pyotp
 import qrcode
 import io
 import base64
-from PIL import Image
-import json
-import asyncio
 from cryptography.fernet import Fernet
 import re
 
