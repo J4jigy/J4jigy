@@ -27,6 +27,19 @@ export default function Dashboard({ user, logout }) {
   const [showProfileDialog, setShowProfileDialog] = useState(false);
   const [showInviteCodesDialog, setShowInviteCodesDialog] = useState(false);
   const [inviteCodes, setInviteCodes] = useState([]);
+  
+  // Business switching states
+  const [businesses, setBusinesses] = useState([
+    { id: 1, name: 'Main Business', type: 'Retail' },
+    { id: 2, name: 'Online Store', type: 'E-commerce' },
+    { id: 3, name: 'Consulting Firm', type: 'Services' }
+  ]);
+  const [activeBusiness, setActiveBusiness] = useState(businesses[0]);
+  const [showBusinessDialog, setShowBusinessDialog] = useState(false);
+  const [showAddBusinessDialog, setShowAddBusinessDialog] = useState(false);
+  const [newBusinessName, setNewBusinessName] = useState('');
+  const [newBusinessType, setNewBusinessType] = useState('Retail');
+  
   const navigate = useNavigate();
 
   useEffect(() => {
