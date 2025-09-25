@@ -631,7 +631,7 @@ const CashOutEntry = ({ onBack }) => {
                 Reset Quantity
               </Button>
               <Button
-                onClick={() => setExpenses([])}
+                onClick={confirmDeleteAllExpenses}
                 className="bg-red-600 hover:bg-red-700 text-white"
               >
                 Delete Expense
@@ -644,7 +644,7 @@ const CashOutEntry = ({ onBack }) => {
                   <Button onClick={() => decQty(expense)} className="bg-slate-600" size="sm">−</Button>
                   <span className="text-white text-sm min-w-[24px] text-center">{selectedItems[expense] || 0}</span>
                   <Button onClick={() => incQty(expense)} className="bg-red-600 hover:bg-red-700" size="sm">+</Button>
-                  <Button onClick={() => deleteExpense(expense)} className="bg-red-500 hover:bg-red-600" size="sm">✕</Button>
+                  <Button onClick={() => confirmDeleteExpense(expense)} className="bg-red-500 hover:bg-red-600" size="sm">✕</Button>
                 </div>
               </div>
             ))}
