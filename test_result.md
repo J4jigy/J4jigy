@@ -264,7 +264,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Reset Quantity functionality testing completed successfully"
+    - "Delete Product functionality in Cash In Products modal"
+    - "Delete Expense functionality in Cash Out Expenses modal"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
