@@ -348,9 +348,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Business deletion functionality - modal overlay issue"
+    - "POS Slots Enhanced Total Display - Remove Payment Mode Badges"
   stuck_tasks:
     - "Business deletion functionality"
+    - "POS Slots Enhanced Total Display - Remove Payment Mode Badges"
   test_all: false
   test_priority: "high_first"
 
