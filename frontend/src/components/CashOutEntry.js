@@ -41,6 +41,8 @@ const CashOutEntry = ({ onBack }) => {
   const decQty = (name) => {
     setSelectedItems(prev => {
       const curr = prev[name] || 0;
+  const [expenseMeasurement, setExpenseMeasurement] = useState('Piece');
+
       if (curr <= 1) {
         const copy = { ...prev };
         delete copy[name];
