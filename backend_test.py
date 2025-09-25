@@ -259,6 +259,241 @@ def test_list_endpoints():
         results.add_fail("List Endpoints", "No list endpoints accessible")
         return False
 
+def test_transaction_apis():
+    """Test transaction API endpoints"""
+    print("\n🔍 Testing Transaction APIs...")
+    
+    if not auth_token:
+        results.add_fail("Transaction APIs", "No auth token available")
+        return False
+    
+    headers = {"Authorization": f"Bearer {auth_token}"}
+    
+    # Test GET /api/transactions
+    response = make_request("GET", "/transactions", headers=headers)
+    if not response:
+        results.add_fail("Transaction APIs - GET", "Request failed")
+        return False
+    
+    if response.status_code == 200:
+        try:
+            data = response.json()
+            if "transactions" in data and "total" in data:
+                results.add_pass("Transaction APIs - GET transactions")
+            else:
+                results.add_fail("Transaction APIs - GET", f"Invalid response format: {data}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Transaction APIs - GET", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Transaction APIs - GET", f"HTTP {response.status_code}: {response.text}")
+        return False
+    
+    # Test POST /api/transactions (create transaction)
+    transaction_data = {
+        "description": "Test business expense",
+        "amount": 150.75,
+        "transaction_type": "cash_out",
+        "debit_account": "Operating Expenses",
+        "credit_account": "Cash"
+    }
+    
+    response = make_request("POST", "/transactions", transaction_data, headers=headers)
+    if not response:
+        results.add_fail("Transaction APIs - POST", "Request failed")
+        return False
+    
+    if response.status_code == 200:
+        try:
+            data = response.json()
+            if "id" in data and "amount" in data and data["amount"] == 150.75:
+                results.add_pass("Transaction APIs - POST create transaction")
+            else:
+                results.add_fail("Transaction APIs - POST", f"Invalid response format: {data}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Transaction APIs - POST", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Transaction APIs - POST", f"HTTP {response.status_code}: {response.text}")
+        return False
+    
+    # Test POST /api/transactions/cash-in
+    cash_in_data = {
+        "description": "Client payment received",
+        "amount": 2500.00,
+        "debit_account": "Cash",
+        "credit_account": "Sales Revenue"
+    }
+    
+    response = make_request("POST", "/transactions/cash-in", cash_in_data, headers=headers)
+    if response and response.status_code == 200:
+        results.add_pass("Transaction APIs - POST cash-in")
+    else:
+        results.add_fail("Transaction APIs - Cash In", f"HTTP {response.status_code if response else 'No response'}: {response.text if response else 'Request failed'}")
+        return False
+    
+    # Test POST /api/transactions/cash-out
+    cash_out_data = {
+        "description": "Office supplies purchase",
+        "amount": 85.50,
+        "debit_account": "Operating Expenses", 
+        "credit_account": "Cash"
+    }
+    
+    response = make_request("POST", "/transactions/cash-out", cash_out_data, headers=headers)
+    if response and response.status_code == 200:
+        results.add_pass("Transaction APIs - POST cash-out")
+        return True
+    else:
+        results.add_fail("Transaction APIs - Cash Out", f"HTTP {response.status_code if response else 'No response'}: {response.text if response else 'Request failed'}")
+        return False
+
+def test_admin_apis():
+    """Test admin API endpoints"""
+    print("\n🔍 Testing Admin APIs...")
+    
+    if not auth_token:
+        results.add_fail("Admin APIs", "No auth token available")
+        return False
+    
+    headers = {"Authorization": f"Bearer {auth_token}"}
+    
+    # Test GET /api/admin/users (should fail for regular user)
+    response = make_request("GET", "/admin/users", headers=headers)
+    if not response:
+        results.add_fail("Admin APIs - Users", "Request failed")
+        return False
+    
+    if response.status_code == 403:
+        results.add_pass("Admin APIs - Users access control (403 for non-admin)")
+    elif response.status_code == 200:
+        # User might have admin role, check response format
+        try:
+            data = response.json()
+            if "users" in data and "total" in data:
+                results.add_pass("Admin APIs - Users endpoint working")
+            else:
+                results.add_fail("Admin APIs - Users", f"Invalid response format: {data}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Admin APIs - Users", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Admin APIs - Users", f"HTTP {response.status_code}: {response.text}")
+        return False
+    
+    # Test GET /api/admin/invites (should fail for regular user)
+    response = make_request("GET", "/admin/invites", headers=headers)
+    if not response:
+        results.add_fail("Admin APIs - Invites GET", "Request failed")
+        return False
+    
+    if response.status_code == 403:
+        results.add_pass("Admin APIs - Invites GET access control (403 for non-admin)")
+    elif response.status_code == 200:
+        # User might have admin role, check response format
+        try:
+            data = response.json()
+            if "invites" in data and "total" in data:
+                results.add_pass("Admin APIs - Invites GET endpoint working")
+            else:
+                results.add_fail("Admin APIs - Invites GET", f"Invalid response format: {data}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Admin APIs - Invites GET", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Admin APIs - Invites GET", f"HTTP {response.status_code}: {response.text}")
+        return False
+    
+    # Test POST /api/admin/invites (should fail for regular user)
+    response = make_request("POST", "/admin/invites", headers=headers)
+    if not response:
+        results.add_fail("Admin APIs - Invites POST", "Request failed")
+        return False
+    
+    if response.status_code == 403:
+        results.add_pass("Admin APIs - Invites POST access control (403 for non-admin)")
+        return True
+    elif response.status_code == 200:
+        # User might have admin role, check response format
+        try:
+            data = response.json()
+            if "code" in data and "id" in data:
+                results.add_pass("Admin APIs - Invites POST endpoint working")
+                return True
+            else:
+                results.add_fail("Admin APIs - Invites POST", f"Invalid response format: {data}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Admin APIs - Invites POST", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Admin APIs - Invites POST", f"HTTP {response.status_code}: {response.text}")
+        return False
+
+def test_account_management_apis():
+    """Test account management API endpoints"""
+    print("\n🔍 Testing Account Management APIs...")
+    
+    if not auth_token:
+        results.add_fail("Account Management APIs", "No auth token available")
+        return False
+    
+    headers = {"Authorization": f"Bearer {auth_token}"}
+    
+    # Test GET /api/accounts
+    response = make_request("GET", "/accounts", headers=headers)
+    if not response:
+        results.add_fail("Account Management APIs - GET", "Request failed")
+        return False
+    
+    if response.status_code == 200:
+        try:
+            data = response.json()
+            if "accounts" in data and "total" in data:
+                results.add_pass("Account Management APIs - GET accounts")
+                print(f"ℹ️  Found {data['total']} accounts for user")
+            else:
+                results.add_fail("Account Management APIs - GET", f"Invalid response format: {data}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Account Management APIs - GET", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Account Management APIs - GET", f"HTTP {response.status_code}: {response.text}")
+        return False
+    
+    # Test POST /api/accounts (create account)
+    account_data = {
+        "name": "Test Marketing Budget",
+        "account_type": "expense",
+        "balance": 5000.00
+    }
+    
+    response = make_request("POST", "/accounts", account_data, headers=headers)
+    if not response:
+        results.add_fail("Account Management APIs - POST", "Request failed")
+        return False
+    
+    if response.status_code == 200:
+        try:
+            data = response.json()
+            if "id" in data and "name" in data and data["name"] == "Test Marketing Budget":
+                results.add_pass("Account Management APIs - POST create account")
+                return True
+            else:
+                results.add_fail("Account Management APIs - POST", f"Invalid response format: {data}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Account Management APIs - POST", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Account Management APIs - POST", f"HTTP {response.status_code}: {response.text}")
+        return False
+
 def test_missing_endpoints():
     """Test for missing critical endpoints"""
     print("\n🔍 Testing Missing Critical Endpoints...")
