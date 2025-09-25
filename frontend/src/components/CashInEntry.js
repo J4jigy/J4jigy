@@ -124,6 +124,12 @@ const CashInEntry = ({ onBack }) => {
     setSlots(prev => prev.map((s, idx) => idx === activeSlot ? { ...s, amount: val } : s));
   };
 
+  // Update payment mode for active slot
+  const setPaymentModeForActive = (mode) => {
+    setPaymentMode(mode);
+    setSlots(prev => prev.map((s, idx) => idx === activeSlot ? { ...s, paymentMode: mode } : s));
+  };
+
   const sampleNames = [
     'Aarav Sharma', 'Vivaan Patel', 'Aditya Kumar', 'Vihaan Singh', 'Arjun Gupta',
     'Sai Krishna', 'Reyansh Agarwal', 'Ayaan Shah', 'Krishna Reddy', 'Ishaan Jain',
