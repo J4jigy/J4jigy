@@ -228,10 +228,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Backend API testing"
-    - "Login functionality"
-    - "Cash In/Out entry pages"
-  stuck_tasks: []
+    - "Fix missing fetch_list function"
+    - "Implement transaction APIs"
+    - "Implement admin APIs"
+    - "Implement account management APIs"
+  stuck_tasks: 
+    - "List endpoints functionality"
   test_all: false
   test_priority: "high_first"
 
