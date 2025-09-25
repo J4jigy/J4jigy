@@ -35,6 +35,9 @@ const CashOutEntry = ({ onBack }) => {
   const [selectedCustomer, setSelectedCustomer] = useState('');
   const [selectedItems, setSelectedItems] = useState({});
 
+  // Measurement for Add New Expense modal
+  const [expenseMeasurement, setExpenseMeasurement] = useState('Piece');
+
   const incQty = (name) => {
     setSelectedItems(prev => ({ ...prev, [name]: (prev[name] || 0) + 1 }));
   };
