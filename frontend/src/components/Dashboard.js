@@ -176,7 +176,14 @@ export default function Dashboard({ user, logout }) {
         
         {/* Business Switcher */}
         <div className="flex-1 flex justify-center">
-          <Dialog open={showBusinessDialog} onOpenChange={setShowBusinessDialog}>
+          <Dialog open={showBusinessDialog} onOpenChange={(open) => {
+            setShowBusinessDialog(open);
+            if (!open) {
+              // Reset any pending delete operations when main dialog closes
+              setShowDeleteConfirmDialog(false);
+              setBusinessToDelete(null);
+            }
+          }}>
             <DialogTrigger asChild>
               <Button variant="ghost" className="text-white hover:bg-slate-700 flex items-center gap-2">
                 <Building className="w-4 h-4 text-orange-400" />
@@ -210,12 +217,13 @@ export default function Dashboard({ user, logout }) {
                       {businesses.length > 1 && (
                         <Button
                           onClick={(e) => {
+                            e.preventDefault();
                             e.stopPropagation();
                             confirmDeleteBusiness(business.id, business.name);
                           }}
                           variant="ghost"
-                          size="sm"
-                          className="text-red-400 hover:bg-red-900/20 z-50"
+                          size="sm" 
+                          className="text-red-400 hover:bg-red-900/20 hover:text-red-300 shrink-0"
                         >
                           <Minus className="w-4 h-4" />
                         </Button>
