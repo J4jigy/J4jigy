@@ -1,7 +1,8 @@
+/* Updated App.js with route to ListViewPage and navigation from tiles */
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { Button } from './components/ui/button';
 import { Card, CardContent } from './components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
@@ -13,7 +14,7 @@ import { Home, UserCircle, Plus, Minus, CreditCard, Users, Building, TrendingUp,
 import AdminDashboard from './components/AdminDashboard';
 import CashInEntry from './components/CashInEntry';
 import CashOutEntry from './components/CashOutEntry';
-import ListViewModal from './components/ListViewModal';
+import ListViewPage from './components/ListViewPage';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -76,7 +77,7 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-// Login Component
+// Login Component (same as before)
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
@@ -248,8 +249,7 @@ const Dashboard = () => {
   const [inviteCodes, setInviteCodes] = useState([]);
   const [newInviteCode, setNewInviteCode] = useState(null);
   const [transactionData, setTransactionData] = useState({ description: '', amount: '' });
-  const [listModal, setListModal] = useState({ open: false, title: '', items: [], defaultSort: 'name_asc' });
-  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchSummary();
@@ -264,25 +264,6 @@ const Dashboard = () => {
     }
   };
 
-  const handleTransaction = async (type) => {
-    try {
-      const payload = {
-        description: transactionData.description,
-        amount: parseFloat(transactionData.amount),
-        transaction_type: type,
-        category: 'general'
-      };
-
-      await axios.post(`${API}/transactions`, payload);
-      setTransactionData({ description: '', amount: '' });
-      setShowCashInDialog(false);
-      setShowCashOutDialog(false);
-      fetchSummary(); // Refresh summary
-    } catch (error) {
-      console.error('Transaction failed:', error);
-    }
-  };
-
   const handleCreateInviteCode = async () => {
     try {
       const response = await axios.post(`${API}/admin/invite-codes`);
@@ -290,7 +271,6 @@ const Dashboard = () => {
       console.log(`New invite code created: ${response.data.code}`);
     } catch (error) {
       console.error('Failed to create invite code:', error);
-      console.error('Failed to create invite code');
     }
   };
 
@@ -305,27 +285,27 @@ const Dashboard = () => {
   };
 
   const businessTiles = [
-    { name: 'Credit Score', subtitle: '', icon: ShieldCheck, iconColor: 'text-blue-400', sub: ['Score','History','Improve'] },
-    { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400', sub: ['Add Customer','Outstanding','Recent','Segments'] },
-    { name: 'Suppliers', subtitle: 'Creditors', icon: Truck, iconColor: 'text-indigo-400', sub: ['Add Supplier','Payables','Recent','Ledger'] },
-    { name: 'Community', subtitle: 'Ratings', icon: Star, iconColor: 'text-yellow-400', sub: ['Rate Customer','Rate Supplier','View Ratings'] },
-    { name: 'Staff', subtitle: '', icon: Users, iconColor: 'text-purple-400', sub: ['Add Staff','Roster','Payroll','Attendance'] }
+    { name: 'Credit Score', subtitle: '', icon: ShieldCheck, iconColor: 'text-blue-400' },
+    { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400' },
+    { name: 'Suppliers', subtitle: 'Creditors', icon: Truck, iconColor: 'text-indigo-400' },
+    { name: 'Community', subtitle: 'Ratings', icon: Star, iconColor: 'text-yellow-400' },
+    { name: 'Staff', subtitle: '', icon: Users, iconColor: 'text-purple-400' }
   ];
 
   const financeTiles = [
-    { name: "Company", subtitle: "Purchase", icon: ShoppingCart, iconColor: 'text-orange-400', sub: ['Add PO','Vendors','GRN','Bills'] },
-    { name: 'Bills', subtitle: 'Recharge', icon: Zap, iconColor: 'text-green-400', sub: ['Mobile','DTH','Electricity','Water'] },
+    { name: "Company", subtitle: "Purchase", icon: ShoppingCart, iconColor: 'text-orange-400' },
+    { name: 'Bills', subtitle: 'Recharge', icon: Zap, iconColor: 'text-green-400' },
     { name: 'Rent', subtitle: '', icon: Building, iconColor: 'text-blue-400' },
-    { name: 'Other', subtitle: 'Expenses', icon: Coins, iconColor: 'text-purple-400', sub: ['Travel','Office','Marketing','Misc'] },
-    { name: 'Bills &', subtitle: 'Invoices', icon: Receipt, iconColor: 'text-yellow-400', sub: ['Create Invoice','View Bills','GST'] },
+    { name: 'Other', subtitle: 'Expenses', icon: Coins, iconColor: 'text-purple-400' },
+    { name: 'Bills &', subtitle: 'Invoices', icon: Receipt, iconColor: 'text-yellow-400' },
     { name: 'Stock', subtitle: 'Management', icon: Package, iconColor: 'text-orange-400' },
     { name: 'Profit', subtitle: 'Loss', icon: TrendingUp, iconColor: 'text-emerald-400' },
     { name: 'Balance', subtitle: 'Sheet', icon: BarChart3, iconColor: 'text-indigo-400' }
   ];
 
   const personalTiles = [
-    { name: 'Offers &', subtitle: 'Discounts', icon: Gift, iconColor: 'text-red-400', sub: ['Coupons','Redeem','History'] },
-    { name: 'Chat', subtitle: '', icon: MessageCircle, iconColor: 'text-blue-400', sub: ['Support','Broadcast','Contacts'] }
+    { name: 'Offers &', subtitle: 'Discounts', icon: Gift, iconColor: 'text-red-400' },
+    { name: 'Chat', subtitle: '', icon: MessageCircle, iconColor: 'text-blue-400' }
   ];
 
   const getTilesForTab = (tab) => {
@@ -337,26 +317,23 @@ const Dashboard = () => {
     }
   };
 
-  const [listState, setListState] = useState({ loading: false });
-  const openList = async (title, endpoint, defaultSort = 'name_asc') => {
-    try {
-      setListState({ loading: true });
-      const resp = await axios.get(`${API}${endpoint}`, { params: { sort: defaultSort, page: 1, page_size: 25 } });
-      setListModal({ open: true, title, items: resp.data.items || [], defaultSort });
-    } catch (e) {
-      console.error('Failed to load list', e);
-      setListModal({ open: true, title, items: [], defaultSort });
-    } finally {
-      setListState({ loading: false });
-    }
+  const handleTileClick = (tile) => {
+    const name = `${tile.name} ${tile.subtitle}`.trim().toLowerCase();
+    if (name.startsWith('customers')) navigate('/list/customers');
+    else if (name.startsWith('suppliers')) navigate('/list/suppliers');
+    else if (name.startsWith('community')) navigate('/list/ratings');
+    else if (name.startsWith('staff')) navigate('/list/staff');
+    else if (name.startsWith('company purchase') || name.startsWith('company')) navigate('/list/purchases');
+    else if (name.startsWith('bills recharge') || tile.name === 'Bills') navigate('/list/bills');
+    else if (name.startsWith('other')) navigate('/list/expenses');
+    else if (name.startsWith('bills &')) navigate('/list/invoices');
   };
 
-  // Show Cash In Entry screen
+  // Show Cash In/Out Entry screen
   if (showCashInEntry) {
     return <CashInEntry onBack={() => setShowCashInEntry(false)} />;
   }
 
-  // Show Cash Out Entry screen
   if (showCashOutEntry) {
     return <CashOutEntry onBack={() => setShowCashOutEntry(false)} />;
   }
@@ -467,27 +444,9 @@ const Dashboard = () => {
       <div className="px-4">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full" data-testid="main-tabs">
           <TabsList className="grid w-full grid-cols-3 bg-slate-800/80 border border-slate-700 rounded-lg">
-            <TabsTrigger 
-              value="business" 
-              data-testid="business-tab" 
-              className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md"
-            >
-              Business
-            </TabsTrigger>
-            <TabsTrigger 
-              value="finance" 
-              data-testid="finance-tab" 
-              className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md"
-            >
-              Finance
-            </TabsTrigger>
-            <TabsTrigger 
-              value="personal" 
-              data-testid="personal-tab" 
-              className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md"
-            >
-              Personal
-            </TabsTrigger>
+            <TabsTrigger value="business" data-testid="business-tab" className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md">Business</TabsTrigger>
+            <TabsTrigger value="finance" data-testid="finance-tab" className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md">Finance</TabsTrigger>
+            <TabsTrigger value="personal" data-testid="personal-tab" className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md">Personal</TabsTrigger>
           </TabsList>
 
           {['business', 'finance', 'personal'].map((tab) => (
@@ -496,32 +455,13 @@ const Dashboard = () => {
                 {getTilesForTab(tab).map((tile, index) => {
                   const IconComponent = tile.icon;
                   return (
-                    <Card 
-                      key={index}
-                      onClick={() => {
-                        const name = `${tile.name} ${tile.subtitle}`.trim().toLowerCase();
-                        if (name.startsWith('customers')) openList('Customers / Debtors', '/lists/customers', 'name_asc');
-                        else if (name.startsWith('suppliers')) openList('Suppliers / Creditors', '/lists/suppliers', 'name_asc');
-                        else if (name.startsWith('community')) openList('Community Ratings', '/lists/ratings', 'newest');
-                        else if (name.startsWith('staff')) openList('Staff', '/lists/staff', 'name_asc');
-                        else if (name.startsWith('company purchase') || name.starts_with === undefined ? false : name.startsWith('company')) openList('Company Purchase', '/lists/purchases', 'newest');
-                        else if (name.startsWith('bills recharge') || tile.name === 'Bills') openList('Bills / Recharge', '/lists/bills', 'newest');
-                        else if (name.startsWith('other')) openList('Other Expenses', '/lists/expenses', 'newest');
-                        else if (name.startsWith('bills &')) openList('Bills & Invoices', '/lists/invoices', 'newest');
-                      }}
-                      className={`bg-slate-700/80 border border-slate-600 hover:bg-slate-600 transition-all duration-200 cursor-pointer shadow-xl aspect-square flex items-center justify-center`}
-                      data-testid={`${tab}-tile-${index}`}
-                    >
+                    <Card key={index} onClick={() => handleTileClick(tile)} className={`bg-slate-700/80 border border-slate-600 hover:bg-slate-600 transition-all duration-200 cursor-pointer shadow-xl aspect-square flex items-center justify-center`} data-testid={`${tab}-tile-${index}`}>
                       <CardContent className="p-3 flex flex-col items-center justify-center text-center relative w-full h-full">
                         <IconComponent className={`w-8 h-8 mb-2 ${tile.iconColor}`} />
                         <div className="text-center">
-                          <p className="text-white text-[12px] font-semibold leading-tight mb-0 break-words">
-                            {tile.name}
-                          </p>
+                          <p className="text-white text-[12px] font-semibold leading-tight mb-0 break-words">{tile.name}</p>
                           {tile.subtitle && (
-                            <p className="text-slate-200 text-[12px] font-medium leading-tight break-words">
-                              {tile.subtitle}
-                            </p>
+                            <p className="text-slate-200 text-[12px] font-medium leading-tight break-words">{tile.subtitle}</p>
                           )}
                         </div>
                       </CardContent>
@@ -547,25 +487,16 @@ const Dashboard = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-white font-mono text-lg">{code.code}</p>
-                      <p className="text-slate-400 text-sm">
-                        Created: {new Date(code.created_at).toLocaleDateString()}
-                      </p>
+                      <p className="text-slate-400 text-sm">Created: {new Date(code.created_at).toLocaleDateString()}</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Badge className={code.used_by ? 'bg-red-600' : 'bg-green-600'}>
-                        {code.used_by ? 'Used' : 'Active'}
-                      </Badge>
-                      <Button
-                        size="sm"
-                        onClick={() => {
-                          const shareUrl = `https://fintracker-56.preview.emergentagent.com/`;
-                          const message = `Join our financial dashboard! Use invite code: ${code.code}\n${shareUrl}`;
-                          const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-                          window.open(whatsappUrl, '_blank');
-                        }}
-                        className="bg-green-600 hover:bg-green-700"
-                        data-testid={`share-whatsapp-${index}`}
-                      >
+                      <Badge className={code.used_by ? 'bg-red-600' : 'bg-green-600'}>{code.used_by ? 'Used' : 'Active'}</Badge>
+                      <Button size="sm" onClick={() => {
+                        const shareUrl = `https://fintracker-56.preview.emergentagent.com/`;
+                        const message = `Join our financial dashboard! Use invite code: ${code.code}\n${shareUrl}`;
+                        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+                        window.open(whatsappUrl, '_blank');
+                      }} className="bg-green-600 hover:bg-green-700" data-testid={`share-whatsapp-${index}`}>
                         <Send className="w-4 h-4 mr-1" />
                         WhatsApp
                       </Button>
@@ -578,26 +509,12 @@ const Dashboard = () => {
         </DialogContent>
       </Dialog>
 
-      {/* List Modal */}
-      <ListViewModal 
-        key={listModal.title}
-        open={listModal.open}
-        onOpenChange={(v) => setListModal(prev => ({ ...prev, open: v }))}
-        title={listModal.title}
-        items={listModal.items}
-        defaultSort={listModal.defaultSort}
-      />
-
       {/* Cash In/Out Buttons */}
       <div className="fixed bottom-6 left-4 right-4">
         <div className="flex gap-4">
           <Dialog open={showCashInDialog} onOpenChange={setShowCashInDialog}>
             <DialogTrigger asChild>
-              <Button 
-                className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 rounded-xl shadow-lg"
-                data-testid="cash-in-button"
-                onClick={() => setShowCashInEntry(true)}
-              >
+              <Button className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 rounded-xl shadow-lg" data-testid="cash-in-button" onClick={() => setShowCashInEntry(true)}>
                 <Plus className="w-5 h-5 mr-2" />
                 Cash In
               </Button>
@@ -606,11 +523,7 @@ const Dashboard = () => {
 
           <Dialog open={showCashOutDialog} onOpenChange={setShowCashOutDialog}>
             <DialogTrigger asChild>
-              <Button 
-                className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 rounded-xl shadow-lg"
-                data-testid="cash-out-button"
-                onClick={() => setShowCashOutEntry(true)}
-              >
+              <Button className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 rounded-xl shadow-lg" data-testid="cash-out-button" onClick={() => setShowCashOutEntry(true)}>
                 <Minus className="w-5 h-5 mr-2" />
                 Cash Out
               </Button>
@@ -639,6 +552,7 @@ function App() {
       <Routes>
         <Route path="/login" element={!token ? <LoginPage /> : <Navigate to="/" />} />
         <Route path="/admin" element={token && (user?.role === 'admin' || user?.role === 'super_admin' || user?.is_admin) ? <AdminDashboard user={user} /> : <Navigate to="/login" />} />
+        <Route path="/list/:key" element={token ? <ListViewPage /> : <Navigate to="/login" />} />
         <Route path="/" element={token ? <Dashboard /> : <Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
