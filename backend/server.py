@@ -453,6 +453,60 @@ async def options_login(
     resp.headers["Access-Control-Allow-Credentials"] = "true"
     return resp
 
+# Helper function for fetching list data
+async def fetch_list(collection_name: str, user_id: str, search: Optional[str], sort: str, page: int, page_size: int):
+    """Fetch paginated list data from specified collection"""
+    try:
+        collection = db[collection_name]
+        
+        # Build query
+        query = {"user_id": user_id}
+        if search:
+            query["$or"] = [
+                {"name": {"$regex": search, "$options": "i"}},
+                {"description": {"$regex": search, "$options": "i"}}
+            ]
+        
+        # Calculate total count
+        total = await collection.count_documents(query)
+        
+        # Build sort criteria
+        sort_field, sort_direction = ("name", 1) if sort == "name_asc" else ("name", -1)
+        if sort == "date_desc":
+            sort_field, sort_direction = ("created_at", -1)
+        elif sort == "date_asc":
+            sort_field, sort_direction = ("created_at", 1)
+        
+        # Get paginated results
+        skip = (page - 1) * page_size
+        cursor = collection.find(query).sort(sort_field, sort_direction).skip(skip).limit(page_size)
+        items = await cursor.to_list(length=None)
+        
+        # Convert ObjectId to string for JSON serialization
+        for item in items:
+            if "_id" in item:
+                item["id"] = str(item["_id"])
+                del item["_id"]
+        
+        return {
+            "items": items,
+            "total": total,
+            "page": page,
+            "page_size": page_size,
+            "total_pages": (total + page_size - 1) // page_size
+        }
+        
+    except Exception as e:
+        print(f"Error in fetch_list: {e}")
+        # Return empty result for collections that don't exist yet
+        return {
+            "items": [],
+            "total": 0,
+            "page": page,
+            "page_size": page_size,
+            "total_pages": 0
+        }
+
 @api_router.get("/lists/{list_name}")
 async def list_items(
     list_name: str,
