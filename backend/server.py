@@ -615,16 +615,6 @@ async def auth_register(payload: RegisterRequest, request: Request):
 async def catch_all_options(path: str):
     return Response(status_code=204)
 
-        'invoices': 'invoices',
-        'ratings': 'ratings'
-    }
-    if list_name not in allowed:
-        raise HTTPException(status_code=404, detail="List not found")
-
-    data = await fetch_list(allowed[list_name], current_user.id, search, sort, page, page_size)
-    await log_audit_event(AuditAction.READ, f"list:{list_name}", current_user.id, {"search": search, "sort": sort}, request, True)
-    return data
-
 
 # ===================== Auth + Summary Minimal Endpoints (restore) =====================
 
