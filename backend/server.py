@@ -530,6 +530,81 @@ async def options_login(
         'bills': 'bills',
         'expenses': 'expenses',
 
+
+class RegisterRequest(BaseModel):
+    username: str
+    email: EmailStr
+    password: str
+    business_name: str
+    invite_code: str
+
+@api_router.options("/auth/register")
+async def options_register(
+    origin: Optional[str] = Header(default=None),
+    access_control_request_headers: Optional[str] = Header(default=None),
+    access_control_request_method: Optional[str] = Header(default=None),
+):
+    resp = Response(status_code=204)
+    if origin:
+        resp.headers["Access-Control-Allow-Origin"] = origin
+        resp.headers["Vary"] = "Origin"
+    resp.headers["Access-Control-Allow-Methods"] = access_control_request_method or "POST, OPTIONS"
+    resp.headers["Access-Control-Allow-Headers"] = access_control_request_headers or "Authorization, Content-Type, *"
+    resp.headers["Access-Control-Allow-Credentials"] = "true"
+    return resp
+
+@api_router.post("/auth/register", response_model=TokenResponse)
+async def auth_register(payload: RegisterRequest, request: Request):
+    # Check if username exists
+    existing = await db.users.find_one({"username": payload.username})
+    if existing:
+        raise HTTPException(status_code=400, detail="Username already exists")
+
+    # Validate invite code, if present. Allow fallback 'OPEN' for testing
+    invite = await db.invite_codes.find_one({"code": payload.invite_code})
+    if not invite and payload.invite_code != 'OPEN':
+        raise HTTPException(status_code=400, detail="Invalid invite code")
+    if invite:
+        if not invite.get('is_active', True):
+            raise HTTPException(status_code=400, detail="Invite code is inactive")
+        limit = invite.get('usage_limit', 1)
+        count = invite.get('usage_count', 0)
+        if count >= limit and payload.invite_code != 'OPEN':
+            raise HTTPException(status_code=400, detail="Invite code usage exceeded")
+
+    hashed = hash_password(payload.password)
+    user = User(
+        username=payload.username,
+        email=payload.email,
+        business_name=payload.business_name,
+        role=UserRole.USER,
+        is_active=True
+    )
+    user_doc = user.dict()
+    user_doc['password'] = hashed
+
+    await db.users.insert_one(user_doc)
+
+    # Update invite usage
+    if invite:
+        await db.invite_codes.update_one(
+            {"code": payload.invite_code},
+            {"$set": {"used_by": user.id, "used_at": datetime.now(timezone.utc)}, "$inc": {"usage_count": 1}}
+        )
+
+    # Create default accounts for user
+    await create_default_accounts(user.id)
+
+    tokens = generate_tokens(user.id)
+    await log_audit_event(AuditAction.CREATE, "auth:register", user.id, {"username": user.username}, request, True)
+
+    return TokenResponse(
+        access_token=tokens["access_token"],
+        refresh_token=tokens["refresh_token"],
+        expires_in=tokens["expires_in"],
+        user=user
+    )
+
 # Catch-all OPTIONS to satisfy any preflight
 @app.options("/{path:path}")
 async def catch_all_options(path: str):
