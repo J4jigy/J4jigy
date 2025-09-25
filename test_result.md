@@ -320,7 +320,7 @@ frontend:
     implemented: true
     working: false
     file: "Dashboard.js"
-    stuck_count: 1
+    stuck_count: 2
     priority: "high"
     needs_retesting: false
     status_history:
@@ -330,6 +330,12 @@ frontend:
         - working: false
           agent: "testing"
           comment: "❌ BUSINESS DELETION MODAL OVERLAY ISSUE: Delete buttons (minus icons) are present and functional when accessed via JavaScript, but have modal overlay interaction issues preventing normal click events. Modal backdrop intercepts pointer events causing timeout errors. Deletion logic works correctly when triggered programmatically. Last business protection needs verification due to overlay issues preventing complete testing. CRITICAL: Modal z-index or overlay configuration needs fixing for proper user interaction."
+        - working: false
+          agent: "main"
+          comment: "ATTEMPTED FIX: Added e.stopPropagation() to delete button click handler (lines 212-215) and implemented delete confirmation dialog with proper state management (showDeleteConfirmDialog, businessToDelete states). Added confirmDeleteBusiness function to show confirmation before deletion."
+        - working: false
+          agent: "testing"
+          comment: "❌ FIX VERIFICATION FAILED: Modal overlay issue persists despite e.stopPropagation() implementation. Delete buttons (minus icons) are visible in Switch Business dialog but still have pointer event interception issues. Error shows 'div data-state=\"open\" aria-hidden=\"true\" intercepts pointer events' - the modal backdrop is still blocking interactions. Even with force=True clicks, timeout errors occur. CRITICAL: The modal overlay z-index/layering issue is not resolved by e.stopPropagation() alone. The dialog backdrop is preventing user interaction with delete buttons."
 
 metadata:
   created_by: "main_agent"
