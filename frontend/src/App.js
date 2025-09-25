@@ -21,7 +21,10 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 let API = `${BACKEND_URL}/api`;
 try {
   const loc = typeof window !== 'undefined' ? window.location.origin : null;
-  if (loc && BACKEND_URL && new URL(BACKEND_URL).origin === loc) {
+  const host = typeof window !== 'undefined' ? window.location.hostname : '';
+  const sameOrigin = BACKEND_URL && loc && new URL(BACKEND_URL).origin === loc;
+  const isPreview = host && host.endsWith('.preview.emergentagent.com');
+  if (sameOrigin || isPreview) {
     API = '/api';
   }
 } catch (_) {
