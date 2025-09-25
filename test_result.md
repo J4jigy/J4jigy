@@ -348,10 +348,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Add new business functionality - dialog closure issue"
     - "Business deletion functionality - modal overlay issue"
   stuck_tasks:
-    - "Add new business functionality"
     - "Business deletion functionality"
   test_all: false
   test_priority: "high_first"
