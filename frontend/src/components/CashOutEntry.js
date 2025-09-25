@@ -203,6 +203,47 @@ const CashOutEntry = ({ onBack }) => {
     setSelectedItems({});
   };
 
+  const confirmDeleteExpense = (expenseToDelete) => {
+    setDeleteAction({
+      type: 'individual',
+      item: expenseToDelete,
+      message: `Are you sure you want to delete "${expenseToDelete}"?`
+    });
+    setShowDeleteConfirm(true);
+  };
+
+  const confirmDeleteAllExpenses = () => {
+    setDeleteAction({
+      type: 'all',
+      message: 'Are you sure you want to delete all expenses?'
+    });
+    setShowDeleteConfirm(true);
+  };
+
+  const executeDelete = () => {
+    if (deleteAction?.type === 'individual') {
+      // Delete individual expense
+      const expenseToDelete = deleteAction.item;
+      setExpenses(prev => prev.filter(expense => expense !== expenseToDelete));
+      setSelectedItems(prev => {
+        const updated = { ...prev };
+        delete updated[expenseToDelete];
+        return updated;
+      });
+    } else if (deleteAction?.type === 'all') {
+      // Delete all expenses
+      setExpenses([]);
+      setSelectedItems({});
+    }
+    setShowDeleteConfirm(false);
+    setDeleteAction(null);
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteConfirm(false);
+    setDeleteAction(null);
+  };
+
   const deleteExpense = (expenseToDelete) => {
     setExpenses(prev => prev.filter(expense => expense !== expenseToDelete));
     // Also remove from selected items if it was selected
