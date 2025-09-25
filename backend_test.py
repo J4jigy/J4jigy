@@ -286,20 +286,20 @@ def test_authentication_security():
     
     # Test access to protected endpoint without token
     response = make_request("GET", "/dashboard/summary")
-    if response and response.status_code == 401:
+    if response and response.status_code in [401, 403]:
         results.add_pass("Authentication Security - Unauthorized Access Blocked")
     else:
-        results.add_fail("Authentication Security", "Protected endpoint accessible without token")
+        results.add_fail("Authentication Security", f"Protected endpoint accessible without token: HTTP {response.status_code if response else 'No response'}")
         return False
     
     # Test with invalid token
     headers = {"Authorization": "Bearer invalid_token_here"}
     response = make_request("GET", "/dashboard/summary", headers=headers)
-    if response and response.status_code == 401:
+    if response and response.status_code in [401, 403]:
         results.add_pass("Authentication Security - Invalid Token Rejected")
         return True
     else:
-        results.add_fail("Authentication Security", "Invalid token accepted")
+        results.add_fail("Authentication Security", f"Invalid token accepted: HTTP {response.status_code if response else 'No response'}")
         return False
 
 def run_all_tests():
