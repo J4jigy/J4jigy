@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the newly implemented business switching functionality on the dashboard"
+user_problem_statement: "Test the newly implemented To-Do List feature with comprehensive functionality testing"
 
 backend:
   - task: "Backend services running"
