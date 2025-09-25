@@ -668,9 +668,9 @@ const CashOutEntry = ({ onBack }) => {
               <div>
                 <Label className="text-slate-200">Quantity</Label>
                 <div className="flex items-center gap-2">
-                  <Button onClick={() => setExpenseMeasurement(expenseMeasurement)} className="bg-slate-600" size="sm">−</Button>
-                  <span className="text-white text-sm">{expenseMeasurement}</span>
-                  <Button onClick={() => setExpenseMeasurement(expenseMeasurement)} className="bg-slate-600" size="sm">+</Button>
+                  <Button onClick={() => setExpenseQty(q => Math.max(0, q - 1))} className="bg-slate-600" size="sm">−</Button>
+                  <span className="text-white text-sm">{expenseQty}</span>
+                  <Button onClick={() => setExpenseQty(q => q + 1)} className="bg-slate-600" size="sm">+</Button>
                 </div>
               </div>
             </div>
