@@ -333,12 +333,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Business switcher in header"
-    - "Switch Business dialog functionality"
-    - "Business switching functionality"
+    - "Add new business functionality - dialog closure issue"
+    - "Business deletion functionality - modal overlay issue"
+  stuck_tasks:
     - "Add new business functionality"
     - "Business deletion functionality"
-  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
