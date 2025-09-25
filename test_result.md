@@ -250,23 +250,65 @@ frontend:
           agent: "testing"
           comment: "✅ DELETE CONFIRMATION FUNCTIONALITY VERIFIED: Comprehensive testing of newly implemented confirmation dialogs completed successfully. BULK DELETE: 'Delete Product' button now shows confirmation dialog with 'Confirm Delete' title, message 'Are you sure you want to delete all products?', and two buttons: 'Yes, Delete' (red bg-red-600) and 'Cancel' (gray bg-slate-600). INDIVIDUAL DELETE: ✕ buttons show confirmation with specific item names like 'Are you sure you want to delete \"Groceries\"?'. FUNCTIONALITY: Cancel preserves all items, 'Yes, Delete' performs actual deletion. Dark themed modals with proper styling. NO IMMEDIATE DELETION - all delete operations now require explicit user confirmation as designed."
 
-  - task: "Delete confirmation functionality for Cash Out Expenses modal"
+  - task: "Business switcher in header"
     implemented: true
-    working: true
-    file: "CashOutEntry.js"
+    working: "NA"
+    file: "Dashboard.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
         - working: "NA"
           agent: "main"
-          comment: "Implemented Delete Expense functionality with deleteExpense() function. Added red 'Delete Expense' button to clear all expenses and individual '✕' buttons for selective deletion. Expenses array is now dynamic with proper expense items (Office Supplies, Utilities, etc.). Need comprehensive testing."
-        - working: true
-          agent: "testing"
-          comment: "✅ COMPREHENSIVE TEST PASSED: Delete Expense functionality working perfectly. Verified three buttons in Expenses modal: 'Add New Expense' (red), 'Reset Quantity' (orange), and 'Delete Expense' (red with correct bg-red-600 styling). Individual ✕ buttons (8 found) work correctly for selective deletion - tested deletion reduced expense count from 8 to 7. 'Delete Expense' button successfully cleared all expenses (from 7 to 0). Proper expense items displayed: Office Supplies, Utilities, Rent, Transportation, Marketing, Equipment, Software, Insurance. Button positioning and styling are correct as specified."
-        - working: true
-          agent: "testing"
-          comment: "✅ DELETE CONFIRMATION FUNCTIONALITY VERIFIED: Comprehensive testing of newly implemented confirmation dialogs completed successfully. BULK DELETE: 'Delete Expense' button now shows confirmation dialog with 'Confirm Delete' title, message 'Are you sure you want to delete all expenses?', and two buttons: 'Yes, Delete' (red bg-red-600) and 'Cancel' (gray bg-slate-600). INDIVIDUAL DELETE: ✕ buttons show confirmation with specific expense names like 'Are you sure you want to delete \"Office Supplies\"?'. FUNCTIONALITY: Cancel preserves all items, 'Yes, Delete' performs actual deletion. Dark themed modals with proper styling. NO IMMEDIATE DELETION - all delete operations now require explicit user confirmation as designed."
+          comment: "Implemented business switcher in header between Home and Profile icons. Added Building icon, business name display, and dropdown arrow. Positioned in center of header with proper styling."
+
+  - task: "Switch Business dialog functionality"
+    implemented: true
+    working: "NA"
+    file: "Dashboard.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented Switch Business dialog with dark theme (bg-slate-800). Shows list of businesses with current business highlighted. Each business shows name, type, and delete button (minus icon). Includes 'Add New Business' button at bottom."
+
+  - task: "Business switching functionality"
+    implemented: true
+    working: "NA"
+    file: "Dashboard.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented handleBusinessSwitch function to change active business. Updates header display and refreshes dashboard summary. Dialog closes after selection."
+
+  - task: "Add new business functionality"
+    implemented: true
+    working: "NA"
+    file: "Dashboard.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented Add New Business dialog with business name input, business type dropdown (9 options: Retail, E-commerce, Services, Manufacturing, Restaurant, Consulting, Healthcare, Technology, Other), Add Business button (disabled when name empty), and Cancel button."
+
+  - task: "Business deletion functionality"
+    implemented: true
+    working: "NA"
+    file: "Dashboard.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented business deletion with minus buttons beside each business. Prevents deletion of last remaining business. If deleted business was active, automatically switches to first business in list."
 
 metadata:
   created_by: "main_agent"
