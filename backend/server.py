@@ -48,7 +48,8 @@ limiter = Limiter(key_func=get_remote_address)
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ['DB_NAME']]
+db_name = os.environ.get('DB_NAME', 'fintracker_db')
+db = client[db_name]
 
 # Create the main app without a prefix
 app = FastAPI(
