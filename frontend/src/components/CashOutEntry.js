@@ -587,14 +587,21 @@ const CashOutEntry = ({ onBack }) => {
               >
                 Reset Quantity
               </Button>
+              <Button
+                onClick={() => setExpenses([])}
+                className="bg-red-600 hover:bg-red-700 text-white"
+              >
+                Delete Expense
+              </Button>
             </div>
-            {products.map((product) => (
-              <div key={product} className="flex items-center justify-between">
-                <span className="text-white">{product}</span>
+            {expenses.map((expense) => (
+              <div key={expense} className="flex items-center justify-between">
+                <span className="text-white">{expense}</span>
                 <div className="flex items-center gap-2">
-                  <Button onClick={() => decQty(product)} className="bg-slate-600" size="sm">−</Button>
-                  <span className="text-white text-sm min-w-[24px] text-center">{selectedItems[product] || 0}</span>
-                  <Button onClick={() => incQty(product)} className="bg-red-600 hover:bg-red-700" size="sm">+</Button>
+                  <Button onClick={() => decQty(expense)} className="bg-slate-600" size="sm">−</Button>
+                  <span className="text-white text-sm min-w-[24px] text-center">{selectedItems[expense] || 0}</span>
+                  <Button onClick={() => incQty(expense)} className="bg-red-600 hover:bg-red-700" size="sm">+</Button>
+                  <Button onClick={() => deleteExpense(expense)} className="bg-red-500 hover:bg-red-600" size="sm">✕</Button>
                 </div>
               </div>
             ))}
