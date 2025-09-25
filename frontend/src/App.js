@@ -102,7 +102,17 @@ const LoginPage = () => {
         ? { username: formData.username, password: formData.password }
         : formData;
 
-      const response = await axios.post(`${API}${endpoint}`, payload);
+      let response;
+      if (isLogin) {
+        const form = new URLSearchParams();
+        form.append('username', formData.username);
+        form.append('password', formData.password);
+        response = await axios.post(`${API}${endpoint}`, form, {
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        });
+      } else {
+        response = await axios.post(`${API}${endpoint}`, payload);
+      }
       login(response.data.user, response.data.access_token);
     } catch (error) {
       setError(error.response?.data?.detail || 'An error occurred');
