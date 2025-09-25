@@ -15,6 +15,7 @@ import CashInEntry from './components/CashInEntry';
 import CashOutEntry from './components/CashOutEntry';
 import ListViewPage from './components/ListViewPage';
 import Dashboard from './components/Dashboard';
+import ToDoList from './components/ToDoList';
 
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
