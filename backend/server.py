@@ -779,23 +779,37 @@ async def get_transactions(
 
 @api_router.post("/transactions/cash-in", response_model=Transaction)
 async def create_cash_in(
-    transaction: TransactionCreate,
+    transaction: CashTransactionCreate,
     request: Request,
     current_user: User = Depends(get_current_user)
 ):
     """Create a cash-in transaction"""
-    transaction.transaction_type = TransactionType.CASH_IN
-    return await create_transaction(transaction, request, current_user)
+    # Create TransactionCreate with the transaction_type set
+    transaction_data = TransactionCreate(
+        description=transaction.description,
+        amount=transaction.amount,
+        transaction_type=TransactionType.CASH_IN,
+        debit_account=transaction.debit_account,
+        credit_account=transaction.credit_account
+    )
+    return await create_transaction(transaction_data, request, current_user)
 
 @api_router.post("/transactions/cash-out", response_model=Transaction)
 async def create_cash_out(
-    transaction: TransactionCreate,
+    transaction: CashTransactionCreate,
     request: Request,
     current_user: User = Depends(get_current_user)
 ):
     """Create a cash-out transaction"""
-    transaction.transaction_type = TransactionType.CASH_OUT
-    return await create_transaction(transaction, request, current_user)
+    # Create TransactionCreate with the transaction_type set
+    transaction_data = TransactionCreate(
+        description=transaction.description,
+        amount=transaction.amount,
+        transaction_type=TransactionType.CASH_OUT,
+        debit_account=transaction.debit_account,
+        credit_account=transaction.credit_account
+    )
+    return await create_transaction(transaction_data, request, current_user)
 
 # ===================== Admin Endpoints =====================
 
