@@ -379,6 +379,14 @@ const CashInEntry = ({ onBack }) => {
                     ₹{slot.amount}
                   </span>
                 )}
+                {/* Payment Mode Indicator */}
+                <div className={`absolute -top-1 -left-1 text-[8px] px-1 py-[1px] rounded font-bold ${
+                  slot.paymentMode === 'Credit' ? 'bg-orange-500 text-white' :
+                  slot.paymentMode === 'Cash' ? 'bg-green-500 text-white' :
+                  'bg-blue-500 text-white'
+                }`}>
+                  {slot.paymentMode === 'Credit' ? 'CR' : slot.paymentMode === 'Cash' ? 'CA' : 'ON'}
+                </div>
                 {activeSlot === idx && parseFloat(slot.amount) > 0 && (
                   <div className="absolute -bottom-2 text-[8px] bg-blue-600 text-white px-1 py-0.5 rounded whitespace-nowrap">
                     Total: ₹{slot.amount}
