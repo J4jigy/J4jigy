@@ -299,7 +299,7 @@ frontend:
     implemented: true
     working: false
     file: "Dashboard.js"
-    stuck_count: 1
+    stuck_count: 2
     priority: "high"
     needs_retesting: false
     status_history:
@@ -309,6 +309,12 @@ frontend:
         - working: false
           agent: "testing"
           comment: "❌ ADD BUSINESS DIALOG CLOSURE ISSUE: Add New Business dialog opens correctly with all required fields: business name input, business type dropdown (9 options confirmed), Add Business button (properly disabled when empty), and Cancel button. Successfully added 'Test Business 2' with Healthcare type. However, dialog does not close after clicking 'Add Business' button - remains open requiring manual closure. Business is added to list correctly but UX issue with dialog not auto-closing."
+        - working: false
+          agent: "main"
+          comment: "ATTEMPTED FIX: Added setShowAddBusinessDialog(false) call in handleAddBusiness function at line 100 to auto-close dialog after successful business addition."
+        - working: false
+          agent: "testing"
+          comment: "❌ FIX VERIFICATION FAILED: Comprehensive testing confirms the Add New Business dialog auto-close fix is NOT working. Dialog remains visible even 2 seconds after clicking 'Add Business' button. The setShowAddBusinessDialog(false) call appears to not be executing or being overridden. Business is successfully added to the list ('Fixed Business Test' and 'Test Auto Close' confirmed), but dialog closure functionality is still broken. CRITICAL: The fix implementation needs investigation - the state change is not taking effect."
 
   - task: "Business deletion functionality"
     implemented: true
