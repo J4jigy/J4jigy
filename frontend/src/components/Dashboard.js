@@ -163,6 +163,7 @@ export default function Dashboard({ user, logout }) {
     else if (name.startsWith('bills recharge') || tile.name === 'Bills') navigate('/list/bills');
     else if (name.startsWith('other')) navigate('/list/expenses');
     else if (name.startsWith('bills &')) navigate('/list/invoices');
+    else if (name.startsWith('to do list')) navigate('/todo');
   };
 
   return (
