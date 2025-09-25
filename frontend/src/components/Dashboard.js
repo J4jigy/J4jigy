@@ -211,7 +211,7 @@ export default function Dashboard({ user, logout }) {
                         <Button
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleDeleteBusiness(business.id);
+                            confirmDeleteBusiness(business.id, business.name);
                           }}
                           variant="ghost"
                           size="sm"
