@@ -40,6 +40,8 @@ export default function Dashboard({ user, logout }) {
   const [activeBusiness, setActiveBusiness] = useState(businesses[0]);
   const [showBusinessDialog, setShowBusinessDialog] = useState(false);
   const [showAddBusinessDialog, setShowAddBusinessDialog] = useState(false);
+  const [showDeleteConfirmDialog, setShowDeleteConfirmDialog] = useState(false);
+  const [businessToDelete, setBusinessToDelete] = useState(null);
   const [newBusinessName, setNewBusinessName] = useState('');
   const [newBusinessType, setNewBusinessType] = useState('Retail');
   
