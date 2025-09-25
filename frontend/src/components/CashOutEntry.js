@@ -687,24 +687,24 @@ const CashOutEntry = ({ onBack }) => {
 
       {/* Add Product Modal */}
       <Dialog open={showAddProductModal} onOpenChange={setShowAddProductModal}>
-        <DialogContent className="bg-slate-800 border-slate-700">
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-sm w-full mx-4">
           <DialogHeader>
             <DialogTitle className="text-white">Add New Expense</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4">
+          <div className="space-y-3">
             <div>
-              <Label className="text-slate-200">Expense Name</Label>
-              <Input className="bg-slate-700 border-slate-600 text-white" placeholder="Enter expense name" />
+              <Label className="text-slate-200 text-sm">Expense Name</Label>
+              <Input className="bg-slate-700 border-slate-600 text-white text-sm h-8" placeholder="Enter expense name" />
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <Label className="text-slate-200">Amount</Label>
-                <Input className="bg-slate-700 border-slate-600 text-white" placeholder="₹0" />
+                <Label className="text-slate-200 text-sm">Amount</Label>
+                <Input className="bg-slate-700 border-slate-600 text-white text-sm h-8" placeholder="₹0" />
               </div>
               <div>
-                <Label className="text-slate-200">Category</Label>
+                <Label className="text-slate-200 text-sm">Category</Label>
                 <Select defaultValue="General">
-                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white h-8">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -717,11 +717,11 @@ const CashOutEntry = ({ onBack }) => {
                 </Select>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <Label className="text-slate-200">Measurement</Label>
+                <Label className="text-slate-200 text-sm">Measurement</Label>
                 <Select value={expenseMeasurement} onValueChange={setExpenseMeasurement}>
-                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white h-8">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -736,27 +736,27 @@ const CashOutEntry = ({ onBack }) => {
                 </Select>
               </div>
               <div>
-                <Label className="text-slate-200">Quantity</Label>
-                <div className="flex items-center gap-2">
+                <Label className="text-slate-200 text-sm">Quantity</Label>
+                <div className="flex items-center gap-1">
                   <Button onClick={() => setExpenseQty(q => Math.max(0, q - 1))} className="bg-slate-600" size="sm">−</Button>
-                  <span className="text-white text-sm">{expenseQty}</span>
+                  <span className="text-white text-sm min-w-[24px] text-center">{expenseQty}</span>
                   <Button onClick={() => setExpenseQty(q => q + 1)} className="bg-slate-600" size="sm">+</Button>
                 </div>
               </div>
             </div>
             <div>
-              <Label className="text-slate-200">Description</Label>
-              <Input className="bg-slate-700 border-slate-600 text-white" placeholder="Enter description" />
+              <Label className="text-slate-200 text-sm">Description</Label>
+              <Input className="bg-slate-700 border-slate-600 text-white text-sm h-8" placeholder="Enter description" />
             </div>
             <div>
-              <Label className="text-slate-200">Reference Number</Label>
-              <Input className="bg-slate-700 border-slate-600 text-white" placeholder="Enter reference number" />
+              <Label className="text-slate-200 text-sm">Reference Number</Label>
+              <Input className="bg-slate-700 border-slate-600 text-white text-sm h-8" placeholder="Enter reference number" />
             </div>
-            <Button className="w-full bg-blue-600 hover:bg-blue-700">
-              <Scan className="w-4 h-4 mr-2" />
+            <Button className="w-full bg-blue-600 hover:bg-blue-700 h-8 text-sm">
+              <Scan className="w-3 h-3 mr-2" />
               Add Receipt
             </Button>
-            <Button className="w-full bg-red-600 hover:bg-red-700">
+            <Button className="w-full bg-red-600 hover:bg-red-700 h-8 text-sm">
               Save Expense
             </Button>
           </div>
