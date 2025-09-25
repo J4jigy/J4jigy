@@ -389,6 +389,9 @@ export default function Dashboard({ user, logout }) {
           // Reset form when dialog closes
           setNewBusinessName('');
           setNewBusinessType('Retail');
+          setNewBusinessGST('');
+          setNewBusinessAddress('');
+          setNewBusinessPhone('');
         }
       }}>
         <DialogContent className="bg-slate-800 border-slate-700">
