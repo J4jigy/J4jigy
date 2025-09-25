@@ -96,7 +96,7 @@ const CashOutEntry = ({ onBack }) => {
   }, [slots, activeSlot]);
 
   const quickAmounts = [1, 2, 5, 10, 20, 50, 100, 200, 500];
-  const products = ['Groceries', 'T-Shirts', 'Rice', 'Wheat', 'Sugar', 'Oil', 'Milk', 'Bread'];
+  const [expenses, setExpenses] = useState(['Office Supplies', 'Utilities', 'Rent', 'Transportation', 'Marketing', 'Equipment', 'Software', 'Insurance']);
   const businessCategories = [
     { name: 'Customers / Debtors', icon: Users },
     { name: 'Suppliers / Creditors', icon: Building },
