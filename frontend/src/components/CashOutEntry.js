@@ -633,7 +633,7 @@ const CashOutEntry = ({ onBack }) => {
                 </Button>
                 <Button
                   onClick={confirmDeleteAllExpenses}
-                  className="bg-red-600 hover:bg-red-700 text-white flex-1 h-8 text-sm"
+                  className="bg-sky-500 hover:bg-sky-600 text-white flex-1 h-8 text-sm"
                 >
                   Delete Expense
                 </Button>
@@ -646,7 +646,7 @@ const CashOutEntry = ({ onBack }) => {
                   <Button onClick={() => decQty(expense)} className="bg-slate-600 w-7 h-7" size="sm">−</Button>
                   <span className="text-white text-sm min-w-[20px] text-center">{selectedItems[expense] || 0}</span>
                   <Button onClick={() => incQty(expense)} className="bg-red-600 hover:bg-red-700 w-7 h-7" size="sm">+</Button>
-                  <Button onClick={() => confirmDeleteExpense(expense)} className="bg-red-500 hover:bg-red-600 w-7 h-7" size="sm">✕</Button>
+                  <Button onClick={() => confirmDeleteExpense(expense)} className="bg-sky-500 hover:bg-sky-600 w-7 h-7" size="sm">✕</Button>
                 </div>
               </div>
             ))}
