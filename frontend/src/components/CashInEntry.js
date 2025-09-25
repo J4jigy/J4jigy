@@ -157,11 +157,7 @@ const CashInEntry = ({ onBack }) => {
   };
 
   const handleProductSelect = (product) => {
-    if (selectedProducts.includes(product)) {
-      setSelectedProducts(selectedProducts.filter(p => p !== product));
-    } else {
-      setSelectedProducts([...selectedProducts, product]);
-    }
+    incQty(product);
   };
 
   const handleCategorySelect = (category) => {
