@@ -54,6 +54,8 @@ const CashOutEntry = ({ onBack }) => {
   };
   const [expenseQty, setExpenseQty] = useState(1);
   const [paymentMode, setPaymentMode] = useState('Cash');
+  const [showCreditTermsDropdown, setShowCreditTermsDropdown] = useState(false);
+  const [selectedCreditTerm, setSelectedCreditTerm] = useState('');
   
   // Modal states
   const [showSettings, setShowSettings] = useState(false);
