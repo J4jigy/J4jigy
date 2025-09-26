@@ -348,7 +348,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Quick Cash Button Layout with Visual Icons"
+    - "Realistic Coin and Currency Note Design"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
