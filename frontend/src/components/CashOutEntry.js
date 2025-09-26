@@ -442,31 +442,44 @@ const CashOutEntry = ({ onBack }) => {
       <div className="flex-1 px-2 pt-0 pb-2 space-y-1 overflow-hidden">
         {/* Quick Amount Buttons */}
         <div className="space-y-1">
-          {/* Primary Quick Cash Buttons - Larger */}
-          <div className="grid grid-cols-6 gap-1">
-            {[1, 2, 5, 10, 20, 50].map((quickAmount) => (
+          {/* Primary Quick Cash Buttons - Coins (Larger) */}
+          <div className="grid grid-cols-5 gap-1">
+            {[
+              { amount: 1, icon: Coins },
+              { amount: 2, icon: Coins },
+              { amount: 5, icon: Coins },
+              { amount: 10, icon: Coins },
+              { amount: 20, icon: Coins }
+            ].map(({ amount, icon: Icon }) => (
               <Button
-                key={quickAmount}
+                key={amount}
                 variant="outline"
                 size="sm"
-                onClick={() => handleQuickAmount(quickAmount)}
-                className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-md px-2 py-1 text-sm h-8 font-medium"
+                onClick={() => handleQuickAmount(amount)}
+                className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-md px-2 py-1 text-sm h-8 font-medium flex items-center justify-center gap-1"
               >
-                ₹{quickAmount}
+                <Icon className="w-3 h-3" />
+                <span>₹{amount}</span>
               </Button>
             ))}
           </div>
-          {/* Secondary Quick Cash Buttons - Smaller */}
+          {/* Secondary Quick Cash Buttons - Currency Notes (Smaller) */}
           <div className="flex gap-1 justify-center">
-            {[100, 200, 500].map((quickAmount) => (
+            {[
+              { amount: 50, icon: CreditCard },
+              { amount: 100, icon: CreditCard },
+              { amount: 200, icon: CreditCard },
+              { amount: 500, icon: CreditCard }
+            ].map(({ amount, icon: Icon }) => (
               <Button
-                key={quickAmount}
+                key={amount}
                 variant="outline"
                 size="sm"
-                onClick={() => handleQuickAmount(quickAmount)}
-                className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-full px-3 py-0.5 text-xs h-6 whitespace-nowrap"
+                onClick={() => handleQuickAmount(amount)}
+                className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-full px-3 py-0.5 text-xs h-6 whitespace-nowrap flex items-center justify-center gap-1"
               >
-                ₹{quickAmount}
+                <Icon className="w-2 h-2" />
+                <span>₹{amount}</span>
               </Button>
             ))}
           </div>
