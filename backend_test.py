@@ -36,16 +36,16 @@ print(f"Testing backend at: {API_BASE}")
 
 # Test data - using realistic business data
 TEST_USER_DATA = {
-    "username": "sarah_johnson",
-    "email": "sarah.johnson@techstartup.com", 
-    "password": "Password123!@#",
-    "business_name": "TechStartup Solutions LLC",
+    "username": "test_user_backend",
+    "email": "test@example.com", 
+    "password": "TestPassword123!@#",
+    "business_name": "Test Business",
     "invite_code": "OPEN"
 }
 
 TEST_LOGIN_DATA = {
-    "username": "sarah_johnson",
-    "password": "Password123!@#"
+    "username": "test_user_backend",
+    "password": "TestPassword123!@#"
 }
 
 # Global variables for test state
