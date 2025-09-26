@@ -10,6 +10,7 @@ import {
   ArrowLeft, 
   Settings, 
   Scan, 
+  Barcode,
   Plus, 
   Delete,
   Phone,
