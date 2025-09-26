@@ -137,7 +137,7 @@ const CashInEntry = ({ onBack }) => {
   ];
 
   const handleCalculatorInput = (value) => {
-    // Always read from the active slot's amount to ensure consistency
+    // Get current amount from the active slot
     const currentAmount = slots[activeSlot]?.amount || '0';
     
     if (value === 'clear') {
@@ -146,7 +146,7 @@ const CashInEntry = ({ onBack }) => {
       if (currentAmount.length <= 1 || currentAmount === '0') {
         setAmountForActive('0');
       } else {
-        const newAmount = currentAmount.slice(0, -1);
+        const newAmount = currentAmount.slice(0, -1) || '0';
         setAmountForActive(newAmount);
       }
     } else if (value === '=') {
@@ -163,15 +163,17 @@ const CashInEntry = ({ onBack }) => {
       }
     } else {
       // Handle number and operator input
+      let newAmount;
       if (currentAmount === '0' || currentAmount === 'Error') {
         if (value !== '.') {
-          setAmountForActive(value);
+          newAmount = value;
         } else {
-          setAmountForActive('0.');
+          newAmount = '0.';
         }
       } else {
-        setAmountForActive(currentAmount + value);
+        newAmount = currentAmount + value;
       }
+      setAmountForActive(newAmount);
     }
   };
 
