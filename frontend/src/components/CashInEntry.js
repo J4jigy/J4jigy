@@ -702,7 +702,7 @@ const CashInEntry = ({ onBack }) => {
 
       {/* Add Product Modal */}
       <Dialog open={showAddProductModal} onOpenChange={setShowAddProductModal}>
-        <DialogContent className="bg-slate-800 border-slate-700 max-w-sm w-full mx-4">
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-sm w-full mx-auto my-4">
           <DialogHeader>
             <DialogTitle className="text-white">Add New Product</DialogTitle>
           </DialogHeader>
