@@ -48,6 +48,12 @@ export default function Dashboard({ user, logout }) {
   const [newBusinessAddress, setNewBusinessAddress] = useState('');
   const [newBusinessPhone, setNewBusinessPhone] = useState('');
   
+  // WhatsApp invite states
+  const [showInviteDialog, setShowInviteDialog] = useState(false);
+  const [inviteMessage, setInviteMessage] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [copySuccess, setCopySuccess] = useState(false);
+  
   const navigate = useNavigate();
 
   const fetchSummary = async () => {
