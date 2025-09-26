@@ -465,10 +465,12 @@ const CashInEntry = ({ onBack }) => {
               <div
                 key={amount}
                 onClick={() => handleQuickAmount(amount)}
-                className="flex flex-col items-center justify-center cursor-pointer hover:scale-110 transition-transform group"
+                className="relative flex items-center justify-center cursor-pointer hover:scale-110 transition-transform group"
               >
-                <Icon className="w-8 h-8 text-yellow-400 group-hover:text-yellow-300" />
-                <span className="text-xs text-slate-300 mt-1">₹{amount}</span>
+                <Icon className="w-10 h-10 text-yellow-400 group-hover:text-yellow-300" />
+                <span className="absolute text-xs font-bold text-slate-800 group-hover:text-slate-900">
+                  ₹{amount}
+                </span>
               </div>
             ))}
           </div>
@@ -483,10 +485,12 @@ const CashInEntry = ({ onBack }) => {
               <div
                 key={amount}
                 onClick={() => handleQuickAmount(amount)}
-                className="flex flex-col items-center justify-center cursor-pointer hover:scale-110 transition-transform group"
+                className="relative flex items-center justify-center cursor-pointer hover:scale-110 transition-transform group"
               >
-                <Icon className="w-8 h-8 text-green-400 group-hover:text-green-300" />
-                <span className="text-xs text-slate-300 mt-1">₹{amount}</span>
+                <Icon className="w-12 h-8 text-green-400 group-hover:text-green-300" />
+                <span className="absolute text-xs font-bold text-slate-800 group-hover:text-slate-900">
+                  ₹{amount}
+                </span>
               </div>
             ))}
           </div>
