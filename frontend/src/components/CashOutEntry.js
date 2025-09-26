@@ -440,10 +440,10 @@ const CashOutEntry = ({ onBack }) => {
 
       {/* Main Content */}
       <div className="flex-1 px-2 pt-0 pb-2 space-y-1 overflow-hidden">
-        {/* Quick Amount Buttons */}
-        <div className="space-y-1">
-          {/* Primary Quick Cash Buttons - Coins (Larger) */}
-          <div className="grid grid-cols-5 gap-1">
+        {/* Quick Amount Icons */}
+        <div className="space-y-2">
+          {/* Coin Icons (Golden) */}
+          <div className="grid grid-cols-5 gap-2">
             {[
               { amount: 1, icon: Coins },
               { amount: 2, icon: Coins },
@@ -451,36 +451,32 @@ const CashOutEntry = ({ onBack }) => {
               { amount: 10, icon: Coins },
               { amount: 20, icon: Coins }
             ].map(({ amount, icon: Icon }) => (
-              <Button
+              <div
                 key={amount}
-                variant="outline"
-                size="sm"
                 onClick={() => handleQuickAmount(amount)}
-                className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-md px-2 py-1 text-sm h-8 font-medium flex items-center justify-center gap-1"
+                className="flex flex-col items-center justify-center cursor-pointer hover:scale-110 transition-transform group"
               >
-                <Icon className="w-3 h-3" />
-                <span>₹{amount}</span>
-              </Button>
+                <Icon className="w-8 h-8 text-yellow-400 group-hover:text-yellow-300" />
+                <span className="text-xs text-slate-300 mt-1">₹{amount}</span>
+              </div>
             ))}
           </div>
-          {/* Secondary Quick Cash Buttons - Currency Notes (Smaller) */}
-          <div className="flex gap-1 justify-center">
+          {/* Currency Note Icons (Green) */}
+          <div className="flex gap-4 justify-center">
             {[
               { amount: 50, icon: CreditCard },
               { amount: 100, icon: CreditCard },
               { amount: 200, icon: CreditCard },
               { amount: 500, icon: CreditCard }
             ].map(({ amount, icon: Icon }) => (
-              <Button
+              <div
                 key={amount}
-                variant="outline"
-                size="sm"
                 onClick={() => handleQuickAmount(amount)}
-                className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-full px-3 py-0.5 text-xs h-6 whitespace-nowrap flex items-center justify-center gap-1"
+                className="flex flex-col items-center justify-center cursor-pointer hover:scale-110 transition-transform group"
               >
-                <Icon className="w-2 h-2" />
-                <span>₹{amount}</span>
-              </Button>
+                <Icon className="w-8 h-8 text-green-400 group-hover:text-green-300" />
+                <span className="text-xs text-slate-300 mt-1">₹{amount}</span>
+              </div>
             ))}
           </div>
         </div>
