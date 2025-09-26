@@ -511,9 +511,9 @@ const CashOutEntry = ({ onBack }) => {
       {/* Main Content */}
       <div className="flex-1 px-2 pt-0 pb-2 space-y-1 overflow-hidden">
         {/* Quick Amount Icons */}
-        <div className="space-y-2">
+        <div className="space-y-1">
           {/* Coin Icons (Golden with Rupee Symbol) */}
-          <div className="grid grid-cols-5 gap-2">
+          <div className="grid grid-cols-5 gap-1">
             {[1, 2, 5, 10, 20].map((amount) => (
               <div
                 key={amount}
@@ -521,10 +521,10 @@ const CashOutEntry = ({ onBack }) => {
                 className="relative flex items-center justify-center cursor-pointer hover:scale-110 transition-transform group"
               >
                 {/* Coin Design - Flat Golden Circle with Border */}
-                <div className="w-10 h-10 rounded-full bg-yellow-400 border-2 border-yellow-600 group-hover:bg-yellow-300 group-hover:border-yellow-500 flex items-center justify-center shadow-md">
+                <div className="w-8 h-8 rounded-full bg-yellow-400 border-2 border-yellow-600 group-hover:bg-yellow-300 group-hover:border-yellow-500 flex items-center justify-center shadow-md">
                   {/* Inner Circle */}
-                  <div className="w-8 h-8 rounded-full bg-yellow-500 group-hover:bg-yellow-400 flex items-center justify-center">
-                    <span className="text-xs font-bold text-yellow-800 group-hover:text-yellow-700">
+                  <div className="w-6 h-6 rounded-full bg-yellow-500 group-hover:bg-yellow-400 flex items-center justify-center">
+                    <span className="text-[10px] font-bold text-yellow-800 group-hover:text-yellow-700">
                       ₹{amount}
                     </span>
                   </div>
@@ -533,7 +533,7 @@ const CashOutEntry = ({ onBack }) => {
             ))}
           </div>
           {/* Currency Note Icons (Flat Design with Circular Emblems) */}
-          <div className="flex gap-3 justify-center">
+          <div className="flex gap-2 justify-center">
             {[50, 100, 200, 500].map((amount) => (
               <div
                 key={amount}
@@ -543,18 +543,18 @@ const CashOutEntry = ({ onBack }) => {
                 {/* Layered Banknotes Design - Flat Style */}
                 <div className="relative">
                   {/* Background Banknote */}
-                  <div className="w-16 h-10 rounded-sm bg-green-500 border border-green-700 absolute top-0 left-0 group-hover:bg-green-400 shadow-sm">
+                  <div className="w-12 h-8 rounded-sm bg-green-500 border border-green-700 absolute top-0 left-0 group-hover:bg-green-400 shadow-sm">
                     {/* Circular Emblem on Background Note */}
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-green-300 group-hover:bg-green-200 flex items-center justify-center">
-                      <span className="text-xs font-bold text-white">₹</span>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-green-300 group-hover:bg-green-200 flex items-center justify-center">
+                      <span className="text-[8px] font-bold text-white">₹</span>
                     </div>
                   </div>
                   
                   {/* Foreground Banknote (Slightly Offset) */}
-                  <div className="w-16 h-10 rounded-sm bg-green-600 border border-green-800 relative top-0.5 left-0.5 group-hover:bg-green-500 shadow-md">
+                  <div className="w-12 h-8 rounded-sm bg-green-600 border border-green-800 relative top-0.5 left-0.5 group-hover:bg-green-500 shadow-md">
                     {/* Circular Emblem on Foreground Note */}
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-green-400 group-hover:bg-green-300 flex items-center justify-center">
-                      <span className="text-xs font-bold text-white">₹{amount}</span>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-green-400 group-hover:bg-green-300 flex items-center justify-center">
+                      <span className="text-[8px] font-bold text-white">₹{amount}</span>
                     </div>
                   </div>
                 </div>
