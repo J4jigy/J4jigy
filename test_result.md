@@ -503,15 +503,18 @@ test_plan:
 
   - task: "Combined Total Amount Display on POS Slots in Cash In Screen"
     implemented: true
-    working: true
+    working: false
     file: "CashInEntry.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
         - working: true
           agent: "testing"
           comment: "✅ COMPREHENSIVE TESTING PASSED: Combined total amount display (calculated amount + quick cash amount) working perfectly on POS selected slot in Cash In screen. VERIFIED FEATURES: 1) ✅ Login with sarah_johnson credentials successful, 2) ✅ Navigation to Cash In screen successful, 3) ✅ Initial state shows 'Total: ₹0' on active C1 slot, 4) ✅ Calculator amount entry (50) correctly reflected in POS slot, 5) ✅ Quick cash addition (₹20) combines with calculator amount showing 'Total: ₹70' (50 + 20), 6) ✅ Additional quick cash (₹10) shows 'Total: ₹80' (50 + 20 + 10), 7) ✅ Calculator operations (5*10=50) + quick cash (₹30) = 'Total: ₹80' working correctly, 8) ✅ Slot switching functionality working - C2 shows ₹0, C1 maintains ₹80 when switching back, 9) ✅ Amount display consistency verified - main amount display (₹80) matches POS slot total (Total: ₹80), 10) ✅ Real-time updates working - total updates immediately when calculator or quick cash is used, 11) ✅ Per-slot tracking working - each slot maintains its own combined total independently, 12) ✅ Enhanced total display always visible on active slot with blue gradient background. All test scenarios from review request completed successfully. The combined total calculation system is working as designed - handleQuickAmount adds quick cash to current amount, setAmountForActive updates both display and slot amounts, calculator operations update the same amount state, and POS slot displays slot.amount containing the combined total."
+        - working: false
+          agent: "testing"
+          comment: "❌ CRITICAL FAILURE: Combined total amount display is NOT working correctly. DETAILED TESTING RESULTS: 1) ❌ Calculator input '50' shows ₹15 instead of ₹50, 2) ❌ Calculator operations broken - '10*5' shows ₹51 instead of ₹50, 3) ❌ Quick cash addition not working - adding ₹20 to ₹15 shows ₹35 (correct addition) but base calculator amount is wrong, 4) ❌ Calculator equals (=) button not functioning - pressing equals doesn't evaluate expressions, 5) ❌ Multiple quick cash additions partially working but based on incorrect calculator amounts, 6) ❌ Slot switching works but preserves incorrect amounts, 7) ❌ C2 slot shows ₹7 when entering '25', indicating systematic calculator input issues. ROOT CAUSE: Calculator input handling is fundamentally broken - numbers entered don't match displayed values. The handleCalculatorInput function appears to have logic errors causing incorrect amount calculations. Quick cash addition logic works correctly (adds to existing amount) but operates on wrong base amounts due to calculator issues. CRITICAL: The entire calculator and amount entry system needs debugging and fixing."
 
 agent_communication:
     - agent: "main"
