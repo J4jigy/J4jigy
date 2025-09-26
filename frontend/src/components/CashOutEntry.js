@@ -21,7 +21,9 @@ import {
   User,
   Building,
   FileText,
-  Package
+  Package,
+  CircleDollarSign,
+  Coins
 } from 'lucide-react';
 
 const CashOutEntry = ({ onBack }) => {
