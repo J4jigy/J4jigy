@@ -356,6 +356,45 @@ const CashInEntry = ({ onBack }) => {
     }
   }, []);
 
+  // Coin sound effect function
+  const playCoinSound = () => {
+    try {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      
+      // Create oscillator for the coin "ting" sound
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      // Connect nodes
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      // Configure the sound - high frequency metallic "ting"
+      oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(1200, audioContext.currentTime + 0.01);
+      oscillator.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.1);
+      
+      // Configure volume envelope
+      gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+      gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+      
+      // Play the sound
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.2);
+      
+    } catch (error) {
+      // Silently fail if Web Audio API is not supported
+      console.log('Audio not supported:', error);
+    }
+  };
+
+  // Handle coin click with sound
+  const handleCoinClick = (amount) => {
+    playCoinSound();
+    handleQuickAmount(amount);
+  };
+
   // Handle transaction save and reset current slot
   const handleSave = () => {
     // Reset current active slot after saving
