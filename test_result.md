@@ -617,6 +617,18 @@ test_plan:
           agent: "main"
           comment: "Implemented WhatsApp invite sharing functionality using Web Share API and WhatsApp URL scheme. Added invite button in header, customizable invite message, phone number input, and multiple sharing options (WhatsApp direct, Web Share API, copy to clipboard). Auto-generates dynamic invite links and messages."
 
+  - task: "Quick Cash Button Layout Reorganization"
+    implemented: true
+    working: "NA"
+    file: "CashInEntry.js, CashOutEntry.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Reorganized quick cash buttons with new layout: Primary buttons (larger, 6-column grid) for ₹1, ₹2, ₹5, ₹10, ₹20, ₹50 and Secondary buttons (smaller, centered row) for ₹100, ₹200, ₹500. Implemented in both Cash In and Cash Out screens with visual size differences and proper grid alignment."
+
 agent_communication:
     - agent: "main"
       message: "Implemented comprehensive UI/UX enhancements: 1) POS Slot Management with clear/transfer/rename/reset functionality and long-press context menus, 2) Enhanced modals with automatic quantity integration and real-time total calculation, 3) localStorage persistence for selected items, 4) WhatsApp invite sharing with multiple sharing options and customizable messages. All features implemented in both Cash In and Cash Out screens. Ready for comprehensive testing."
