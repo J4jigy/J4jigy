@@ -137,19 +137,22 @@ const CashInEntry = ({ onBack }) => {
   ];
 
   const handleCalculatorInput = (value) => {
+    // Always read from the active slot's amount to ensure consistency
+    const currentAmount = slots[activeSlot]?.amount || '0';
+    
     if (value === 'clear') {
       setAmountForActive('0');
     } else if (value === 'back') {
-      if (amount.length <= 1 || amount === '0') {
+      if (currentAmount.length <= 1 || currentAmount === '0') {
         setAmountForActive('0');
       } else {
-        const newAmount = amount.slice(0, -1);
+        const newAmount = currentAmount.slice(0, -1);
         setAmountForActive(newAmount);
       }
     } else if (value === '=') {
       try {
         // Safe evaluation for basic math operations
-        const sanitizedAmount = amount.replace(/[^0-9+\-*/().]/g, '');
+        const sanitizedAmount = currentAmount.replace(/[^0-9+\-*/().]/g, '');
         if (sanitizedAmount && sanitizedAmount !== '0') {
           const result = Function(`"use strict"; return (${sanitizedAmount})`)();
           setAmountForActive(result.toString());
@@ -160,14 +163,14 @@ const CashInEntry = ({ onBack }) => {
       }
     } else {
       // Handle number and operator input
-      if (amount === '0' || amount === 'Error') {
+      if (currentAmount === '0' || currentAmount === 'Error') {
         if (value !== '.') {
           setAmountForActive(value);
         } else {
           setAmountForActive('0.');
         }
       } else {
-        setAmountForActive(amount + value);
+        setAmountForActive(currentAmount + value);
       }
     }
   };
