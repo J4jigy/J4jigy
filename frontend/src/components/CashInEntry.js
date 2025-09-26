@@ -126,10 +126,30 @@ const CashInEntry = ({ onBack }) => {
     setSlots(prev => prev.map((s, idx) => idx === activeSlot ? { ...s, amount: val } : s));
   };
 
-  // Update payment mode for active slot
-  const setPaymentModeForActive = (mode) => {
-    setPaymentMode(mode);
-    setSlots(prev => prev.map((s, idx) => idx === activeSlot ? { ...s, paymentMode: mode } : s));
+  // Credit terms options
+  const creditTerms = [
+    '0-5 days',
+    '5-10 days', 
+    '10-15 days',
+    '15-30 days',
+    '1 month',
+    '2 months',
+    'More days'
+  ];
+
+  const handleCreditTermSelect = (term) => {
+    setSelectedCreditTerm(term);
+    setShowCreditTermsDropdown(false);
+    setPaymentModeForActive('Credit');
+  };
+
+  const handlePaymentModeClick = (mode) => {
+    if (mode === 'Credit') {
+      setShowCreditTermsDropdown(true);
+    } else {
+      setPaymentModeForActive(mode);
+      setShowCreditTermsDropdown(false);
+    }
   };
 
   const sampleNames = [
