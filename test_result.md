@@ -348,7 +348,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Updated Smaller Coin and Currency Note Sizes"
+    - "Coin Sound Effect Functionality"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
