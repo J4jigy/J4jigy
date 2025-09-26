@@ -301,6 +301,83 @@ const CashInEntry = ({ onBack }) => {
     });
   };
 
+  // POS Slot Management Functions
+  const handleSlotLongPress = (slotIndex, event) => {
+    event.preventDefault();
+    setSelectedSlotIndex(slotIndex);
+    setShowSlotMenu(true);
+  };
+
+  const clearCurrentSlot = () => {
+    setSlots(prev => prev.map((slot, idx) => 
+      idx === selectedSlotIndex ? { ...slot, amount: '0' } : slot
+    ));
+    if (selectedSlotIndex === activeSlot) {
+      setAmount('0');
+    }
+    setShowSlotMenu(false);
+  };
+
+  const startTransfer = () => {
+    setTransferFromSlot(selectedSlotIndex);
+    setShowSlotMenu(false);
+    setShowTransferDialog(true);
+  };
+
+  const executeTransfer = (toSlotIndex) => {
+    if (transferFromSlot !== null && transferFromSlot !== toSlotIndex) {
+      const fromAmount = parseFloat(slots[transferFromSlot]?.amount) || 0;
+      const toAmount = parseFloat(slots[toSlotIndex]?.amount) || 0;
+      
+      setSlots(prev => prev.map((slot, idx) => {
+        if (idx === transferFromSlot) {
+          return { ...slot, amount: '0' };
+        } else if (idx === toSlotIndex) {
+          return { ...slot, amount: (fromAmount + toAmount).toString() };
+        }
+        return slot;
+      }));
+
+      // Update display if active slot was involved
+      if (transferFromSlot === activeSlot) {
+        setAmount('0');
+      } else if (toSlotIndex === activeSlot) {
+        setAmount((fromAmount + toAmount).toString());
+      }
+    }
+    setShowTransferDialog(false);
+    setTransferFromSlot(null);
+  };
+
+  const openRenameDialog = () => {
+    const currentSlot = slots[selectedSlotIndex];
+    setNewSlotName(currentSlot?.customName || currentSlot?.label || '');
+    setShowSlotMenu(false);
+    setShowRenameDialog(true);
+  };
+
+  const executeRename = () => {
+    if (newSlotName.trim()) {
+      setSlots(prev => prev.map((slot, idx) => 
+        idx === selectedSlotIndex 
+          ? { ...slot, customName: newSlotName.trim() }
+          : slot
+      ));
+    }
+    setShowRenameDialog(false);
+    setNewSlotName('');
+  };
+
+  const resetAllSlots = () => {
+    setSlots(prev => prev.map(slot => ({ 
+      ...slot, 
+      amount: '0', 
+      customName: undefined 
+    })));
+    setAmount('0');
+    setShowResetAllConfirm(false);
+  };
+
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col max-h-screen overflow-hidden">
       {/* Header */}
