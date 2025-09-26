@@ -348,7 +348,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Layered Flat-Design Currency Notes"
+    - "Updated Smaller Quick Amount Buttons Testing Complete"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
