@@ -343,6 +343,18 @@ const CashOutEntry = ({ onBack }) => {
     }
   }, []);
 
+  // Handle transaction save and reset current slot
+  const handleSave = () => {
+    // Reset current active slot after saving
+    setSlots(prev => prev.map((slot, idx) => 
+      idx === activeSlot ? { ...slot, amount: '0' } : slot
+    ));
+    setAmount('0');
+    
+    // You can add actual transaction save logic here
+    console.log('Transaction saved, slot reset');
+  };
+
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col max-h-screen overflow-hidden">
       {/* Header - Red theme for Cash Out */}
