@@ -430,7 +430,8 @@ const CashOutEntry = ({ onBack }) => {
         {/* Action Buttons - match Cash In sizes */}
         <div className="flex gap-1">
           <Button className="flex-1 bg-red-500 hover:bg-red-600 h-10 text-sm rounded-md">
-            Save &amp; Add New
+            <Scan className="w-4 h-4 mr-2" />
+            Scan Barcode
           </Button>
           <Button className="flex-1 bg-red-500 hover:bg-red-600 h-10 text-sm rounded-md">
             Save
