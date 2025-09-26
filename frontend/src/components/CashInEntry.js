@@ -621,7 +621,7 @@ const CashInEntry = ({ onBack }) => {
 
       {/* Product Modal */}
       <Dialog open={showProductModal} onOpenChange={setShowProductModal}>
-        <DialogContent className="bg-slate-800 border-slate-700 max-w-sm w-full mx-4 max-h-[80vh]">
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-sm w-full mx-auto my-4 max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-white text-lg">Select Products</DialogTitle>
           </DialogHeader>
