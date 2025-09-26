@@ -205,6 +205,32 @@ const CashOutEntry = ({ onBack }) => {
     setSelectedItems({});
   };
 
+  // Credit terms options
+  const creditTerms = [
+    '0-5 days',
+    '5-10 days', 
+    '10-15 days',
+    '15-30 days',
+    '1 month',
+    '2 months',
+    'More days'
+  ];
+
+  const handleCreditTermSelect = (term) => {
+    setSelectedCreditTerm(term);
+    setShowCreditTermsDropdown(false);
+    setPaymentMode('Credit');
+  };
+
+  const handlePaymentModeClick = (mode) => {
+    if (mode === 'Credit') {
+      setShowCreditTermsDropdown(true);
+    } else {
+      setPaymentMode(mode);
+      setShowCreditTermsDropdown(false);
+    }
+  };
+
   const confirmDeleteExpense = (expenseToDelete) => {
     setDeleteAction({
       type: 'individual',
