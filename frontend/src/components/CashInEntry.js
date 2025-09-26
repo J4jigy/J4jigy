@@ -936,48 +936,105 @@ const CashInEntry = ({ onBack }) => {
             <DialogTitle className="text-white">Add New Product</DialogTitle>
           </DialogHeader>
           <div className="space-y-3">
+            <div>
+              <Label className="text-slate-200 text-sm">Product Name *</Label>
+              <Input 
+                value={newProductName}
+                onChange={(e) => setNewProductName(e.target.value)}
+                className="bg-slate-700 border-slate-600 text-white text-sm h-8" 
+                placeholder="Enter product name" 
+              />
+            </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <Label className="text-slate-200 text-sm">Selling Price</Label>
-                <Input className="bg-slate-700 border-slate-600 text-white text-sm h-8" placeholder="₹0" />
+                <Label className="text-slate-200 text-sm">Selling Price *</Label>
+                <Input 
+                  value={newProductSellingPrice}
+                  onChange={(e) => setNewProductSellingPrice(e.target.value)}
+                  className="bg-slate-700 border-slate-600 text-white text-sm h-8" 
+                  placeholder="₹0" 
+                  type="number"
+                />
               </div>
               <div>
                 <Label className="text-slate-200 text-sm">Cost Price</Label>
-                <Input className="bg-slate-700 border-slate-600 text-white text-sm h-8" placeholder="₹0" />
+                <Input 
+                  value={newProductCostPrice}
+                  onChange={(e) => setNewProductCostPrice(e.target.value)}
+                  className="bg-slate-700 border-slate-600 text-white text-sm h-8" 
+                  placeholder="₹0" 
+                  type="number"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label className="text-slate-200 text-sm">Quantity</Label>
+                <div className="flex items-center gap-1">
+                  <Button 
+                    onClick={() => setNewProductQuantity(q => Math.max(1, q - 1))} 
+                    className="bg-slate-600 w-7 h-7" 
+                    size="sm"
+                  >
+                    −
+                  </Button>
+                  <span className="text-white text-sm min-w-[32px] text-center">{newProductQuantity}</span>
+                  <Button 
+                    onClick={() => setNewProductQuantity(q => q + 1)} 
+                    className="bg-green-600 w-7 h-7" 
+                    size="sm"
+                  >
+                    +
+                  </Button>
+                </div>
+              </div>
+              <div>
+                <Label className="text-slate-200 text-sm">Measurement</Label>
+                <Select value={newProductMeasurement} onValueChange={setNewProductMeasurement}>
+                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white h-8">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Kg">Kg</SelectItem>
+                    <SelectItem value="Piece">Piece</SelectItem>
+                    <SelectItem value="Grams">Grams</SelectItem>
+                    <SelectItem value="Ltr">Ltr</SelectItem>
+                    <SelectItem value="mm">mm</SelectItem>
+                    <SelectItem value="cm">cm</SelectItem>
+                    <SelectItem value="meter">meter</SelectItem>
+                    <SelectItem value="feet">feet</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
             <div>
-              <Label className="text-slate-200 text-sm">Quantity</Label>
-              <Input className="bg-slate-700 border-slate-600 text-white text-sm h-8" placeholder="Enter quantity" />
-            </div>
-            <div>
-              <Label className="text-slate-200 text-sm">Measurement</Label>
-              <Select defaultValue="Kg">
-                <SelectTrigger className="bg-slate-700 border-slate-600 text-white h-8">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Kg">Kg</SelectItem>
-                  <SelectItem value="Piece">Piece</SelectItem>
-                  <SelectItem value="Grams">Grams</SelectItem>
-                  <SelectItem value="Ltr">Ltr</SelectItem>
-                  <SelectItem value="mm">mm</SelectItem>
-                  <SelectItem value="cm">cm</SelectItem>
-                  <SelectItem value="meter">meter</SelectItem>
-                  <SelectItem value="feet">feet</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
               <Label className="text-slate-200 text-sm">HSN Code</Label>
-              <Input className="bg-slate-700 border-slate-600 text-white text-sm h-8" placeholder="Enter HSN code" />
+              <Input 
+                value={newProductHsn}
+                onChange={(e) => setNewProductHsn(e.target.value)}
+                className="bg-slate-700 border-slate-600 text-white text-sm h-8" 
+                placeholder="Enter HSN code" 
+              />
             </div>
+            {/* Total Value Display */}
+            {newProductSellingPrice && newProductQuantity > 0 && (
+              <div className="bg-blue-600/20 border border-blue-500 rounded p-2">
+                <div className="text-xs text-blue-300">Total Value</div>
+                <div className="text-lg font-bold text-blue-100">
+                  ₹{(parseFloat(newProductSellingPrice) * newProductQuantity || 0).toFixed(2)}
+                </div>
+              </div>
+            )}
             <Button className="w-full bg-blue-600 hover:bg-blue-700 h-8 text-sm">
               <Barcode className="w-3 h-3 mr-2" />
               Add Barcode
             </Button>
-            <Button className="w-full bg-green-600 hover:bg-green-700 h-8 text-sm">
-              Save Product
+            <Button 
+              onClick={saveNewProduct}
+              className="w-full bg-green-600 hover:bg-green-700 h-8 text-sm"
+              disabled={!newProductName.trim() || !newProductSellingPrice.trim()}
+            >
+              Save Product & Add to Order
             </Button>
           </div>
         </DialogContent>
