@@ -241,6 +241,12 @@ It's completely free to try!`;
     setShowWhatsAppFromChat(true);
   };
 
+  // Navigation with chat hiding
+  const handleNavigate = (path) => {
+    setShowFloatingChat(false);
+    navigate(path);
+  };
+
   const businessTiles = [
     { name: 'Credit Score', subtitle: '', icon: ShieldCheck, iconColor: 'text-blue-400' },
     { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400' },
