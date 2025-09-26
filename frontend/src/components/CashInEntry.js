@@ -357,41 +357,72 @@ const CashInEntry = ({ onBack }) => {
   }, []);
 
   // Coin sound effect function
-  const playCoinSound = () => {
+  const playActualCoinSound = () => {
+    try {
+      // Create audio element with actual coin sound
+      const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmYnBaKE2/LVfC4EKHjL8d4BBCPEhNTtx2wiBCaE0/HVcigEOHLX4MF9JwVfqMRrsowPBj+k3M84FZvdZeFdDq6ijN3xDuF/kI8dHEuq8Fs0Gc8rT8RtaURAcyeC4FpJPGeFpLFiKN9q5pKz7AGZaFbNxcupZayYhEOiuVFRb0C3iv+k4Nt1klN3hYzjSA8JUhH8ghU9pdfeWE8VTQdgvKusKCcYBY8mKtfbyHwcrRiPP0o2IDtF+UYdZhicC4WKqPrG8Ai5q+bo3hY=');
+      audio.volume = 0.3;
+      audio.currentTime = 0;
+      audio.play().catch(() => {
+        // Fallback to Web Audio API if file fails to load
+        createCoinSound();
+      });
+    } catch (error) {
+      // Fallback to programmatic sound
+      createCoinSound();
+    }
+  };
+
+  // Fallback coin sound using Web Audio API (more realistic)
+  const createCoinSound = () => {
     try {
       const audioContext = new (window.AudioContext || window.webkitAudioContext)();
       
-      // Create oscillator for the coin "ting" sound
-      const oscillator = audioContext.createOscillator();
+      // Create multiple oscillators for richer coin sound
+      const oscillator1 = audioContext.createOscillator();
+      const oscillator2 = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
       
       // Connect nodes
-      oscillator.connect(gainNode);
+      oscillator1.connect(gainNode);
+      oscillator2.connect(gainNode);
       gainNode.connect(audioContext.destination);
       
-      // Configure the sound - high frequency metallic "ting"
-      oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-      oscillator.frequency.exponentialRampToValueAtTime(1200, audioContext.currentTime + 0.01);
-      oscillator.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.1);
+      // Configure realistic coin sound frequencies
+      oscillator1.frequency.setValueAtTime(800, audioContext.currentTime);
+      oscillator1.frequency.exponentialRampToValueAtTime(1200, audioContext.currentTime + 0.02);
+      oscillator1.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.15);
       
-      // Configure volume envelope
+      oscillator2.frequency.setValueAtTime(1200, audioContext.currentTime);
+      oscillator2.frequency.exponentialRampToValueAtTime(1600, audioContext.currentTime + 0.01);
+      oscillator2.frequency.exponentialRampToValueAtTime(600, audioContext.currentTime + 0.12);
+      
+      // Configure volume envelope for coin drop effect
       gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-      gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+      gainNode.gain.linearRampToValueAtTime(0.4, audioContext.currentTime + 0.01);
+      gainNode.gain.exponentialRampToValueAtTime(0.1, audioContext.currentTime + 0.05);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.25);
       
       // Play the sound
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.2);
+      oscillator1.start(audioContext.currentTime);
+      oscillator2.start(audioContext.currentTime);
+      oscillator1.stop(audioContext.currentTime + 0.25);
+      oscillator2.stop(audioContext.currentTime + 0.25);
       
     } catch (error) {
-      // Silently fail if Web Audio API is not supported
       console.log('Audio not supported:', error);
     }
   };
 
   // Handle coin click with sound
   const handleCoinClick = (amount) => {
-    playCoinSound();
+    playActualCoinSound();
+    handleQuickAmount(amount);
+  };
+
+  // Handle currency note click with sound
+  const handleNoteClick = (amount) => {
+    playActualCoinSound();
     handleQuickAmount(amount);
   };
 
