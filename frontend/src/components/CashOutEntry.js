@@ -458,66 +458,42 @@ const CashOutEntry = ({ onBack }) => {
           </div>
         </div>
         {/* POS multi-customer boxes */}
-        <div className="relative">
-          <div className="grid grid-cols-6 gap-1">
-            {slots.map((slot, idx) => (
-              <button
-                key={slot.id}
-                onClick={() => {
-                  setActiveSlot(idx);
-                  setAmount(slot.amount);
-                }}
-                onContextMenu={(e) => handleSlotLongPress(idx, e)}
-                onTouchStart={(e) => {
-                  // Long press for mobile
-                  const timer = setTimeout(() => handleSlotLongPress(idx, e), 500);
-                  e.target.dataset.timer = timer;
-                }}
-                onTouchEnd={(e) => {
-                  clearTimeout(e.target.dataset.timer);
-                }}
-                className={`aspect-square rounded-md flex items-center justify-center border transition ${
-                  activeSlot === idx ? 'bg-blue-700 border-blue-500' : 'bg-slate-800 border-slate-700'
-                }`}
-              >
-                <div className="relative flex flex-col items-center">
-                  <User className="w-5 h-5 text-slate-200" />
-                  <span className="text-[10px] text-slate-100 mt-0.5">
-                    {slot.customName || slot.label}
-                  </span>
-                  {/* Amount Badge - Top Right */}
-                  {parseFloat(slot.amount) > 0 && (
-                    <span className={`absolute -top-1 -right-1 text-[10px] px-1 py-[1px] rounded font-bold ${
-                      activeSlot === idx 
-                        ? 'bg-yellow-500 text-black text-xs' 
-                        : 'bg-emerald-600 text-white'
-                    }`}>
-                      ₹{slot.amount}
-                    </span>
-                  )}
-                  {/* Enhanced Total Amount Display for Active Slot - Always Visible */}
-                  {activeSlot === idx && (
-                    <div className="absolute -bottom-4 text-[11px] bg-gradient-to-r from-red-600 to-red-700 text-white px-3 py-1.5 rounded-lg font-bold whitespace-nowrap border border-red-400 shadow-lg">
-                      Total: ₹{slot.amount || '0'}
-                    </div>
-                  )}
-                </div>
-              </button>
-            ))}
-          </div>
-
-          {/* Slot Management Quick Actions */}
-          <div className="flex justify-between mt-2">
-            <Button
-              onClick={() => setShowResetAllConfirm(true)}
-              className="bg-orange-600 hover:bg-orange-700 text-white h-6 text-xs px-2"
+        <div className="grid grid-cols-6 gap-1">
+          {slots.map((slot, idx) => (
+            <button
+              key={slot.id}
+              onClick={() => {
+                setActiveSlot(idx);
+                setAmount(slot.amount);
+              }}
+              className={`aspect-square rounded-md flex items-center justify-center border transition ${
+                activeSlot === idx ? 'bg-blue-700 border-blue-500' : 'bg-slate-800 border-slate-700'
+              }`}
             >
-              Reset All
-            </Button>
-            <div className="text-xs text-slate-400 flex items-center">
-              Long press slot for options
-            </div>
-          </div>
+              <div className="relative flex flex-col items-center">
+                <User className="w-5 h-5 text-slate-200" />
+                <span className="text-[10px] text-slate-100 mt-0.5">
+                  {slot.customName || slot.label}
+                </span>
+                {/* Amount Badge - Top Right */}
+                {parseFloat(slot.amount) > 0 && (
+                  <span className={`absolute -top-1 -right-1 text-[10px] px-1 py-[1px] rounded font-bold ${
+                    activeSlot === idx 
+                      ? 'bg-yellow-500 text-black text-xs' 
+                      : 'bg-emerald-600 text-white'
+                  }`}>
+                    ₹{slot.amount}
+                  </span>
+                )}
+                {/* Enhanced Total Amount Display for Active Slot - Always Visible */}
+                {activeSlot === idx && (
+                  <div className="absolute -bottom-4 text-[11px] bg-gradient-to-r from-red-600 to-red-700 text-white px-3 py-1.5 rounded-lg font-bold whitespace-nowrap border border-red-400 shadow-lg">
+                    Total: ₹{slot.amount || '0'}
+                  </div>
+                )}
+              </div>
+            </button>
+          ))}
         </div>
 
 
