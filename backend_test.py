@@ -45,7 +45,7 @@ TEST_USER_DATA = {
 
 TEST_LOGIN_DATA = {
     "username": "sarah_johnson",
-    "password": "SecurePass123!@#"
+    "password": "password123"
 }
 
 # Global variables for test state
