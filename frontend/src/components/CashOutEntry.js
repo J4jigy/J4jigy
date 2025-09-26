@@ -375,6 +375,60 @@ const CashOutEntry = ({ onBack }) => {
     setShowResetAllConfirm(false);
   };
 
+  // Enhanced Modal Functions
+  const saveNewExpense = () => {
+    if (!newExpenseName.trim() || !newExpenseAmount.trim()) {
+      return; // Don't save if required fields are empty
+    }
+
+    // Add expense to the expenses list
+    const expenseName = newExpenseName.trim();
+    setExpenses(prev => [...prev, expenseName]);
+    
+    // Add to selected items with quantity
+    if (expenseQty > 0) {
+      setSelectedItems(prev => ({
+        ...prev,
+        [expenseName]: expenseQty
+      }));
+    }
+
+    // Calculate and add to current amount
+    const expenseAmount = parseFloat(newExpenseAmount) || 0;
+    if (expenseAmount > 0 && expenseQty > 0) {
+      const totalExpenseValue = expenseAmount * expenseQty;
+      const currentAmount = parseFloat(amount) || 0;
+      setAmountForActive((currentAmount + totalExpenseValue).toString());
+    }
+
+    // Reset form
+    setNewExpenseName('');
+    setNewExpenseAmount('');
+    setNewExpenseCategory('General');
+    setNewExpenseDescription('');
+    setNewExpenseReference('');
+    setExpenseQty(1);
+    
+    // Close modal
+    setShowAddProductModal(false);
+  };
+
+  // Persist selected items to localStorage
+  useEffect(() => {
+    localStorage.setItem('cashout_selected_items', JSON.stringify(selectedItems));
+  }, [selectedItems]);
+
+  // Load selected items from localStorage
+  useEffect(() => {
+    const savedItems = localStorage.getItem('cashout_selected_items');
+    if (savedItems) {
+      try {
+        const parsed = JSON.parse(savedItems);
+        setSelectedItems(parsed);
+      } catch {}
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col max-h-screen overflow-hidden">
       {/* Header - Red theme for Cash Out */}
