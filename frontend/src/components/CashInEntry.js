@@ -430,7 +430,7 @@ const CashInEntry = ({ onBack }) => {
 
         {/* Action Buttons - increased size for better tap targets */}
         <div className="flex gap-1">
-          <Button className="flex-1 bg-sky-500 hover:bg-sky-600 h-10 text-sm rounded-md">
+          <Button className="flex-1 bg-slate-700 hover:bg-slate-800 h-10 text-sm rounded-md text-white">
             <Scan className="w-4 h-4 mr-2" />
             Scan Barcode
           </Button>
