@@ -348,9 +348,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Business deletion functionality"
-  stuck_tasks:
-    - "Business deletion functionality"
+    - "POS Slot Management Enhancements"
+    - "Enhanced Modal Functionality - Quantity Integration"
+    - "Selected Items Persistence"
+    - "WhatsApp Invite Sharing Functionality"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
