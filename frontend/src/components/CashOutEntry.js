@@ -69,6 +69,15 @@ const CashOutEntry = ({ onBack }) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteAction, setDeleteAction] = useState(null);
   
+  // POS Slot Management states
+  const [showSlotMenu, setShowSlotMenu] = useState(false);
+  const [selectedSlotIndex, setSelectedSlotIndex] = useState(null);
+  const [showTransferDialog, setShowTransferDialog] = useState(false);
+  const [transferFromSlot, setTransferFromSlot] = useState(null);
+  const [showRenameDialog, setShowRenameDialog] = useState(false);
+  const [newSlotName, setNewSlotName] = useState('');
+  const [showResetAllConfirm, setShowResetAllConfirm] = useState(false);
+  
   const [selectedCategory, setSelectedCategory] = useState('');
   const [newEntryTitle, setNewEntryTitle] = useState('');
   const [darkTheme, setDarkTheme] = useState(true);
