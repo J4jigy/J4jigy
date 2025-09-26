@@ -131,6 +131,84 @@ export default function Dashboard({ user, logout }) {
     setShowDeleteConfirmDialog(true);
   };
 
+  // WhatsApp Invite Functions
+  const generateInviteLink = () => {
+    const appUrl = window.location.origin;
+    return `${appUrl}/register?invite=${user?.email || 'user'}`;
+  };
+
+  const generateInviteMessage = () => {
+    const inviteLink = generateInviteLink();
+    return `🚀 Join me on FinanceTracker - the best financial management app!
+
+✅ Track cash in/out
+✅ Manage customers & suppliers  
+✅ POS billing system
+✅ Real-time financial dashboard
+
+Click here to get started: ${inviteLink}
+
+It's completely free to try!`;
+  };
+
+  const shareViaWhatsApp = () => {
+    if (!phoneNumber.trim()) {
+      alert('Please enter a phone number');
+      return;
+    }
+
+    const message = inviteMessage || generateInviteMessage();
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodedMessage}`;
+    
+    window.open(whatsappUrl, '_blank');
+    setShowInviteDialog(false);
+    setPhoneNumber('');
+  };
+
+  const shareViaWebAPI = async () => {
+    const message = inviteMessage || generateInviteMessage();
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Join FinanceTracker',
+          text: message,
+          url: generateInviteLink()
+        });
+      } catch (error) {
+        console.log('Web Share failed:', error);
+        copyInviteLink();
+      }
+    } else {
+      copyInviteLink();
+    }
+  };
+
+  const copyInviteLink = async () => {
+    const message = inviteMessage || generateInviteMessage();
+    
+    try {
+      await navigator.clipboard.writeText(message);
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    } catch (error) {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = message;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    }
+  };
+
+  useEffect(() => {
+    setInviteMessage(generateInviteMessage());
+  }, [user]);
+
   const businessTiles = [
     { name: 'Credit Score', subtitle: '', icon: ShieldCheck, iconColor: 'text-blue-400' },
     { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400' },
