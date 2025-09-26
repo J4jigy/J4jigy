@@ -67,6 +67,14 @@ const CashInEntry = ({ onBack }) => {
   const [showAddProductModal, setShowAddProductModal] = useState(false);
   const [showBarcodeModal, setShowBarcodeModal] = useState(false);
   const [showCategoryList, setShowCategoryList] = useState(false);
+  
+  // Add New Product Modal States
+  const [newProductName, setNewProductName] = useState('');
+  const [newProductSellingPrice, setNewProductSellingPrice] = useState('');
+  const [newProductCostPrice, setNewProductCostPrice] = useState('');
+  const [newProductQuantity, setNewProductQuantity] = useState(1);
+  const [newProductMeasurement, setNewProductMeasurement] = useState('Piece');
+  const [newProductHsn, setNewProductHsn] = useState('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteAction, setDeleteAction] = useState(null);
   
