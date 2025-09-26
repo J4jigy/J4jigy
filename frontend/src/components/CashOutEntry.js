@@ -537,7 +537,7 @@ const CashOutEntry = ({ onBack }) => {
             {[50, 100, 200, 500].map((amount) => (
               <div
                 key={amount}
-                onClick={() => handleQuickAmount(amount)}
+                onClick={() => handleNoteClick(amount)}
                 className="relative flex items-center justify-center cursor-pointer hover:scale-110 transition-transform group"
               >
                 {/* Currency Note Design - Rectangular with Central Circle */}
