@@ -348,6 +348,7 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Quick Cash Button Layout Reorganization"
     - "POS Slot Management Enhancements"
     - "Enhanced Modal Functionality - Quantity Integration"
     - "Selected Items Persistence"
