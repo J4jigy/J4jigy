@@ -367,10 +367,21 @@ const CashOutEntry = ({ onBack }) => {
               <div className="relative flex flex-col items-center">
                 <User className="w-5 h-5 text-slate-200" />
                 <span className="text-[10px] text-slate-100 mt-0.5">{slot.label}</span>
+                {/* Amount Badge - Top Right */}
                 {parseFloat(slot.amount) > 0 && (
-                  <span className="absolute -top-1 -right-1 text-[10px] bg-emerald-600 text-white px-1 py-[1px] rounded">
+                  <span className={`absolute -top-1 -right-1 text-[10px] px-1 py-[1px] rounded font-bold ${
+                    activeSlot === idx 
+                      ? 'bg-yellow-500 text-black text-xs' 
+                      : 'bg-emerald-600 text-white'
+                  }`}>
                     ₹{slot.amount}
                   </span>
+                )}
+                {/* Enhanced Total Amount Display for Active Slot - Always Visible */}
+                {activeSlot === idx && (
+                  <div className="absolute -bottom-4 text-[11px] bg-gradient-to-r from-red-600 to-red-700 text-white px-3 py-1.5 rounded-lg font-bold whitespace-nowrap border border-red-400 shadow-lg">
+                    Total: ₹{slot.amount || '0'}
+                  </div>
                 )}
               </div>
             </button>
