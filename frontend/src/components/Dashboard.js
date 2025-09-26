@@ -220,6 +220,27 @@ It's completely free to try!`;
     setInviteMessage(generateInviteMessage());
   }, [user]);
 
+  // Floating Chat Functions  
+  const sendMessage = () => {
+    if (!newMessage.trim()) return;
+    
+    const message = {
+      id: Date.now(),
+      user: user?.username || 'You',
+      message: newMessage.trim(),
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      isSystem: false
+    };
+    
+    setChatMessages(prev => [...prev, message]);
+    setNewMessage('');
+  };
+
+  const handleChatWhatsAppShare = () => {
+    setShowChatDialog(false);
+    setShowWhatsAppFromChat(true);
+  };
+
   const businessTiles = [
     { name: 'Credit Score', subtitle: '', icon: ShieldCheck, iconColor: 'text-blue-400' },
     { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400' },
