@@ -348,7 +348,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Realistic Coin and Currency Note Design"
+    - "Updated Smaller Coin and Currency Note Sizes"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
