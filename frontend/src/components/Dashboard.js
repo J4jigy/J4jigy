@@ -241,11 +241,6 @@ It's completely free to try!`;
     setNewMessage('');
   };
 
-  const handleChatWhatsAppShare = () => {
-    setShowChatDialog(false);
-    setShowWhatsAppFromChat(true);
-  };
-
   // Navigation with chat hiding
   const handleNavigate = (path) => {
     setShowFloatingChat(false);
