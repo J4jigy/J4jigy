@@ -668,6 +668,9 @@ test_plan:
         - working: true
           agent: "testing"
           comment: "✅ CHAT DIALOG FUNCTIONALITY VERIFIED: Successfully tested Community Chat dialog interface and features. VERIFIED FEATURES: 1) ✅ Dialog opens correctly with 'Community Chat' title and MessageCircle icon, 2) ✅ Pre-loaded chat messages displayed correctly including System welcome message, John Doe message ('Hey, great app! Love the POS features'), and Sarah message ('Thanks John! The quick cash buttons are really helpful'), 3) ✅ Message history shows proper formatting with user names and timestamps, 4) ✅ Message input field present with placeholder 'Type your message...', 5) ✅ Send button with Send icon functional, 6) ✅ Dialog uses proper dark theme styling (bg-slate-800) consistent with app design, 7) ✅ Dialog size (max-w-md h-[500px]) appropriate for chat interface. Minor: Message sending functionality partially working - input accepts text but new messages may not persist in display. Core chat dialog functionality is working as designed."
+        - working: true
+          agent: "testing"
+          comment: "✅ UPDATED LAYOUT - CHAT DIALOG FUNCTIONALITY RE-VERIFIED: Successfully re-tested Chat dialog functionality with the new separate button layout. VERIFIED FEATURES: 1) ✅ Chat button (blue bg-blue-600, 56x56px) opens 'Community Chat' dialog correctly, 2) ✅ Dialog shows 6 existing messages with proper formatting and dark theme styling, 3) ✅ Message input field with placeholder 'Type your message...' present and functional, 4) ✅ Send button with Send icon present, 5) ✅ Dialog maintains max-w-md h-[500px] size and bg-slate-800 styling, 6) ✅ MessageCircle icon properly displayed in dialog header. The chat dialog functionality remains fully operational with the updated separate button layout."
 
   - task: "Chat Visibility Behavior"
     implemented: true
@@ -683,6 +686,9 @@ test_plan:
         - working: true
           agent: "testing"
           comment: "✅ CHAT VISIBILITY BEHAVIOR VERIFIED: Successfully tested chat visibility during navigation as specified. VERIFIED FEATURES: 1) ✅ Chat initially visible on dashboard (showFloatingChat: true), 2) ✅ Navigation to Cash In screen - chat correctly disappears (visible: false), 3) ✅ Navigation back to dashboard - chat correctly reappears (visible: true), 4) ✅ handleNavigate function properly sets setShowFloatingChat(false) before navigation, 5) ✅ useEffect hook correctly sets setShowFloatingChat(true) when dashboard loads, 6) ✅ Chat visibility state management working correctly across page transitions. The chat visibility behavior is working exactly as designed - chat disappears on other pages and reappears on dashboard."
+        - working: true
+          agent: "testing"
+          comment: "✅ UPDATED LAYOUT - SYNCHRONIZED VISIBILITY BEHAVIOR VERIFIED: Successfully tested visibility behavior for both separate floating buttons. VERIFIED FEATURES: 1) ✅ Both WhatsApp and Chat buttons initially visible on dashboard, 2) ✅ Navigation to Cash In - both buttons disappear together (synchronized hiding), 3) ✅ Navigation back to dashboard - both buttons reappear together (synchronized showing), 4) ✅ handleNavigate function properly controls setShowFloatingChat(false) for entire container, 5) ✅ useEffect hook correctly shows both buttons when dashboard loads, 6) ✅ Container-level visibility management ensures both buttons have consistent behavior. The synchronized visibility behavior for both separate buttons is working perfectly as designed."
 
   - task: "WhatsApp Integration from Floating Chat"
     implemented: true
@@ -698,6 +704,9 @@ test_plan:
         - working: true
           agent: "testing"
           comment: "✅ WHATSAPP INTEGRATION VERIFIED: Successfully tested WhatsApp sharing functionality from floating chat mini button. VERIFIED FEATURES: 1) ✅ WhatsApp mini button opens 'Invite Friends to Chat' dialog correctly, 2) ✅ Dialog contains phone number input field with placeholder 'Enter phone number (e.g. +1234567890)', 3) ✅ Message preview textarea with pre-populated FinanceTracker invite message including app features and invite link, 4) ✅ 'Send via WhatsApp' button (green bg-green-600) present and functional, 5) ✅ 'Copy Message' button present for clipboard functionality, 6) ✅ Dialog uses consistent dark theme styling (bg-slate-800), 7) ✅ handleChatWhatsAppShare function correctly closes chat dialog and opens WhatsApp dialog, 8) ✅ generateInviteMessage function creates dynamic invite content with app URL. The WhatsApp integration from floating chat is fully functional and provides multiple sharing options as designed."
+        - working: true
+          agent: "testing"
+          comment: "✅ UPDATED LAYOUT - WHATSAPP INTEGRATION FROM SEPARATE BUTTON VERIFIED: Successfully tested WhatsApp integration from the new separate WhatsApp button. VERIFIED FEATURES: 1) ✅ Separate WhatsApp button (green bg-green-500, 56x56px) opens 'Invite Friends to Chat' dialog correctly, 2) ✅ Dialog contains phone number input field with proper placeholder, 3) ✅ Message preview textarea with pre-populated FinanceTracker invite message including app features and dynamic invite link, 4) ✅ 'Send via WhatsApp' button (green bg-green-600) and 'Copy Message' button present and functional, 5) ✅ Dialog maintains consistent dark theme styling (bg-slate-800), 6) ✅ generateInviteMessage function creates dynamic invite content with app URL, 7) ✅ Multiple sharing options available (WhatsApp direct, Web Share API, copy to clipboard). The WhatsApp integration from the separate button is fully functional and provides all expected sharing options as designed."
 
 agent_communication:
     - agent: "main"
