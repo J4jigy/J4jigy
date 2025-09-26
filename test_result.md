@@ -348,7 +348,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Coin Sound Effect Functionality"
+    - "Layered Flat-Design Currency Notes"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
