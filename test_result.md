@@ -348,11 +348,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Quick Cash Button Layout Reorganization"
-    - "POS Slot Management Enhancements"
-    - "Enhanced Modal Functionality - Quantity Integration"
-    - "Selected Items Persistence"
-    - "WhatsApp Invite Sharing Functionality"
+    - "Floating Chat Component"
+    - "WhatsApp Share Mini Button"
+    - "Chat Dialog Functionality"
+    - "Chat Visibility Behavior"
+    - "WhatsApp Integration from Floating Chat"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
