@@ -780,14 +780,14 @@ It's completely free to try!`;
         <div className="flex gap-4">
           <Button 
             className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 rounded-xl shadow-lg"
-            onClick={() => navigate('/cash-in')}
+            onClick={() => handleNavigate('/cash-in')}
           >
             <Plus className="w-5 h-5 mr-2" />
             Cash In
           </Button>
           <Button 
             className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 rounded-xl shadow-lg"
-            onClick={() => navigate('/cash-out')}
+            onClick={() => handleNavigate('/cash-out')}
           >
             <Minus className="w-5 h-5 mr-2" />
             Cash Out
