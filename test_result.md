@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the comprehensive UI/UX enhancements including POS slot management (clear, transfer, rename, reset), enhanced modal functionality (quantity integration, persistence), and WhatsApp invite sharing"
+user_problem_statement: "Test the newly implemented floating chat functionality on the dashboard with floating chat component, WhatsApp share mini button, chat dialog with community chat interface, and proper visibility behavior during navigation"
 
 backend:
   - task: "Backend services running"
