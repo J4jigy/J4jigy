@@ -386,6 +386,60 @@ const CashInEntry = ({ onBack }) => {
     setShowResetAllConfirm(false);
   };
 
+  // Enhanced Modal Functions
+  const saveNewProduct = () => {
+    if (!newProductName.trim() || !newProductSellingPrice.trim()) {
+      return; // Don't save if required fields are empty
+    }
+
+    // Add product to the products list
+    const productName = newProductName.trim();
+    setProducts(prev => [...prev, productName]);
+    
+    // Add to selected items with quantity
+    if (newProductQuantity > 0) {
+      setSelectedItems(prev => ({
+        ...prev,
+        [productName]: newProductQuantity
+      }));
+    }
+
+    // Calculate and add to current amount
+    const sellingPrice = parseFloat(newProductSellingPrice) || 0;
+    if (sellingPrice > 0 && newProductQuantity > 0) {
+      const totalProductValue = sellingPrice * newProductQuantity;
+      const currentAmount = parseFloat(amount) || 0;
+      setAmountForActive((currentAmount + totalProductValue).toString());
+    }
+
+    // Reset form
+    setNewProductName('');
+    setNewProductSellingPrice('');
+    setNewProductCostPrice('');
+    setNewProductQuantity(1);
+    setNewProductMeasurement('Piece');
+    setNewProductHsn('');
+    
+    // Close modal
+    setShowAddProductModal(false);
+  };
+
+  // Persist selected items to localStorage
+  useEffect(() => {
+    localStorage.setItem('cashin_selected_items', JSON.stringify(selectedItems));
+  }, [selectedItems]);
+
+  // Load selected items from localStorage
+  useEffect(() => {
+    const savedItems = localStorage.getItem('cashin_selected_items');
+    if (savedItems) {
+      try {
+        const parsed = JSON.parse(savedItems);
+        setSelectedItems(parsed);
+      } catch {}
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col max-h-screen overflow-hidden">
       {/* Header */}
