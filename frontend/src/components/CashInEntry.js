@@ -55,6 +55,8 @@ const CashInEntry = ({ onBack }) => {
     });
   };
   const [paymentMode, setPaymentMode] = useState('Cash');
+  const [showCreditTermsDropdown, setShowCreditTermsDropdown] = useState(false);
+  const [selectedCreditTerm, setSelectedCreditTerm] = useState('');
   
   // Modal states
   const [showSettings, setShowSettings] = useState(false);
