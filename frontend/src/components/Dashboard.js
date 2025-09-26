@@ -54,6 +54,17 @@ export default function Dashboard({ user, logout }) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [copySuccess, setCopySuccess] = useState(false);
   
+  // Floating Chat states
+  const [showFloatingChat, setShowFloatingChat] = useState(true);
+  const [showChatDialog, setShowChatDialog] = useState(false);
+  const [showWhatsAppFromChat, setShowWhatsAppFromChat] = useState(false);
+  const [chatMessages, setChatMessages] = useState([
+    { id: 1, user: 'System', message: 'Welcome to FinanceTracker! Chat with other users here.', time: '10:30 AM', isSystem: true },
+    { id: 2, user: 'John Doe', message: 'Hey, great app! Love the POS features.', time: '2:45 PM', isSystem: false },
+    { id: 3, user: 'Sarah', message: 'Thanks John! The quick cash buttons are really helpful.', time: '3:10 PM', isSystem: false }
+  ]);
+  const [newMessage, setNewMessage] = useState('');
+  
   const navigate = useNavigate();
 
   const fetchSummary = async () => {
