@@ -436,6 +436,7 @@ It's completely free to try!`;
             </div>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       {/* Summary */}
