@@ -532,7 +532,7 @@ const CashOutEntry = ({ onBack }) => {
               </div>
             ))}
           </div>
-          {/* Currency Note Icons (Green with Rupee Symbol) */}
+          {/* Currency Note Icons (Flat Design with Circular Emblems) */}
           <div className="flex gap-3 justify-center">
             {[50, 100, 200, 500].map((amount) => (
               <div
@@ -540,16 +540,22 @@ const CashOutEntry = ({ onBack }) => {
                 onClick={() => handleNoteClick(amount)}
                 className="relative flex items-center justify-center cursor-pointer hover:scale-110 transition-transform group"
               >
-                {/* Currency Note Design - Rectangular with Central Circle */}
-                <div className="w-14 h-8 rounded bg-green-200 border-2 border-green-600 group-hover:bg-green-100 group-hover:border-green-500 shadow-md flex items-center justify-center relative">
-                  {/* Side Dots */}
-                  <div className="absolute left-1 w-1 h-1 rounded-full bg-green-600 group-hover:bg-green-500"></div>
-                  <div className="absolute right-1 w-1 h-1 rounded-full bg-green-600 group-hover:bg-green-500"></div>
-                  {/* Central Circle with Rupee Symbol */}
-                  <div className="w-5 h-5 rounded-full bg-green-600 group-hover:bg-green-500 flex items-center justify-center">
-                    <span className="text-[10px] font-bold text-white">
-                      ₹{amount}
-                    </span>
+                {/* Layered Banknotes Design - Flat Style */}
+                <div className="relative">
+                  {/* Background Banknote */}
+                  <div className="w-16 h-10 rounded-sm bg-green-500 border border-green-700 absolute top-0 left-0 group-hover:bg-green-400 shadow-sm">
+                    {/* Circular Emblem on Background Note */}
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-green-300 group-hover:bg-green-200 flex items-center justify-center">
+                      <span className="text-xs font-bold text-white">₹</span>
+                    </div>
+                  </div>
+                  
+                  {/* Foreground Banknote (Slightly Offset) */}
+                  <div className="w-16 h-10 rounded-sm bg-green-600 border border-green-800 relative top-0.5 left-0.5 group-hover:bg-green-500 shadow-md">
+                    {/* Circular Emblem on Foreground Note */}
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-green-400 group-hover:bg-green-300 flex items-center justify-center">
+                      <span className="text-xs font-bold text-white">₹{amount}</span>
+                    </div>
                   </div>
                 </div>
               </div>
