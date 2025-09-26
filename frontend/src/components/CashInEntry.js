@@ -126,6 +126,12 @@ const CashInEntry = ({ onBack }) => {
     setSlots(prev => prev.map((s, idx) => idx === activeSlot ? { ...s, amount: val } : s));
   };
 
+  // Update payment mode for active slot
+  const setPaymentModeForActive = (mode) => {
+    setPaymentMode(mode);
+    setSlots(prev => prev.map((s, idx) => idx === activeSlot ? { ...s, paymentMode: mode } : s));
+  };
+
   // Credit terms options
   const creditTerms = [
     '0-5 days',
