@@ -143,7 +143,8 @@ const CashInEntry = ({ onBack }) => {
       if (amount.length <= 1 || amount === '0') {
         setAmountForActive('0');
       } else {
-        setAmountForActive(amount.slice(0, -1));
+        const newAmount = amount.slice(0, -1);
+        setAmountForActive(newAmount);
       }
     } else if (value === '=') {
       try {
@@ -151,21 +152,22 @@ const CashInEntry = ({ onBack }) => {
         const sanitizedAmount = amount.replace(/[^0-9+\-*/().]/g, '');
         if (sanitizedAmount && sanitizedAmount !== '0') {
           const result = Function(`"use strict"; return (${sanitizedAmount})`)();
-          setAmountForActive(result.toString()); // Fix: Update slot amount with calculator result
+          setAmountForActive(result.toString());
         }
       } catch (error) {
         setAmountForActive('Error');
         setTimeout(() => setAmountForActive('0'), 1000);
       }
     } else {
+      // Handle number and operator input
       if (amount === '0' || amount === 'Error') {
         if (value !== '.') {
-          setAmountForActive(value); // Fix: Update slot with new value
+          setAmountForActive(value);
         } else {
           setAmountForActive('0.');
         }
       } else {
-        setAmountForActive(amount + value); // Fix: Update slot with appended value
+        setAmountForActive(amount + value);
       }
     }
   };
