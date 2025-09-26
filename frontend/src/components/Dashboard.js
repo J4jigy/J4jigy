@@ -220,6 +220,11 @@ It's completely free to try!`;
     setInviteMessage(generateInviteMessage());
   }, [user]);
 
+  // Show floating chat when dashboard loads
+  useEffect(() => {
+    setShowFloatingChat(true);
+  }, []);
+
   // Floating Chat Functions  
   const sendMessage = () => {
     if (!newMessage.trim()) return;
