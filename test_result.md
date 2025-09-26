@@ -525,6 +525,18 @@ test_plan:
           agent: "testing"
           comment: "✅ FINAL COMPREHENSIVE TESTING CONFIRMS CALCULATOR FUNCTIONALITY COMPLETELY FIXED: Executed exact test scenarios from review request with successful results. DETAILED VERIFICATION: 1) ✅ Login with sarah_johnson credentials successful, 2) ✅ Navigation to Cash In screen successful, 3) ✅ Calculator number input WORKING: Press 5 shows ₹5, press 0 shows ₹50 (not ₹0), POS slot shows 'Total: ₹50', 4) ✅ MAIN FEATURE - Combined totals WORKING: Calculator ₹50 + quick cash ₹20 = ₹70 displayed correctly in both calculator display and POS slot 'Total: ₹70', adding quick cash ₹10 = ₹80 displayed correctly 'Total: ₹80', 5) ✅ Calculator operations WORKING: Clear (C) resets to ₹0, calculation 2*10 shows '₹2*10' before equals, pressing = shows ₹20, POS slot shows 'Total: ₹20', 6) ✅ Combined calc+quick WORKING: Calculator result ₹20 + quick cash ₹5 = ₹25 displayed correctly 'Total: ₹25'. ALL SUCCESS CRITERIA MET: Calculator number input works (5,0 shows ₹50), Calculator operations work (2*10 = 20), MAIN FEATURE works (Calculator amount + Quick cash = Combined total on POS slot), Clear function works. The React state management issue has been resolved - calculator operations now read from current slot amount and properly calculate new amounts before updating state. The combined total feature is fully functional and ready for production use."
 
+  - task: "Button Changes - Replace Save & Add New with Scan Barcode"
+    implemented: true
+    working: true
+    file: "CashInEntry.js, CashOutEntry.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "✅ BUTTON CHANGES TESTING COMPLETE: Successfully tested button changes in both Cash In and Cash Out screens as requested. VERIFIED RESULTS: 1) ✅ Login with sarah_johnson credentials successful, 2) ✅ Both screens accessible and loading correctly, 3) ✅ NO scan buttons found under amount displays (correctly removed), 4) ✅ 'Save & Add New' buttons correctly replaced with 'Scan Barcode' buttons in both screens, 5) ✅ 'Save' buttons still present in both screens, 6) ✅ 'Scan Barcode' buttons have correct scan icons in both screens, 7) ✅ Correct styling implemented - Sky blue (bg-sky-500) for Cash In, Red (bg-red-500) for Cash Out, 8) ✅ All buttons are functional and clickable. BUTTON LAYOUT CONFIRMED: Cash In - 'Scan Barcode' (sky blue with icon) + 'Save' (sky blue), Cash Out - 'Scan Barcode' (red with icon) + 'Save' (red). All expected changes have been successfully implemented and are working as designed. The button replacement feature is ready for production use."
+
 agent_communication:
     - agent: "main"
       message: "Fixed compile error in CashOutEntry.js by removing duplicate expenseMeasurement declaration. App now loads successfully. Ready for backend testing."
