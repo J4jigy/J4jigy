@@ -283,15 +283,15 @@ It's completely free to try!`;
 
   const handleTileClick = (tile) => {
     const name = `${tile.name} ${tile.subtitle}`.trim().toLowerCase();
-    if (name.startsWith('customers')) navigate('/list/customers');
-    else if (name.startsWith('suppliers')) navigate('/list/suppliers');
-    else if (name.startsWith('community')) navigate('/list/ratings');
-    else if (name.startsWith('staff')) navigate('/list/staff');
-    else if (name.startsWith('company purchase') || name.startsWith('company')) navigate('/list/purchases');
-    else if (name.startsWith('bills recharge') || tile.name === 'Bills') navigate('/list/bills');
-    else if (name.startsWith('other')) navigate('/list/expenses');
-    else if (name.startsWith('bills &')) navigate('/list/invoices');
-    else if (name.startsWith('to do list')) navigate('/todo');
+    if (name.startsWith('customers')) handleNavigate('/list/customers');
+    else if (name.startsWith('suppliers')) handleNavigate('/list/suppliers');
+    else if (name.startsWith('community')) handleNavigate('/list/ratings');
+    else if (name.startsWith('staff')) handleNavigate('/list/staff');
+    else if (name.startsWith('company purchase') || name.startsWith('company')) handleNavigate('/list/purchases');
+    else if (name.startsWith('bills recharge') || tile.name === 'Bills') handleNavigate('/list/bills');
+    else if (name.startsWith('other')) handleNavigate('/list/expenses');
+    else if (name.startsWith('bills &')) handleNavigate('/list/invoices');
+    else if (name.startsWith('to do list')) handleNavigate('/todo');
   };
 
   return (
