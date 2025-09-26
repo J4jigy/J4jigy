@@ -783,7 +783,7 @@ const CashInEntry = ({ onBack }) => {
 
       {/* Delete Confirmation Modal */}
       <Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
-        <DialogContent className="bg-slate-800 border-slate-700">
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-md w-full mx-auto my-4">
           <DialogHeader>
             <DialogTitle className="text-white">Confirm Delete</DialogTitle>
           </DialogHeader>
