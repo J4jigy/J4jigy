@@ -348,11 +348,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Floating Chat Component"
-    - "WhatsApp Share Mini Button"
-    - "Chat Dialog Functionality"
-    - "Chat Visibility Behavior"
-    - "WhatsApp Integration from Floating Chat"
+    - "POS Slot Automatic Reset After Save"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
