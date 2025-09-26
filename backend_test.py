@@ -38,14 +38,14 @@ print(f"Testing backend at: {API_BASE}")
 TEST_USER_DATA = {
     "username": "sarah_johnson",
     "email": "sarah.johnson@techstartup.com", 
-    "password": "password123",
+    "password": "Password123!@#",
     "business_name": "TechStartup Solutions LLC",
     "invite_code": "OPEN"
 }
 
 TEST_LOGIN_DATA = {
     "username": "sarah_johnson",
-    "password": "password123"
+    "password": "Password123!@#"
 }
 
 # Global variables for test state
