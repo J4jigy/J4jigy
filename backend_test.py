@@ -520,6 +520,9 @@ def test_missing_endpoints():
         response = make_request(method, endpoint, headers=headers)
         if not response or response.status_code == 404:
             missing_endpoints.append(f"{method} {endpoint} ({description})")
+        elif response.status_code == 403 and "admin" in endpoint:
+            # Admin endpoints should return 403 for non-admin users, which is correct
+            continue
     
     if missing_endpoints:
         results.add_fail("Missing Critical Endpoints", f"Missing: {', '.join(missing_endpoints)}")
