@@ -348,7 +348,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Currency Note Text Visibility Improvements Testing Complete"
+    - "Simple Quick Amount Buttons Testing Complete"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
