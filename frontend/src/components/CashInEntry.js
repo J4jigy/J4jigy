@@ -524,18 +524,35 @@ const CashInEntry = ({ onBack }) => {
       {/* Main Content */}
       <div className="flex-1 px-2 pt-0 pb-2 space-y-1 overflow-hidden">
         {/* Quick Amount Buttons */}
-        <div className="flex gap-1 justify-center flex-wrap sm:flex-nowrap overflow-x-auto no-scrollbar">
-          {quickAmounts.map((quickAmount) => (
-            <Button
-              key={quickAmount}
-              variant="outline"
-              size="sm"
-              onClick={() => handleQuickAmount(quickAmount)}
-              className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-full px-2 py-0.5 text-xs h-5 whitespace-nowrap"
-            >
-              ₹{quickAmount}
-            </Button>
-          ))}
+        <div className="space-y-1">
+          {/* Primary Quick Cash Buttons - Larger */}
+          <div className="grid grid-cols-6 gap-1">
+            {[1, 2, 5, 10, 20, 50].map((quickAmount) => (
+              <Button
+                key={quickAmount}
+                variant="outline"
+                size="sm"
+                onClick={() => handleQuickAmount(quickAmount)}
+                className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-md px-2 py-1 text-sm h-8 font-medium"
+              >
+                ₹{quickAmount}
+              </Button>
+            ))}
+          </div>
+          {/* Secondary Quick Cash Buttons - Smaller */}
+          <div className="flex gap-1 justify-center">
+            {[100, 200, 500].map((quickAmount) => (
+              <Button
+                key={quickAmount}
+                variant="outline"
+                size="sm"
+                onClick={() => handleQuickAmount(quickAmount)}
+                className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 rounded-full px-3 py-0.5 text-xs h-6 whitespace-nowrap"
+              >
+                ₹{quickAmount}
+              </Button>
+            ))}
+          </div>
         </div>
 
         {/* POS multi-customer boxes */}
