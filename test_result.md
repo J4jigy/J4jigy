@@ -632,6 +632,9 @@ test_plan:
         - working: true
           agent: "testing"
           comment: "✅ FLOATING CHAT COMPONENT VERIFIED: Successfully tested floating chat component positioning and functionality. VERIFIED FEATURES: 1) ✅ Login with sarah_johnson credentials successful, 2) ✅ Floating chat container found at correct position (x=1848, y=928) in bottom-right area, 3) ✅ Blue circular chat button (bg-blue-600) present and functional with correct size (56x56px), 4) ✅ Button positioned above Cash Out button as specified, 5) ✅ Proper z-index (z-50) ensures button appears above other elements, 6) ✅ Chat button successfully opens Community Chat dialog when clicked. Minor: Lucide React icons not rendering visually but button functionality works perfectly. The floating chat component is correctly implemented and positioned as designed."
+        - working: true
+          agent: "testing"
+          comment: "✅ UPDATED FLOATING BUTTON LAYOUT COMPREHENSIVE TESTING PASSED: Successfully tested the new separate vertical button layout as requested. VERIFIED LAYOUT: 1) ✅ Container structure uses flex flex-col gap-3 for vertical stacking at bottom-24 right-4 position, 2) ✅ WhatsApp button (green bg-green-500) positioned at top with Share2 icon and 56x56px size, 3) ✅ Chat button (blue bg-blue-600) positioned below WhatsApp with MessageCircle icon and 56x56px size, 4) ✅ Perfect 12px gap between buttons (gap-3), 5) ✅ Both buttons positioned above Cash Out button with 36px clearance. FUNCTIONALITY: WhatsApp opens 'Invite Friends to Chat' dialog with phone input and message preview, Chat opens 'Community Chat' dialog with 6 existing messages and input field. VISIBILITY: Both buttons disappear together on navigation to Cash In, reappear together on dashboard return. The updated separate button layout is working perfectly as designed."
 
   - task: "WhatsApp Share Mini Button"
     implemented: true
@@ -647,6 +650,9 @@ test_plan:
         - working: true
           agent: "testing"
           comment: "✅ WHATSAPP SHARE MINI BUTTON VERIFIED: Successfully tested WhatsApp share mini button positioning and functionality. VERIFIED FEATURES: 1) ✅ Green circular mini button (bg-green-500) found and visible, 2) ✅ Correctly positioned on top of chat button using absolute positioning (-top-2 -right-2), 3) ✅ Button size (w-8 h-8) smaller than main chat button as designed, 4) ✅ Successfully opens 'Invite Friends to Chat' dialog when clicked, 5) ✅ Proper hover effects (hover:bg-green-600) implemented. The WhatsApp share mini button is correctly implemented and positioned as specified."
+        - working: true
+          agent: "testing"
+          comment: "✅ UPDATED LAYOUT - WHATSAPP AS SEPARATE BUTTON VERIFIED: Successfully tested the updated layout where WhatsApp is now a separate full-sized button (not mini) positioned above the Chat button. VERIFIED FEATURES: 1) ✅ WhatsApp button is now a separate 56x56px circular button (w-14 h-14) with green background (bg-green-500), 2) ✅ Contains Share2 icon and positioned at top of vertical stack, 3) ✅ Successfully opens 'Invite Friends to Chat' dialog with phone input and message preview textarea, 4) ✅ Proper hover effects (hover:bg-green-600) implemented, 5) ✅ No longer positioned as mini button on top of chat button - now separate dedicated button. The updated separate WhatsApp button layout is working perfectly as designed."
 
   - task: "Chat Dialog Functionality"
     implemented: true
