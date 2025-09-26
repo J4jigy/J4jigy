@@ -639,6 +639,136 @@ It's completely free to try!`;
         </DialogContent>
       </Dialog>
 
+      {/* Floating Chat Component */}
+      {showFloatingChat && (
+        <div className="fixed bottom-24 right-4 z-50">
+          <div className="relative">
+            {/* WhatsApp Share Mini Button */}
+            <Button
+              onClick={handleChatWhatsAppShare}
+              className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-green-500 hover:bg-green-600 p-0 shadow-lg"
+            >
+              <Share2 className="w-4 h-4 text-white" />
+            </Button>
+            
+            {/* Chat Button */}
+            <Button
+              onClick={() => setShowChatDialog(true)}
+              className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg flex items-center justify-center"
+            >
+              <MessageCircle className="w-6 h-6 text-white" />
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Chat Dialog */}
+      <Dialog open={showChatDialog} onOpenChange={setShowChatDialog}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-md h-[500px] flex flex-col">
+          <DialogHeader>
+            <DialogTitle className="text-white flex items-center gap-2">
+              <MessageCircle className="w-5 h-5" />
+              Community Chat
+            </DialogTitle>
+          </DialogHeader>
+          
+          {/* Chat Messages */}
+          <div className="flex-1 overflow-y-auto space-y-3 pr-2">
+            {chatMessages.map((msg) => (
+              <div key={msg.id} className={`flex flex-col ${msg.isSystem ? 'items-center' : 'items-start'}`}>
+                {msg.isSystem ? (
+                  <div className="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-xs">
+                    {msg.message}
+                  </div>
+                ) : (
+                  <div className="max-w-[80%]">
+                    <div className="bg-blue-600 text-white p-3 rounded-lg rounded-tl-sm">
+                      <div className="text-sm">{msg.message}</div>
+                    </div>
+                    <div className="text-xs text-slate-400 mt-1 flex items-center gap-1">
+                      <span>{msg.user}</span>
+                      <span>•</span>
+                      <span>{msg.time}</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          
+          {/* Message Input */}
+          <div className="flex gap-2 pt-3 border-t border-slate-600">
+            <Input
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              placeholder="Type your message..."
+              className="bg-slate-700 border-slate-600 text-white flex-1"
+              onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+            />
+            <Button
+              onClick={sendMessage}
+              disabled={!newMessage.trim()}
+              className="bg-blue-600 hover:bg-blue-700 px-3"
+            >
+              <Send className="w-4 h-4" />
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* WhatsApp Share from Chat */}
+      <Dialog open={showWhatsAppFromChat} onOpenChange={setShowWhatsAppFromChat}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-white">Invite Friends to Chat</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label className="text-slate-200 text-sm">Phone Number</Label>
+              <Input
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                placeholder="Enter phone number (e.g. +1234567890)"
+                className="bg-slate-700 border-slate-600 text-white mt-1"
+              />
+            </div>
+            <div>
+              <Label className="text-slate-200 text-sm">Message Preview</Label>
+              <textarea
+                value={inviteMessage}
+                onChange={(e) => setInviteMessage(e.target.value)}
+                className="w-full bg-slate-700 border border-slate-600 text-white rounded-md p-3 text-sm mt-1 min-h-[120px] resize-none"
+                placeholder="Customize your invite message..."
+              />
+            </div>
+            <div className="flex gap-2">
+              <Button
+                onClick={shareViaWhatsApp}
+                className="flex-1 bg-green-600 hover:bg-green-700"
+              >
+                <MessageCircle className="w-4 h-4 mr-2" />
+                Send via WhatsApp
+              </Button>
+              <Button
+                onClick={shareViaWebAPI}
+                variant="outline"
+                className="border-slate-600 text-slate-200"
+              >
+                <Share2 className="w-4 h-4" />
+              </Button>
+            </div>
+            <Button
+              onClick={copyInviteLink}
+              variant="outline"
+              className="w-full border-slate-600 text-slate-200"
+            >
+              <Copy className="w-4 h-4 mr-2" />
+              {copySuccess ? 'Copied!' : 'Copy Message'}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Cash In/Out Floating Buttons */}
       <div className="fixed bottom-6 left-4 right-4">
         <div className="flex gap-4">
