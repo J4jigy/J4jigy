@@ -395,7 +395,7 @@ It's completely free to try!`;
                 <div className="border-t border-slate-600 pt-4">
                   <h4 className="text-white font-semibold mb-3">Admin Panel</h4>
                   <div className="space-y-2">
-                    <Button onClick={() => navigate('/admin')} className="w-full bg-purple-600 hover:bg-purple-700">
+                    <Button onClick={() => handleNavigate('/admin')} className="w-full bg-purple-600 hover:bg-purple-700">
                       <Shield className="w-4 h-4 mr-2" />
                       Security Dashboard
                     </Button>
