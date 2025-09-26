@@ -21,8 +21,7 @@ import {
   User,
   Building,
   FileText,
-  Package,
-  Barcode
+  Package
 } from 'lucide-react';
 
 const CashOutEntry = ({ onBack }) => {
