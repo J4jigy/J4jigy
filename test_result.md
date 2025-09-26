@@ -348,9 +348,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Business deletion functionality"
+    - "Combined Total Amount Display on POS Slots in Cash In Screen"
   stuck_tasks:
     - "Business deletion functionality"
+    - "Combined Total Amount Display on POS Slots in Cash In Screen"
   test_all: false
   test_priority: "high_first"
 
