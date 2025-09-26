@@ -348,7 +348,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "POS Slot Automatic Reset After Save"
+    - "Quick Cash Button Layout with Visual Icons"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
