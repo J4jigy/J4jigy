@@ -442,7 +442,7 @@ const CashInEntry = ({ onBack }) => {
           {['Credit', 'Cash', 'Online'].map((mode) => (
             <Button
               key={mode}
-              onClick={() => setPaymentModeForActive(mode)}
+              onClick={() => handlePaymentModeClick(mode)}
               className={`w-full h-10 text-xs sm:text-sm rounded-md ${
                 paymentMode === mode
                   ? mode === 'Credit' ? 'bg-orange-900 hover:bg-orange-950 ring-1 ring-orange-700' 
@@ -452,9 +452,36 @@ const CashInEntry = ({ onBack }) => {
               }`}
             >
               {mode}
+              {mode === 'Credit' && selectedCreditTerm && (
+                <span className="ml-1 text-[10px] opacity-80">({selectedCreditTerm})</span>
+              )}
             </Button>
           ))}
         </div>
+
+        {/* Credit Terms Dropdown */}
+        {showCreditTermsDropdown && (
+          <div className="relative">
+            <div className="absolute top-2 left-0 right-0 bg-slate-800 border border-slate-600 rounded-md shadow-lg z-50 max-h-48 overflow-y-auto">
+              <div className="p-2">
+                <div className="text-sm text-slate-200 mb-2 font-medium">Select Credit Terms:</div>
+                {creditTerms.map((term) => (
+                  <Button
+                    key={term}
+                    onClick={() => handleCreditTermSelect(term)}
+                    className={`w-full mb-1 text-left justify-start h-8 text-sm ${
+                      selectedCreditTerm === term
+                        ? 'bg-orange-600 hover:bg-orange-700 text-white'
+                        : 'bg-slate-700 hover:bg-slate-600 text-slate-200'
+                    }`}
+                  >
+                    {term}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Action Buttons - increased size for better tap targets */}
         <div className="flex gap-1">
