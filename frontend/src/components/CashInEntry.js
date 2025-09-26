@@ -453,7 +453,7 @@ const CashInEntry = ({ onBack }) => {
       <div className="flex-1 px-2 pt-0 pb-2 space-y-1 overflow-hidden">
         {/* Quick Amount Icons */}
         <div className="space-y-3">
-          {/* Coin Icons (Golden) */}
+          {/* Coin Icons (Golden with Rupee Symbol) */}
           <div className="grid grid-cols-5 gap-3">
             {[1, 2, 5, 10, 20].map((amount) => (
               <div
@@ -461,16 +461,19 @@ const CashInEntry = ({ onBack }) => {
                 onClick={() => handleQuickAmount(amount)}
                 className="relative flex items-center justify-center cursor-pointer hover:scale-110 transition-transform group"
               >
-                {/* Coin Background */}
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 shadow-lg border-2 border-yellow-300 group-hover:from-yellow-300 group-hover:via-yellow-400 group-hover:to-yellow-500 flex items-center justify-center">
-                  <span className="text-sm font-bold text-yellow-900 group-hover:text-yellow-800">
-                    ₹{amount}
-                  </span>
+                {/* Coin Design - Flat Golden Circle with Border */}
+                <div className="w-12 h-12 rounded-full bg-yellow-400 border-2 border-yellow-600 group-hover:bg-yellow-300 group-hover:border-yellow-500 flex items-center justify-center shadow-md">
+                  {/* Inner Circle */}
+                  <div className="w-10 h-10 rounded-full bg-yellow-500 group-hover:bg-yellow-400 flex items-center justify-center">
+                    <span className="text-sm font-bold text-yellow-800 group-hover:text-yellow-700">
+                      ₹{amount}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-          {/* Currency Note Icons (Green) */}
+          {/* Currency Note Icons (Green with Rupee Symbol) */}
           <div className="flex gap-4 justify-center">
             {[50, 100, 200, 500].map((amount) => (
               <div
@@ -478,11 +481,17 @@ const CashInEntry = ({ onBack }) => {
                 onClick={() => handleQuickAmount(amount)}
                 className="relative flex items-center justify-center cursor-pointer hover:scale-110 transition-transform group"
               >
-                {/* Currency Note Background */}
-                <div className="w-16 h-10 rounded bg-gradient-to-r from-green-400 via-green-500 to-green-600 shadow-lg border border-green-300 group-hover:from-green-300 group-hover:via-green-400 group-hover:to-green-500 flex items-center justify-center">
-                  <span className="text-xs font-bold text-green-900 group-hover:text-green-800">
-                    ₹{amount}
-                  </span>
+                {/* Currency Note Design - Rectangular with Central Circle */}
+                <div className="w-16 h-10 rounded bg-green-200 border-2 border-green-600 group-hover:bg-green-100 group-hover:border-green-500 shadow-md flex items-center justify-center relative">
+                  {/* Side Dots */}
+                  <div className="absolute left-1 w-1.5 h-1.5 rounded-full bg-green-600 group-hover:bg-green-500"></div>
+                  <div className="absolute right-1 w-1.5 h-1.5 rounded-full bg-green-600 group-hover:bg-green-500"></div>
+                  {/* Central Circle with Rupee Symbol */}
+                  <div className="w-6 h-6 rounded-full bg-green-600 group-hover:bg-green-500 flex items-center justify-center">
+                    <span className="text-xs font-bold text-white">
+                      ₹{amount}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
