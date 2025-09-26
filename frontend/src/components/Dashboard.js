@@ -650,26 +650,24 @@ It's completely free to try!`;
         </DialogContent>
       </Dialog>
 
-      {/* Floating Chat Component */}
+      {/* Floating Chat and WhatsApp Components */}
       {showFloatingChat && (
-        <div className="fixed bottom-24 right-4 z-50">
-          <div className="relative">
-            {/* WhatsApp Share Mini Button */}
-            <Button
-              onClick={handleChatWhatsAppShare}
-              className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-green-500 hover:bg-green-600 p-0 shadow-lg"
-            >
-              <Share2 className="w-4 h-4 text-white" />
-            </Button>
-            
-            {/* Chat Button */}
-            <Button
-              onClick={() => setShowChatDialog(true)}
-              className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg flex items-center justify-center"
-            >
-              <MessageCircle className="w-6 h-6 text-white" />
-            </Button>
-          </div>
+        <div className="fixed bottom-24 right-4 z-50 flex flex-col gap-3">
+          {/* WhatsApp Share Button */}
+          <Button
+            onClick={() => setShowWhatsAppFromChat(true)}
+            className="w-14 h-14 rounded-full bg-green-500 hover:bg-green-600 shadow-lg flex items-center justify-center"
+          >
+            <Share2 className="w-6 h-6 text-white" />
+          </Button>
+          
+          {/* Chat Button */}
+          <Button
+            onClick={() => setShowChatDialog(true)}
+            className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg flex items-center justify-center"
+          >
+            <MessageCircle className="w-6 h-6 text-white" />
+          </Button>
         </div>
       )}
 
