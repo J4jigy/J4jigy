@@ -546,15 +546,15 @@ const CashOutEntry = ({ onBack }) => {
                   <div className="w-12 h-8 rounded-sm bg-green-500 border border-green-700 absolute top-0 left-0 group-hover:bg-green-400 shadow-sm">
                     {/* Circular Emblem on Background Note */}
                     <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-green-300 group-hover:bg-green-200 flex items-center justify-center">
-                      <span className="text-[8px] font-bold text-white">₹</span>
+                      <span className="text-[8px] font-bold text-green-900 group-hover:text-green-800">₹</span>
                     </div>
                   </div>
                   
                   {/* Foreground Banknote (Slightly Offset) */}
                   <div className="w-12 h-8 rounded-sm bg-green-600 border border-green-800 relative top-0.5 left-0.5 group-hover:bg-green-500 shadow-md">
                     {/* Circular Emblem on Foreground Note */}
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-green-400 group-hover:bg-green-300 flex items-center justify-center">
-                      <span className="text-[8px] font-bold text-white">₹{amount}</span>
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-yellow-300 group-hover:bg-yellow-200 flex items-center justify-center border border-yellow-500">
+                      <span className="text-[8px] font-bold text-green-900 group-hover:text-green-800">₹{amount}</span>
                     </div>
                   </div>
                 </div>
