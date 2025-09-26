@@ -398,16 +398,6 @@ const CashOutEntry = ({ onBack }) => {
           </CardContent>
         </Card>
 
-        {/* Scan Barcode Button */}
-        <Button
-          onClick={() => setShowBarcodeModal(true)}
-          variant="outline"
-          className="w-full bg-slate-800 border-slate-700 text-white hover:bg-slate-700 h-6 text-xs"
-        >
-          <Barcode className="w-3 h-3 mr-1" />
-          Scan Barcode
-        </Button>
-
         {/* Payment Mode Tabs - enlarged buttons, full width across screen */}
         <div className="grid grid-cols-3 gap-2">
           {['Credit', 'Cash', 'Online'].map((mode) => (
