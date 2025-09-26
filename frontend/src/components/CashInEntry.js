@@ -582,7 +582,10 @@ const CashInEntry = ({ onBack }) => {
             <Barcode className="w-4 h-4 mr-2" />
             Scan Barcode
           </Button>
-          <Button className="flex-1 bg-sky-500 hover:bg-sky-600 h-10 text-sm rounded-md">
+          <Button 
+            onClick={handleSave}
+            className="flex-1 bg-sky-500 hover:bg-sky-600 h-10 text-sm rounded-md"
+          >
             Save
           </Button>
         </div>
