@@ -744,7 +744,7 @@ const CashInEntry = ({ onBack }) => {
               <Input className="bg-slate-700 border-slate-600 text-white text-sm h-8" placeholder="Enter HSN code" />
             </div>
             <Button className="w-full bg-blue-600 hover:bg-blue-700 h-8 text-sm">
-              <Scan className="w-3 h-3 mr-2" />
+              <Barcode className="w-3 h-3 mr-2" />
               Add Barcode
             </Button>
             <Button className="w-full bg-green-600 hover:bg-green-700 h-8 text-sm">
