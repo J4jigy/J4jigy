@@ -333,12 +333,71 @@ It's completely free to try!`;
           </Dialog>
         </div>
 
-        <Dialog open={showProfileDialog} onOpenChange={setShowProfileDialog}>
-          <DialogTrigger asChild>
-            <Button variant="ghost" size="sm" data-testid="profile-icon">
-              <UserCircle className="w-6 h-6 text-slate-400" />
-            </Button>
-          </DialogTrigger>
+        <div className="flex items-center gap-2">
+          {/* WhatsApp Invite Button */}
+          <Dialog open={showInviteDialog} onOpenChange={setShowInviteDialog}>
+            <DialogTrigger asChild>
+              <Button variant="ghost" size="sm" className="text-green-400 hover:bg-green-900/20">
+                <Share2 className="w-5 h-5" />
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="bg-slate-800 border-slate-700 max-w-md">
+              <DialogHeader>
+                <DialogTitle className="text-white">Invite Friends via WhatsApp</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div>
+                  <Label className="text-slate-200 text-sm">Phone Number</Label>
+                  <Input
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    placeholder="Enter phone number (e.g. +1234567890)"
+                    className="bg-slate-700 border-slate-600 text-white mt-1"
+                  />
+                </div>
+                <div>
+                  <Label className="text-slate-200 text-sm">Message Preview</Label>
+                  <textarea
+                    value={inviteMessage}
+                    onChange={(e) => setInviteMessage(e.target.value)}
+                    className="w-full bg-slate-700 border border-slate-600 text-white rounded-md p-3 text-sm mt-1 min-h-[120px] resize-none"
+                    placeholder="Customize your invite message..."
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    onClick={shareViaWhatsApp}
+                    className="flex-1 bg-green-600 hover:bg-green-700"
+                  >
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    Send via WhatsApp
+                  </Button>
+                  <Button
+                    onClick={shareViaWebAPI}
+                    variant="outline"
+                    className="border-slate-600 text-slate-200"
+                  >
+                    <Share2 className="w-4 h-4" />
+                  </Button>
+                </div>
+                <Button
+                  onClick={copyInviteLink}
+                  variant="outline"
+                  className="w-full border-slate-600 text-slate-200"
+                >
+                  <Copy className="w-4 h-4 mr-2" />
+                  {copySuccess ? 'Copied!' : 'Copy Message'}
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+
+          <Dialog open={showProfileDialog} onOpenChange={setShowProfileDialog}>
+            <DialogTrigger asChild>
+              <Button variant="ghost" size="sm" data-testid="profile-icon">
+                <UserCircle className="w-6 h-6 text-slate-400" />
+              </Button>
+            </DialogTrigger>
           <DialogContent className="bg-slate-800 border-slate-700">
             <DialogHeader>
               <DialogTitle className="text-white">Profile</DialogTitle>
