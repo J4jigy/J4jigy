@@ -497,7 +497,7 @@ const CashInEntry = ({ onBack }) => {
             {[1, 2, 5, 10, 20].map((amount) => (
               <div
                 key={amount}
-                onClick={() => handleQuickAmount(amount)}
+                onClick={() => handleCoinClick(amount)}
                 className="relative flex items-center justify-center cursor-pointer hover:scale-110 transition-transform group"
               >
                 {/* Coin Design - Flat Golden Circle with Border */}
