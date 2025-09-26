@@ -171,8 +171,10 @@ const CashInEntry = ({ onBack }) => {
   };
 
   const handleQuickAmount = (quickAmount) => {
-    const currentAmount = parseFloat(amount) || 0;
-    setAmountForActive((currentAmount + quickAmount).toString());
+    // Get current amount from the active slot to ensure we're adding to the correct total
+    const currentSlotAmount = parseFloat(slots[activeSlot]?.amount) || 0;
+    const newTotal = currentSlotAmount + quickAmount;
+    setAmountForActive(newTotal.toString());
   };
 
   const handleProductSelect = (product) => {
