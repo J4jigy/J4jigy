@@ -86,6 +86,11 @@ const CashInEntry = ({ onBack }) => {
   // Search states
   const [productSearchQuery, setProductSearchQuery] = useState('');
   
+  // Bill/Invoice modal states
+  const [showBillModal, setShowBillModal] = useState(false);
+  const [selectedSlotForBill, setSelectedSlotForBill] = useState(null);
+  const [longPressTimer, setLongPressTimer] = useState(null);
+  
   const [selectedCategory, setSelectedCategory] = useState('');
   const [newEntryTitle, setNewEntryTitle] = useState('');
   const [darkTheme, setDarkTheme] = useState(true);
