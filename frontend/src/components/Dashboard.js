@@ -851,31 +851,39 @@ It's completely free to try!`;
           {showPeerList ? (
             /* Peer List View */
             <div className="flex-1 overflow-y-auto space-y-1 pr-2">
-              <div className="text-xs text-slate-400 mb-2">Online Peers ({onlinePeers.filter(p => p.status === 'online').length} online)</div>
-              {onlinePeers.map((peer) => (
-                <div
-                  key={peer.id}
-                  onClick={() => selectPeer(peer)}
-                  className="flex items-center gap-3 p-3 hover:bg-slate-700 rounded-lg cursor-pointer transition-colors"
-                >
-                  <div className="relative">
-                    <span className="text-2xl">{peer.avatar}</span>
-                    {peer.status === 'online' && (
-                      <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-slate-800"></div>
-                    )}
-                  </div>
-                  <div className="flex-1">
-                    <div className="text-sm font-medium text-white">{peer.name}</div>
-                    <div className="text-xs text-slate-400">{peer.email}</div>
-                    {peer.status === 'offline' && (
-                      <div className="text-xs text-slate-500">last seen {peer.lastSeen}</div>
-                    )}
-                  </div>
-                  {peerMessages[peer.id] && peerMessages[peer.id].length > 1 && (
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  )}
+              <div className="text-xs text-slate-400 mb-2">Contacts ({contacts.filter(p => p.status === 'online').length} online)</div>
+              {contacts.length === 0 ? (
+                <div className="text-center text-slate-400 py-8">
+                  <MessageCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                  <p className="text-sm">No contacts yet</p>
+                  <p className="text-xs">Add customers in Cash In/Out to see them here</p>
                 </div>
-              ))}
+              ) : (
+                contacts.map((contact) => (
+                  <div
+                    key={contact.id}
+                    onClick={() => selectPeer(contact)}
+                    className="flex items-center gap-3 p-3 hover:bg-slate-700 rounded-lg cursor-pointer transition-colors"
+                  >
+                    <div className="relative">
+                      <span className="text-2xl">{contact.avatar}</span>
+                      {contact.status === 'online' && (
+                        <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-slate-800"></div>
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <div className="text-sm font-medium text-white">{contact.name}</div>
+                      <div className="text-xs text-slate-400 capitalize">{contact.type}</div>
+                      {contact.status === 'offline' && (
+                        <div className="text-xs text-slate-500">last seen {contact.lastSeen}</div>
+                      )}
+                    </div>
+                    {peerMessages[contact.id] && peerMessages[contact.id].length > 1 && (
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    )}
+                  </div>
+                ))
+              )}
             </div>
           ) : (
             /* Chat Messages View */
