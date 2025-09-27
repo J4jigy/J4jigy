@@ -82,6 +82,9 @@ const CashInEntry = ({ onBack }) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteAction, setDeleteAction] = useState(null);
   
+  // Search states
+  const [productSearchQuery, setProductSearchQuery] = useState('');
+  
   const [selectedCategory, setSelectedCategory] = useState('');
   const [newEntryTitle, setNewEntryTitle] = useState('');
   const [darkTheme, setDarkTheme] = useState(true);
