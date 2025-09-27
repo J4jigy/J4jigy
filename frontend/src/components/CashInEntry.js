@@ -23,7 +23,8 @@ import {
   FileText,
   Package,
   CircleDollarSign,
-  Coins
+  Coins,
+  MessageCircle
 } from 'lucide-react';
 
 const CashInEntry = ({ onBack }) => {
