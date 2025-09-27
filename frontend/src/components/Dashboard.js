@@ -80,8 +80,34 @@ export default function Dashboard({ user, logout }) {
     }
   };
 
+  const fetchContacts = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      const response = await axios.get(`${API}/api/contacts`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      // Simulate online status for contacts (random for demo)
+      const contactsWithStatus = response.data.map(contact => ({
+        ...contact,
+        status: Math.random() > 0.5 ? 'online' : 'offline',
+        lastSeen: contact.status === 'online' ? 'online' : `${Math.floor(Math.random() * 12) + 1} hours ago`
+      }));
+      
+      setContacts(contactsWithStatus);
+    } catch (error) {
+      console.log('Error fetching contacts:', error);
+      setContacts([]);
+    }
+  };
+
   useEffect(() => {
     fetchSummary();
+    fetchContacts();
   }, []);
 
   const handleCreateInviteCode = async () => {
