@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 
 const CashOutEntry = ({ onBack }) => {
+  const API = process.env.REACT_APP_BACKEND_URL;
   const [amount, setAmount] = useState('0');
   // POS multi-customer slots
   const initialSlots = Array.from({ length: 6 }, (_, i) => ({ id: i, label: `C${i + 1}`, amount: '0' }));
