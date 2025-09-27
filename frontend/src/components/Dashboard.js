@@ -1122,7 +1122,10 @@ It's completely free to try!`;
                 
                 <div className="flex gap-3">
                   <Button
-                    onClick={simulateScanDocument}
+                    onClick={() => {
+                      console.log('Button clicked!');
+                      simulateScanDocument();
+                    }}
                     disabled={isScanning}
                     className="flex-1 bg-cyan-600 hover:bg-cyan-700"
                   >
