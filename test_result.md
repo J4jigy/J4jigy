@@ -347,12 +347,7 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "Chat in Finance Category Integration"
-    - "Peer-to-Peer Floating Chat System"
-    - "Contact List with Online/Offline Status"
-    - "Individual Peer Chat Functionality"
-    - "Community Chat Functionality"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
