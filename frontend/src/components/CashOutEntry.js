@@ -81,6 +81,9 @@ const CashOutEntry = ({ onBack }) => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteAction, setDeleteAction] = useState(null);
   
+  // Search states
+  const [expenseSearchQuery, setExpenseSearchQuery] = useState('');
+  
   const [selectedCategory, setSelectedCategory] = useState('');
   const [newEntryTitle, setNewEntryTitle] = useState('');
   const [darkTheme, setDarkTheme] = useState(true);
