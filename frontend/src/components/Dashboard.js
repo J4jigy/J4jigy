@@ -1066,6 +1066,163 @@ It's completely free to try!`;
         </DialogContent>
       </Dialog>
 
+      {/* Scan Documents Modal */}
+      <Dialog open={showScanModal} onOpenChange={setShowScanModal}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-2xl">
+          <DialogHeader>
+            <DialogTitle className="text-white flex items-center gap-2">
+              <ScanLine className="w-5 h-5 text-cyan-400" />
+              Scan Documents
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-6">
+            {!selectedFile ? (
+              /* File Selection */
+              <div className="border-2 border-dashed border-slate-600 rounded-lg p-8">
+                <div className="text-center">
+                  <ScanLine className="w-12 h-12 text-slate-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-white mb-2">Upload Document</h3>
+                  <p className="text-slate-400 mb-4">
+                    Select a PDF, JPG, PNG, or WebP file to scan and extract text
+                  </p>
+                  <input
+                    type="file"
+                    id="document-upload"
+                    className="hidden"
+                    accept=".pdf,.jpg,.jpeg,.png,.webp"
+                    onChange={handleFileSelect}
+                  />
+                  <Button
+                    onClick={() => document.getElementById('document-upload').click()}
+                    className="bg-cyan-600 hover:bg-cyan-700"
+                  >
+                    <ScanLine className="w-4 h-4 mr-2" />
+                    Choose File
+                  </Button>
+                </div>
+              </div>
+            ) : !scanResults ? (
+              /* File Selected - Ready to Scan */
+              <div className="space-y-4">
+                <div className="bg-slate-700 rounded-lg p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-cyan-600 rounded-lg flex items-center justify-center">
+                      <Receipt className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-white font-medium">{selectedFile.name}</p>
+                      <p className="text-slate-400 text-sm">{(selectedFile.size / 1024).toFixed(1)} KB</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex gap-3">
+                  <Button
+                    onClick={simulateScanDocument}
+                    disabled={isScanning}
+                    className="flex-1 bg-cyan-600 hover:bg-cyan-700"
+                  >
+                    {isScanning ? (
+                      <>
+                        <div className="w-4 h-4 mr-2 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                        Scanning...
+                      </>
+                    ) : (
+                      <>
+                        <ScanLine className="w-4 h-4 mr-2" />
+                        Scan Document
+                      </>
+                    )}
+                  </Button>
+                  <Button
+                    onClick={resetScan}
+                    variant="outline"
+                    className="border-slate-600 text-slate-200"
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              /* Scan Results */
+              <div className="space-y-6">
+                <div className="bg-slate-700 rounded-lg p-4">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
+                      <CheckSquare className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-white font-medium">Scan Complete</h3>
+                      <p className="text-slate-400 text-sm">Confidence: {scanResults.confidence}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4 mb-4 text-sm">
+                    <div>
+                      <p className="text-slate-400">File Name</p>
+                      <p className="text-white">{scanResults.fileName}</p>
+                    </div>
+                    <div>
+                      <p className="text-slate-400">Document Type</p>
+                      <p className="text-white">{scanResults.documentType}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <h4 className="text-white font-medium">Extracted Text</h4>
+                  <div className="bg-slate-700 rounded-lg p-4">
+                    <pre className="text-slate-200 text-sm whitespace-pre-wrap font-mono">
+                      {scanResults.extractedText}
+                    </pre>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <h4 className="text-white font-medium">Quick Actions</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {scanResults.suggestions.map((suggestion, idx) => (
+                      <Button
+                        key={idx}
+                        size="sm"
+                        variant="outline"
+                        className="border-slate-600 text-slate-200 hover:bg-slate-600"
+                        onClick={() => {
+                          // Handle suggestion actions
+                          if (suggestion.includes('Company Purchase')) handleNavigate('/list/purchases');
+                          else if (suggestion.includes('Cash Out')) handleNavigate('/cash-out');
+                          else if (suggestion.includes('Expense')) handleNavigate('/list/expenses');
+                          setShowScanModal(false);
+                        }}
+                      >
+                        {suggestion}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-3">
+                  <Button
+                    onClick={resetScan}
+                    className="flex-1 bg-cyan-600 hover:bg-cyan-700"
+                  >
+                    Scan Another
+                  </Button>
+                  <Button
+                    onClick={() => setShowScanModal(false)}
+                    variant="outline"
+                    className="border-slate-600 text-slate-200"
+                  >
+                    Close
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Cash In/Out Floating Buttons */}
       <div className="fixed bottom-6 left-4 right-4">
         <div className="flex gap-4">
