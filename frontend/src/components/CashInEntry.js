@@ -927,8 +927,23 @@ const CashInEntry = ({ onBack }) => {
                   Delete Product
                 </Button>
               </div>
+              
+              {/* Search Box */}
+              <div className="relative">
+                <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                <Input
+                  value={productSearchQuery}
+                  onChange={(e) => setProductSearchQuery(e.target.value)}
+                  placeholder="Search products..."
+                  className="bg-slate-700 border-slate-600 text-white pl-10 h-8 text-sm"
+                />
+              </div>
             </div>
-            {products.map((product) => (
+            {products
+              .filter(product => 
+                product.toLowerCase().includes(productSearchQuery.toLowerCase())
+              )
+              .map((product) => (
               <div key={product} className="flex items-center justify-between bg-slate-700 p-2 rounded">
                 <span className="text-white text-sm">{product}</span>
                 <div className="flex items-center gap-1">
