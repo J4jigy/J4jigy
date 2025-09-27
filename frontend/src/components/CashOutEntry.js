@@ -511,15 +511,15 @@ const CashOutEntry = ({ onBack }) => {
       {/* Main Content */}
       <div className="flex-1 px-2 pt-0 pb-2 space-y-1 overflow-hidden">
         {/* Quick Amount Buttons */}
-        <div className="grid grid-cols-3 gap-1">
-          {/* All amount buttons with uniform styling */}
+        <div className="grid grid-cols-3 gap-0.5">
+          {/* All amount buttons with green currency styling */}
           {[1, 2, 5, 10, 20, 50, 100, 200, 500].map((amount) => (
             <Button
               key={amount}
               onClick={() => amount <= 20 ? handleCoinClick(amount) : handleNoteClick(amount)}
               variant="outline"
               size="sm"
-              className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 h-8 text-xs font-medium"
+              className="bg-green-600 border-green-700 text-white hover:bg-green-500 h-6 text-xs font-medium px-1"
             >
               ₹{amount}
             </Button>
