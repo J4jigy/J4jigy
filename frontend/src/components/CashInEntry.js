@@ -350,6 +350,10 @@ const CashInEntry = ({ onBack }) => {
 
   const resetQuantities = () => {
     setSelectedItems({});
+    // Also clear the active slot's selectedItems
+    setSlots(prev => prev.map((slot, idx) => 
+      idx === activeSlot ? { ...slot, selectedItems: {} } : slot
+    ));
   };
 
   const confirmDeleteProduct = (productToDelete) => {
