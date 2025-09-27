@@ -375,6 +375,53 @@ It's completely free to try!`;
     navigate(path);
   };
 
+  // Scan Documents functionality
+  const handleFileSelect = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // Check file type
+      const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+      if (allowedTypes.includes(file.type)) {
+        setSelectedFile(file);
+        setScanResults(null);
+      } else {
+        alert('Please select a valid file type: PDF, JPG, PNG, or WebP');
+      }
+    }
+  };
+
+  const simulateScanDocument = async () => {
+    if (!selectedFile) return;
+    
+    setIsScanning(true);
+    
+    // Simulate scanning process with delay
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Mock scan results based on file type
+    const mockResults = {
+      fileName: selectedFile.name,
+      fileSize: `${(selectedFile.size / 1024).toFixed(1)} KB`,
+      documentType: selectedFile.type.includes('pdf') ? 'PDF Document' : 'Image Document',
+      extractedText: selectedFile.type.includes('pdf') 
+        ? 'Invoice #INV-2024-001\nDate: January 15, 2024\nAmount: $1,250.00\nVendor: TechSupply Corp\nDescription: Office supplies and equipment'
+        : 'Receipt #RCP-456\nStore: QuickMart\nDate: Jan 15, 2024\nTotal: $45.67\nPayment: Credit Card',
+      confidence: '94%',
+      suggestions: selectedFile.type.includes('pdf') 
+        ? ['Add to Company Purchases', 'Create Expense Entry', 'Update Supplier Record']
+        : ['Add to Other Expenses', 'Create Cash Out Entry', 'Save Receipt']
+    };
+    
+    setScanResults(mockResults);
+    setIsScanning(false);
+  };
+
+  const resetScan = () => {
+    setSelectedFile(null);
+    setScanResults(null);
+    setIsScanning(false);
+  };
+
   const businessTiles = [
     { name: 'Credit Score', subtitle: '', icon: ShieldCheck, iconColor: 'text-blue-400' },
     { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400' },
