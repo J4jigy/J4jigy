@@ -494,6 +494,241 @@ def test_account_management_apis():
         results.add_fail("Account Management APIs - POST", f"HTTP {response.status_code}: {response.text}")
         return False
 
+def test_contact_management_apis():
+    """Test contact management API endpoints"""
+    print("\n🔍 Testing Contact Management APIs...")
+    
+    if not auth_token:
+        results.add_fail("Contact Management APIs", "No auth token available")
+        return False
+    
+    headers = {"Authorization": f"Bearer {auth_token}"}
+    created_contact_ids = []
+    
+    # Test 1: GET /api/contacts (should work with authentication)
+    print("  Testing GET /api/contacts...")
+    response = make_request("GET", "/contacts", headers=headers)
+    if not response:
+        results.add_fail("Contact Management - GET contacts", "Request failed")
+        return False
+    
+    if response.status_code == 200:
+        try:
+            contacts = response.json()
+            if isinstance(contacts, list):
+                results.add_pass("Contact Management - GET contacts")
+                print(f"ℹ️  Found {len(contacts)} existing contacts")
+            else:
+                results.add_fail("Contact Management - GET contacts", f"Expected list, got: {type(contacts)}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Contact Management - GET contacts", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Contact Management - GET contacts", f"HTTP {response.status_code}: {response.text}")
+        return False
+    
+    # Test 2: POST /api/contacts - Create customer contact
+    print("  Testing POST /api/contacts (customer)...")
+    customer_data = {
+        "name": "Acme Corporation",
+        "type": "customer",
+        "email": "contact@acmecorp.com",
+        "phone": "+1-555-0123"
+    }
+    
+    response = make_request("POST", "/contacts", customer_data, headers=headers)
+    if not response:
+        results.add_fail("Contact Management - POST customer", "Request failed")
+        return False
+    
+    if response.status_code == 200:
+        try:
+            contact = response.json()
+            if "id" in contact and contact["name"] == "Acme Corporation" and contact["type"] == "customer":
+                created_contact_ids.append(contact["id"])
+                results.add_pass("Contact Management - POST customer contact")
+                print(f"ℹ️  Created customer contact with ID: {contact['id']}")
+            else:
+                results.add_fail("Contact Management - POST customer", f"Invalid response format: {contact}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Contact Management - POST customer", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Contact Management - POST customer", f"HTTP {response.status_code}: {response.text}")
+        return False
+    
+    # Test 3: POST /api/contacts - Create supplier contact
+    print("  Testing POST /api/contacts (supplier)...")
+    supplier_data = {
+        "name": "TechSupply Ltd",
+        "type": "supplier",
+        "email": "orders@techsupply.com",
+        "phone": "+1-555-0456"
+    }
+    
+    response = make_request("POST", "/contacts", supplier_data, headers=headers)
+    if response and response.status_code == 200:
+        try:
+            contact = response.json()
+            if "id" in contact and contact["type"] == "supplier":
+                created_contact_ids.append(contact["id"])
+                results.add_pass("Contact Management - POST supplier contact")
+            else:
+                results.add_fail("Contact Management - POST supplier", f"Invalid response: {contact}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Contact Management - POST supplier", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Contact Management - POST supplier", f"HTTP {response.status_code if response else 'No response'}: {response.text if response else 'Request failed'}")
+        return False
+    
+    # Test 4: POST /api/contacts - Create staff contact
+    print("  Testing POST /api/contacts (staff)...")
+    staff_data = {
+        "name": "John Smith",
+        "type": "staff",
+        "email": "john.smith@company.com",
+        "phone": "+1-555-0789"
+    }
+    
+    response = make_request("POST", "/contacts", staff_data, headers=headers)
+    if response and response.status_code == 200:
+        try:
+            contact = response.json()
+            if "id" in contact and contact["type"] == "staff":
+                created_contact_ids.append(contact["id"])
+                results.add_pass("Contact Management - POST staff contact")
+            else:
+                results.add_fail("Contact Management - POST staff", f"Invalid response: {contact}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Contact Management - POST staff", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Contact Management - POST staff", f"HTTP {response.status_code if response else 'No response'}: {response.text if response else 'Request failed'}")
+        return False
+    
+    # Test 5: Test duplicate contact handling (update vs create)
+    print("  Testing duplicate contact handling...")
+    duplicate_data = {
+        "name": "Acme Corporation",  # Same name and type as first contact
+        "type": "customer",
+        "email": "updated@acmecorp.com",  # Different email
+        "phone": "+1-555-9999"  # Different phone
+    }
+    
+    response = make_request("POST", "/contacts", duplicate_data, headers=headers)
+    if response and response.status_code == 200:
+        try:
+            contact = response.json()
+            if contact["email"] == "updated@acmecorp.com":
+                results.add_pass("Contact Management - Duplicate handling (update)")
+                print("ℹ️  Duplicate contact was updated correctly")
+            else:
+                results.add_fail("Contact Management - Duplicate handling", f"Contact not updated: {contact}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Contact Management - Duplicate handling", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Contact Management - Duplicate handling", f"HTTP {response.status_code if response else 'No response'}: {response.text if response else 'Request failed'}")
+        return False
+    
+    # Test 6: Verify contacts are associated with authenticated user
+    print("  Testing user association...")
+    response = make_request("GET", "/contacts", headers=headers)
+    if response and response.status_code == 200:
+        try:
+            contacts = response.json()
+            user_contacts = [c for c in contacts if c.get("user_id") == test_user_id]
+            if len(user_contacts) >= 3:  # Should have at least our 3 created contacts
+                results.add_pass("Contact Management - User association")
+            else:
+                results.add_fail("Contact Management - User association", f"Expected at least 3 user contacts, found {len(user_contacts)}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Contact Management - User association", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Contact Management - User association", f"HTTP {response.status_code if response else 'No response'}")
+        return False
+    
+    # Test 7: Test error handling for invalid requests
+    print("  Testing error handling...")
+    
+    # Test missing required fields
+    invalid_data = {"type": "customer"}  # Missing name
+    response = make_request("POST", "/contacts", invalid_data, headers=headers)
+    if response and response.status_code in [400, 422]:
+        results.add_pass("Contact Management - Error handling (missing fields)")
+    else:
+        results.add_fail("Contact Management - Error handling", f"Expected 400/422 for missing fields, got {response.status_code if response else 'No response'}")
+    
+    # Test 8: Test authentication requirement
+    print("  Testing authentication requirement...")
+    response = make_request("GET", "/contacts")  # No auth header
+    if response and response.status_code in [401, 403]:
+        results.add_pass("Contact Management - Authentication required")
+    else:
+        results.add_fail("Contact Management - Authentication", f"Expected 401/403 without auth, got {response.status_code if response else 'No response'}")
+    
+    # Test 9: DELETE /api/contacts/{contact_id}
+    print("  Testing DELETE /api/contacts/{contact_id}...")
+    if created_contact_ids:
+        contact_id_to_delete = created_contact_ids[0]
+        response = make_request("DELETE", f"/contacts/{contact_id_to_delete}", headers=headers)
+        
+        if response and response.status_code == 200:
+            try:
+                result = response.json()
+                if "message" in result and "deleted" in result["message"].lower():
+                    results.add_pass("Contact Management - DELETE contact")
+                    
+                    # Verify contact was actually deleted
+                    response = make_request("GET", "/contacts", headers=headers)
+                    if response and response.status_code == 200:
+                        contacts = response.json()
+                        if not any(c["id"] == contact_id_to_delete for c in contacts):
+                            results.add_pass("Contact Management - DELETE verification")
+                        else:
+                            results.add_fail("Contact Management - DELETE verification", "Contact still exists after deletion")
+                else:
+                    results.add_fail("Contact Management - DELETE", f"Unexpected response: {result}")
+                    return False
+            except json.JSONDecodeError:
+                results.add_fail("Contact Management - DELETE", "Invalid JSON response")
+                return False
+        else:
+            results.add_fail("Contact Management - DELETE", f"HTTP {response.status_code if response else 'No response'}: {response.text if response else 'Request failed'}")
+            return False
+    else:
+        results.add_fail("Contact Management - DELETE", "No contact ID available for deletion test")
+        return False
+    
+    # Test 10: DELETE non-existent contact
+    print("  Testing DELETE non-existent contact...")
+    fake_id = "non-existent-contact-id"
+    response = make_request("DELETE", f"/contacts/{fake_id}", headers=headers)
+    if response and response.status_code == 404:
+        results.add_pass("Contact Management - DELETE non-existent (404)")
+    else:
+        results.add_fail("Contact Management - DELETE non-existent", f"Expected 404, got {response.status_code if response else 'No response'}")
+    
+    # Test 11: DELETE without authentication
+    print("  Testing DELETE without authentication...")
+    if len(created_contact_ids) > 1:
+        response = make_request("DELETE", f"/contacts/{created_contact_ids[1]}")  # No auth header
+        if response and response.status_code in [401, 403]:
+            results.add_pass("Contact Management - DELETE auth required")
+        else:
+            results.add_fail("Contact Management - DELETE auth", f"Expected 401/403 without auth, got {response.status_code if response else 'No response'}")
+    
+    print(f"ℹ️  Contact Management API testing completed")
+    return True
+
 def test_missing_endpoints():
     """Test for missing critical endpoints"""
     print("\n🔍 Testing Missing Critical Endpoints...")
@@ -513,7 +748,9 @@ def test_missing_endpoints():
         ("/transactions/cash-out", "POST", "Cash Out Transaction"),
         ("/admin/invites", "GET", "Admin Invite Management"),
         ("/admin/users", "GET", "Admin User Management"),
-        ("/accounts", "GET", "Account Management")
+        ("/accounts", "GET", "Account Management"),
+        ("/contacts", "GET", "Contact Management"),
+        ("/contacts", "POST", "Contact Creation")
     ]
     
     for endpoint, method, description in critical_endpoints:
