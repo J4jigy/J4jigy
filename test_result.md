@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the new search boxes in product and expense selection modals for Cash In and Cash Out screens"
+user_problem_statement: "Test the new POS slot long press bill/invoice functionality in Cash In screen"
 
 backend:
   - task: "Backend services running"
