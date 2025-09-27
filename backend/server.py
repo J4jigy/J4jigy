@@ -692,6 +692,25 @@ class CashTransactionCreate(BaseModel):
     debit_account: str = "Cash"
     credit_account: str = "General"
 
+class Contact(BaseModel):
+    id: str
+    user_id: str
+    name: str
+    type: str  # 'customer', 'supplier', 'staff'
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    status: str = 'offline'  # 'online', 'offline'
+    last_seen: Optional[str] = None
+    avatar: str = '👤'
+    created_at: datetime
+    updated_at: datetime
+
+class ContactCreate(BaseModel):
+    name: str
+    type: str
+    email: Optional[str] = None
+    phone: Optional[str] = None
+
 @api_router.post("/transactions", response_model=Transaction)
 async def create_transaction(
     transaction: TransactionCreate,
