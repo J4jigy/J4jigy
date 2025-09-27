@@ -348,7 +348,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Simple Quick Amount Buttons Testing Complete"
+    - "Finance Category with Rent and Other Subcategories"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
