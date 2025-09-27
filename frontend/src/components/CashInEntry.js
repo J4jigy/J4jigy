@@ -648,10 +648,17 @@ const CashInEntry = ({ onBack }) => {
             <button
               key={slot.id}
               onClick={() => {
-                setActiveSlot(idx);
-                setAmount(slot.amount);
-                setPaymentMode(slot.paymentMode || 'Cash');
-                setSelectedItems(slot.selectedItems || {});
+                if (activeSlot === idx) {
+                  // If clicking on the currently active slot, open bill/invoice
+                  setSelectedSlotForBill(idx);
+                  setShowBillModal(true);
+                } else {
+                  // If clicking on a different slot, switch to it
+                  setActiveSlot(idx);
+                  setAmount(slot.amount);
+                  setPaymentMode(slot.paymentMode || 'Cash');
+                  setSelectedItems(slot.selectedItems || {});
+                }
               }}
               onMouseDown={() => handleSlotMouseDown(idx)}
               onMouseUp={handleSlotMouseUp}
