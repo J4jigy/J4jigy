@@ -234,15 +234,27 @@ const CashInEntry = ({ onBack }) => {
   };
 
   const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-    setNewEntryTitle(
-      financeCategories.some(cat => cat.name === category) 
-        ? 'Add New Expense' 
-        : `Add New ${category.split(' / ')[0]}`
-    );
-    setShowBusinessModal(false);
-    setShowFinanceModal(false);
-    setShowCategoryList(true);
+    if (category === 'Finance') {
+      // Show finance subcategories
+      setShowBusinessModal(false);
+      setShowFinanceSubcategory(true);
+    } else {
+      setSelectedCategory(category);
+      setNewEntryTitle(
+        financeCategories.some(cat => cat.name === category) 
+          ? 'Add New Expense' 
+          : `Add New ${category.split(' / ')[0]}`
+      );
+      setShowBusinessModal(false);
+      setShowFinanceModal(false);
+      setShowCategoryList(true);
+    }
+  };
+
+  const handleFinanceSubcategorySelect = (subcategory) => {
+    setSelectedCustomer(subcategory);
+    setSelectedFinanceCategory(subcategory);
+    setShowFinanceSubcategory(false);
   };
 
   const handleNameSelect = (name) => {
