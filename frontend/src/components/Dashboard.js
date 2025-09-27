@@ -63,15 +63,10 @@ export default function Dashboard({ user, logout }) {
   ]);
   const [newMessage, setNewMessage] = useState('');
   
-  // Peer-to-peer chat states
-  const [showPeerList, setShowPeerList] = useState(false);
+  // Contact and chat states
+  const [showPeerList, setShowPeerList] = useState(true); // Show contact list by default
   const [selectedPeer, setSelectedPeer] = useState(null);
-  const [onlinePeers, setOnlinePeers] = useState([
-    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'online', avatar: '👤', lastSeen: 'online' },
-    { id: 2, name: 'Sarah Wilson', email: 'sarah@example.com', status: 'online', avatar: '👩', lastSeen: 'online' },
-    { id: 3, name: 'Mike Johnson', email: 'mike@example.com', status: 'offline', avatar: '👨', lastSeen: '2 hours ago' },
-    { id: 4, name: 'Lisa Chen', email: 'lisa@example.com', status: 'online', avatar: '👩', lastSeen: 'online' }
-  ]);
+  const [contacts, setContacts] = useState([]);
   const [peerMessages, setPeerMessages] = useState({});
   
   const navigate = useNavigate();
