@@ -819,7 +819,7 @@ It's completely free to try!`;
               ) : showPeerList ? (
                 <div className="flex items-center gap-2 w-full">
                   <MessageCircle className="w-5 h-5" />
-                  <span>Select Contact</span>
+                  <span>Contacts</span>
                   <div className="flex-1"></div>
                   <Button 
                     onClick={openCommunityChat}
