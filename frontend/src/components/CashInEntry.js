@@ -125,7 +125,8 @@ const CashInEntry = ({ onBack }) => {
   ];
   const financeSubcategories = [
     { name: 'Rent', icon: Building, selectable: true },
-    { name: 'Other', icon: FileText, selectable: true }
+    { name: 'Other', icon: FileText, selectable: true },
+    { name: 'Chat', icon: MessageCircle, selectable: true }
   ];
   const financeCategories = [
     { name: 'Bills / Recharge', icon: FileText },
