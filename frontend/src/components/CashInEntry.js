@@ -232,15 +232,48 @@ const CashInEntry = ({ onBack }) => {
     incQty(product);
   };
 
+  const createContact = async (name, type) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      await axios.post(`${API}/api/contacts`, {
+        name: name,
+        type: type
+      }, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+    } catch (error) {
+      console.log('Contact creation error (non-critical):', error);
+      // Don't throw error as this is a background operation
+    }
+  };
+
   const handleCategorySelect = (category) => {
     // Set the selected customer directly for business and finance options
     setSelectedCustomer(category);
     setShowBusinessModal(false);
+    
+    // Auto-create contact based on category type
+    let contactType = 'customer'; // default
+    if (category.includes('Supplier') || category.includes('Creditor')) {
+      contactType = 'supplier';
+    } else if (category.includes('Staff')) {
+      contactType = 'staff';
+    }
+    
+    // Create contact in background
+    createContact(category, contactType);
   };
 
   const handleNameSelect = (name) => {
     setSelectedCustomer(name);
     setShowCategoryList(false);
+    
+    // Create contact as customer type for individual names
+    createContact(name, 'customer');
   };
 
   const resetAmount = () => {
