@@ -25,7 +25,9 @@ import {
   Package,
   CircleDollarSign,
   Coins,
-  Search
+  Search,
+  Receipt,
+  Share2
 } from 'lucide-react';
 
 const CashInEntry = ({ onBack }) => {
