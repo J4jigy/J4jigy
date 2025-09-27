@@ -161,10 +161,8 @@ metadata:
   run_ui: true
 
 test_plan:
-  current_focus:
-    - "Scan Documents Feature in Finance Tab"
-  stuck_tasks:
-    - "Scan Documents Feature in Finance Tab"
+  current_focus: []
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
