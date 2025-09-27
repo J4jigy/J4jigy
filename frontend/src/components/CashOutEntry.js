@@ -885,8 +885,23 @@ const CashOutEntry = ({ onBack }) => {
                   Delete Expense
                 </Button>
               </div>
+              
+              {/* Search Box */}
+              <div className="relative">
+                <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                <Input
+                  value={expenseSearchQuery}
+                  onChange={(e) => setExpenseSearchQuery(e.target.value)}
+                  placeholder="Search expenses..."
+                  className="bg-slate-700 border-slate-600 text-white pl-10 h-8 text-sm"
+                />
+              </div>
             </div>
-            {expenses.map((expense) => (
+            {expenses
+              .filter(expense => 
+                expense.toLowerCase().includes(expenseSearchQuery.toLowerCase())
+              )
+              .map((expense) => (
               <div key={expense} className="flex items-center justify-between bg-slate-700 p-2 rounded">
                 <span className="text-white text-sm">{expense}</span>
                 <div className="flex items-center gap-1">
