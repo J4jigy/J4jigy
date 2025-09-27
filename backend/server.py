@@ -1019,6 +1019,93 @@ async def create_account(
         )
         raise HTTPException(status_code=500, detail="Failed to create account")
 
+# Contact management endpoints
+@api_router.get("/contacts")
+async def get_contacts(
+    request: Request,
+    current_user: User = Depends(get_current_user)
+):
+    """Get all contacts for current user"""
+    try:
+        contacts = await db.contacts.find({"user_id": current_user.id}).to_list(length=None)
+        return [Contact(**contact) for contact in contacts]
+    except Exception as e:
+        print(f"Error fetching contacts: {e}")
+        return []
+
+@api_router.post("/contacts", response_model=Contact)
+async def create_contact(
+    contact: ContactCreate,
+    request: Request,
+    current_user: User = Depends(get_current_user)
+):
+    """Create or update a contact"""
+    try:
+        # Check if contact already exists by name and type
+        existing = await db.contacts.find_one({
+            "user_id": current_user.id,
+            "name": contact.name,
+            "type": contact.type
+        })
+        
+        if existing:
+            # Update existing contact
+            updated_doc = {
+                **existing,
+                "email": contact.email,
+                "phone": contact.phone,
+                "updated_at": datetime.now(timezone.utc)
+            }
+            await db.contacts.update_one(
+                {"id": existing["id"]}, 
+                {"$set": updated_doc}
+            )
+            return Contact(**updated_doc)
+        else:
+            # Create new contact
+            contact_doc = {
+                "id": str(uuid.uuid4()),
+                "user_id": current_user.id,
+                "name": contact.name,
+                "type": contact.type,
+                "email": contact.email,
+                "phone": contact.phone,
+                "status": "offline",
+                "last_seen": None,
+                "avatar": "👤" if contact.type == "customer" else "🏢" if contact.type == "supplier" else "👥",
+                "created_at": datetime.now(timezone.utc),
+                "updated_at": datetime.now(timezone.utc)
+            }
+            
+            await db.contacts.insert_one(contact_doc)
+            return Contact(**contact_doc)
+    except Exception as e:
+        print(f"Error creating contact: {e}")
+        raise HTTPException(status_code=500, detail="Failed to create contact")
+
+@api_router.delete("/contacts/{contact_id}")
+async def delete_contact(
+    contact_id: str,
+    request: Request,
+    current_user: User = Depends(get_current_user)
+):
+    """Delete a contact"""
+    try:
+        result = await db.contacts.delete_one({
+            "id": contact_id,
+            "user_id": current_user.id
+        })
+        
+        if result.deleted_count == 0:
+            raise HTTPException(status_code=404, detail="Contact not found")
+        
+        return {"message": "Contact deleted successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error deleting contact: {e}")
+        raise HTTPException(status_code=500, detail="Failed to delete contact")
+
 # Health/Ping endpoint
 @api_router.get("/ping")
 async def ping():
