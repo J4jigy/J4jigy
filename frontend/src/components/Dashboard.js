@@ -394,7 +394,6 @@ It's completely free to try!`;
     if (!selectedFile) return;
     
     setIsScanning(true);
-    console.log('Starting scan for file:', selectedFile.name);
     
     // Simulate scanning process with delay
     await new Promise(resolve => setTimeout(resolve, 2000));
@@ -413,10 +412,8 @@ It's completely free to try!`;
         : ['Add to Other Expenses', 'Create Cash Out Entry', 'Save Receipt']
     };
     
-    console.log('Setting scan results:', mockResults);
     setScanResults(mockResults);
     setIsScanning(false);
-    console.log('Scan completed');
   };
 
   const resetScan = () => {
