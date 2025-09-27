@@ -260,6 +260,7 @@ It's completely free to try!`;
     const handleOpenPeerChat = () => {
       setShowChatDialog(true);
       setShowPeerList(true);
+      fetchContacts(); // Refresh contacts when chat opens
     };
 
     window.addEventListener('openPeerChat', handleOpenPeerChat);
