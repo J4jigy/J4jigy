@@ -1197,6 +1197,140 @@ const CashInEntry = ({ onBack }) => {
         </DialogContent>
       </Dialog>
 
+      {/* Bill/Invoice Modal */}
+      <Dialog open={showBillModal} onOpenChange={setShowBillModal}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-md w-full mx-auto my-4 max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-white flex items-center gap-2">
+              <Receipt className="w-5 h-5 text-green-400" />
+              Bill / Invoice - {selectedSlotForBill !== null ? slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label : ''}
+            </DialogTitle>
+          </DialogHeader>
+          
+          {selectedSlotForBill !== null && (
+            <div className="space-y-4">
+              {/* Business Header */}
+              <div className="text-center border-b border-slate-600 pb-3">
+                <h2 className="text-lg font-bold text-white">Your Business Name</h2>
+                <p className="text-sm text-slate-300">Address Line 1, Address Line 2</p>
+                <p className="text-sm text-slate-300">Phone: +91 XXXXX XXXXX</p>
+                <p className="text-sm text-slate-300">Email: business@example.com</p>
+              </div>
+
+              {/* Bill Details */}
+              <div className="flex justify-between text-sm">
+                <div>
+                  <p className="text-slate-300">Bill No: <span className="text-white">INV-{String(Date.now()).slice(-6)}</span></p>
+                  <p className="text-slate-300">Date: <span className="text-white">{new Date().toLocaleDateString()}</span></p>
+                </div>
+                <div className="text-right">
+                  <p className="text-slate-300">Customer: <span className="text-white">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span></p>
+                  <p className="text-slate-300">Payment: <span className="text-white">{slots[selectedSlotForBill]?.paymentMode}</span></p>
+                </div>
+              </div>
+
+              {/* Items Table */}
+              <div className="border border-slate-600 rounded">
+                <div className="bg-slate-700 px-3 py-2 grid grid-cols-4 gap-2 text-sm font-medium text-white">
+                  <span>Item</span>
+                  <span className="text-center">Qty</span>
+                  <span className="text-right">Rate</span>
+                  <span className="text-right">Amount</span>
+                </div>
+                
+                {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0 ? (
+                  <>
+                    {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).map(([item, qty]) => (
+                      <div key={item} className="px-3 py-2 grid grid-cols-4 gap-2 text-sm border-b border-slate-600 last:border-b-0">
+                        <span className="text-white">{item}</span>
+                        <span className="text-center text-slate-300">{qty}</span>
+                        <span className="text-right text-slate-300">₹0.00</span>
+                        <span className="text-right text-slate-300">₹0.00</span>
+                      </div>
+                    ))}
+                    
+                    {/* Add manual amount row if slot has amount but no items */}
+                    {parseFloat(slots[selectedSlotForBill]?.amount) > 0 && (
+                      <div className="px-3 py-2 grid grid-cols-4 gap-2 text-sm border-b border-slate-600 last:border-b-0">
+                        <span className="text-white">Manual Entry</span>
+                        <span className="text-center text-slate-300">1</span>
+                        <span className="text-right text-slate-300">₹{slots[selectedSlotForBill]?.amount}</span>
+                        <span className="text-right text-slate-300">₹{slots[selectedSlotForBill]?.amount}</span>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className="px-3 py-8 text-center text-slate-400">
+                    {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
+                      <div className="px-3 py-2 grid grid-cols-4 gap-2 text-sm">
+                        <span className="text-white">Manual Entry</span>
+                        <span className="text-center text-slate-300">1</span>
+                        <span className="text-right text-slate-300">₹{slots[selectedSlotForBill]?.amount}</span>
+                        <span className="text-right text-slate-300">₹{slots[selectedSlotForBill]?.amount}</span>
+                      </div>
+                    ) : (
+                      "No items added to this slot"
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Total Section */}
+              <div className="border-t border-slate-600 pt-3">
+                <div className="flex justify-between text-sm text-slate-300 mb-1">
+                  <span>Subtotal:</span>
+                  <span>₹{slots[selectedSlotForBill]?.amount || '0.00'}</span>
+                </div>
+                <div className="flex justify-between text-sm text-slate-300 mb-1">
+                  <span>Tax (0%):</span>
+                  <span>₹0.00</span>
+                </div>
+                <div className="flex justify-between text-lg font-bold text-white border-t border-slate-600 pt-2">
+                  <span>Total:</span>
+                  <span>₹{slots[selectedSlotForBill]?.amount || '0.00'}</span>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3 pt-2">
+                <Button
+                  onClick={() => {
+                    // Here you could add print functionality
+                    window.print();
+                  }}
+                  className="flex-1 bg-green-600 hover:bg-green-700"
+                >
+                  <Receipt className="w-4 h-4 mr-2" />
+                  Print
+                </Button>
+                <Button
+                  onClick={() => {
+                    // Here you could add share functionality
+                    if (navigator.share) {
+                      navigator.share({
+                        title: 'Invoice',
+                        text: `Invoice for ${slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label} - Total: ₹${slots[selectedSlotForBill]?.amount}`,
+                      });
+                    }
+                  }}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700"
+                >
+                  <Share2 className="w-4 h-4 mr-2" />
+                  Share
+                </Button>
+                <Button
+                  onClick={() => setShowBillModal(false)}
+                  variant="outline"
+                  className="border-slate-600 text-slate-200"
+                >
+                  Close
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
       {/* Delete Confirmation Modal */}
       <Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
         <DialogContent className="bg-slate-800 border-slate-700 max-w-md w-full mx-auto my-4">
