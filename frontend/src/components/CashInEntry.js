@@ -106,10 +106,11 @@ const CashInEntry = ({ onBack }) => {
       try {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length === 6) {
-          // Ensure each slot has paymentMode property
+          // Ensure each slot has paymentMode and selectedItems properties
           const slotsWithPaymentMode = parsed.map(slot => ({
             ...slot,
-            paymentMode: slot.paymentMode || 'Cash'
+            paymentMode: slot.paymentMode || 'Cash',
+            selectedItems: slot.selectedItems || {}
           }));
           setSlots(slotsWithPaymentMode);
           const activeIndex = parseInt(localStorage.getItem('cashin_active') || '0', 10) || 0;
