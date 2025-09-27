@@ -771,52 +771,156 @@ It's completely free to try!`;
         <DialogContent className="bg-slate-800 border-slate-700 max-w-md h-[500px] flex flex-col">
           <DialogHeader>
             <DialogTitle className="text-white flex items-center gap-2">
-              <MessageCircle className="w-5 h-5" />
-              Community Chat
+              {selectedPeer ? (
+                <div className="flex items-center gap-2 w-full">
+                  <Button 
+                    onClick={goBackToPeerList}
+                    variant="ghost" 
+                    size="sm" 
+                    className="p-1 h-6 w-6"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                  </Button>
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl">{selectedPeer.avatar}</span>
+                    <div className="flex-1">
+                      <div className="text-sm font-medium">{selectedPeer.name}</div>
+                      <div className="text-xs text-slate-400">
+                        {selectedPeer.status === 'online' ? (
+                          <span className="text-green-400">● online</span>
+                        ) : (
+                          <span className="text-slate-400">last seen {selectedPeer.lastSeen}</span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : showPeerList ? (
+                <div className="flex items-center gap-2 w-full">
+                  <MessageCircle className="w-5 h-5" />
+                  <span>Select Contact</span>
+                  <div className="flex-1"></div>
+                  <Button 
+                    onClick={openCommunityChat}
+                    variant="ghost" 
+                    size="sm"
+                    className="text-xs text-slate-300 hover:text-white"
+                  >
+                    Community
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <MessageCircle className="w-5 h-5" />
+                  Community Chat
+                  <div className="flex-1"></div>
+                  <Button 
+                    onClick={() => setShowPeerList(true)}
+                    variant="ghost" 
+                    size="sm"
+                    className="text-xs text-slate-300 hover:text-white"
+                  >
+                    Contacts
+                  </Button>
+                </div>
+              )}
             </DialogTitle>
           </DialogHeader>
           
-          {/* Chat Messages */}
-          <div className="flex-1 overflow-y-auto space-y-3 pr-2">
-            {chatMessages.map((msg) => (
-              <div key={msg.id} className={`flex flex-col ${msg.isSystem ? 'items-center' : 'items-start'}`}>
-                {msg.isSystem ? (
-                  <div className="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-xs">
-                    {msg.message}
+          {showPeerList ? (
+            /* Peer List View */
+            <div className="flex-1 overflow-y-auto space-y-1 pr-2">
+              <div className="text-xs text-slate-400 mb-2">Online Peers ({onlinePeers.filter(p => p.status === 'online').length} online)</div>
+              {onlinePeers.map((peer) => (
+                <div
+                  key={peer.id}
+                  onClick={() => selectPeer(peer)}
+                  className="flex items-center gap-3 p-3 hover:bg-slate-700 rounded-lg cursor-pointer transition-colors"
+                >
+                  <div className="relative">
+                    <span className="text-2xl">{peer.avatar}</span>
+                    {peer.status === 'online' && (
+                      <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-400 rounded-full border-2 border-slate-800"></div>
+                    )}
                   </div>
-                ) : (
-                  <div className="max-w-[80%]">
-                    <div className="bg-blue-600 text-white p-3 rounded-lg rounded-tl-sm">
-                      <div className="text-sm">{msg.message}</div>
-                    </div>
-                    <div className="text-xs text-slate-400 mt-1 flex items-center gap-1">
-                      <span>{msg.user}</span>
-                      <span>•</span>
-                      <span>{msg.time}</span>
-                    </div>
+                  <div className="flex-1">
+                    <div className="text-sm font-medium text-white">{peer.name}</div>
+                    <div className="text-xs text-slate-400">{peer.email}</div>
+                    {peer.status === 'offline' && (
+                      <div className="text-xs text-slate-500">last seen {peer.lastSeen}</div>
+                    )}
                   </div>
-                )}
-              </div>
-            ))}
-          </div>
+                  {peerMessages[peer.id] && peerMessages[peer.id].length > 1 && (
+                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  )}
+                </div>
+              ))}
+            </div>
+          ) : (
+            /* Chat Messages View */
+            <div className="flex-1 overflow-y-auto space-y-3 pr-2">
+              {(selectedPeer ? peerMessages[selectedPeer.id] || [] : chatMessages).map((msg) => (
+                <div key={msg.id} className={`flex flex-col ${
+                  msg.isSystem 
+                    ? 'items-center' 
+                    : selectedPeer 
+                      ? (msg.sent ? 'items-end' : 'items-start')
+                      : 'items-start'
+                }`}>
+                  {msg.isSystem ? (
+                    <div className="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-xs">
+                      {msg.message}
+                    </div>
+                  ) : (
+                    <div className={`max-w-[80%] ${selectedPeer ? '' : 'w-full'}`}>
+                      <div className={`p-3 rounded-lg ${
+                        selectedPeer 
+                          ? (msg.sent 
+                              ? 'bg-green-600 text-white rounded-br-sm ml-auto' 
+                              : 'bg-slate-700 text-white rounded-bl-sm')
+                          : 'bg-blue-600 text-white rounded-tl-sm'
+                      }`}>
+                        <div className="text-sm">{msg.message}</div>
+                        {selectedPeer && msg.sent && (
+                          <div className="text-xs text-green-200 mt-1 text-right">✓</div>
+                        )}
+                      </div>
+                      <div className="text-xs text-slate-400 mt-1 flex items-center gap-1">
+                        {!selectedPeer && (
+                          <>
+                            <span className="text-lg">{msg.avatar}</span>
+                            <span>{msg.user}</span>
+                            <span>•</span>
+                          </>
+                        )}
+                        <span>{msg.time}</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
           
-          {/* Message Input */}
-          <div className="flex gap-2 pt-3 border-t border-slate-600">
-            <Input
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              placeholder="Type your message..."
-              className="bg-slate-700 border-slate-600 text-white flex-1"
-              onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-            />
-            <Button
-              onClick={sendMessage}
-              disabled={!newMessage.trim()}
-              className="bg-blue-600 hover:bg-blue-700 px-3"
-            >
-              <Send className="w-4 h-4" />
-            </Button>
-          </div>
+          {!showPeerList && (
+            /* Message Input */
+            <div className="flex gap-2 pt-3 border-t border-slate-600">
+              <Input
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                placeholder={selectedPeer ? `Message ${selectedPeer.name}...` : "Type your message..."}
+                className="bg-slate-700 border-slate-600 text-white flex-1"
+                onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+              />
+              <Button
+                onClick={sendMessage}
+                disabled={!newMessage.trim()}
+                className="bg-blue-600 hover:bg-blue-700 px-3"
+              >
+                <Send className="w-4 h-4" />
+              </Button>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
 
