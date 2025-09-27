@@ -234,20 +234,111 @@ It's completely free to try!`;
     setShowFloatingChat(true);
   }, []);
 
+  // Listen for chat open events from other components
+  useEffect(() => {
+    const handleOpenPeerChat = () => {
+      setShowChatDialog(true);
+      setShowPeerList(true);
+    };
+
+    window.addEventListener('openPeerChat', handleOpenPeerChat);
+    return () => {
+      window.removeEventListener('openPeerChat', handleOpenPeerChat);
+    };
+  }, []);
+
   // Floating Chat Functions  
   const sendMessage = () => {
     if (!newMessage.trim()) return;
     
-    const message = {
-      id: Date.now(),
-      user: user?.username || 'You',
-      message: newMessage.trim(),
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      isSystem: false
-    };
+    if (selectedPeer) {
+      // Send message to selected peer
+      const message = {
+        id: Date.now(),
+        user: user?.username || 'You',
+        message: newMessage.trim(),
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        isSystem: false,
+        sent: true
+      };
+      
+      setPeerMessages(prev => ({
+        ...prev,
+        [selectedPeer.id]: [...(prev[selectedPeer.id] || []), message]
+      }));
+      
+      // Simulate peer response after 2-3 seconds
+      setTimeout(() => {
+        const responses = [
+          "Thanks for the message!",
+          "Got it, will check on that.",
+          "Sure thing!",
+          "Sounds good to me.",
+          "Let me get back to you on this.",
+          "Perfect timing!"
+        ];
+        const response = {
+          id: Date.now() + 1,
+          user: selectedPeer.name,
+          message: responses[Math.floor(Math.random() * responses.length)],
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          isSystem: false,
+          sent: false
+        };
+        
+        setPeerMessages(prev => ({
+          ...prev,
+          [selectedPeer.id]: [...(prev[selectedPeer.id] || []), response]
+        }));
+      }, 2000 + Math.random() * 2000);
+      
+    } else {
+      // General community message
+      const message = {
+        id: Date.now(),
+        user: user?.username || 'You',
+        message: newMessage.trim(),
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        isSystem: false,
+        avatar: '👤'
+      };
+      
+      setChatMessages(prev => [...prev, message]);
+    }
     
-    setChatMessages(prev => [...prev, message]);
     setNewMessage('');
+  };
+
+  // Peer management functions
+  const selectPeer = (peer) => {
+    setSelectedPeer(peer);
+    setShowPeerList(false);
+    
+    // Initialize conversation if not exists
+    if (!peerMessages[peer.id]) {
+      setPeerMessages(prev => ({
+        ...prev,
+        [peer.id]: [
+          {
+            id: Date.now(),
+            user: 'System',
+            message: `Chat started with ${peer.name}`,
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            isSystem: true
+          }
+        ]
+      }));
+    }
+  };
+
+  const goBackToPeerList = () => {
+    setSelectedPeer(null);
+    setShowPeerList(true);
+  };
+
+  const openCommunityChat = () => {
+    setSelectedPeer(null);
+    setShowPeerList(false);
   };
 
   // Navigation with chat hiding
