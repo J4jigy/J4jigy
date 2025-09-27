@@ -780,7 +780,11 @@ It's completely free to try!`;
           
           {/* Chat Button */}
           <Button
-            onClick={() => setShowChatDialog(true)}
+            onClick={() => {
+              setShowChatDialog(true);
+              setShowPeerList(true); // Show contacts by default
+              fetchContacts(); // Refresh contacts when opening
+            }}
             className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg flex items-center justify-center"
           >
             <MessageCircle className="w-6 h-6 text-white" />
