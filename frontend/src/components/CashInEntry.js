@@ -1317,13 +1317,49 @@ const CashInEntry = ({ onBack }) => {
                   Print
                 </Button>
                 <Button
-                  onClick={() => {
-                    // Here you could add share functionality
-                    if (navigator.share) {
-                      navigator.share({
+                  onClick={async () => {
+                    try {
+                      const shareData = {
                         title: 'Invoice',
                         text: `Invoice for ${slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label} - Total: ₹${slots[selectedSlotForBill]?.amount}`,
-                      });
+                        url: window.location.href
+                      };
+
+                      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+                        await navigator.share(shareData);
+                      } else {
+                        // Fallback: Copy to clipboard
+                        const textToCopy = `Invoice for ${slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}\nTotal: ₹${slots[selectedSlotForBill]?.amount}\nDate: ${new Date().toLocaleDateString()}`;
+                        
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                          await navigator.clipboard.writeText(textToCopy);
+                          alert('Invoice details copied to clipboard!');
+                        } else {
+                          // Ultimate fallback: Create temporary text area
+                          const textArea = document.createElement('textarea');
+                          textArea.value = textToCopy;
+                          document.body.appendChild(textArea);
+                          textArea.select();
+                          document.execCommand('copy');
+                          document.body.removeChild(textArea);
+                          alert('Invoice details copied to clipboard!');
+                        }
+                      }
+                    } catch (error) {
+                      console.log('Share cancelled or failed:', error);
+                      // Fallback to copy functionality
+                      try {
+                        const textToCopy = `Invoice for ${slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}\nTotal: ₹${slots[selectedSlotForBill]?.amount}\nDate: ${new Date().toLocaleDateString()}`;
+                        
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                          await navigator.clipboard.writeText(textToCopy);
+                          alert('Invoice details copied to clipboard!');
+                        } else {
+                          alert('Share failed. Please try again.');
+                        }
+                      } catch (clipboardError) {
+                        alert('Share and clipboard not available. Please try manually copying the invoice details.');
+                      }
                     }
                   }}
                   className="flex-1 bg-blue-600 hover:bg-blue-700"
