@@ -415,6 +415,7 @@ It's completely free to try!`;
     else if (name.startsWith('other')) handleNavigate('/list/expenses');
     else if (name.startsWith('bills &')) handleNavigate('/list/invoices');
     else if (name.startsWith('to do list')) handleNavigate('/todo');
+    else if (name.startsWith('scan documents') || tile.name === 'Scan') setShowScanModal(true);
   };
 
   return (
