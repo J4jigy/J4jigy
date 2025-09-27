@@ -348,7 +348,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Finance Category with Rent and Other Subcategories"
+    - "Updated Customer Selection Popup with Single Modal Structure"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
