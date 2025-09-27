@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the new Scan Documents feature in the Finance tab"
+user_problem_statement: "Test the new search boxes in product and expense selection modals for Cash In and Cash Out screens"
 
 backend:
   - task: "Backend services running"
@@ -133,6 +133,30 @@ backend:
           comment: "Login and registration endpoints working. JWT authentication properly blocks unauthorized access (403). Token generation and validation working correctly."
 
 frontend:
+  - task: "Search functionality in Cash In product selection modal"
+    implemented: true
+    working: "NA"
+    file: "CashInEntry.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented search box in product selection modal with Search icon, placeholder text 'Search products...', and case-insensitive filtering functionality. Search box positioned under Reset Quantity and Delete Product buttons as requested."
+
+  - task: "Search functionality in Cash Out expense selection modal"
+    implemented: true
+    working: "NA"
+    file: "CashOutEntry.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented search box in expense selection modal with Search icon, placeholder text 'Search expenses...', and case-insensitive filtering functionality. Search box positioned under Reset Quantity and Delete Expense buttons as requested."
+
   - task: "Scan Documents Feature Repositioned from Finance to Personal Tab"
     implemented: true
     working: true
