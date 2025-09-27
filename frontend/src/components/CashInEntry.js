@@ -36,7 +36,8 @@ const CashInEntry = ({ onBack }) => {
     id: i, 
     label: `C${i + 1}`, 
     amount: '0',
-    paymentMode: 'Cash'
+    paymentMode: 'Cash',
+    selectedItems: {}
   }));
   const [slots, setSlots] = useState(initialSlots);
   const [activeSlot, setActiveSlot] = useState(0);
