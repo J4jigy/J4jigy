@@ -439,12 +439,11 @@ It's completely free to try!`;
     { name: 'Stock', subtitle: 'Management', icon: Package, iconColor: 'text-orange-400' },
     { name: 'Profit', subtitle: 'Loss', icon: PieChart, iconColor: 'text-emerald-400' },
     { name: 'Balance', subtitle: 'Sheet', icon: BarChart3, iconColor: 'text-indigo-400' },
-    { name: 'Scan', subtitle: 'Documents', icon: ScanLine, iconColor: 'text-cyan-400' },
   ];
 
   const personalTiles = [
     { name: 'Offers &', subtitle: 'Discounts', icon: Gift, iconColor: 'text-red-400' },
-    { name: 'Chat', subtitle: '', icon: MessageCircle, iconColor: 'text-blue-400' },
+    { name: 'Scan', subtitle: 'Documents', icon: ScanLine, iconColor: 'text-cyan-400' },
     { name: 'To Do List', subtitle: '', icon: CheckSquare, iconColor: 'text-green-400' },
   ];
 
