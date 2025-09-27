@@ -59,11 +59,20 @@ export default function Dashboard({ user, logout }) {
   const [showChatDialog, setShowChatDialog] = useState(false);
   const [showWhatsAppFromChat, setShowWhatsAppFromChat] = useState(false);
   const [chatMessages, setChatMessages] = useState([
-    { id: 1, user: 'System', message: 'Welcome to FinanceTracker! Chat with other users here.', time: '10:30 AM', isSystem: true },
-    { id: 2, user: 'John Doe', message: 'Hey, great app! Love the POS features.', time: '2:45 PM', isSystem: false },
-    { id: 3, user: 'Sarah', message: 'Thanks John! The quick cash buttons are really helpful.', time: '3:10 PM', isSystem: false }
+    { id: 1, user: 'System', message: 'Welcome to FinanceTracker! Chat with other users here.', time: '10:30 AM', isSystem: true, avatar: '🤖' },
   ]);
   const [newMessage, setNewMessage] = useState('');
+  
+  // Peer-to-peer chat states
+  const [showPeerList, setShowPeerList] = useState(false);
+  const [selectedPeer, setSelectedPeer] = useState(null);
+  const [onlinePeers, setOnlinePeers] = useState([
+    { id: 1, name: 'John Doe', email: 'john@example.com', status: 'online', avatar: '👤', lastSeen: 'online' },
+    { id: 2, name: 'Sarah Wilson', email: 'sarah@example.com', status: 'online', avatar: '👩', lastSeen: 'online' },
+    { id: 3, name: 'Mike Johnson', email: 'mike@example.com', status: 'offline', avatar: '👨', lastSeen: '2 hours ago' },
+    { id: 4, name: 'Lisa Chen', email: 'lisa@example.com', status: 'online', avatar: '👩', lastSeen: 'online' }
+  ]);
+  const [peerMessages, setPeerMessages] = useState({});
   
   const navigate = useNavigate();
 
