@@ -47,9 +47,19 @@ const CashInEntry = ({ onBack }) => {
   const [selectedItems, setSelectedItems] = useState({});
 
   const incQty = (name) => {
+    // Update selectedItems for current view
     setSelectedItems(prev => ({ ...prev, [name]: (prev[name] || 0) + 1 }));
+    
+    // Update the active slot's selectedItems
+    setSlots(prev => prev.map((slot, idx) => 
+      idx === activeSlot 
+        ? { ...slot, selectedItems: { ...slot.selectedItems, [name]: (slot.selectedItems[name] || 0) + 1 } }
+        : slot
+    ));
   };
+  
   const decQty = (name) => {
+    // Update selectedItems for current view
     setSelectedItems(prev => {
       const curr = prev[name] || 0;
       if (curr <= 1) {
@@ -59,6 +69,20 @@ const CashInEntry = ({ onBack }) => {
       }
       return { ...prev, [name]: curr - 1 };
     });
+    
+    // Update the active slot's selectedItems
+    setSlots(prev => prev.map((slot, idx) => {
+      if (idx === activeSlot) {
+        const curr = slot.selectedItems[name] || 0;
+        if (curr <= 1) {
+          const copy = { ...slot.selectedItems };
+          delete copy[name];
+          return { ...slot, selectedItems: copy };
+        }
+        return { ...slot, selectedItems: { ...slot.selectedItems, [name]: curr - 1 } };
+      }
+      return slot;
+    }));
   };
   const [paymentMode, setPaymentMode] = useState('Cash');
   const [showCreditTermsDropdown, setShowCreditTermsDropdown] = useState(false);
