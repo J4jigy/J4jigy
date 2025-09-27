@@ -234,15 +234,7 @@ const CashInEntry = ({ onBack }) => {
   const handleCategorySelect = (category) => {
     // Set the selected customer directly for business and finance options
     setSelectedCustomer(category);
-    
-    // If chat is selected, open the peer-to-peer chat
-    if (category === 'Chat') {
-      setShowBusinessModal(false);
-      // Trigger the floating chat system
-      window.dispatchEvent(new CustomEvent('openPeerChat'));
-    } else {
-      setShowBusinessModal(false);
-    }
+    setShowBusinessModal(false);
   };
 
   const handleNameSelect = (name) => {
