@@ -267,6 +267,37 @@ const CashInEntry = ({ onBack }) => {
     incQty(product);
   };
 
+  // Long press handling for bill/invoice
+  const handleSlotMouseDown = (slotIndex) => {
+    const timer = setTimeout(() => {
+      setSelectedSlotForBill(slotIndex);
+      setShowBillModal(true);
+    }, 800); // 800ms for long press
+    setLongPressTimer(timer);
+  };
+
+  const handleSlotMouseUp = () => {
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+      setLongPressTimer(null);
+    }
+  };
+
+  const handleSlotTouchStart = (slotIndex) => {
+    const timer = setTimeout(() => {
+      setSelectedSlotForBill(slotIndex);
+      setShowBillModal(true);
+    }, 800); // 800ms for long press
+    setLongPressTimer(timer);
+  };
+
+  const handleSlotTouchEnd = () => {
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+      setLongPressTimer(null);
+    }
+  };
+
   const createContact = async (name, type) => {
     try {
       const token = localStorage.getItem('token');
