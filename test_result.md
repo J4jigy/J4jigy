@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the newly implemented floating chat functionality on the dashboard with floating chat component, WhatsApp share mini button, chat dialog with community chat interface, and proper visibility behavior during navigation"
+user_problem_statement: "Remove chat option from finance category in customer selection popup window in cash in screen"
 
 backend:
   - task: "Backend services running"
