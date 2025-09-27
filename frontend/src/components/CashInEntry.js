@@ -768,22 +768,54 @@ const CashInEntry = ({ onBack }) => {
       <Dialog open={showBusinessModal} onOpenChange={setShowBusinessModal}>
         <DialogContent className="bg-slate-800 border-slate-700">
           <DialogHeader>
-            <DialogTitle className="text-white">Business Categories</DialogTitle>
+            <DialogTitle className="text-white">Customer Selection</DialogTitle>
           </DialogHeader>
-          <div className="space-y-2">
-            {businessCategories.map((category) => {
-              const IconComponent = category.icon;
-              return (
-                <Button
-                  key={category.name}
-                  onClick={() => handleCategorySelect(category.name)}
-                  className="w-full justify-start bg-slate-700 hover:bg-slate-600 text-white"
-                >
-                  <IconComponent className="w-4 h-4 mr-2" />
-                  {category.name}
-                </Button>
-              );
-            })}
+          <div className="space-y-4">
+            {/* Business Section */}
+            <div>
+              <h3 className="text-sm font-medium text-slate-300 mb-2 flex items-center">
+                <Building className="w-4 h-4 mr-2" />
+                Business
+              </h3>
+              <div className="space-y-1">
+                {businessCategories.map((category) => {
+                  const IconComponent = category.icon;
+                  return (
+                    <Button
+                      key={category.name}
+                      onClick={() => handleCategorySelect(category.name)}
+                      className="w-full justify-start bg-slate-700 hover:bg-slate-600 text-white text-sm py-2"
+                    >
+                      <IconComponent className="w-4 h-4 mr-2" />
+                      {category.name}
+                    </Button>
+                  );
+                })}
+              </div>
+            </div>
+            
+            {/* Finance Section */}
+            <div>
+              <h3 className="text-sm font-medium text-slate-300 mb-2 flex items-center">
+                <Coins className="w-4 h-4 mr-2" />
+                Finance
+              </h3>
+              <div className="space-y-1">
+                {financeSubcategories.map((subcategory) => {
+                  const IconComponent = subcategory.icon;
+                  return (
+                    <Button
+                      key={subcategory.name}
+                      onClick={() => handleCategorySelect(subcategory.name)}
+                      className="w-full justify-start bg-slate-700 hover:bg-slate-600 text-white text-sm py-2"
+                    >
+                      <IconComponent className="w-4 h-4 mr-2" />
+                      {subcategory.name}
+                    </Button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
