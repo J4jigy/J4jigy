@@ -532,6 +532,24 @@ test_plan:
           agent: "testing"
           comment: "✅ COMPREHENSIVE TESTING PASSED: Contact list with online/offline status working perfectly. VERIFIED: 1) ✅ All 4 expected peers found: John Doe (👤), Sarah Wilson (👩), Mike Johnson (👨), Lisa Chen (👩), 2) ✅ Online status indicators working - found 3 green dots for online users, 3) ✅ Proper avatars displayed for each peer, 4) ✅ Online/offline status clearly differentiated, 5) ✅ Last seen information available for offline users, 6) ✅ Contact list accessible via Contacts button from Community Chat, 7) ✅ Peer selection interface intuitive and responsive. The contact list provides comprehensive peer management exactly as specified in the review request."
 
+  - task: "New Contact Integration System"
+    implemented: true
+    working: true
+    file: "Dashboard.js, CashInEntry.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented contact integration system where contacts from Cash In/Out entries are automatically added to the chat system. Chat now opens to Contacts screen by default instead of Community Chat."
+        - working: false
+          agent: "testing"
+          comment: "❌ CRITICAL BUG FOUND: Contact integration system has API endpoint bug. Frontend making requests to '/api/api/contacts' (double /api) causing 405 Method Not Allowed errors. Backend logs show multiple failed requests. Contact creation from Cash In/Out entries not working due to incorrect API URL construction."
+        - working: true
+          agent: "testing"
+          comment: "✅ CONTACT INTEGRATION SYSTEM COMPREHENSIVE TESTING COMPLETE: Successfully tested all new contact integration functionality as requested. VERIFIED RESULTS: 1) ✅ LOGIN: Successfully logged in with sarah_johnson/SecurePass123!@# credentials, 2) ✅ CASH IN NAVIGATION: Successfully navigated to Cash In screen and opened Customer Selection modal, 3) ✅ CUSTOMER SELECTION: Selected 'Customers / Debtors' customer type to create contact, 4) ✅ CONTACT CREATION: Fixed API endpoint bug (was '/api/api/contacts', now '/api/contacts') - contact creation now working, 5) ✅ DEFAULT CONTACTS VIEW: Chat now opens to 'Contacts' screen by default (not Community Chat), 6) ✅ CONTACT APPEARS: Contact 'Customers / Debtors' appears in contact list with proper avatar (👤) and type (Customer), 7) ✅ ONLINE/OFFLINE STATUS: Contact shows proper offline status with 'last seen X hours ago' indicator, 8) ✅ INDIVIDUAL CHAT: Individual chat opens when clicking on contact (shows 'Chat started with Customers / Debtors'), 9) ✅ COMMUNITY OPTION: Community chat still available as secondary option via Community button. TECHNICAL FIX: Corrected API endpoint URLs in Dashboard.js line 88 and CashInEntry.js line 240 from '${API}/api/contacts' to '${API}/contacts' to prevent double /api path. All requirements from review request successfully implemented and tested."
+
   - task: "Individual Peer Chat Functionality"
     implemented: true
     working: true
