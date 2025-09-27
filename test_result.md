@@ -480,7 +480,7 @@ test_plan:
           agent: "testing"
           comment: "✅ COMPREHENSIVE COMPACT GREEN QUICK AMOUNT BUTTONS TESTING COMPLETE: Successfully verified all updated compact green quick amount buttons as requested in review. VERIFIED IMPLEMENTATION: 1) ✅ CASH IN SCREEN: All 9 denominations (₹1, ₹2, ₹5, ₹10, ₹20, ₹50, ₹100, ₹200, ₹500) present in perfect 3x3 grid layout with reduced spacing (gap-0.5), all buttons use identical green currency styling: bg-green-600, border-green-700, text-white, hover:bg-green-500, h-6 (smaller height), text-xs, font-medium, px-1 (reduced padding), 2) ✅ CASH OUT SCREEN: Identical implementation verified - all 9 buttons present with same compact green layout and styling, perfect consistency between both screens, 3) ✅ FUNCTIONALITY PRESERVATION: Button click functionality working correctly (tested ₹1 button in Cash In: ₹0→₹1, tested ₹10 button in Cash Out: ₹0→₹10), sound effects working for both coin and note buttons (tested ₹1, ₹50, ₹200), amount calculations working properly, 4) ✅ SCREEN FIT OPTIMIZATION: Both Cash In and Cash Out screens fit perfectly within 1920x1080 viewport without scrolling (page dimensions = viewport dimensions), compact layout saves space while maintaining usability, all buttons remain easily clickable despite smaller size, 5) ✅ GREEN CURRENCY THEME: All buttons use consistent green colors representing currency exactly as specified - bg-green-600 (green background), border-green-700 (green border), hover:bg-green-500 (lighter green hover), uniform green styling across all 9 denominations, 6) ✅ COMPACT DESIGN VERIFICATION: Reduced spacing from gap-1 to gap-0.5 creates tighter button arrangement, smaller button height from h-8 to h-6 for more compact design, reduced padding to px-1 for minimal horizontal padding, 3x3 grid layout more space-efficient than previous implementations, 7) ✅ CROSS-SCREEN CONSISTENCY: Identical implementation between Cash In and Cash Out screens verified, same button layout, styling, and functionality across both screens, consistent user experience maintained with green currency theme. The compact green design provides better screen utilization while creating a more currency-themed visual experience exactly as specified in the review request. All requirements successfully implemented and tested."
 
-  - task: "Chat in Finance Category Integration"
+  - task: "Chat Option Removal from Finance Category"
     implemented: true
     working: true
     file: "CashInEntry.js"
@@ -490,10 +490,16 @@ test_plan:
     status_history:
         - working: "NA"
           agent: "main"
-          comment: "Implemented Chat as 3rd option under Finance section in customer selection. Added MessageCircle icon and integration with peer-to-peer chat system. When Chat is selected, it triggers openPeerChat event to open floating chat dialog."
+          comment: "Previously implemented Chat as 3rd option under Finance section in customer selection. Added MessageCircle icon and integration with peer-to-peer chat system. When Chat is selected, it triggers openPeerChat event to open floating chat dialog."
         - working: true
           agent: "testing"
           comment: "✅ COMPREHENSIVE TESTING PASSED: Chat in Finance Category integration working perfectly. VERIFIED: 1) ✅ Successfully navigated to Cash In screen, 2) ✅ Customer dropdown opens correctly, 3) ✅ Finance section found with proper header and Coins icon, 4) ✅ Chat option found under Finance section with MessageCircle icon, 5) ✅ Customer field updates to 'Chat' after selection, 6) ✅ Modal closes properly after selection, 7) ✅ Integration triggers peer chat system as designed. The Chat option is properly positioned as the 3rd option under Finance section and seamlessly integrates with the peer-to-peer chat functionality."
+        - working: true
+          agent: "main"
+          comment: "REMOVED Chat option from Finance category as requested. Updated financeSubcategories array to contain only 'Rent' and 'Other' options. Chat functionality moved to separate floating chat system."
+        - working: true
+          agent: "testing"
+          comment: "✅ CHAT OPTION REMOVAL VERIFICATION COMPLETE: Successfully tested the Cash In customer selection modal to verify Chat option removal. COMPREHENSIVE VERIFICATION: 1) ✅ Login successful with sarah_johnson credentials, 2) ✅ Navigation to Cash In screen successful, 3) ✅ Customer Selection modal opens correctly, 4) ✅ Finance section contains exactly 2 options: 'Rent' and 'Other', 5) ✅ Chat option confirmed NOT present (count: 0), 6) ✅ Modal structure correct with 6 total buttons: 3 Business options, 2 Finance options, 1 Close button, 7) ✅ Both Rent and Other buttons functional and clickable, 8) ✅ Screenshot captured showing Finance section with only expected options. RESULT: Chat option has been successfully removed from the Finance category in the Cash In customer selection popup. The Finance section now contains only 'Rent' and 'Other' options as specified in the review request."
 
   - task: "Peer-to-Peer Floating Chat System"
     implemented: true
