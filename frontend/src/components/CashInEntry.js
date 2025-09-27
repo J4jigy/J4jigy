@@ -121,14 +121,13 @@ const CashInEntry = ({ onBack }) => {
   const quickAmounts = [1, 2, 5, 10, 20, 50, 100, 200, 500];
   const [products, setProducts] = useState(['Groceries', 'T-Shirts', 'Rice', 'Wheat', 'Sugar', 'Oil', 'Milk', 'Bread']);
   const businessCategories = [
-    { name: 'Customers / Debtors', icon: Users },
-    { name: 'Suppliers / Creditors', icon: Building },
-    { name: 'Staff', icon: Users },
-    { name: 'Finance', icon: Coins }
+    { name: 'Customers / Debtors', icon: Users, selectable: true },
+    { name: 'Suppliers / Creditors', icon: Building, selectable: true },
+    { name: 'Staff', icon: Users, selectable: true }
   ];
   const financeSubcategories = [
-    { name: 'Rent', icon: Building },
-    { name: 'Other', icon: FileText }
+    { name: 'Rent', icon: Building, selectable: true },
+    { name: 'Other', icon: FileText, selectable: true }
   ];
   const financeCategories = [
     { name: 'Bills / Recharge', icon: FileText },
