@@ -183,8 +183,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Search functionality in Cash In product selection modal"
-    - "Search functionality in Cash Out expense selection modal"
+    - "POS slot long press bill/invoice functionality"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
