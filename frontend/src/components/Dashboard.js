@@ -69,6 +69,12 @@ export default function Dashboard({ user, logout }) {
   const [contacts, setContacts] = useState([]);
   const [peerMessages, setPeerMessages] = useState({});
   
+  // Scan Documents states
+  const [showScanModal, setShowScanModal] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [scanResults, setScanResults] = useState(null);
+  const [isScanning, setIsScanning] = useState(false);
+  
   const navigate = useNavigate();
 
   const fetchSummary = async () => {
