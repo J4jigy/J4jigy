@@ -123,7 +123,12 @@ const CashInEntry = ({ onBack }) => {
   const businessCategories = [
     { name: 'Customers / Debtors', icon: Users },
     { name: 'Suppliers / Creditors', icon: Building },
-    { name: 'Staff', icon: Users }
+    { name: 'Staff', icon: Users },
+    { name: 'Finance', icon: Coins }
+  ];
+  const financeSubcategories = [
+    { name: 'Rent', icon: Building },
+    { name: 'Other', icon: FileText }
   ];
   const financeCategories = [
     { name: 'Bills / Recharge', icon: FileText },
