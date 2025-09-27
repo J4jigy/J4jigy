@@ -520,35 +520,19 @@ const CashInEntry = ({ onBack }) => {
       {/* Main Content */}
       <div className="flex-1 px-2 pt-0 pb-2 space-y-1 overflow-hidden">
         {/* Quick Amount Buttons */}
-        <div className="space-y-1">
-          {/* Coin Amount Buttons */}
-          <div className="grid grid-cols-5 gap-1">
-            {[1, 2, 5, 10, 20].map((amount) => (
-              <Button
-                key={amount}
-                onClick={() => handleCoinClick(amount)}
-                variant="outline"
-                size="sm"
-                className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 h-8 text-xs font-medium"
-              >
-                ₹{amount}
-              </Button>
-            ))}
-          </div>
-          {/* Currency Note Amount Buttons */}
-          <div className="flex gap-1 justify-center">
-            {[50, 100, 200, 500].map((amount) => (
-              <Button
-                key={amount}
-                onClick={() => handleNoteClick(amount)}
-                variant="outline"
-                size="sm"
-                className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 h-6 text-xs px-3 whitespace-nowrap"
-              >
-                ₹{amount}
-              </Button>
-            ))}
-          </div>
+        <div className="grid grid-cols-3 gap-1">
+          {/* All amount buttons with uniform styling */}
+          {[1, 2, 5, 10, 20, 50, 100, 200, 500].map((amount) => (
+            <Button
+              key={amount}
+              onClick={() => amount <= 20 ? handleCoinClick(amount) : handleNoteClick(amount)}
+              variant="outline"
+              size="sm"
+              className="bg-slate-800 border-slate-700 text-white hover:bg-slate-700 h-8 text-xs font-medium"
+            >
+              ₹{amount}
+            </Button>
+          ))}
         </div>
 
         {/* POS multi-customer boxes */}
