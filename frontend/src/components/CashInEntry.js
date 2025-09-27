@@ -844,30 +844,6 @@ const CashInEntry = ({ onBack }) => {
         </DialogContent>
       </Dialog>
 
-      {/* Finance Subcategory Modal */}
-      <Dialog open={showFinanceSubcategory} onOpenChange={setShowFinanceSubcategory}>
-        <DialogContent className="bg-slate-800 border-slate-700">
-          <DialogHeader>
-            <DialogTitle className="text-white">Finance Options</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-2">
-            {financeSubcategories.map((subcategory) => {
-              const IconComponent = subcategory.icon;
-              return (
-                <Button
-                  key={subcategory.name}
-                  onClick={() => handleFinanceSubcategorySelect(subcategory.name)}
-                  className="w-full justify-start bg-slate-700 hover:bg-slate-600 text-white"
-                >
-                  <IconComponent className="w-4 h-4 mr-2" />
-                  {subcategory.name}
-                </Button>
-              );
-            })}
-          </div>
-        </DialogContent>
-      </Dialog>
-
       {/* Category List Modal */}
       <Dialog open={showCategoryList} onOpenChange={setShowCategoryList}>
         <DialogContent className="bg-slate-800 border-slate-700 max-w-md max-h-96">
