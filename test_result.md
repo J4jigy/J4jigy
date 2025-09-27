@@ -348,7 +348,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Compact Green Quick Amount Buttons with Reduced Spacing and Smaller Sizing"
+    - "Chat in Finance Category Integration"
+    - "Peer-to-Peer Floating Chat System"
+    - "Contact List with Online/Offline Status"
+    - "Individual Peer Chat Functionality"
+    - "Community Chat Functionality"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
