@@ -237,7 +237,7 @@ const CashInEntry = ({ onBack }) => {
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      await axios.post(`${API}/api/contacts`, {
+      await axios.post(`${API}/contacts`, {
         name: name,
         type: type
       }, {
