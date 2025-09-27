@@ -835,6 +835,7 @@ def run_all_tests():
         test_transaction_apis,
         test_admin_apis,
         test_account_management_apis,
+        test_contact_management_apis,
         test_missing_endpoints,
     ]
     
