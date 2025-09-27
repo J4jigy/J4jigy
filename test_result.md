@@ -348,7 +348,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Uniform Quick Amount Buttons with 3x3 Grid Layout"
+    - "Compact Green Quick Amount Buttons with Reduced Spacing and Smaller Sizing"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
