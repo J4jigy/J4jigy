@@ -85,7 +85,7 @@ export default function Dashboard({ user, logout }) {
       const token = localStorage.getItem('token');
       if (!token) return;
 
-      const response = await axios.get(`${API}/api/contacts`, {
+      const response = await axios.get(`${API}/contacts`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
