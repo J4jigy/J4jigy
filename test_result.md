@@ -348,7 +348,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Updated Customer Selection Popup with Single Modal Structure"
+    - "Uniform Quick Amount Buttons with 3x3 Grid Layout"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
