@@ -84,6 +84,12 @@ const CashOutEntry = ({ onBack }) => {
   // Search states
   const [expenseSearchQuery, setExpenseSearchQuery] = useState('');
   
+  // Cheque modal states
+  const [showChequeModal, setShowChequeModal] = useState(false);
+  const [chequeBankName, setChequeBankName] = useState('');
+  const [chequeIfscCode, setChequeIfscCode] = useState('');
+  const [chequeNumber, setChequeNumber] = useState('');
+  
   const [selectedCategory, setSelectedCategory] = useState('');
   const [newEntryTitle, setNewEntryTitle] = useState('');
   const [darkTheme, setDarkTheme] = useState(true);
