@@ -276,6 +276,24 @@ const CashOutEntry = ({ onBack }) => {
     setPaymentMode('Credit');
   };
 
+  const handleChequeSave = () => {
+    if (chequeBankName.trim() && chequeIfscCode.trim() && chequeNumber.trim()) {
+      setPaymentMode('Cheque');
+      setShowChequeModal(false);
+      setShowCreditTermsDropdown(false);
+    } else {
+      alert('Please fill all cheque details');
+    }
+  };
+
+  const handleChequeCancel = () => {
+    setShowChequeModal(false);
+    // Clear the form fields
+    setChequeBankName('');
+    setChequeIfscCode('');
+    setChequeNumber('');
+  };
+
   const handlePaymentModeClick = (mode) => {
     if (mode === 'Credit') {
       setShowCreditTermsDropdown(true);
