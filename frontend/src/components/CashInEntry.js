@@ -27,7 +27,8 @@ import {
   Coins,
   Search,
   Receipt,
-  Share2
+  Share2,
+  FileBarChart
 } from 'lucide-react';
 
 const CashInEntry = ({ onBack }) => {
