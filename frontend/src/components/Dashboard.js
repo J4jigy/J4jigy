@@ -596,8 +596,8 @@ It's completely free to try!`;
       </div>
 
       {/* Summary */}
-      <div className="p-4">
-        <div className="grid grid-cols-2 gap-4 mb-6">
+      <div className="px-4 mb-6">
+        <div className="grid grid-cols-2 gap-4">
           <Card className="bg-gradient-to-br from-red-800 to-red-900 border border-red-700/50 shadow-xl">
             <CardContent className="p-4 text-center">
               <p className="text-red-100 text-xs font-medium mb-1">You will Give</p>
@@ -614,16 +614,16 @@ It's completely free to try!`;
       </div>
 
       {/* Tabs and Tiles */}
-      <div className="px-4">
+      <div className="px-4 mb-6">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 bg-slate-800/80 border border-slate-700 rounded-lg">
+          <TabsList className="grid w-full grid-cols-3 bg-slate-800/80 border border-slate-700 rounded-lg mb-6">
             <TabsTrigger value="business" className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md">Business</TabsTrigger>
             <TabsTrigger value="finance" className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md">Finance</TabsTrigger>
             <TabsTrigger value="personal" className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md">Personal</TabsTrigger>
           </TabsList>
 
           {['business', 'finance', 'personal'].map((tab) => (
-            <TabsContent key={tab} value={tab} className="mt-6">
+            <TabsContent key={tab} value={tab} className="mt-0">
               <div className="grid grid-cols-3 gap-3 px-4">
                 {getTilesForTab(tab).map((tile, idx) => {
                   const IconComponent = tile.icon;
