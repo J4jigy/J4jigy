@@ -246,8 +246,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Cheque payment mode button in Cash In screen"
-    - "Cheque payment mode button in Cash Out screen"
+    - "Cheque Details popup modal in Cash In screen"
+    - "Cheque Details popup modal in Cash Out screen"
     - "Settings modal Cheque payment mode integration"
   stuck_tasks: []
   test_all: false
