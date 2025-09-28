@@ -261,9 +261,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Cheque Details popup modal in Cash In screen"
-    - "Cheque Details popup modal in Cash Out screen"
-    - "Settings modal Cheque payment mode integration"
+    - "Bills & Invoices icon update to FileBarChart"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
