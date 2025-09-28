@@ -1311,7 +1311,7 @@ const CashInEntry = ({ onBack }) => {
         <DialogContent className="bg-slate-800 border-slate-700 max-w-md w-full mx-auto my-4 max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle className="text-white flex items-center gap-2">
-              <Receipt className="w-5 h-5 text-green-400" />
+              <FileBarChart className="w-5 h-5 text-green-400" />
               Bill / Invoice - {selectedSlotForBill !== null ? slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label : ''}
             </DialogTitle>
           </DialogHeader>
