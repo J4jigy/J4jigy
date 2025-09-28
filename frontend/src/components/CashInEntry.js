@@ -861,6 +861,7 @@ const CashInEntry = ({ onBack }) => {
                   <SelectItem value="Cash">Cash</SelectItem>
                   <SelectItem value="Credit">Credit</SelectItem>
                   <SelectItem value="Online">Online</SelectItem>
+                  <SelectItem value="Cheque">Cheque</SelectItem>
                 </SelectContent>
               </Select>
             </div>
