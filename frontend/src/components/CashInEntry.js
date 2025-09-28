@@ -211,6 +211,8 @@ const CashInEntry = ({ onBack }) => {
   const handlePaymentModeClick = (mode) => {
     if (mode === 'Credit') {
       setShowCreditTermsDropdown(true);
+    } else if (mode === 'Cheque') {
+      setShowChequeModal(true);
     } else {
       setPaymentModeForActive(mode);
       setShowCreditTermsDropdown(false);
