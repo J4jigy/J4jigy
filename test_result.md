@@ -246,7 +246,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Share functionality in bill/invoice modal"
+    - "Cheque payment mode button in Cash In screen"
+    - "Cheque payment mode button in Cash Out screen"
+    - "Settings modal Cheque payment mode integration"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
