@@ -199,7 +199,7 @@ metadata:
   test_sequence: 1
   run_ui: true
 
-  - task: "Cheque payment mode button in Cash In screen"
+  - task: "Cheque Details popup modal in Cash In screen"
     implemented: true
     working: true
     file: "CashInEntry.js"
@@ -209,12 +209,12 @@ metadata:
     status_history:
         - working: "NA"
           agent: "main"
-          comment: "Implemented Cheque payment mode button as the 4th payment option alongside Credit, Cash, and Online in Cash In screen. Added proper styling with blue background when selected and integrated with POS slot payment mode preservation functionality."
+          comment: "Implemented Cheque Details popup modal that opens when Cheque payment mode button is clicked. Modal includes title 'Cheque Details' with blue credit card icon, Bank Name input field, IFSC Code input field, Cheque No. input field, Save button (blue), and Cancel button (outlined). Added form validation and Save/Cancel functionality."
         - working: true
           agent: "testing"
-          comment: "✅ CHEQUE PAYMENT MODE FULLY WORKING IN CASH IN: Conducted comprehensive testing of the new Cheque payment mode button in Cash In screen as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ Login with admin/admin123 successful, 2) ✅ Cash In screen navigation working correctly, 3) ✅ PAYMENT MODE BUTTONS: Found all 4 payment mode buttons in a row - Credit, Cash, Online, Cheque, 4) ✅ CHEQUE BUTTON FUNCTIONALITY: Cheque button properly highlighted with blue background when selected (bg-blue-600), other buttons become unselected when Cheque is clicked, 5) ✅ PAYMENT MODE SWITCHING: Tested clicking Credit, Cash, Online, Cheque in sequence - each gets properly selected and others become deselected, 6) ✅ POS SLOT INTEGRATION: Selected Cheque payment mode and added ₹50 to C1 slot, switched to C2 slot and set different payment mode (Cash), switched back to C1 and verified Cheque payment mode was preserved correctly per slot. All Cheque payment mode functionality requirements met successfully in Cash In screen."
+          comment: "✅ CHEQUE DETAILS MODAL FULLY WORKING IN CASH IN: Conducted comprehensive testing of the new Cheque Details popup modal in Cash In screen as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ Login with admin/admin123 successful, 2) ✅ Cash In screen navigation working correctly, 3) ✅ Cheque payment mode button click opens modal, 4) ✅ MODAL COMPONENTS VERIFIED: Title 'Cheque Details' with blue credit card icon, Bank Name text input field, IFSC Code text input field, Cheque No. text input field, Save button (blue background), Cancel button (outlined), 5) ✅ FORM FUNCTIONALITY: Entered test data (Bank: SBI, IFSC: SBIN0001234, Cheque: 123456), clicked Save, modal closed and Cheque payment mode selected with blue background, 6) ✅ FORM VALIDATION: Tested with empty fields, validation working correctly, 7) ✅ CANCEL FUNCTIONALITY: Entered data, clicked Cancel, modal closed and fields cleared properly. All Cheque Details modal functionality requirements met successfully in Cash In screen."
 
-  - task: "Cheque payment mode button in Cash Out screen"
+  - task: "Cheque Details popup modal in Cash Out screen"
     implemented: true
     working: true
     file: "CashOutEntry.js"
@@ -224,10 +224,10 @@ metadata:
     status_history:
         - working: "NA"
           agent: "main"
-          comment: "Implemented Cheque payment mode button as the 4th payment option alongside Credit, Cash, and Online in Cash Out screen. Added proper styling with blue background when selected and integrated with POS slot functionality."
+          comment: "Implemented Cheque Details popup modal that opens when Cheque payment mode button is clicked. Modal includes title 'Cheque Details' with blue credit card icon, Bank Name input field, IFSC Code input field, Cheque No. input field, Save button (blue), and Cancel button (outlined). Added form validation and Save/Cancel functionality."
         - working: true
           agent: "testing"
-          comment: "✅ CHEQUE PAYMENT MODE FULLY WORKING IN CASH OUT: Conducted comprehensive testing of the new Cheque payment mode button in Cash Out screen as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ Cash Out screen navigation working correctly, 2) ✅ PAYMENT MODE BUTTONS: Found all 4 payment mode buttons in a row - Credit, Cash, Online, Cheque, 3) ✅ CHEQUE BUTTON FUNCTIONALITY: Cheque button properly highlighted with blue background when selected (bg-blue-600), proper selection/highlighting working correctly, 4) ✅ PAYMENT MODE SWITCHING: Tested switching between all payment modes (Credit, Cash, Online, Cheque) - each gets properly selected and others become deselected, 5) ✅ POS SLOT FUNCTIONALITY: Added ₹20 to C1 slot with Cheque payment mode, POS slot functionality working correctly with Cheque payment mode. All Cheque payment mode functionality requirements met successfully in Cash Out screen."
+          comment: "✅ CHEQUE DETAILS MODAL FULLY WORKING IN CASH OUT: Conducted comprehensive testing of the new Cheque Details popup modal in Cash Out screen as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ Cash Out screen navigation working correctly, 2) ✅ Cheque payment mode button click opens modal, 3) ✅ MODAL COMPONENTS VERIFIED: Title 'Cheque Details' with blue credit card icon, Bank Name text input field, IFSC Code text input field, Cheque No. text input field, Save button (blue background), Cancel button (outlined), 4) ✅ FORM FUNCTIONALITY: Entered test data (Bank: HDFC Bank, IFSC: HDFC0001234, Cheque: 789012), clicked Save, modal closed and Cheque payment mode selected with blue background, 5) ✅ FORM VALIDATION: Tested with empty fields, validation working correctly, 6) ✅ CANCEL FUNCTIONALITY: Entered data, clicked Cancel, modal closed and fields cleared properly, 7) ✅ CONSISTENT BEHAVIOR: Modal behavior identical between Cash In and Cash Out screens. All Cheque Details modal functionality requirements met successfully in Cash Out screen."
 
   - task: "Settings modal Cheque payment mode integration"
     implemented: true
