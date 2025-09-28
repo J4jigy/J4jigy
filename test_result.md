@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the new POS slot long press bill/invoice functionality in Cash In screen"
+user_problem_statement: "Test the new Cheque payment mode button in both Cash In and Cash Out screens"
 
 backend:
   - task: "Backend services running"
