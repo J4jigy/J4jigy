@@ -1239,6 +1239,72 @@ const CashInEntry = ({ onBack }) => {
         </DialogContent>
       </Dialog>
 
+      {/* Cheque Details Modal */}
+      <Dialog open={showChequeModal} onOpenChange={setShowChequeModal}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-sm w-full mx-auto my-4">
+          <DialogHeader>
+            <DialogTitle className="text-white flex items-center gap-2">
+              <CreditCard className="w-5 h-5 text-blue-400" />
+              Cheque Details
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-200 mb-2">
+                Bank Name
+              </label>
+              <Input
+                value={chequeBankName}
+                onChange={(e) => setChequeBankName(e.target.value)}
+                placeholder="Enter bank name"
+                className="bg-slate-700 border-slate-600 text-white"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-slate-200 mb-2">
+                IFSC Code
+              </label>
+              <Input
+                value={chequeIfscCode}
+                onChange={(e) => setChequeIfscCode(e.target.value.toUpperCase())}
+                placeholder="Enter IFSC code"
+                className="bg-slate-700 border-slate-600 text-white"
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-slate-200 mb-2">
+                Cheque No.
+              </label>
+              <Input
+                value={chequeNumber}
+                onChange={(e) => setChequeNumber(e.target.value)}
+                placeholder="Enter cheque number"
+                className="bg-slate-700 border-slate-600 text-white"
+              />
+            </div>
+            
+            <div className="flex gap-3 pt-2">
+              <Button
+                onClick={handleChequeSave}
+                className="flex-1 bg-blue-600 hover:bg-blue-700"
+              >
+                Save
+              </Button>
+              <Button
+                onClick={handleChequeCancel}
+                variant="outline"
+                className="flex-1 border-slate-600 text-slate-200 hover:bg-slate-700"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Bill/Invoice Modal */}
       <Dialog open={showBillModal} onOpenChange={setShowBillModal}>
         <DialogContent className="bg-slate-800 border-slate-700 max-w-md w-full mx-auto my-4 max-h-[90vh] overflow-y-auto">
