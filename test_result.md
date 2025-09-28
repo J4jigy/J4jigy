@@ -199,7 +199,7 @@ metadata:
   test_sequence: 1
   run_ui: true
 
-  - task: "Share functionality in bill/invoice modal"
+  - task: "Cheque payment mode button in Cash In screen"
     implemented: true
     working: true
     file: "CashInEntry.js"
@@ -209,10 +209,40 @@ metadata:
     status_history:
         - working: "NA"
           agent: "main"
-          comment: "Fixed Share functionality in bill/invoice modal to handle error cases properly. Updated Share button implementation with comprehensive error handling including native share API detection, clipboard fallback, and proper error management to prevent runtime errors."
+          comment: "Implemented Cheque payment mode button as the 4th payment option alongside Credit, Cash, and Online in Cash In screen. Added proper styling with blue background when selected and integrated with POS slot payment mode preservation functionality."
         - working: true
           agent: "testing"
-          comment: "✅ SHARE FUNCTIONALITY FULLY WORKING: Conducted comprehensive testing of the fixed Share functionality in bill/invoice modal as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ Login with admin/admin123 successful, 2) ✅ Cash In screen navigation working correctly, 3) ✅ Added ₹100 to C1 slot successfully, 4) ✅ Bill/Invoice modal opens correctly when clicking active slot, 5) ✅ SHARE BUTTON TESTING: Share button found and clickable, no runtime errors detected, proper error handling implemented, 6) ✅ MULTIPLE CLICKS: Tested Share button multiple times - consistent behavior, no crashes or uncaught errors, 7) ✅ FALLBACK FUNCTIONALITY: When native share not available, clipboard fallback works (permission denied expected in automated testing), 8) ✅ PRINT BUTTON: Print functionality working correctly, 9) ✅ CLOSE BUTTON: Modal closes properly and returns to Cash In screen. TECHNICAL VERIFICATION: No runtime errors detected, no uncaught exceptions, proper error handling for clipboard permissions, Share button responsive and functional, comprehensive fallback mechanisms in place. The Share functionality now works without throwing runtime errors and provides appropriate fallback functionality when native sharing isn't available."
+          comment: "✅ CHEQUE PAYMENT MODE FULLY WORKING IN CASH IN: Conducted comprehensive testing of the new Cheque payment mode button in Cash In screen as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ Login with admin/admin123 successful, 2) ✅ Cash In screen navigation working correctly, 3) ✅ PAYMENT MODE BUTTONS: Found all 4 payment mode buttons in a row - Credit, Cash, Online, Cheque, 4) ✅ CHEQUE BUTTON FUNCTIONALITY: Cheque button properly highlighted with blue background when selected (bg-blue-600), other buttons become unselected when Cheque is clicked, 5) ✅ PAYMENT MODE SWITCHING: Tested clicking Credit, Cash, Online, Cheque in sequence - each gets properly selected and others become deselected, 6) ✅ POS SLOT INTEGRATION: Selected Cheque payment mode and added ₹50 to C1 slot, switched to C2 slot and set different payment mode (Cash), switched back to C1 and verified Cheque payment mode was preserved correctly per slot. All Cheque payment mode functionality requirements met successfully in Cash In screen."
+
+  - task: "Cheque payment mode button in Cash Out screen"
+    implemented: true
+    working: true
+    file: "CashOutEntry.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented Cheque payment mode button as the 4th payment option alongside Credit, Cash, and Online in Cash Out screen. Added proper styling with blue background when selected and integrated with POS slot functionality."
+        - working: true
+          agent: "testing"
+          comment: "✅ CHEQUE PAYMENT MODE FULLY WORKING IN CASH OUT: Conducted comprehensive testing of the new Cheque payment mode button in Cash Out screen as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ Cash Out screen navigation working correctly, 2) ✅ PAYMENT MODE BUTTONS: Found all 4 payment mode buttons in a row - Credit, Cash, Online, Cheque, 3) ✅ CHEQUE BUTTON FUNCTIONALITY: Cheque button properly highlighted with blue background when selected (bg-blue-600), proper selection/highlighting working correctly, 4) ✅ PAYMENT MODE SWITCHING: Tested switching between all payment modes (Credit, Cash, Online, Cheque) - each gets properly selected and others become deselected, 5) ✅ POS SLOT FUNCTIONALITY: Added ₹20 to C1 slot with Cheque payment mode, POS slot functionality working correctly with Cheque payment mode. All Cheque payment mode functionality requirements met successfully in Cash Out screen."
+
+  - task: "Settings modal Cheque payment mode integration"
+    implemented: true
+    working: true
+    file: "CashInEntry.js, CashOutEntry.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Added Cheque option to default payment mode dropdown in settings modal for both Cash In and Cash Out screens. Users can now set Cheque as their default payment mode."
+        - working: true
+          agent: "testing"
+          comment: "✅ SETTINGS MODAL CHEQUE INTEGRATION WORKING: Verified that Cheque appears in the default payment mode dropdown in settings modal for both screens. Settings modal accessible and Cheque option available for selection as default payment mode."
 
 test_plan:
   current_focus:
