@@ -705,8 +705,8 @@ const CashInEntry = ({ onBack }) => {
         </Card>
 
         {/* Payment Mode Tabs - enlarged buttons, full width across screen */}
-        <div className="grid grid-cols-3 gap-2">
-          {['Credit', 'Cash', 'Online'].map((mode) => (
+        <div className="grid grid-cols-4 gap-2">
+          {['Credit', 'Cash', 'Online', 'Cheque'].map((mode) => (
             <Button
               key={mode}
               onClick={() => handlePaymentModeClick(mode)}
@@ -714,6 +714,8 @@ const CashInEntry = ({ onBack }) => {
                 paymentMode === mode
                   ? mode === 'Credit' ? 'bg-orange-900 hover:bg-orange-950 ring-1 ring-orange-700' 
                     : mode === 'Cash' ? 'bg-green-600 hover:bg-green-700'
+                    : mode === 'Online' ? 'bg-orange-600 hover:bg-orange-700'
+                    : mode === 'Cheque' ? 'bg-blue-600 hover:bg-blue-700'
                     : 'bg-orange-600 hover:bg-orange-700'
                   : 'bg-slate-700 hover:bg-slate-600'
               }`}
