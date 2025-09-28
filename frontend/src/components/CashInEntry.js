@@ -118,6 +118,12 @@ const CashInEntry = ({ onBack }) => {
   const [selectedSlotForBill, setSelectedSlotForBill] = useState(null);
   const [longPressTimer, setLongPressTimer] = useState(null);
   
+  // Cheque modal states
+  const [showChequeModal, setShowChequeModal] = useState(false);
+  const [chequeBankName, setChequeBankName] = useState('');
+  const [chequeIfscCode, setChequeIfscCode] = useState('');
+  const [chequeNumber, setChequeNumber] = useState('');
+  
   const [selectedCategory, setSelectedCategory] = useState('');
   const [newEntryTitle, setNewEntryTitle] = useState('');
   const [darkTheme, setDarkTheme] = useState(true);
