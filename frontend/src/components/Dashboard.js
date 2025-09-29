@@ -902,15 +902,6 @@ It's completely free to try!`;
                   <span>Contacts</span>
                   <div className="flex-1"></div>
                   <Button 
-                    onClick={() => setShowWhatsAppFromChat(true)}
-                    variant="ghost" 
-                    size="sm"
-                    className="text-xs text-green-400 hover:text-green-300"
-                  >
-                    <Share2 className="w-3 h-3 mr-1" />
-                    Share
-                  </Button>
-                  <Button 
                     onClick={openCommunityChat}
                     variant="ghost" 
                     size="sm"
