@@ -309,7 +309,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Summary section visibility logic testing completed"
+    - "Error resolution and Offers & Discounts testing completed"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
