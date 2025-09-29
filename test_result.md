@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the new Cheque payment mode button in both Cash In and Cash Out screens"
+user_problem_statement: "Test the updated Business tab with Bank tile replacing Credit Score"
 
 backend:
   - task: "Backend services running"
