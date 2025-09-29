@@ -465,6 +465,9 @@ test_plan:
         - working: true
           agent: "testing"
           comment: "✅ STOCK MANAGEMENT PAGE FULLY WORKING: Conducted comprehensive testing of all page components as requested. VERIFIED ALL REQUIREMENTS: Page title shows 'Stock Management', Add Stock Item button found with correct blue styling (bg-blue-600) and Plus icon, Stock Report button found with correct purple styling (bg-purple-600) and Package icon, Search box with correct 'Search...' placeholder, Sort dropdown showing 'Name (A→Z)' with options, Page size dropdown showing '25 / page', Pagination controls (Prev/Next) functional, Layout order correct: Title → Action Buttons (2 buttons in grid layout) → Search/Controls → Content, Empty state shows 'No results' (correct), All action buttons are clickable and functional. Navigation from Finance tab tile working correctly."
+        - working: true
+          agent: "testing"
+          comment: "✅ STOCK MANAGEMENT ERROR HANDLING FIX VERIFIED: Re-tested Stock Management page as part of comprehensive error handling verification. CONFIRMED ALL FUNCTIONALITY: Page loads without 'Failed to load data' errors (0 errors found), Shows proper 'No results' empty state instead of error messages, Page title 'Stock Management' displays correctly, 'Add Stock Item' button (blue with Plus icon) visible and clickable, 'Stock Report' button (purple with Package icon) visible and clickable, Search box with 'Search...' placeholder functional, Sort dropdown 'Name (A→Z)' working, Page size '25 / page' indicator present, Navigation from Finance tab tile working perfectly. Error handling implementation in ListViewPage.js successfully prevents 'Failed to load data' errors and shows clean empty state."
 
   - task: "Profit & Loss page functionality"
     implemented: true
