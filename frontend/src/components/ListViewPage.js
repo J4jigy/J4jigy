@@ -70,9 +70,19 @@ export default function ListViewPage() {
     setLoading(true);
     setError('');
     try {
-      const resp = await axios.get(`${API}/lists/${key}`, {
-        params: { search: search || undefined, sort, page, page_size: pageSize },
-      });
+      const params = { 
+        search: search || undefined, 
+        sort, 
+        page, 
+        page_size: pageSize 
+      };
+      
+      // Add sub-tab parameter if sub-tabs are active
+      if (hasSubTabs && activeSubTab) {
+        params.sub_type = activeSubTab;
+      }
+      
+      const resp = await axios.get(`${API}/lists/${key}`, { params });
       setItems(resp.data.items || []);
       setTotal(resp.data.total || 0);
     } catch (e) {
