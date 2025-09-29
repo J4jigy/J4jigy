@@ -261,7 +261,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Bills & Invoices icon update to FileBarChart"
+    - "Bank tile replacement in Business tab"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
