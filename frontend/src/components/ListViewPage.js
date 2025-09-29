@@ -166,8 +166,8 @@ export default function ListViewPage() {
         </div>
       )}
 
-      {/* Summary Section for Debtors/Creditors */}
-      {(key === 'customers' || key === 'suppliers') && (
+      {/* Summary Section for Debtors/Creditors Only */}
+      {(activeSubTab === 'debtors' || activeSubTab === 'creditors') && (
         <div className="px-3 py-3 border-b border-slate-700">
           <div className="grid grid-cols-2 gap-4">
             <Card className="bg-gradient-to-br from-red-800 to-red-900 border border-red-700/50 shadow-xl">
