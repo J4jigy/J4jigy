@@ -842,17 +842,9 @@ It's completely free to try!`;
         </DialogContent>
       </Dialog>
 
-      {/* Floating Action Buttons */}
+      {/* Floating Chat Button */}
       {showFloatingChat && (
-        <div className="fixed bottom-24 right-4 z-50 flex flex-row gap-3">
-          {/* Fuel Station Button */}
-          <Button
-            onClick={() => handleNavigate('/list/fuel-station')}
-            className="w-14 h-14 rounded-full bg-orange-500/20 hover:bg-orange-500/40 active:bg-orange-500/60 border border-orange-400/30 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200"
-          >
-            <Fuel className="w-6 h-6 text-orange-400" />
-          </Button>
-          
+        <div className="fixed bottom-24 right-4 z-50">
           {/* Chat Button */}
           <Button
             onClick={() => {
