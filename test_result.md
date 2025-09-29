@@ -278,6 +278,18 @@ test_plan:
           agent: "testing"
           comment: "🎉 DASHBOARD SPACING TEST FULLY PASSED: Conducted comprehensive testing of the updated Dashboard spacing to verify equal vertical spacing between sections as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ Login with admin/admin123 successful, 2) ✅ Dashboard home page navigation working correctly, 3) ✅ VISUAL SPACING ASSESSMENT COMPLETED: Summary Section ('You will Give' and 'You will Receive' cards) to Tab Section (Business/Finance/Personal tabs) gap measured at exactly 24px, Tab Section to Feature Tiles gap measured at exactly 24px across all tabs, 4) ✅ SPECIFIC SPACING TESTS PASSED: Gap between Summary cards and Tab buttons = 24px (matches mb-6), Gap between Tab buttons and Feature tiles = 24px (matches mb-6), Both gaps are visually equal as requested, 5) ✅ TAB SWITCHING TEST SUCCESSFUL: Switched between Business (5 tiles), Finance (8 tiles), and Personal (3 tiles) tabs, Consistent 24px spacing maintained when switching tabs, Feature tiles appear at same vertical position (235px) regardless of active tab, 6) ✅ CROSS-SECTION CONSISTENCY VERIFIED: Spacing looks balanced and professional, No section appears cramped or too spread out, Visual hierarchy maintained throughout dashboard, mb-6 (24px) spacing consistently applied between Summary→Tabs and Tabs→Features. TECHNICAL VERIFICATION: Expected spacing (mb-6) = 24px, Summary→Tabs actual = 24px ✅, Tabs→Tiles actual = 24px ✅, All three tabs tested successfully, Equal vertical spacing achieved as requested. The Dashboard spacing implementation is WORKING CORRECTLY with mb-6 (24px) spacing successfully applied between all sections."
 
+  - task: "Bank tile replacement in Business tab"
+    implemented: true
+    working: "NA"
+    file: "Dashboard.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Updated Business tab to replace Credit Score tile with Bank tile. Bank tile now shows as first tile with Landmark icon, blue color (text-blue-400), and no subtitle. Tile functionality should navigate to /list/bank when clicked."
+
 agent_communication:
     - agent: "testing"
       message: "Starting comprehensive testing of the new Cheque Details popup modal functionality in both Cash In and Cash Out screens as requested. Will test: 1) Login with admin/admin123, 2) Navigate to Cash In screen and click Cheque payment mode button, 3) Verify Cheque Details modal opens with title, blue credit card icon, Bank Name field, IFSC Code field, Cheque No. field, Save button (blue), Cancel button (outlined), 4) Test form functionality with valid data, 5) Test form validation with empty fields, 6) Test Cancel functionality, 7) Navigate to Cash Out screen and repeat all tests, 8) Verify consistent behavior between both screens."
