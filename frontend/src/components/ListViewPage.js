@@ -138,9 +138,18 @@ export default function ListViewPage() {
             <TabsList className="grid w-full grid-cols-2 bg-slate-800/80 border border-slate-700 rounded-lg">
               {subTabsByKey[key].map((tab) => {
                 const isDebtorCreditor = tab.value === 'debtors' || tab.value === 'creditors';
-                const activeClass = isDebtorCreditor 
-                  ? 'data-[state=active]:bg-red-900/30 data-[state=active]:text-red-100 data-[state=active]:border-red-700/50' 
-                  : 'data-[state=active]:bg-slate-700';
+                const isRentGive = tab.value === 'rent_give';
+                const isRentReceive = tab.value === 'rent_receive';
+                
+                let activeClass = 'data-[state=active]:bg-slate-700';
+                
+                if (isDebtorCreditor) {
+                  activeClass = 'data-[state=active]:bg-red-900/30 data-[state=active]:text-red-100 data-[state=active]:border-red-700/50';
+                } else if (isRentGive) {
+                  activeClass = 'data-[state=active]:bg-red-900/30 data-[state=active]:text-red-100 data-[state=active]:border-red-700/50';
+                } else if (isRentReceive) {
+                  activeClass = 'data-[state=active]:bg-green-900/30 data-[state=active]:text-green-100 data-[state=active]:border-green-700/50';
+                }
                 
                 return (
                   <TabsTrigger 
@@ -154,6 +163,26 @@ export default function ListViewPage() {
               })}
             </TabsList>
           </Tabs>
+        </div>
+      )}
+
+      {/* Summary Section for Debtors/Creditors */}
+      {(key === 'customers' || key === 'suppliers') && (
+        <div className="px-3 py-3 border-b border-slate-700">
+          <div className="grid grid-cols-2 gap-4">
+            <Card className="bg-gradient-to-br from-red-800 to-red-900 border border-red-700/50 shadow-xl">
+              <CardContent className="p-3 text-center">
+                <p className="text-red-100 text-xs font-medium mb-1">You will Give</p>
+                <p className="text-lg font-bold text-white">₹ 0</p>
+              </CardContent>
+            </Card>
+            <Card className="bg-gradient-to-br from-green-800 to-green-900 border border-green-700/50 shadow-xl">
+              <CardContent className="p-3 text-center">
+                <p className="text-green-100 text-xs font-medium mb-1">You will Receive</p>
+                <p className="text-lg font-bold text-white">₹ 0</p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       )}
 
