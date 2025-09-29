@@ -1086,59 +1086,6 @@ It's completely free to try!`;
         </DialogContent>
       </Dialog>
 
-      {/* WhatsApp Share from Chat */}
-      <Dialog open={showWhatsAppFromChat} onOpenChange={setShowWhatsAppFromChat}>
-        <DialogContent className="bg-slate-800 border-slate-700 max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-white">Invite Friends to Chat</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label className="text-slate-200 text-sm">Phone Number</Label>
-              <Input
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                placeholder="Enter phone number (e.g. +1234567890)"
-                className="bg-slate-700 border-slate-600 text-white mt-1"
-              />
-            </div>
-            <div>
-              <Label className="text-slate-200 text-sm">Message Preview</Label>
-              <textarea
-                value={inviteMessage}
-                onChange={(e) => setInviteMessage(e.target.value)}
-                className="w-full bg-slate-700 border border-slate-600 text-white rounded-md p-3 text-sm mt-1 min-h-[120px] resize-none"
-                placeholder="Customize your invite message..."
-              />
-            </div>
-            <div className="flex gap-2">
-              <Button
-                onClick={shareViaWhatsApp}
-                className="flex-1 bg-green-600 hover:bg-green-700"
-              >
-                <MessageCircle className="w-4 h-4 mr-2" />
-                Send via WhatsApp
-              </Button>
-              <Button
-                onClick={shareViaWebAPI}
-                variant="outline"
-                className="border-slate-600 text-slate-200"
-              >
-                <Share2 className="w-4 h-4" />
-              </Button>
-            </div>
-            <Button
-              onClick={copyInviteLink}
-              variant="outline"
-              className="w-full border-slate-600 text-slate-200"
-            >
-              <Copy className="w-4 h-4 mr-2" />
-              {copySuccess ? 'Copied!' : 'Copy Message'}
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
       {/* Scan Documents Modal */}
       <Dialog open={showScanModal} onOpenChange={setShowScanModal}>
         <DialogContent className="bg-slate-800 border-slate-700 max-w-2xl">
