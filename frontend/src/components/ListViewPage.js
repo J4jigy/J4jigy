@@ -96,7 +96,7 @@ export default function ListViewPage() {
   useEffect(() => {
     fetchData();
     // ignore deps warning intentionally to avoid extra fetches
-  }, [key, sort, page, pageSize]);
+  }, [key, sort, page, pageSize, activeSubTab]);
 
   // Debounce search
   useEffect(() => {
