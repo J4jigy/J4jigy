@@ -274,10 +274,26 @@ metadata:
           agent: "testing"
           comment: "✅ RENT SUB-TABS FUNCTIONALITY FULLY WORKING: Conducted comprehensive testing of the new Rent sub-tabs functionality as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ Login with admin/admin123 successful, 2) ✅ Successfully navigated to Dashboard and clicked 'Rent' tile in Finance tab, 3) ✅ Page opens with correct title 'Rent', 4) ✅ SUB-TABS VERIFICATION COMPLETE: Both 'Rent Give' and 'Rent Receive' tabs visible, Sub-tabs container properly rendered using [role='tablist'], Found 2 tabs as expected, 5) ✅ DEFAULT STATE CORRECT: 'Rent Give' tab active by default (data-state='active'), 'Rent Receive' tab inactive by default (data-state='inactive'), 6) ✅ SUB-TAB SWITCHING FULLY FUNCTIONAL: Clicking 'Rent Receive' tab makes it active and 'Rent Give' inactive, Clicking back on 'Rent Give' tab works correctly, Tab highlighting works properly with proper data-state updates, Sub-tab switching works in both directions, 7) ✅ PAGE FUNCTIONALITY VERIFIED IN BOTH TABS: Search input visible and functional with placeholder 'Search...', Sort dropdown accessible (shows current selection like 'Newest'), Page size dropdown working (shows '25 / page'), Pagination controls (Prev/Next) visible and functional, Data loading works appropriately (shows 'Failed to load data' for empty state), 8) ✅ FUNCTIONALITY INTEGRATION WORKING: Search functionality works within active sub-tab, Sort and page size controls functional, Page resets when switching sub-tabs, All controls work independently within each sub-tab. All Rent sub-tabs functionality requirements successfully implemented and tested."
 
+  - task: "Debtors and Creditors sub-tabs red styling"
+    implemented: true
+    working: "NA"
+    file: "ListViewPage.js"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented red styling for Debtors and Creditors sub-tabs. Added transparent light red background (bg-red-900/30) and light red text (text-red-100) when these tabs are active. Only applies to 'debtors' and 'creditors' tab values, other tabs maintain normal slate colors."
+        - working: "NA"
+          agent: "testing"
+          comment: "❌ UNABLE TO TEST DUE TO BLOCKING MODAL: Attempted to test the red styling for Debtors and Creditors sub-tabs but encountered a persistent 'Switch Business' modal that blocks all UI interactions after login. ATTEMPTED SOLUTIONS: 1) Escape key, 2) Clicking outside modal, 3) Clicking Main Business button, 4) Force clicking through overlay, 5) Direct URL navigation (redirects to login). TECHNICAL ISSUE: Modal overlay intercepts pointer events preventing navigation to test pages. Modal appears automatically after login but no auto-trigger mechanism found in Dashboard.js. RECOMMENDATION: Main agent needs to investigate and resolve the persistent Switch Business modal issue before red styling tests can be completed."
+
 test_plan:
   current_focus:
-    - "Rent sub-tabs functionality"
-  stuck_tasks: []
+    - "Debtors and Creditors sub-tabs red styling"
+  stuck_tasks:
+    - "Debtors and Creditors sub-tabs red styling"
   test_all: false
   test_priority: "high_first"
 
