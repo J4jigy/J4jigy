@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the updated Business tab with Bank tile replacing Credit Score"
+user_problem_statement: "Test the new sub-tabs functionality for Customers/Debtors and Suppliers/Creditors"
 
 backend:
   - task: "Backend services running"
