@@ -13,6 +13,7 @@ import { Home, UserCircle, Plus, Minus, CreditCard, Users, Building, TrendingUp,
 import AdminDashboard from './components/AdminDashboard';
 import CashInEntry from './components/CashInEntry';
 import CashOutEntry from './components/CashOutEntry';
+import FuelDispenser from './components/FuelDispenser';
 import ListViewPage from './components/ListViewPage';
 import Dashboard from './components/Dashboard';
 import ToDoList from './components/ToDoList';
