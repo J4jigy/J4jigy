@@ -31,8 +31,8 @@ const FuelDispenser = () => {
       </div>
 
       {/* Fuel Dispenser Grid */}
-      <div className="flex-1 p-1 flex justify-center">
-        <div className="grid grid-cols-4 gap-1">
+      <div className="flex-1 px-1 py-1 flex justify-center">
+        <div className="grid grid-cols-4 gap-y-0 gap-x-3">
           {Array.from({ length: 24 }, (_, index) => {
             return (
               <Button
