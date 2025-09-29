@@ -34,6 +34,17 @@ const defaultSortByKey = {
   invoices: 'newest',
 };
 
+const subTabsByKey = {
+  customers: [
+    { value: 'customers', label: 'Customers' },
+    { value: 'debtors', label: 'Debtors' }
+  ],
+  suppliers: [
+    { value: 'suppliers', label: 'Suppliers' },
+    { value: 'creditors', label: 'Creditors' }
+  ]
+};
+
 export default function ListViewPage() {
   const { key } = useParams();
   const navigate = useNavigate();
@@ -46,8 +57,14 @@ export default function ListViewPage() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
   const [total, setTotal] = useState(0);
+  const [activeSubTab, setActiveSubTab] = useState(() => {
+    // Default to first sub-tab if sub-tabs exist for this key
+    const subTabs = subTabsByKey[key];
+    return subTabs ? subTabs[0].value : null;
+  });
 
   const title = titleByKey[key] || 'List';
+  const hasSubTabs = !!subTabsByKey[key];
 
   const fetchData = async () => {
     setLoading(true);
