@@ -32,17 +32,16 @@ const FuelDispenser = () => {
 
       {/* Fuel Dispenser Grid */}
       <div className="flex-1 p-4">
-        <div className="grid grid-cols-4 gap-3 max-w-md mx-auto">
-          {Array.from({ length: 16 }, (_, index) => {
-            const IconComponent = fuelIcons[index];
+        <div className="grid grid-cols-6 gap-3 max-w-lg mx-auto">
+          {Array.from({ length: 24 }, (_, index) => {
             return (
               <Button
                 key={index}
                 variant="outline"
-                className="bg-orange-600 border-orange-700 text-white hover:bg-orange-500 w-12 h-12 p-0 flex items-center justify-center aspect-square"
+                className="bg-orange-600 border-orange-700 text-white hover:bg-orange-500 w-12 h-12 p-0 flex items-center justify-center aspect-square text-xs font-medium"
                 onClick={() => handleDispenserClick(index)}
               >
-                <IconComponent className="w-5 h-5" />
+                D{index + 1}
               </Button>
             );
           })}
