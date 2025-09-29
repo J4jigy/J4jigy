@@ -44,6 +44,10 @@ const subTabsByKey = {
   suppliers: [
     { value: 'suppliers', label: 'Suppliers' },
     { value: 'creditors', label: 'Creditors' }
+  ],
+  rent: [
+    { value: 'rent_give', label: 'Rent Give' },
+    { value: 'rent_receive', label: 'Rent Receive' }
   ]
 };
 
