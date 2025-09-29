@@ -611,16 +611,24 @@ It's completely free to try!`;
       {/* Summary */}
       <div className="px-4 mb-6">
         <div className="grid grid-cols-2 gap-4">
-          <Card className="bg-gradient-to-br from-red-800 to-red-900 border border-red-700/50 shadow-xl">
+          <Card 
+            className="bg-gradient-to-br from-red-800 to-red-900 border border-red-700/50 shadow-xl cursor-pointer hover:from-red-700 hover:to-red-800 transition-colors"
+            onClick={() => handleNavigate('/list/payables')}
+          >
             <CardContent className="p-4 text-center">
               <p className="text-red-100 text-xs font-medium mb-1">You will Give</p>
               <p className="text-xl font-bold text-white">₹ {Number(summary.you_will_give || 0).toLocaleString()}</p>
+              <p className="text-red-200 text-xs mt-1">Total Payables</p>
             </CardContent>
           </Card>
-          <Card className="bg-gradient-to-br from-green-800 to-green-900 border border-green-700/50 shadow-xl">
+          <Card 
+            className="bg-gradient-to-br from-green-800 to-green-900 border border-green-700/50 shadow-xl cursor-pointer hover:from-green-700 hover:to-green-800 transition-colors"
+            onClick={() => handleNavigate('/list/receivables')}
+          >
             <CardContent className="p-4 text-center">
               <p className="text-green-100 text-xs font-medium mb-1">You will Receive</p>
               <p className="text-xl font-bold text-white">₹ {Number(summary.you_will_receive || 0).toLocaleString()}</p>
+              <p className="text-green-200 text-xs mt-1">Total Receivables</p>
             </CardContent>
           </Card>
         </div>
