@@ -625,23 +625,20 @@ const CashInEntry = ({ onBack }) => {
           </div>
         </div>
 
-        {/* Fuel Slot */}
+        {/* Fuel, Customer & Product Dropdowns */}
         <div className="grid grid-cols-3 gap-2">
+          {/* Fuel Button */}
           <Button
             variant="outline"
-            className="bg-orange-600 border-orange-700 text-white hover:bg-orange-500 h-12 w-full aspect-square flex flex-col items-center justify-center gap-1"
+            className="bg-orange-600 border-orange-700 text-white hover:bg-orange-500 h-auto py-1 aspect-square flex flex-col items-center justify-center gap-1"
             onClick={() => setShowFuelModal(true)}
           >
             <Fuel className="w-4 h-4" />
             <div className="text-xs">₹{fuelAmount}</div>
             <div className="text-[10px] text-orange-200">{fuelType}</div>
           </Button>
-          <div></div>
-          <div></div>
-        </div>
-
-        {/* Customer & Product Dropdowns */}
-        <div className="grid grid-cols-2 gap-2">
+          
+          {/* Customer Selection */}
           <Button
             variant="outline"
             className="bg-slate-800 border-slate-700 text-white justify-start h-auto py-1"
@@ -653,6 +650,7 @@ const CashInEntry = ({ onBack }) => {
             </div>
           </Button>
           
+          {/* Products Selection */}
           <Button
             variant="outline"
             className="bg-slate-800 border-slate-700 text-white justify-start h-auto py-1"
