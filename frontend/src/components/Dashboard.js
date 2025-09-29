@@ -842,15 +842,23 @@ It's completely free to try!`;
         </DialogContent>
       </Dialog>
 
-      {/* Floating Chat and WhatsApp Components */}
+      {/* Floating Action Buttons */}
       {showFloatingChat && (
-        <div className="fixed bottom-24 right-4 z-50 flex flex-col gap-3">
+        <div className="fixed bottom-24 right-4 z-50 flex flex-row gap-3">
+          {/* Fuel Station Button */}
+          <Button
+            onClick={() => handleNavigate('/list/fuel-station')}
+            className="w-14 h-14 rounded-full bg-orange-500/20 hover:bg-orange-500/40 active:bg-orange-500/60 border border-orange-400/30 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200"
+          >
+            <Fuel className="w-6 h-6 text-orange-400" />
+          </Button>
+          
           {/* WhatsApp Share Button */}
           <Button
             onClick={() => setShowWhatsAppFromChat(true)}
-            className="w-14 h-14 rounded-full bg-green-500 hover:bg-green-600 shadow-lg flex items-center justify-center"
+            className="w-14 h-14 rounded-full bg-green-500/20 hover:bg-green-500/40 active:bg-green-500/60 border border-green-400/30 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200"
           >
-            <Share2 className="w-6 h-6 text-white" />
+            <Share2 className="w-6 h-6 text-green-400" />
           </Button>
           
           {/* Chat Button */}
@@ -860,9 +868,9 @@ It's completely free to try!`;
               setShowPeerList(true); // Show contacts by default
               fetchContacts(); // Refresh contacts when opening
             }}
-            className="w-14 h-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg flex items-center justify-center"
+            className="w-14 h-14 rounded-full bg-blue-500/20 hover:bg-blue-500/40 active:bg-blue-500/60 border border-blue-400/30 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200"
           >
-            <MessageCircle className="w-6 h-6 text-white" />
+            <MessageCircle className="w-6 h-6 text-blue-400" />
           </Button>
         </div>
       )}
