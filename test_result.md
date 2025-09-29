@@ -292,9 +292,24 @@ metadata:
           agent: "testing"
           comment: "✅ DEBTORS/CREDITORS RED STYLING FULLY WORKING: Conducted comprehensive testing of the updated styling for Debtors and Creditors sub-tabs with transparent light red color as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ Login with admin/admin123 successful - no Switch Business modal blocking issue (resolved), 2) ✅ CUSTOMERS/DEBTORS TESTING: Successfully navigated to Customers/Debtors page, both sub-tabs visible and functional, Customers tab active by default with normal slate color, Debtors tab inactive with normal gray color initially, 3) ✅ DEBTORS TAB RED STYLING VERIFIED: Clicked Debtors tab to make it active, confirmed transparent light red background (bg-red-900/30) applied correctly, verified light red text color (text-red-100) working, tab switching works perfectly with proper color changes, 4) ✅ SUPPLIERS/CREDITORS TESTING: Successfully navigated to Suppliers/Creditors page, both sub-tabs visible and functional, Suppliers tab active by default with normal slate color, 5) ✅ CREDITORS TAB RED STYLING VERIFIED: Clicked Creditors tab to make it active, confirmed transparent light red background (bg-red-900/30) applied correctly, verified light red text color working, tab switching between Suppliers/Creditors works correctly, 6) ✅ OTHER SUB-TABS VERIFICATION: Tested Rent page sub-tabs (Rent Give/Rent Receive), confirmed both tabs maintain normal slate colors (no red styling), tab switching works correctly without red styling, 7) ✅ TECHNICAL VERIFICATION: Red styling classes (bg-red-900/30, border-red-700/50, text-red-100) correctly applied only to debtors and creditors tabs when active, Normal slate styling maintained for all other tabs (customers, suppliers, rent), Tab switching functionality working perfectly in all scenarios. MODAL ISSUE RESOLVED: Switch Business modal no longer appears and blocks UI interactions. All red styling functionality requirements successfully implemented and tested."
 
+  - task: "Summary section visibility logic - only for Debtors/Creditors tabs"
+    implemented: true
+    working: true
+    file: "ListViewPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Updated summary section visibility logic to only appear for Debtors/Creditors tabs, not for Customers/Suppliers tabs. Summary section should dynamically show/hide based on active sub-tab selection."
+        - working: true
+          agent: "testing"
+          comment: "✅ SUMMARY SECTION VISIBILITY LOGIC FULLY WORKING: Conducted comprehensive testing of the updated summary section visibility logic as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ CUSTOMERS/DEBTORS PAGE TESTING: Login with admin/admin123 successful, Successfully navigated to Customers/Debtors page, Customers tab active by default with NO summary section visible (CORRECT), Clicked Debtors tab and summary section NOW appears with both 'You will Give' (red) and 'You will Receive' (green) cards visible, Cards show '₹ 0' placeholder amounts correctly, Switching back to Customers tab makes summary section disappear (CORRECT), 2) ✅ SUPPLIERS/CREDITORS PAGE TESTING: Successfully navigated to Suppliers/Creditors page, Suppliers tab active by default with NO summary section visible (CORRECT), Clicked Creditors tab and summary section NOW appears with both summary cards visible with proper styling, Switching back to Suppliers tab makes summary section disappear (CORRECT), 3) ✅ OTHER PAGES VERIFICATION: Successfully navigated to Rent page, NO summary section visible on Rent page (CORRECT - unaffected), Tested both Rent Give and Rent Receive tabs - NO summary section visible on either tab (CORRECT), 4) ✅ DYNAMIC BEHAVIOR VERIFIED: Tab switching shows/hides summary section dynamically as expected, Summary section ONLY appears when 'Debtors' or 'Creditors' tabs are active, Summary section does NOT appear when 'Customers' or 'Suppliers' tabs are active, Other pages (Rent) are unaffected by the changes. TECHNICAL VERIFICATION: Summary section visibility controlled by condition (activeSubTab === 'debtors' || activeSubTab === 'creditors') working correctly, Tab switching updates activeSubTab state properly, Summary cards render with correct styling (red gradient for 'You will Give', green gradient for 'You will Receive'), All functionality requirements from the review request successfully verified and working."
+
 test_plan:
   current_focus:
-    - "Summary section and updated tab colors testing"
+    - "Summary section visibility logic testing completed"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
