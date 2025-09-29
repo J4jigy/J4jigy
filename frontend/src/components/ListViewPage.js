@@ -21,6 +21,7 @@ const titleByKey = {
   bills: 'Bills / Recharge',
   expenses: 'Other Expenses',
   invoices: 'Bills & Invoices',
+  rent: 'Rent',
 };
 
 const defaultSortByKey = {
