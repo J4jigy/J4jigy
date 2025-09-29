@@ -31,14 +31,14 @@ const FuelDispenser = () => {
       </div>
 
       {/* Fuel Dispenser Grid */}
-      <div className="flex-1 px-4 pt-4 flex justify-center">
-        <div className="grid grid-cols-4 gap-4">
+      <div className="flex-1 px-3 pt-3 flex justify-center">
+        <div className="grid grid-cols-4 gap-3">
           {Array.from({ length: 24 }, (_, index) => {
             return (
               <Button
                 key={index}
                 variant="outline"
-                className="bg-orange-600 border-orange-700 text-white hover:bg-orange-500 w-16 h-16 p-0 flex items-center justify-center aspect-square text-sm font-medium"
+                className="bg-orange-600 border-orange-700 text-white hover:bg-orange-500 w-14 h-14 p-0 flex items-center justify-center aspect-square text-xs font-medium"
                 onClick={() => handleDispenserClick(index)}
               >
                 D{index + 1}
