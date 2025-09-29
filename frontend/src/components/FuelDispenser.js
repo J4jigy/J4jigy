@@ -5,18 +5,10 @@ import { ArrowLeft, Fuel, Zap, Gauge, CircleDot, Square, Triangle, Diamond, Star
 
 const FuelDispenser = () => {
   const navigate = useNavigate();
-  
-  // Array of 16 different icons for fuel dispensing units
-  const fuelIcons = [
-    Fuel, Zap, Gauge, CircleDot, 
-    Square, Triangle, Diamond, Star,
-    Heart, Hexagon, Octagon, Plus,
-    Minus, X, Check, Fuel
-  ];
 
   const handleDispenserClick = (index) => {
     // Handle dispenser selection logic here
-    console.log(`Dispenser ${index + 1} selected`);
+    console.log(`Dispenser D${index + 1} selected`);
     // You can add navigation or state management here
   };
 
