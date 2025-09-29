@@ -49,6 +49,7 @@ const defaultSortByKey = {
   balance: 'newest',
   payables: 'amount_desc',
   receivables: 'amount_desc',
+  'fuel-station': 'newest',
 };
 
 const subTabsByKey = {
