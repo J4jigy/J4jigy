@@ -446,6 +446,51 @@ test_plan:
           agent: "testing"
           comment: "✅ OFFERS & DISCOUNTS PAGE FULLY WORKING: Conducted comprehensive testing of all page components as requested. VERIFIED ALL REQUIREMENTS: Page title shows 'Offers & Discounts', Create Discount Coupons button found with green styling (bg-green-600), full width, Plus icon, positioned above search box, Search box with correct 'Search...' placeholder, Sort dropdown showing 'Newest' with options, Page size dropdown showing '25 / page', Pagination controls (Prev/Next) functional, Page information display working, Layout order correct: Title → Create Button → Search/Controls → Content, Error handling shows 'No results' instead of 'Failed to load data', All components render and function correctly. Backend 404 handled gracefully with proper empty state display."
 
+  - task: "Stock Management page functionality"
+    implemented: true
+    working: true
+    file: "ListViewPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented Stock Management page with two action buttons: 'Add Stock Item' (blue with Plus icon) and 'Stock Report' (purple with Package icon). Added stock key to titleByKey configuration and proper routing. Page includes standard controls (search, sort, pagination) and proper layout order."
+        - working: true
+          agent: "testing"
+          comment: "✅ STOCK MANAGEMENT PAGE FULLY WORKING: Conducted comprehensive testing of all page components as requested. VERIFIED ALL REQUIREMENTS: Page title shows 'Stock Management', Add Stock Item button found with correct blue styling (bg-blue-600) and Plus icon, Stock Report button found with correct purple styling (bg-purple-600) and Package icon, Search box with correct 'Search...' placeholder, Sort dropdown showing 'Name (A→Z)' with options, Page size dropdown showing '25 / page', Pagination controls (Prev/Next) functional, Layout order correct: Title → Action Buttons (2 buttons in grid layout) → Search/Controls → Content, Empty state shows 'No results' (correct), All action buttons are clickable and functional. Navigation from Finance tab tile working correctly."
+
+  - task: "Profit & Loss page functionality"
+    implemented: true
+    working: true
+    file: "ListViewPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented Profit & Loss page with two action buttons: 'Generate P&L Report' (emerald/green with BarChart3 icon) and 'Select Period' (orange with Calendar icon). Added profit key to titleByKey configuration and proper routing. Page includes standard controls and proper layout order."
+        - working: true
+          agent: "testing"
+          comment: "✅ PROFIT & LOSS PAGE FULLY WORKING: Conducted comprehensive testing of all page components as requested. VERIFIED ALL REQUIREMENTS: Page title shows 'Profit & Loss', Generate P&L Report button found with correct emerald styling (bg-emerald-600) and BarChart3 icon, Select Period button found with correct orange styling (bg-orange-600) and Calendar icon, Search box with correct 'Search...' placeholder, Sort dropdown showing 'Newest' with options, Page size dropdown showing '25 / page', Pagination controls (Prev/Next) functional, Layout order correct: Title → Action Buttons (2 buttons in grid layout) → Search/Controls → Content, Empty state shows 'No results' (correct), All action buttons are clickable and functional. Navigation from Finance tab tile working correctly."
+
+  - task: "Balance Sheet page functionality"
+    implemented: true
+    working: true
+    file: "ListViewPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented Balance Sheet page with two action buttons: 'Generate Balance Sheet' (indigo with PieChart icon) and 'Export Report' (slate with FileText icon). Added balance key to titleByKey configuration and proper routing. Page includes standard controls and proper layout order."
+        - working: true
+          agent: "testing"
+          comment: "✅ BALANCE SHEET PAGE FULLY WORKING: Conducted comprehensive testing of all page components as requested. VERIFIED ALL REQUIREMENTS: Page title shows 'Balance Sheet', Generate Balance Sheet button found with correct indigo styling (bg-indigo-600) and PieChart icon, Export Report button found with correct slate styling (bg-slate-600) and FileText icon, Search box with correct 'Search...' placeholder, Sort dropdown showing 'Newest' with options, Page size dropdown showing '25 / page', Pagination controls (Prev/Next) functional, Layout order correct: Title → Action Buttons (2 buttons in grid layout) → Search/Controls → Content, Empty state shows 'No results' (correct), All action buttons are clickable and functional. Navigation from Finance tab tile working correctly."
+
 agent_communication:
     - agent: "testing"
       message: "Starting comprehensive testing of the new Rent sub-tabs functionality as requested. Will test: 1) Login with admin/admin123, 2) Navigate to Dashboard and click 'Rent' tile in Finance tab, 3) Verify page opens with title 'Rent', 4) Verify Rent sub-tabs: 'Rent Give' (default active) and 'Rent Receive', 5) Test sub-tab switching and highlighting, 6) Verify functionality in each sub-tab (search, sort, pagination), 7) Test functionality integration (search within tabs, sort within tabs, page reset on tab switch)."
