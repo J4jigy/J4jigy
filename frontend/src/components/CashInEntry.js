@@ -1492,67 +1492,6 @@ const CashInEntry = ({ onBack }) => {
         </DialogContent>
       </Dialog>
 
-      {/* Fuel Modal */}
-      <Dialog open={showFuelModal} onOpenChange={setShowFuelModal}>
-        <DialogContent className="bg-slate-800 border-slate-700 max-w-sm w-full mx-auto my-4">
-          <DialogHeader>
-            <DialogTitle className="text-white flex items-center gap-2">
-              <Fuel className="w-5 h-5 text-orange-400" />
-              Fuel Entry
-            </DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label className="text-slate-200 text-sm">Fuel Type</Label>
-              <Select value={fuelType} onValueChange={setFuelType}>
-                <SelectTrigger className="bg-slate-700 border-slate-600 text-white mt-1">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Petrol">Petrol</SelectItem>
-                  <SelectItem value="Diesel">Diesel</SelectItem>
-                  <SelectItem value="CNG">CNG</SelectItem>
-                  <SelectItem value="Electric">Electric</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div>
-              <Label className="text-slate-200 text-sm">Amount (₹)</Label>
-              <Input
-                type="number"
-                value={fuelAmount}
-                onChange={(e) => setFuelAmount(e.target.value)}
-                placeholder="Enter fuel amount"
-                className="bg-slate-700 border-slate-600 text-white mt-1"
-                min="0"
-                step="0.01"
-              />
-            </div>
-
-            <div className="flex gap-2">
-              <Button
-                onClick={() => {
-                  // Here you could add fuel entry logic
-                  setShowFuelModal(false);
-                }}
-                className="flex-1 bg-orange-600 hover:bg-orange-700"
-                disabled={!fuelAmount || fuelAmount === '0'}
-              >
-                Add Fuel Entry
-              </Button>
-              <Button
-                onClick={() => setShowFuelModal(false)}
-                variant="outline"
-                className="border-slate-600 text-slate-200"
-              >
-                Cancel
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
       {/* Delete Confirmation Modal */}
       <Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
         <DialogContent className="bg-slate-800 border-slate-700 max-w-md w-full mx-auto my-4">
