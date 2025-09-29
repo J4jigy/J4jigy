@@ -295,6 +295,42 @@ test_plan:
           agent: "testing"
           comment: "✅ BANK TILE REPLACEMENT FULLY VERIFIED: Conducted comprehensive testing of the updated Business tab with Bank tile replacing Credit Score as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ Login with admin/admin123 successful, 2) ✅ Dashboard home page navigation working correctly, 3) ✅ Business tab activation successful, 4) ✅ BANK TILE VERIFICATION COMPLETE: First tile shows 'Bank' with no subtitle as expected, Landmark icon present and visible, Icon color verified as blue (text-blue-400), 5) ✅ BANK TILE FUNCTIONALITY WORKING: Clicking Bank tile successfully navigates to /list/bank, Navigation working correctly without errors, 6) ✅ OTHER BUSINESS TILES VERIFIED: All 5 business tiles present (Bank, Customers/Debtors, Suppliers/Creditors, Community/Ratings, Staff), Tile names and subtitles correct (minor formatting differences in display but content accurate), Icons and colors maintained for other tiles, 7) ✅ CROSS-TAB VERIFICATION SUCCESSFUL: Finance tab unaffected - 8 tiles present, Personal tab unaffected - 3 tiles present, Bank tile persists after switching between tabs, All tabs working correctly. TECHNICAL VERIFICATION: Bank tile positioned as first tile in Business tab, Landmark icon properly imported and displayed, Blue color class (text-blue-400) correctly applied, Navigation handler working (/list/bank), No subtitle displayed as expected, Other business tiles functionality preserved. The Bank tile replacement has been successfully implemented and is working correctly in all tested scenarios."
 
+  - task: "Customers/Debtors sub-tabs functionality"
+    implemented: true
+    working: "NA"
+    file: "ListViewPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented sub-tabs functionality for Customers/Debtors page. Added subTabsByKey configuration with 'Customers' and 'Debtors' tabs, default active tab selection, sub-tab switching logic, and page reset when switching tabs. Sub-tabs should appear when navigating to /list/customers."
+
+  - task: "Suppliers/Creditors sub-tabs functionality"
+    implemented: true
+    working: "NA"
+    file: "ListViewPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented sub-tabs functionality for Suppliers/Creditors page. Added subTabsByKey configuration with 'Suppliers' and 'Creditors' tabs, default active tab selection, sub-tab switching logic, and page reset when switching tabs. Sub-tabs should appear when navigating to /list/suppliers."
+
+  - task: "Other list pages unaffected verification"
+    implemented: true
+    working: "NA"
+    file: "ListViewPage.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Ensured that other list pages (Staff, Community/Ratings) are not affected by sub-tabs implementation. Only customers and suppliers keys have sub-tabs configured in subTabsByKey object."
+
 agent_communication:
     - agent: "testing"
       message: "Starting comprehensive testing of the new sub-tabs functionality for Customers/Debtors and Suppliers/Creditors as requested. Will test: 1) Login with admin/admin123, 2) Navigate to Dashboard and click 'Customers / Debtors' tile in Business tab, 3) Verify sub-tabs: 'Customers' (default active) and 'Debtors', 4) Test sub-tab switching and highlighting, 5) Verify functionality in each sub-tab (data loading, search, sort, pagination), 6) Navigate to 'Suppliers / Creditors' tile and repeat similar tests, 7) Test other pages (Staff, Community/Ratings) to ensure they're unaffected by sub-tabs implementation."
