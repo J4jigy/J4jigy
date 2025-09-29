@@ -33,6 +33,7 @@ const defaultSortByKey = {
   bills: 'newest',
   expenses: 'newest',
   invoices: 'newest',
+  rent: 'newest',
 };
 
 const subTabsByKey = {
