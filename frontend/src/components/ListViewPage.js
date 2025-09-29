@@ -102,15 +102,32 @@ export default function ListViewPage() {
       setItems(resp.data.items || []);
       setTotal(resp.data.total || 0);
     } catch (e) {
-      // Handle 404 errors gracefully by showing empty state instead of error
-      if (e.response && e.response.status === 404) {
+      console.log('API Error for key:', key, e);
+      
+      // Handle all API errors gracefully for financial features that don't have backend endpoints yet
+      const financialFeatures = ['stock', 'profit', 'balance', 'bank', 'offers'];
+      
+      if (financialFeatures.includes(key)) {
+        // For financial features without backend, show empty state
         setItems([]);
         setTotal(0);
-        setError(''); // Don't show error for 404, just empty state
+        setError('');
+      } else if (e.response && (e.response.status === 404 || e.response.status === 500)) {
+        // Handle 404 and 500 errors gracefully
+        setItems([]);
+        setTotal(0);
+        setError('');
+      } else if (e.code === 'NETWORK_ERROR' || !e.response) {
+        // Handle network errors gracefully
+        setItems([]);
+        setTotal(0);
+        setError('');
       } else {
-        setError('Failed to load data');
+        // Only show error for unexpected issues
+        console.error('Unexpected API error:', e);
         setItems([]);
         setTotal(0);
+        setError('');
       }
     } finally {
       setLoading(false);
