@@ -29,6 +29,7 @@ const titleByKey = {
   balance: 'Balance Sheet',
   payables: 'Payables - You will Give',
   receivables: 'Receivables - You will Receive',
+  'fuel-station': 'Fuel Station Management',
 };
 
 const defaultSortByKey = {
