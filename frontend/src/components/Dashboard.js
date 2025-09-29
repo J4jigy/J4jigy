@@ -57,7 +57,6 @@ export default function Dashboard({ user, logout }) {
   // Floating Chat states
   const [showFloatingChat, setShowFloatingChat] = useState(true);
   const [showChatDialog, setShowChatDialog] = useState(false);
-  const [showWhatsAppFromChat, setShowWhatsAppFromChat] = useState(false);
   const [chatMessages, setChatMessages] = useState([
     { id: 1, user: 'System', message: 'Welcome to FinanceTracker! Chat with other users here.', time: '10:30 AM', isSystem: true, avatar: '🤖' },
   ]);
