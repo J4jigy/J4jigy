@@ -423,7 +423,7 @@ It's completely free to try!`;
   };
 
   const businessTiles = [
-    { name: 'Credit Score', subtitle: '', icon: ShieldCheck, iconColor: 'text-blue-400' },
+    { name: 'Bank', subtitle: '', icon: Landmark, iconColor: 'text-blue-400' },
     { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400' },
     { name: 'Suppliers', subtitle: 'Creditors', icon: Truck, iconColor: 'text-indigo-400' },
     { name: 'Community', subtitle: 'Ratings', icon: Star, iconColor: 'text-yellow-400' },
