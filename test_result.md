@@ -261,7 +261,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Bank tile replacement in Business tab"
+    - "Customers/Debtors sub-tabs functionality"
+    - "Suppliers/Creditors sub-tabs functionality"
+    - "Other list pages unaffected verification"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
