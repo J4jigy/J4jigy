@@ -259,11 +259,21 @@ metadata:
           agent: "testing"
           comment: "✅ BILLS & INVOICES ICON UPDATE FULLY VERIFIED: Conducted comprehensive testing of the FileBarChart icon changes as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ Login with admin/admin123 successful, 2) ✅ HOME PAGE TESTING: Navigate to Finance tab successful, Bills & Invoices tile found with FileBarChart icon, Yellow color (text-yellow-400) confirmed, Tile functionality (navigation to /list/invoices) working correctly, 3) ✅ RECEIPT MODAL TESTING: Navigate to Cash In screen successful, Added ₹100 to POS slot C1, Clicked active slot to open bill/invoice modal, Modal title 'Bill / Invoice - C1' displayed with FileBarChart icon, Green color (text-green-400) confirmed on modal title icon, Print button found and functional, Share button found and functional, Close button found and working correctly (modal closes successfully), 4) ✅ TECHNICAL VERIFICATION: FileBarChart icon properly imported and used in both locations, Color classes correctly applied (text-yellow-400 for dashboard tile, text-green-400 for modal), All existing functionality maintained, Icon change from Receipt to FileBarChart successfully implemented. The Bills & Invoices icon update has been fully implemented and tested successfully in both the Dashboard Finance tab and the Cash In bill/invoice modal."
 
+  - task: "Rent sub-tabs functionality"
+    implemented: true
+    working: "NA"
+    file: "ListViewPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented Rent sub-tabs functionality with 'Rent Give' and 'Rent Receive' tabs. Added rent key to subTabsByKey configuration with proper sub-tab switching logic, page reset functionality, and integration with search, sort, and pagination controls. Sub-tabs should appear when navigating to /list/rent from Finance tab."
+
 test_plan:
   current_focus:
-    - "Customers/Debtors sub-tabs functionality"
-    - "Suppliers/Creditors sub-tabs functionality"
-    - "Other list pages unaffected verification"
+    - "Rent sub-tabs functionality"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
