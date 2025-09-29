@@ -324,6 +324,22 @@ export default function ListViewPage() {
         </div>
       )}
 
+      {/* Fuel Station Action Buttons */}
+      {key === 'fuel-station' && (
+        <div className="px-3 py-3 border-b border-slate-700">
+          <div className="grid grid-cols-2 gap-2">
+            <Button className="bg-orange-600 hover:bg-orange-700 text-white">
+              <Plus className="w-4 h-4 mr-2" />
+              Add Fuel Entry
+            </Button>
+            <Button className="bg-yellow-600 hover:bg-yellow-700 text-white">
+              <BarChart3 className="w-4 h-4 mr-2" />
+              Fuel Report
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Controls */}
       <div className="p-3 flex items-center gap-2 flex-wrap">
         <div className="flex-1 min-w-[200px]">
