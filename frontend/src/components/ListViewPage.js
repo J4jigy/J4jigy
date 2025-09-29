@@ -46,6 +46,8 @@ const defaultSortByKey = {
   stock: 'name_asc',
   profit: 'newest',
   balance: 'newest',
+  payables: 'amount_desc',
+  receivables: 'amount_desc',
 };
 
 const subTabsByKey = {
