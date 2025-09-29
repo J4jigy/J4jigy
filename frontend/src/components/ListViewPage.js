@@ -136,15 +136,22 @@ export default function ListViewPage() {
         <div className="px-3 py-2 border-b border-slate-700">
           <Tabs value={activeSubTab} onValueChange={setActiveSubTab} className="w-full">
             <TabsList className="grid w-full grid-cols-2 bg-slate-800/80 border border-slate-700 rounded-lg">
-              {subTabsByKey[key].map((tab) => (
-                <TabsTrigger 
-                  key={tab.value} 
-                  value={tab.value} 
-                  className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md"
-                >
-                  {tab.label}
-                </TabsTrigger>
-              ))}
+              {subTabsByKey[key].map((tab) => {
+                const isDebtorCreditor = tab.value === 'debtors' || tab.value === 'creditors';
+                const activeClass = isDebtorCreditor 
+                  ? 'data-[state=active]:bg-red-900/30 data-[state=active]:text-red-100 data-[state=active]:border-red-700/50' 
+                  : 'data-[state=active]:bg-slate-700';
+                
+                return (
+                  <TabsTrigger 
+                    key={tab.value} 
+                    value={tab.value} 
+                    className={`${activeClass} data-[state=active]:text-white text-slate-300 rounded-md transition-colors`}
+                  >
+                    {tab.label}
+                  </TabsTrigger>
+                );
+              })}
             </TabsList>
           </Tabs>
         </div>
