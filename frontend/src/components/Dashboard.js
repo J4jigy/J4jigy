@@ -458,7 +458,8 @@ It's completely free to try!`;
 
   const handleTileClick = (tile) => {
     const name = `${tile.name} ${tile.subtitle}`.trim().toLowerCase();
-    if (name.startsWith('customers')) handleNavigate('/list/customers');
+    if (name.startsWith('bank')) handleNavigate('/list/bank');
+    else if (name.startsWith('customers')) handleNavigate('/list/customers');
     else if (name.startsWith('suppliers')) handleNavigate('/list/suppliers');
     else if (name.startsWith('community')) handleNavigate('/list/ratings');
     else if (name.startsWith('staff')) handleNavigate('/list/staff');
