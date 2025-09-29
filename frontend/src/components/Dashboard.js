@@ -463,6 +463,7 @@ It's completely free to try!`;
     else if (name.startsWith('suppliers')) handleNavigate('/list/suppliers');
     else if (name.startsWith('community')) handleNavigate('/list/ratings');
     else if (name.startsWith('staff')) handleNavigate('/list/staff');
+    else if (name.startsWith('rent')) handleNavigate('/list/rent');
     else if (name.startsWith('company purchase') || name.startsWith('company')) handleNavigate('/list/purchases');
     else if (name.startsWith('bills recharge') || tile.name === 'Bills') handleNavigate('/list/bills');
     else if (name.startsWith('other')) handleNavigate('/list/expenses');
