@@ -544,6 +544,13 @@ It's completely free to try!`;
                   <Plus className="w-4 h-4 mr-2" />
                   Add New Business
                 </Button>
+                <Button
+                  onClick={() => setShowBusinessDialog(false)}
+                  variant="outline"
+                  className="w-full border-slate-600 text-slate-200 hover:bg-slate-700"
+                >
+                  Close
+                </Button>
               </div>
             </DialogContent>
           </Dialog>
