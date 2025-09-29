@@ -110,6 +110,25 @@ export default function ListViewPage() {
         <h1 className="text-base font-semibold">{title}</h1>
       </div>
 
+      {/* Sub-tabs */}
+      {hasSubTabs && (
+        <div className="px-3 py-2 border-b border-slate-700">
+          <Tabs value={activeSubTab} onValueChange={setActiveSubTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-2 bg-slate-800/80 border border-slate-700 rounded-lg">
+              {subTabsByKey[key].map((tab) => (
+                <TabsTrigger 
+                  key={tab.value} 
+                  value={tab.value} 
+                  className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md"
+                >
+                  {tab.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+        </div>
+      )}
+
       {/* Controls */}
       <div className="p-3 flex items-center gap-2 flex-wrap">
         <div className="flex-1 min-w-[200px]">
