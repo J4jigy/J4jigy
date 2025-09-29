@@ -628,7 +628,7 @@ const CashInEntry = ({ onBack }) => {
           <Button
             variant="outline"
             className="bg-orange-600 border-orange-700 text-white hover:bg-orange-500 w-12 h-12 p-0 flex items-center justify-center flex-shrink-0"
-            onClick={() => setShowFuelModal(true)}
+            onClick={() => navigate('/fuel-dispenser')}
           >
             <Fuel className="w-5 h-5" />
           </Button>
