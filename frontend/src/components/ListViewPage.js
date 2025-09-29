@@ -96,8 +96,16 @@ export default function ListViewPage() {
       setItems(resp.data.items || []);
       setTotal(resp.data.total || 0);
     } catch (e) {
-      setError('Failed to load data');
-      setItems([]);
+      // Handle 404 errors gracefully by showing empty state instead of error
+      if (e.response && e.response.status === 404) {
+        setItems([]);
+        setTotal(0);
+        setError(''); // Don't show error for 404, just empty state
+      } else {
+        setError('Failed to load data');
+        setItems([]);
+        setTotal(0);
+      }
     } finally {
       setLoading(false);
     }
