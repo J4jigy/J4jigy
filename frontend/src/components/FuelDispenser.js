@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
-import { ArrowLeft, Fuel, Zap, Gauge, CircleDot, Square, Triangle, Diamond, Star, Heart, Hexagon, Octagon, Plus, Minus, X, Check } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 const FuelDispenser = () => {
   const navigate = useNavigate();
