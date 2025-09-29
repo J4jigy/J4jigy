@@ -198,6 +198,16 @@ export default function ListViewPage() {
         </div>
       )}
 
+      {/* Create Discount Coupons Button for Offers page */}
+      {key === 'offers' && (
+        <div className="px-3 py-3 border-b border-slate-700">
+          <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
+            <Plus className="w-4 h-4 mr-2" />
+            Create Discount Coupons
+          </Button>
+        </div>
+      )}
+
       {/* Controls */}
       <div className="p-3 flex items-center gap-2 flex-wrap">
         <div className="flex-1 min-w-[200px]">
