@@ -214,6 +214,54 @@ export default function ListViewPage() {
         </div>
       )}
 
+      {/* Stock Management Action Buttons */}
+      {key === 'stock' && (
+        <div className="px-3 py-3 border-b border-slate-700">
+          <div className="grid grid-cols-2 gap-2">
+            <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+              <Plus className="w-4 h-4 mr-2" />
+              Add Stock Item
+            </Button>
+            <Button className="bg-purple-600 hover:bg-purple-700 text-white">
+              <Package className="w-4 h-4 mr-2" />
+              Stock Report
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Profit & Loss Action Buttons */}
+      {key === 'profit' && (
+        <div className="px-3 py-3 border-b border-slate-700">
+          <div className="grid grid-cols-2 gap-2">
+            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white">
+              <BarChart3 className="w-4 h-4 mr-2" />
+              Generate P&L Report
+            </Button>
+            <Button className="bg-orange-600 hover:bg-orange-700 text-white">
+              <Calendar className="w-4 h-4 mr-2" />
+              Select Period
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Balance Sheet Action Buttons */}
+      {key === 'balance' && (
+        <div className="px-3 py-3 border-b border-slate-700">
+          <div className="grid grid-cols-2 gap-2">
+            <Button className="bg-indigo-600 hover:bg-indigo-700 text-white">
+              <PieChart className="w-4 h-4 mr-2" />
+              Generate Balance Sheet
+            </Button>
+            <Button className="bg-slate-600 hover:bg-slate-700 text-white">
+              <FileText className="w-4 h-4 mr-2" />
+              Export Report
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Controls */}
       <div className="p-3 flex items-center gap-2 flex-wrap">
         <div className="flex-1 min-w-[200px]">
