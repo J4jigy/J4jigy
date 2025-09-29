@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the new Rent sub-tabs functionality with 'Rent Give' and 'Rent Receive' tabs"
+user_problem_statement: "Test the new Stock Management, Profit & Loss, and Balance Sheet functionality"
 
 backend:
   - task: "Backend services running"
