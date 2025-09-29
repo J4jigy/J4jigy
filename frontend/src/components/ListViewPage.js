@@ -24,6 +24,9 @@ const titleByKey = {
   rent: 'Rent',
   offers: 'Offers & Discounts',
   bank: 'Bank',
+  stock: 'Stock Management',
+  profit: 'Profit & Loss',
+  balance: 'Balance Sheet',
 };
 
 const defaultSortByKey = {
