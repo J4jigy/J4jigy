@@ -853,14 +853,6 @@ It's completely free to try!`;
             <Fuel className="w-6 h-6 text-orange-400" />
           </Button>
           
-          {/* WhatsApp Share Button */}
-          <Button
-            onClick={() => setShowWhatsAppFromChat(true)}
-            className="w-14 h-14 rounded-full bg-green-500/20 hover:bg-green-500/40 active:bg-green-500/60 border border-green-400/30 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200"
-          >
-            <Share2 className="w-6 h-6 text-green-400" />
-          </Button>
-          
           {/* Chat Button */}
           <Button
             onClick={() => {
