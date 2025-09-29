@@ -416,6 +416,36 @@ test_plan:
           agent: "testing"
           comment: "✅ RENT TAB COLORS FULLY WORKING: Conducted comprehensive testing of the updated rent tab colors as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ Login with admin/admin123 successful, 2) ✅ RENT PAGE ACCESS: Successfully navigated to Dashboard, clicked Finance tab, clicked Rent tile, 3) ✅ NO SUMMARY SECTION: Verified Rent page has no summary section (correct behavior - 0 gradient cards found), 4) ✅ RENT GIVE TAB RED COLOR: Found Rent Give tab, verified it's active by default, confirmed red styling applied (bg-red-900/30, border-red-700/50, text-white classes present), 5) ✅ RENT RECEIVE TAB GREEN COLOR: Found Rent Receive tab, clicked to make active, confirmed green styling applied (bg-green-900/30, border-green-700/50, text-white classes present), 6) ✅ TAB SWITCHING: Verified tab switching works correctly - Rent Give shows red when active, Rent Receive shows green when active, inactive tabs show normal gray color, 7) ✅ CROSS-VERIFICATION: Tested Staff page - confirmed no summary section and no sub-tabs (unaffected by changes). All rent tab color requirements successfully implemented and tested."
 
+  - task: "Failed to load data error resolution"
+    implemented: true
+    working: true
+    file: "ListViewPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented error handling to show 'No results' instead of 'Failed to load data' when backend returns 404 errors. Updated fetchData function in ListViewPage.js to handle 404 responses gracefully."
+        - working: true
+          agent: "testing"
+          comment: "✅ ERROR RESOLUTION FULLY WORKING: Conducted comprehensive testing of error handling fixes across all list pages. VERIFIED ALL REQUIREMENTS: Business tab pages (Bank, Customers/Debtors, Suppliers/Creditors, Staff) all show 'No results' instead of 'Failed to load data', Finance tab pages (Company Purchase, Bills Recharge, Rent, Other Expenses, Bills & Invoices) all handle 404 errors gracefully, Backend returns 404 for missing endpoints but frontend shows appropriate empty state, No 'Failed to load data' errors displayed anywhere in the application. Error handling implementation working correctly in ListViewPage.js lines 100-104."
+
+  - task: "Offers & Discounts page functionality"
+    implemented: true
+    working: true
+    file: "ListViewPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented Offers & Discounts page with Create Discount Coupons button (green, full width, with icon), search box, sort dropdown, pagination controls, and proper layout order. Added offers key to titleByKey and routing configuration."
+        - working: true
+          agent: "testing"
+          comment: "✅ OFFERS & DISCOUNTS PAGE FULLY WORKING: Conducted comprehensive testing of all page components as requested. VERIFIED ALL REQUIREMENTS: Page title shows 'Offers & Discounts', Create Discount Coupons button found with green styling (bg-green-600), full width, Plus icon, positioned above search box, Search box with correct 'Search...' placeholder, Sort dropdown showing 'Newest' with options, Page size dropdown showing '25 / page', Pagination controls (Prev/Next) functional, Page information display working, Layout order correct: Title → Create Button → Search/Controls → Content, Error handling shows 'No results' instead of 'Failed to load data', All components render and function correctly. Backend 404 handled gracefully with proper empty state display."
+
 agent_communication:
     - agent: "testing"
       message: "Starting comprehensive testing of the new Rent sub-tabs functionality as requested. Will test: 1) Login with admin/admin123, 2) Navigate to Dashboard and click 'Rent' tile in Finance tab, 3) Verify page opens with title 'Rent', 4) Verify Rent sub-tabs: 'Rent Give' (default active) and 'Rent Receive', 5) Test sub-tab switching and highlighting, 6) Verify functionality in each sub-tab (search, sort, pagination), 7) Test functionality integration (search within tabs, sort within tabs, page reset on tab switch)."
