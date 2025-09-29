@@ -309,7 +309,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Error resolution and Offers & Discounts testing completed"
+    - "Stock Management page functionality"
+    - "Profit & Loss page functionality"
+    - "Balance Sheet page functionality"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
