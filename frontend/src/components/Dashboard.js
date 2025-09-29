@@ -609,7 +609,7 @@ It's completely free to try!`;
       </div>
 
       {/* Summary */}
-      <div className="px-4 mb-3">
+      <div className="px-4 mb-1">
         <div className="grid grid-cols-2 gap-4">
           <Card 
             className="bg-gradient-to-br from-red-800 to-red-900 border border-red-700/50 shadow-xl cursor-pointer hover:from-red-700 hover:to-red-800 transition-colors"
