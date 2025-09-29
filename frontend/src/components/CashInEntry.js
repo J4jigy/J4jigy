@@ -49,6 +49,11 @@ const CashInEntry = ({ onBack }) => {
   const [selectedTime, setSelectedTime] = useState(new Date().toTimeString().slice(0, 5));
   const [selectedCustomer, setSelectedCustomer] = useState('');
   const [selectedItems, setSelectedItems] = useState({});
+  
+  // Fuel slot state
+  const [fuelAmount, setFuelAmount] = useState('0');
+  const [fuelType, setFuelType] = useState('Petrol');
+  const [showFuelModal, setShowFuelModal] = useState(false);
 
   const incQty = (name) => {
     // Update selectedItems for current view
