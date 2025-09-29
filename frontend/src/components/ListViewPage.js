@@ -111,7 +111,7 @@ export default function ListViewPage() {
       console.log('API Error for key:', key, e);
       
       // Handle all API errors gracefully for financial features that don't have backend endpoints yet
-      const financialFeatures = ['stock', 'profit', 'balance', 'bank', 'offers', 'payables', 'receivables'];
+      const financialFeatures = ['stock', 'profit', 'balance', 'bank', 'offers', 'payables', 'receivables', 'fuel-station'];
       
       if (financialFeatures.includes(key)) {
         // For financial features without backend, show empty state
