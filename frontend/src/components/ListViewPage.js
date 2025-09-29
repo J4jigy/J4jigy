@@ -108,6 +108,11 @@ export default function ListViewPage() {
     // ignore deps warning intentionally to avoid extra fetches
   }, [search]);
 
+  // Reset page when sub-tab changes
+  useEffect(() => {
+    setPage(1);
+  }, [activeSubTab]);
+
   const totalPages = useMemo(() => Math.max(1, Math.ceil(total / pageSize)), [total, pageSize]);
 
   return (
