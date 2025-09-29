@@ -309,8 +309,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Transparent floating buttons functionality"
-    - "Fuel station button navigation and page functionality"
+    - "Repositioned floating buttons with integrated sharing functionality"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
