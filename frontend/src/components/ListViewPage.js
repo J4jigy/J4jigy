@@ -213,13 +213,13 @@ export default function ListViewPage() {
           <div className="grid grid-cols-2 gap-4">
             <Card className="bg-gradient-to-br from-red-800 to-red-900 border border-red-700/50 shadow-xl">
               <CardContent className="p-3 text-center">
-                <p className="text-red-100 text-xs font-medium mb-1">You will Give</p>
+                <p className="text-red-100 text-xs font-medium mb-1">You gave</p>
                 <p className="text-lg font-bold text-white">₹ 0</p>
               </CardContent>
             </Card>
             <Card className="bg-gradient-to-br from-green-800 to-green-900 border border-green-700/50 shadow-xl">
               <CardContent className="p-3 text-center">
-                <p className="text-green-100 text-xs font-medium mb-1">You will Receive</p>
+                <p className="text-green-100 text-xs font-medium mb-1">You Received</p>
                 <p className="text-lg font-bold text-white">₹ 0</p>
               </CardContent>
             </Card>
