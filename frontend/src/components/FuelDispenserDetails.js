@@ -519,7 +519,7 @@ const FuelDispenserDetails = () => {
                 {formData.customProducts.map((product, index) => (
                   <div key={index}>
                     <div className="flex items-center justify-between mb-3">
-                      <h3 className="text-white text-sm font-medium">Custom Product {index + 1}</h3>
+                      <h3 className="text-white text-sm font-medium">{product.name}</h3>
                       <Button
                         type="button"
                         onClick={() => removeCustomProduct(index)}
@@ -528,16 +528,6 @@ const FuelDispenserDetails = () => {
                       >
                         <X className="w-3 h-3" />
                       </Button>
-                    </div>
-                    <div className="mb-3">
-                      <label className="text-slate-400 text-xs mb-1 block">Product Name</label>
-                      <Input
-                        type="text"
-                        placeholder="Enter product name"
-                        value={product.name}
-                        onChange={(e) => handleCustomProductChange(index, 'name', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8 max-w-xs"
-                      />
                     </div>
                     <div className="space-y-3">
                       {/* First row - 2 boxes */}
