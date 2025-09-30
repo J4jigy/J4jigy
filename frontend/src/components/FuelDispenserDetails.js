@@ -202,6 +202,30 @@ const FuelDispenserDetails = () => {
     setShowAddPartyModal(false);
   };
 
+  const addNewPayment = () => {
+    setShowAddPaymentModal(true);
+  };
+
+  const saveNewPayment = () => {
+    if (newPaymentMethod.trim()) {
+      setDigitalPayments(prev => [
+        ...prev,
+        {
+          id: Date.now(),
+          method: newPaymentMethod.trim(),
+          amount: ''
+        }
+      ]);
+      setNewPaymentMethod('');
+      setShowAddPaymentModal(false);
+    }
+  };
+
+  const cancelAddPayment = () => {
+    setNewPaymentMethod('');
+    setShowAddPaymentModal(false);
+  };
+
   const removeCreditSaleParty = (index) => {
     const party = creditSaleParties[index];
     const partyName = `${party.partyName} - ${party.vehicleNo}`;
