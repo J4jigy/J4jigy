@@ -76,6 +76,14 @@ const FuelDispenserDetails = () => {
   // State for credit sale parties
   const [creditSaleParties, setCreditSaleParties] = useState([]);
 
+  // State for delete confirmation modal
+  const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
+  const [deleteAction, setDeleteAction] = useState({
+    type: '', // 'product' or 'party'
+    index: null,
+    name: ''
+  });
+
   const handleInputChange = (field, value) => {
     setFormData(prev => ({
       ...prev,
