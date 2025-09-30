@@ -258,6 +258,17 @@ const FuelDispenserDetails = () => {
     });
   };
 
+  const handleDigitalPaymentChange = (index, field, value) => {
+    setDigitalPayments(prev => {
+      const newPayments = [...prev];
+      newPayments[index] = {
+        ...newPayments[index],
+        [field]: value
+      };
+      return newPayments;
+    });
+  };
+
   const removeCustomProduct = (index) => {
     const productName = formData.customProducts[index].name;
     setDeleteAction({
