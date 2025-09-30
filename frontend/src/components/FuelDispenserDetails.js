@@ -63,6 +63,19 @@ const FuelDispenserDetails = () => {
   const [showAddProductModal, setShowAddProductModal] = useState(false);
   const [newProductName, setNewProductName] = useState('');
 
+  // State for add party modal
+  const [showAddPartyModal, setShowAddPartyModal] = useState(false);
+  const [newPartyData, setNewPartyData] = useState({
+    partyName: '',
+    vehicleNo: ''
+  });
+
+  // State for available parties (for dropdowns)
+  const [availableParties, setAvailableParties] = useState([]);
+
+  // State for credit sale parties
+  const [creditSaleParties, setCreditSaleParties] = useState([]);
+
   const handleInputChange = (field, value) => {
     setFormData(prev => ({
       ...prev,
