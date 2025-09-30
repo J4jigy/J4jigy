@@ -54,6 +54,10 @@ const FuelDispenserDetails = () => {
     cashOnHand: ''
   });
 
+  // State for add product modal
+  const [showAddProductModal, setShowAddProductModal] = useState(false);
+  const [newProductName, setNewProductName] = useState('');
+
   const handleInputChange = (field, value) => {
     setFormData(prev => ({
       ...prev,
