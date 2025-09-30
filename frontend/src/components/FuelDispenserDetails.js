@@ -79,6 +79,7 @@ const FuelDispenserDetails = () => {
       id: Date.now(),
       partyName: '',
       vehicleNo: '',
+      productSelection: '',
       ltr: '',
       rate: '',
       totalCreditSalesAmount: ''
