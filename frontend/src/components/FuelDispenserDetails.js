@@ -38,6 +38,27 @@ const FuelDispenserDetails = () => {
     }));
   };
 
+  const handleProductTypeChange = (productType, value) => {
+    setFormData(prev => ({
+      ...prev,
+      productTypes: {
+        ...prev.productTypes,
+        [productType]: value
+      }
+    }));
+  };
+
+  const handleGridChange = (row, col, value) => {
+    setFormData(prev => {
+      const newGrid = [...prev.productGrid];
+      newGrid[row][col] = value;
+      return {
+        ...prev,
+        productGrid: newGrid
+      };
+    });
+  };
+
   const handleConfirmAndSave = () => {
     // Handle confirm and save logic here
     console.log('Confirming and saving data for dispenser', dispenserId, formData);
