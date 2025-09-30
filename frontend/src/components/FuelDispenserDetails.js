@@ -74,7 +74,16 @@ const FuelDispenserDetails = () => {
   const [availableParties, setAvailableParties] = useState([]);
 
   // State for credit sale parties
-  const [creditSaleParties, setCreditSaleParties] = useState([]);
+  const [creditSaleParties, setCreditSaleParties] = useState([
+    {
+      id: Date.now(),
+      partyName: '',
+      vehicleNo: '',
+      ltr: '',
+      rate: '',
+      totalCreditSalesAmount: ''
+    }
+  ]);
 
   // State for delete confirmation modal
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
