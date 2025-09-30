@@ -68,25 +68,17 @@ const FuelDispenserDetails = () => {
     }));
   };
 
-  const handleProductTypeChange = (productType, value) => {
+  const handleProductTypeChange = (productType, field, value) => {
     setFormData(prev => ({
       ...prev,
       productTypes: {
         ...prev.productTypes,
-        [productType]: value
+        [productType]: {
+          ...prev.productTypes[productType],
+          [field]: value
+        }
       }
     }));
-  };
-
-  const handleGridChange = (row, col, value) => {
-    setFormData(prev => {
-      const newGrid = [...prev.productGrid];
-      newGrid[row][col] = value;
-      return {
-        ...prev,
-        productGrid: newGrid
-      };
-    });
   };
 
   const handleConfirmAndSave = () => {
