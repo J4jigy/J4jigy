@@ -439,9 +439,9 @@ const FuelDispenserDetails = () => {
                   </div>
                 ))}
 
-                {/* Total Sale Amount Summary - Always at bottom */}
+                {/* Total Sales Amount Summary - Always at bottom */}
                 <div className="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
-                  <h3 className="text-white text-sm font-medium mb-3">Total Sale Amount</h3>
+                  <h3 className="text-white text-sm font-medium mb-3">Total Sales Amount</h3>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="text-slate-400 text-xs mb-1 block">Total Sales Amount</label>
