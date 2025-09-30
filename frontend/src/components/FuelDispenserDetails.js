@@ -191,63 +191,83 @@ const FuelDispenserDetails = () => {
           {/* Product Section with Types */}
           <Card className="bg-slate-800 border-slate-700">
             <CardHeader className="pb-3">
-              <CardTitle className="text-white text-sm font-medium">Product</CardTitle>
+              <CardTitle className="text-white text-sm font-medium flex items-center justify-between">
+                Product
+                <Button
+                  type="button"
+                  onClick={addNewProduct}
+                  className="bg-green-600 hover:bg-green-700 text-white h-8 px-3 text-xs"
+                >
+                  <Plus className="w-3 h-3 mr-1" />
+                  Add Product
+                </Button>
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
                 {/* Petrol */}
                 <div>
                   <h3 className="text-white text-sm font-medium mb-3">Petrol</h3>
-                  <div className="grid grid-cols-5 gap-3">
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Opening Meter</label>
-                      <Input
-                        type="number"
-                        placeholder="Opening"
-                        value={formData.productTypes.petrol.openingMeter}
-                        onChange={(e) => handleProductTypeChange('petrol', 'openingMeter', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
+                  <div className="space-y-3">
+                    {/* First row - 2 boxes */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Opening Meter</label>
+                        <Input
+                          type="number"
+                          placeholder="Opening"
+                          value={formData.productTypes.petrol.openingMeter}
+                          onChange={(e) => handleProductTypeChange('petrol', 'openingMeter', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Closing Meter</label>
+                        <Input
+                          type="number"
+                          placeholder="Closing"
+                          value={formData.productTypes.petrol.closingMeter}
+                          onChange={(e) => handleProductTypeChange('petrol', 'closingMeter', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Closing Meter</label>
-                      <Input
-                        type="number"
-                        placeholder="Closing"
-                        value={formData.productTypes.petrol.closingMeter}
-                        onChange={(e) => handleProductTypeChange('petrol', 'closingMeter', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
+                    {/* Second row - 2 boxes */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Total Sale</label>
+                        <Input
+                          type="number"
+                          placeholder="Total Sale"
+                          value={formData.productTypes.petrol.totalSale}
+                          onChange={(e) => handleProductTypeChange('petrol', 'totalSale', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Rate</label>
+                        <Input
+                          type="number"
+                          placeholder="Rate"
+                          value={formData.productTypes.petrol.rate}
+                          onChange={(e) => handleProductTypeChange('petrol', 'rate', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Total Sale</label>
-                      <Input
-                        type="number"
-                        placeholder="Total Sale"
-                        value={formData.productTypes.petrol.totalSale}
-                        onChange={(e) => handleProductTypeChange('petrol', 'totalSale', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Rate</label>
-                      <Input
-                        type="number"
-                        placeholder="Rate"
-                        value={formData.productTypes.petrol.rate}
-                        onChange={(e) => handleProductTypeChange('petrol', 'rate', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Total Sales Amount</label>
-                      <Input
-                        type="number"
-                        placeholder="Amount"
-                        value={formData.productTypes.petrol.totalSalesAmount}
-                        onChange={(e) => handleProductTypeChange('petrol', 'totalSalesAmount', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
+                    {/* Third row - 1 box */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Total Sales Amount</label>
+                        <Input
+                          type="number"
+                          placeholder="Amount"
+                          value={formData.productTypes.petrol.totalSalesAmount}
+                          onChange={(e) => handleProductTypeChange('petrol', 'totalSalesAmount', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
+                      <div></div> {/* Empty space */}
                     </div>
                   </div>
                 </div>
@@ -255,56 +275,66 @@ const FuelDispenserDetails = () => {
                 {/* Diesel */}
                 <div>
                   <h3 className="text-white text-sm font-medium mb-3">Diesel</h3>
-                  <div className="grid grid-cols-5 gap-3">
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Opening Meter</label>
-                      <Input
-                        type="number"
-                        placeholder="Opening"
-                        value={formData.productTypes.diesel.openingMeter}
-                        onChange={(e) => handleProductTypeChange('diesel', 'openingMeter', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
+                  <div className="space-y-3">
+                    {/* First row - 2 boxes */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Opening Meter</label>
+                        <Input
+                          type="number"
+                          placeholder="Opening"
+                          value={formData.productTypes.diesel.openingMeter}
+                          onChange={(e) => handleProductTypeChange('diesel', 'openingMeter', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Closing Meter</label>
+                        <Input
+                          type="number"
+                          placeholder="Closing"
+                          value={formData.productTypes.diesel.closingMeter}
+                          onChange={(e) => handleProductTypeChange('diesel', 'closingMeter', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Closing Meter</label>
-                      <Input
-                        type="number"
-                        placeholder="Closing"
-                        value={formData.productTypes.diesel.closingMeter}
-                        onChange={(e) => handleProductTypeChange('diesel', 'closingMeter', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
+                    {/* Second row - 2 boxes */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Total Sale</label>
+                        <Input
+                          type="number"
+                          placeholder="Total Sale"
+                          value={formData.productTypes.diesel.totalSale}
+                          onChange={(e) => handleProductTypeChange('diesel', 'totalSale', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Rate</label>
+                        <Input
+                          type="number"
+                          placeholder="Rate"
+                          value={formData.productTypes.diesel.rate}
+                          onChange={(e) => handleProductTypeChange('diesel', 'rate', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Total Sale</label>
-                      <Input
-                        type="number"
-                        placeholder="Total Sale"
-                        value={formData.productTypes.diesel.totalSale}
-                        onChange={(e) => handleProductTypeChange('diesel', 'totalSale', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Rate</label>
-                      <Input
-                        type="number"
-                        placeholder="Rate"
-                        value={formData.productTypes.diesel.rate}
-                        onChange={(e) => handleProductTypeChange('diesel', 'rate', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Total Sales Amount</label>
-                      <Input
-                        type="number"
-                        placeholder="Amount"
-                        value={formData.productTypes.diesel.totalSalesAmount}
-                        onChange={(e) => handleProductTypeChange('diesel', 'totalSalesAmount', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
+                    {/* Third row - 1 box */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Total Sales Amount</label>
+                        <Input
+                          type="number"
+                          placeholder="Amount"
+                          value={formData.productTypes.diesel.totalSalesAmount}
+                          onChange={(e) => handleProductTypeChange('diesel', 'totalSalesAmount', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
+                      <div></div> {/* Empty space */}
                     </div>
                   </div>
                 </div>
@@ -312,56 +342,66 @@ const FuelDispenserDetails = () => {
                 {/* Power Petrol */}
                 <div>
                   <h3 className="text-white text-sm font-medium mb-3">Power Petrol</h3>
-                  <div className="grid grid-cols-5 gap-3">
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Opening Meter</label>
-                      <Input
-                        type="number"
-                        placeholder="Opening"
-                        value={formData.productTypes.powerPetrol.openingMeter}
-                        onChange={(e) => handleProductTypeChange('powerPetrol', 'openingMeter', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
+                  <div className="space-y-3">
+                    {/* First row - 2 boxes */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Opening Meter</label>
+                        <Input
+                          type="number"
+                          placeholder="Opening"
+                          value={formData.productTypes.powerPetrol.openingMeter}
+                          onChange={(e) => handleProductTypeChange('powerPetrol', 'openingMeter', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Closing Meter</label>
+                        <Input
+                          type="number"
+                          placeholder="Closing"
+                          value={formData.productTypes.powerPetrol.closingMeter}
+                          onChange={(e) => handleProductTypeChange('powerPetrol', 'closingMeter', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Closing Meter</label>
-                      <Input
-                        type="number"
-                        placeholder="Closing"
-                        value={formData.productTypes.powerPetrol.closingMeter}
-                        onChange={(e) => handleProductTypeChange('powerPetrol', 'closingMeter', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
+                    {/* Second row - 2 boxes */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Total Sale</label>
+                        <Input
+                          type="number"
+                          placeholder="Total Sale"
+                          value={formData.productTypes.powerPetrol.totalSale}
+                          onChange={(e) => handleProductTypeChange('powerPetrol', 'totalSale', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Rate</label>
+                        <Input
+                          type="number"
+                          placeholder="Rate"
+                          value={formData.productTypes.powerPetrol.rate}
+                          onChange={(e) => handleProductTypeChange('powerPetrol', 'rate', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Total Sale</label>
-                      <Input
-                        type="number"
-                        placeholder="Total Sale"
-                        value={formData.productTypes.powerPetrol.totalSale}
-                        onChange={(e) => handleProductTypeChange('powerPetrol', 'totalSale', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Rate</label>
-                      <Input
-                        type="number"
-                        placeholder="Rate"
-                        value={formData.productTypes.powerPetrol.rate}
-                        onChange={(e) => handleProductTypeChange('powerPetrol', 'rate', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Total Sales Amount</label>
-                      <Input
-                        type="number"
-                        placeholder="Amount"
-                        value={formData.productTypes.powerPetrol.totalSalesAmount}
-                        onChange={(e) => handleProductTypeChange('powerPetrol', 'totalSalesAmount', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
+                    {/* Third row - 1 box */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Total Sales Amount</label>
+                        <Input
+                          type="number"
+                          placeholder="Amount"
+                          value={formData.productTypes.powerPetrol.totalSalesAmount}
+                          onChange={(e) => handleProductTypeChange('powerPetrol', 'totalSalesAmount', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
+                      <div></div> {/* Empty space */}
                     </div>
                   </div>
                 </div>
@@ -369,126 +409,158 @@ const FuelDispenserDetails = () => {
                 {/* Turbo Diesel */}
                 <div>
                   <h3 className="text-white text-sm font-medium mb-3">Turbo Diesel</h3>
-                  <div className="grid grid-cols-5 gap-3">
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Opening Meter</label>
-                      <Input
-                        type="number"
-                        placeholder="Opening"
-                        value={formData.productTypes.turboDiesel.openingMeter}
-                        onChange={(e) => handleProductTypeChange('turboDiesel', 'openingMeter', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
+                  <div className="space-y-3">
+                    {/* First row - 2 boxes */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Opening Meter</label>
+                        <Input
+                          type="number"
+                          placeholder="Opening"
+                          value={formData.productTypes.turboDiesel.openingMeter}
+                          onChange={(e) => handleProductTypeChange('turboDiesel', 'openingMeter', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Closing Meter</label>
+                        <Input
+                          type="number"
+                          placeholder="Closing"
+                          value={formData.productTypes.turboDiesel.closingMeter}
+                          onChange={(e) => handleProductTypeChange('turboDiesel', 'closingMeter', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Closing Meter</label>
-                      <Input
-                        type="number"
-                        placeholder="Closing"
-                        value={formData.productTypes.turboDiesel.closingMeter}
-                        onChange={(e) => handleProductTypeChange('turboDiesel', 'closingMeter', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
+                    {/* Second row - 2 boxes */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Total Sale</label>
+                        <Input
+                          type="number"
+                          placeholder="Total Sale"
+                          value={formData.productTypes.turboDiesel.totalSale}
+                          onChange={(e) => handleProductTypeChange('turboDiesel', 'totalSale', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Rate</label>
+                        <Input
+                          type="number"
+                          placeholder="Rate"
+                          value={formData.productTypes.turboDiesel.rate}
+                          onChange={(e) => handleProductTypeChange('turboDiesel', 'rate', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
                     </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Total Sale</label>
-                      <Input
-                        type="number"
-                        placeholder="Total Sale"
-                        value={formData.productTypes.turboDiesel.totalSale}
-                        onChange={(e) => handleProductTypeChange('turboDiesel', 'totalSale', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Rate</label>
-                      <Input
-                        type="number"
-                        placeholder="Rate"
-                        value={formData.productTypes.turboDiesel.rate}
-                        onChange={(e) => handleProductTypeChange('turboDiesel', 'rate', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Total Sales Amount</label>
-                      <Input
-                        type="number"
-                        placeholder="Amount"
-                        value={formData.productTypes.turboDiesel.totalSalesAmount}
-                        onChange={(e) => handleProductTypeChange('turboDiesel', 'totalSalesAmount', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
+                    {/* Third row - 1 box */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Total Sales Amount</label>
+                        <Input
+                          type="number"
+                          placeholder="Amount"
+                          value={formData.productTypes.turboDiesel.totalSalesAmount}
+                          onChange={(e) => handleProductTypeChange('turboDiesel', 'totalSalesAmount', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
+                      <div></div> {/* Empty space */}
                     </div>
                   </div>
                 </div>
 
-                {/* Add New Product */}
-                <div>
-                  <h3 className="text-white text-sm font-medium mb-3">Add New Product</h3>
-                  <div className="mb-3">
-                    <label className="text-slate-400 text-xs mb-1 block">Product Name</label>
-                    <Input
-                      type="text"
-                      placeholder="Enter new product name"
-                      value={formData.productTypes.newProduct.name}
-                      onChange={(e) => handleProductTypeChange('newProduct', 'name', e.target.value)}
-                      className="bg-slate-700 border-slate-600 text-white h-8 max-w-xs"
-                    />
+                {/* Custom Products */}
+                {formData.customProducts.map((product, index) => (
+                  <div key={index}>
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="text-white text-sm font-medium">Custom Product {index + 1}</h3>
+                      <Button
+                        type="button"
+                        onClick={() => removeCustomProduct(index)}
+                        variant="outline"
+                        className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white h-6 w-6 p-0"
+                      >
+                        <X className="w-3 h-3" />
+                      </Button>
+                    </div>
+                    <div className="mb-3">
+                      <label className="text-slate-400 text-xs mb-1 block">Product Name</label>
+                      <Input
+                        type="text"
+                        placeholder="Enter product name"
+                        value={product.name}
+                        onChange={(e) => handleCustomProductChange(index, 'name', e.target.value)}
+                        className="bg-slate-700 border-slate-600 text-white h-8 max-w-xs"
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      {/* First row - 2 boxes */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Opening Meter</label>
+                          <Input
+                            type="number"
+                            placeholder="Opening"
+                            value={product.openingMeter}
+                            onChange={(e) => handleCustomProductChange(index, 'openingMeter', e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white h-8"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Closing Meter</label>
+                          <Input
+                            type="number"
+                            placeholder="Closing"
+                            value={product.closingMeter}
+                            onChange={(e) => handleCustomProductChange(index, 'closingMeter', e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white h-8"
+                          />
+                        </div>
+                      </div>
+                      {/* Second row - 2 boxes */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Total Sale</label>
+                          <Input
+                            type="number"
+                            placeholder="Total Sale"
+                            value={product.totalSale}
+                            onChange={(e) => handleCustomProductChange(index, 'totalSale', e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white h-8"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Rate</label>
+                          <Input
+                            type="number"
+                            placeholder="Rate"
+                            value={product.rate}
+                            onChange={(e) => handleCustomProductChange(index, 'rate', e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white h-8"
+                          />
+                        </div>
+                      </div>
+                      {/* Third row - 1 box */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Total Sales Amount</label>
+                          <Input
+                            type="number"
+                            placeholder="Amount"
+                            value={product.totalSalesAmount}
+                            onChange={(e) => handleCustomProductChange(index, 'totalSalesAmount', e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white h-8"
+                          />
+                        </div>
+                        <div></div> {/* Empty space */}
+                      </div>
+                    </div>
                   </div>
-                  <div className="grid grid-cols-5 gap-3">
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Opening Meter</label>
-                      <Input
-                        type="number"
-                        placeholder="Opening"
-                        value={formData.productTypes.newProduct.openingMeter}
-                        onChange={(e) => handleProductTypeChange('newProduct', 'openingMeter', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Closing Meter</label>
-                      <Input
-                        type="number"
-                        placeholder="Closing"
-                        value={formData.productTypes.newProduct.closingMeter}
-                        onChange={(e) => handleProductTypeChange('newProduct', 'closingMeter', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Total Sale</label>
-                      <Input
-                        type="number"
-                        placeholder="Total Sale"
-                        value={formData.productTypes.newProduct.totalSale}
-                        onChange={(e) => handleProductTypeChange('newProduct', 'totalSale', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Rate</label>
-                      <Input
-                        type="number"
-                        placeholder="Rate"
-                        value={formData.productTypes.newProduct.rate}
-                        onChange={(e) => handleProductTypeChange('newProduct', 'rate', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-slate-400 text-xs mb-1 block">Total Sales Amount</label>
-                      <Input
-                        type="number"
-                        placeholder="Amount"
-                        value={formData.productTypes.newProduct.totalSalesAmount}
-                        onChange={(e) => handleProductTypeChange('newProduct', 'totalSalesAmount', e.target.value)}
-                        className="bg-slate-700 border-slate-600 text-white h-8"
-                      />
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
             </CardContent>
           </Card>
