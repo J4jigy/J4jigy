@@ -782,35 +782,6 @@ const FuelDispenserDetails = () => {
             <p className="text-slate-200">
               Are you sure you want to delete "{deleteAction.name}"?
             </p>
-            <div className="flex gap-3">
-              <Button
-                onClick={confirmDelete}
-                className="flex-1 bg-red-600 hover:bg-red-700"
-              >
-                Delete
-              </Button>
-              <Button
-                onClick={cancelDelete}
-                variant="outline"
-                className="flex-1 border-slate-600 text-slate-200 hover:bg-slate-700"
-              >
-                Cancel
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Delete Confirmation Modal */}
-      <Dialog open={showDeleteConfirmModal} onOpenChange={setShowDeleteConfirmModal}>
-        <DialogContent className="bg-slate-800 border-slate-700 max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-white">Confirm Delete</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <p className="text-slate-200">
-              Are you sure you want to delete "{deleteAction.name}"?
-            </p>
             <p className="text-slate-400 text-sm">
               This action cannot be undone.
             </p>
