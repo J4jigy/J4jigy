@@ -585,8 +585,6 @@ const FuelDispenserDetails = () => {
                         value={
                           (parseFloat(formData.productTypes.petrol.totalSalesAmount || 0) +
                            parseFloat(formData.productTypes.diesel.totalSalesAmount || 0) +
-                           parseFloat(formData.productTypes.powerPetrol.totalSalesAmount || 0) +
-                           parseFloat(formData.productTypes.turboDiesel.totalSalesAmount || 0) +
                            formData.customProducts.reduce((sum, product) => sum + parseFloat(product.totalSalesAmount || 0), 0)).toFixed(2)
                         }
                         readOnly
