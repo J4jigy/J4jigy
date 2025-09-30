@@ -55,11 +55,11 @@ const defaultSortByKey = {
 const subTabsByKey = {
   customers: [
     { value: 'customers', label: 'Customers' },
-    { value: 'debtors', label: 'Debtors' }
+    { value: 'debtors', label: 'Debtors (देनदार)' }
   ],
   suppliers: [
     { value: 'suppliers', label: 'Suppliers' },
-    { value: 'creditors', label: 'Creditors' }
+    { value: 'creditors', label: 'Creditors (लेनदार)' }
   ],
   rent: [
     { value: 'rent_give', label: 'Rent Give' },
