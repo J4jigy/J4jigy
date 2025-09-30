@@ -74,6 +74,44 @@ const FuelDispenserDetails = () => {
     }));
   };
 
+  const handleCustomProductChange = (index, field, value) => {
+    setFormData(prev => {
+      const newCustomProducts = [...prev.customProducts];
+      newCustomProducts[index] = {
+        ...newCustomProducts[index],
+        [field]: value
+      };
+      return {
+        ...prev,
+        customProducts: newCustomProducts
+      };
+    });
+  };
+
+  const addNewProduct = () => {
+    setFormData(prev => ({
+      ...prev,
+      customProducts: [
+        ...prev.customProducts,
+        {
+          name: '',
+          openingMeter: '',
+          closingMeter: '',
+          totalSale: '',
+          rate: '',
+          totalSalesAmount: ''
+        }
+      ]
+    }));
+  };
+
+  const removeCustomProduct = (index) => {
+    setFormData(prev => ({
+      ...prev,
+      customProducts: prev.customProducts.filter((_, i) => i !== index)
+    }));
+  };
+
   const handleConfirmAndSave = () => {
     // Handle confirm and save logic here
     console.log('Confirming and saving data for dispenser', dispenserId, formData);
