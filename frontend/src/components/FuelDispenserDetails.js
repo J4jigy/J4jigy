@@ -287,6 +287,8 @@ const FuelDispenserDetails = () => {
       }));
     } else if (deleteAction.type === 'party') {
       setCreditSaleParties(prev => prev.filter((_, i) => i !== deleteAction.index));
+    } else if (deleteAction.type === 'payment') {
+      setDigitalPayments(prev => prev.filter((_, i) => i !== deleteAction.index));
     }
     
     setShowDeleteConfirmModal(false);
