@@ -7,9 +7,10 @@ const FuelDispenser = () => {
   const navigate = useNavigate();
 
   const handleDispenserClick = (index) => {
-    // Handle dispenser selection logic here
-    console.log(`Dispenser D${index + 1} selected`);
-    // You can add navigation or state management here
+    // Navigate to dispenser details page
+    const dispenserId = `D${index + 1}`;
+    console.log(`Navigating to ${dispenserId} details page`);
+    navigate(`/fuel-dispenser/${dispenserId}`);
   };
 
   return (
