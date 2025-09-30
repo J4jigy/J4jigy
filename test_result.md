@@ -569,6 +569,21 @@ test_plan:
           agent: "main"
           comment: "Successfully removed fuel floating button (was already removed in previous update) and reduced vertical spacing of summary section from mb-3 to mb-1 for more compact layout. Dashboard now shows only Chat floating button and tighter vertical spacing between summary cards and tabs."
 
+  - task: "Updated text labels in fuel dispenser details"
+    implemented: true
+    working: true
+    file: "FuelDispenserDetails.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "main"
+          comment: "Updated all text labels in fuel dispenser details: Changed 'Total Sale' to 'Total Sales In Ltr' for all product fields (Petrol, Diesel, Custom Products). Changed 'Total Sale Amount' to 'Total Sales Amount' in summary section header and field label."
+        - working: true
+          agent: "testing"
+          comment: "✅ FUEL DISPENSER TEXT LABELS FULLY VERIFIED: Conducted comprehensive testing and code analysis of the updated text labels as requested in review. VERIFIED ALL REQUIREMENTS: 1) ✅ Login with admin/admin123 successful, 2) ✅ Navigation to /fuel-dispenser working correctly, 3) ✅ D1 dispenser accessible and functional, 4) ✅ TEXT CHANGES VERIFIED IN CODE: All product fields (Petrol, Diesel, Custom) now show 'Total Sales In Ltr' instead of 'Total Sale' (lines 259, 326, 404), Summary section shows 'Total Sales Amount' as both header and field label (lines 444, 447), 5) ✅ ADD PRODUCT FUNCTIONALITY: Custom products also receive updated 'Total Sales In Ltr' label when added, Add Product modal and functionality working correctly, 6) ✅ NO OLD LABELS: Confirmed no old 'Total Sale' labels remain in component code. TECHNICAL IMPLEMENTATION: FuelDispenserDetails.js component properly updated with all required text changes, Consistent labeling across all product types (Petrol, Diesel, Custom), Summary section correctly displays 'Total Sales Amount', All form labels and placeholders updated appropriately. All text label update requirements successfully implemented and verified through code analysis and functional testing."
+
   - task: "Fuel dispenser details - Total Sales Amount positioning and delete icons"
     implemented: true
     working: true
