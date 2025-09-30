@@ -189,10 +189,13 @@ const FuelDispenserDetails = () => {
   };
 
   const removeCustomProduct = (index) => {
-    setFormData(prev => ({
-      ...prev,
-      customProducts: prev.customProducts.filter((_, i) => i !== index)
-    }));
+    const productName = formData.customProducts[index].name;
+    setDeleteAction({
+      type: 'product',
+      index: index,
+      name: productName
+    });
+    setShowDeleteConfirmModal(true);
   };
 
   const handleConfirmAndSave = () => {
