@@ -93,20 +93,33 @@ const FuelDispenserDetails = () => {
   };
 
   const addNewProduct = () => {
-    setFormData(prev => ({
-      ...prev,
-      customProducts: [
-        ...prev.customProducts,
-        {
-          name: '',
-          openingMeter: '',
-          closingMeter: '',
-          totalSale: '',
-          rate: '',
-          totalSalesAmount: ''
-        }
-      ]
-    }));
+    setShowAddProductModal(true);
+  };
+
+  const saveNewProduct = () => {
+    if (newProductName.trim()) {
+      setFormData(prev => ({
+        ...prev,
+        customProducts: [
+          ...prev.customProducts,
+          {
+            name: newProductName.trim(),
+            openingMeter: '',
+            closingMeter: '',
+            totalSale: '',
+            rate: '',
+            totalSalesAmount: ''
+          }
+        ]
+      }));
+      setNewProductName('');
+      setShowAddProductModal(false);
+    }
+  };
+
+  const cancelAddProduct = () => {
+    setNewProductName('');
+    setShowAddProductModal(false);
   };
 
   const removeCustomProduct = (index) => {
