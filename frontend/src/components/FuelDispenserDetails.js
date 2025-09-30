@@ -334,7 +334,7 @@ const FuelDispenserDetails = () => {
 
       {/* Bottom Action Buttons */}
       <div className="p-4 border-t border-slate-700">
-        <div className="grid grid-cols-2 gap-3 max-w-2xl mx-auto">
+        <div className="grid grid-cols-2 gap-3 max-w-6xl mx-auto">
           <Button
             onClick={handleConfirmAndSave}
             className="bg-blue-600 hover:bg-blue-700 text-white"
