@@ -534,25 +534,23 @@ const FuelDispenserDetails = () => {
                 ))}
 
                 {/* Total Credit Sales Amount Summary - Always at bottom */}
-                {creditSaleParties.length > 0 && (
-                  <div className="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
-                    <h3 className="text-white text-sm font-medium mb-3">Total Credit Sales Amount</h3>
-                    <div className="w-full">
-                      <div>
-                        <label className="text-slate-400 text-xs mb-1 block">Total Credit Sales Amount</label>
-                        <Input
-                          type="number"
-                          placeholder="Total Amount"
-                          value={
-                            (creditSaleParties.reduce((sum, party) => sum + parseFloat(party.totalCreditSalesAmount || 0), 0)).toFixed(2)
-                          }
-                          readOnly
-                          className="bg-slate-600 border-slate-500 text-white h-8 font-medium w-full"
-                        />
-                      </div>
+                <div className="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
+                  <h3 className="text-white text-sm font-medium mb-3">Total Credit Sales Amount</h3>
+                  <div className="w-full">
+                    <div>
+                      <label className="text-slate-400 text-xs mb-1 block">Total Credit Sales Amount</label>
+                      <Input
+                        type="number"
+                        placeholder="Total Amount"
+                        value={
+                          (creditSaleParties.reduce((sum, party) => sum + parseFloat(party.totalCreditSalesAmount || 0), 0)).toFixed(2)
+                        }
+                        readOnly
+                        className="bg-slate-600 border-slate-500 text-white h-8 font-medium w-full"
+                      />
                     </div>
                   </div>
-                )}
+                </div>
               </div>
             </CardContent>
           </Card>
