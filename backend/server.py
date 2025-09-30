@@ -65,7 +65,7 @@ app.add_middleware(
 )
 
 # CORS (allow frontend hosts)
-allowed_origins = os.environ.get('ALLOWED_ORIGINS', 'http://localhost:3000,https://fintech-dash-8.preview.emergentagent.com').split(',')
+allowed_origins = os.environ.get('ALLOWED_ORIGINS', 'http://localhost:3000,https://fuel-dash-4.preview.emergentagent.com').split(',')
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[o.strip() for o in allowed_origins if o.strip()],
