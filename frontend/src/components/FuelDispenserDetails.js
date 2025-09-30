@@ -362,17 +362,17 @@ const FuelDispenserDetails = () => {
 
                 {/* Custom Products */}
                 {formData.customProducts.map((product, index) => (
-                  <div key={index} className="relative">
-                    <div className="flex items-center justify-between mb-3">
+                  <div key={index} className="relative border border-slate-600 rounded-lg p-4">
+                    <Button
+                      type="button"
+                      onClick={() => removeCustomProduct(index)}
+                      variant="outline"
+                      className="absolute -top-2 -right-2 border-red-600 text-red-400 hover:bg-red-600 hover:text-white h-6 w-6 p-0 bg-slate-800 rounded-full"
+                    >
+                      <X className="w-3 h-3" />
+                    </Button>
+                    <div className="mb-3">
                       <h3 className="text-white text-sm font-medium">{product.name}</h3>
-                      <Button
-                        type="button"
-                        onClick={() => removeCustomProduct(index)}
-                        variant="outline"
-                        className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white h-6 w-6 p-0 absolute top-0 right-0"
-                      >
-                        <X className="w-3 h-3" />
-                      </Button>
                     </div>
                     <div className="space-y-3">
                       {/* First row - 2 boxes */}
