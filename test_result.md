@@ -570,6 +570,18 @@ test_plan:
           agent: "main"
           comment: "Successfully removed fuel floating button (was already removed in previous update) and reduced vertical spacing of summary section from mb-3 to mb-1 for more compact layout. Dashboard now shows only Chat floating button and tighter vertical spacing between summary cards and tabs."
 
+  - task: "Credit Sale subsections functionality in fuel dispenser details"
+    implemented: true
+    working: "NA"
+    file: "FuelDispenserDetails.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented Credit Sale subsections functionality with Add New Party button, modal for party creation, 2-2-1 layout with 5 fields (Party Name, Vehicle No, Ltr, Rate, Total Credit Sales Amount), dropdown functionality for Party Name and Vehicle No, delete buttons, and Total Credit Sales Amount summary box. Ready for testing."
+
   - task: "Updated text labels in fuel dispenser details"
     implemented: true
     working: true
