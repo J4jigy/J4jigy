@@ -309,7 +309,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Repositioned floating buttons with integrated sharing functionality"
+    - "Updated fuel dispenser details functionality with all products deletable"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
