@@ -384,16 +384,130 @@ const FuelDispenserDetails = () => {
           {/* Credit Sale */}
           <Card className="bg-slate-800 border-slate-700">
             <CardHeader className="pb-3">
-              <CardTitle className="text-white text-sm font-medium">Credit Sale</CardTitle>
+              <CardTitle className="text-white text-sm font-medium flex items-center justify-between">
+                Credit Sale
+                <Button
+                  type="button"
+                  onClick={addNewParty}
+                  className="bg-green-600 hover:bg-green-700 text-white h-8 px-3 text-xs"
+                >
+                  <Plus className="w-3 h-3 mr-1" />
+                  Add New Party
+                </Button>
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <Input
-                type="number"
-                placeholder="Enter credit sale amount"
-                value={formData.creditSale}
-                onChange={(e) => handleInputChange('creditSale', e.target.value)}
-                className="bg-slate-700 border-slate-600 text-white"
-              />
+              <div className="space-y-6">
+                {/* Credit Sale Parties */}
+                {creditSaleParties.map((party, index) => (
+                  <div key={party.id} className="relative border border-slate-600 rounded-lg p-4">
+                    <Button
+                      type="button"
+                      onClick={() => removeCreditSaleParty(index)}
+                      variant="outline"
+                      className="absolute -top-2 -right-2 border-red-600 text-red-400 hover:bg-red-600 hover:text-white h-6 w-6 p-0 bg-slate-800 rounded-full"
+                    >
+                      <X className="w-3 h-3" />
+                    </Button>
+                    <div className="mb-3">
+                      <h3 className="text-white text-sm font-medium">Party: {party.partyName} - {party.vehicleNo}</h3>
+                    </div>
+                    <div className="space-y-3">
+                      {/* First row - 2 boxes */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Party Name</label>
+                          <select
+                            value={party.partyName}
+                            onChange={(e) => handleCreditSalePartyChange(index, 'partyName', e.target.value)}
+                            className="bg-slate-700 border border-slate-600 text-white h-8 w-full rounded px-2 text-sm"
+                          >
+                            <option value="">Select Party</option>
+                            {availableParties.map((availableParty) => (
+                              <option key={availableParty.id} value={availableParty.partyName}>
+                                {availableParty.partyName}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Vehicle No</label>
+                          <select
+                            value={party.vehicleNo}
+                            onChange={(e) => handleCreditSalePartyChange(index, 'vehicleNo', e.target.value)}
+                            className="bg-slate-700 border border-slate-600 text-white h-8 w-full rounded px-2 text-sm"
+                          >
+                            <option value="">Select Vehicle</option>
+                            {availableParties.map((availableParty) => (
+                              <option key={availableParty.id} value={availableParty.vehicleNo}>
+                                {availableParty.vehicleNo}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                      {/* Second row - 2 boxes */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Ltr</label>
+                          <Input
+                            type="number"
+                            placeholder="Litres"
+                            value={party.ltr}
+                            onChange={(e) => handleCreditSalePartyChange(index, 'ltr', e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white h-8"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Rate</label>
+                          <Input
+                            type="number"
+                            placeholder="Rate"
+                            value={party.rate}
+                            onChange={(e) => handleCreditSalePartyChange(index, 'rate', e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white h-8"
+                          />
+                        </div>
+                      </div>
+                      {/* Third row - 1 box */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Total Credit Sales Amount</label>
+                          <Input
+                            type="number"
+                            placeholder="Amount"
+                            value={party.totalCreditSalesAmount}
+                            onChange={(e) => handleCreditSalePartyChange(index, 'totalCreditSalesAmount', e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white h-8"
+                          />
+                        </div>
+                        <div></div> {/* Empty space */}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                {/* Total Credit Sales Amount Summary - Always at bottom */}
+                {creditSaleParties.length > 0 && (
+                  <div className="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
+                    <h3 className="text-white text-sm font-medium mb-3">Total Credit Sales Amount</h3>
+                    <div className="w-full">
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Total Credit Sales Amount</label>
+                        <Input
+                          type="number"
+                          placeholder="Total Amount"
+                          value={
+                            (creditSaleParties.reduce((sum, party) => sum + parseFloat(party.totalCreditSalesAmount || 0), 0)).toFixed(2)
+                          }
+                          readOnly
+                          className="bg-slate-600 border-slate-500 text-white h-8 font-medium w-full"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </CardContent>
           </Card>
 
