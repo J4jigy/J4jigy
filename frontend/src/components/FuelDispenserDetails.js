@@ -127,6 +127,59 @@ const FuelDispenserDetails = () => {
     setShowAddProductModal(false);
   };
 
+  const addNewParty = () => {
+    setShowAddPartyModal(true);
+  };
+
+  const saveNewParty = () => {
+    if (newPartyData.partyName.trim() && newPartyData.vehicleNo.trim()) {
+      // Add to available parties for dropdowns
+      const newParty = {
+        id: Date.now(),
+        partyName: newPartyData.partyName.trim(),
+        vehicleNo: newPartyData.vehicleNo.trim()
+      };
+      
+      setAvailableParties(prev => [...prev, newParty]);
+      
+      // Add to credit sale parties
+      setCreditSaleParties(prev => [
+        ...prev,
+        {
+          id: newParty.id,
+          partyName: newParty.partyName,
+          vehicleNo: newParty.vehicleNo,
+          ltr: '',
+          rate: '',
+          totalCreditSalesAmount: ''
+        }
+      ]);
+      
+      setNewPartyData({ partyName: '', vehicleNo: '' });
+      setShowAddPartyModal(false);
+    }
+  };
+
+  const cancelAddParty = () => {
+    setNewPartyData({ partyName: '', vehicleNo: '' });
+    setShowAddPartyModal(false);
+  };
+
+  const removeCreditSaleParty = (index) => {
+    setCreditSaleParties(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleCreditSalePartyChange = (index, field, value) => {
+    setCreditSaleParties(prev => {
+      const newParties = [...prev];
+      newParties[index] = {
+        ...newParties[index],
+        [field]: value
+      };
+      return newParties;
+    });
+  };
+
   const removeCustomProduct = (index) => {
     setFormData(prev => ({
       ...prev,
