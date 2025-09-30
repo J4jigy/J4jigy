@@ -310,6 +310,7 @@ metadata:
 test_plan:
   current_focus:
     - "Updated fuel dispenser details functionality with all products deletable"
+    - "Credit Sale subsections functionality in fuel dispenser details"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
