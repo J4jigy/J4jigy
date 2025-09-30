@@ -742,6 +742,48 @@ const FuelDispenserDetails = () => {
           </Button>
         </div>
       </div>
+
+      {/* Add Product Modal */}
+      <Dialog open={showAddProductModal} onOpenChange={setShowAddProductModal}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-white">Add New Product</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <label className="text-slate-200 text-sm font-medium mb-2 block">Product Name</label>
+              <Input
+                type="text"
+                placeholder="Enter product name"
+                value={newProductName}
+                onChange={(e) => setNewProductName(e.target.value)}
+                className="bg-slate-700 border-slate-600 text-white"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    saveNewProduct();
+                  }
+                }}
+              />
+            </div>
+            <div className="flex gap-3">
+              <Button
+                onClick={saveNewProduct}
+                className="flex-1 bg-green-600 hover:bg-green-700"
+                disabled={!newProductName.trim()}
+              >
+                Save
+              </Button>
+              <Button
+                onClick={cancelAddProduct}
+                variant="outline"
+                className="flex-1 border-slate-600 text-slate-200 hover:bg-slate-700"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
