@@ -14,6 +14,7 @@ import AdminDashboard from './components/AdminDashboard';
 import CashInEntry from './components/CashInEntry';
 import CashOutEntry from './components/CashOutEntry';
 import FuelDispenser from './components/FuelDispenser';
+import FuelDispenserDetails from './components/FuelDispenserDetails';
 import ListViewPage from './components/ListViewPage';
 import Dashboard from './components/Dashboard';
 import ToDoList from './components/ToDoList';
