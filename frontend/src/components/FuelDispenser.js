@@ -25,7 +25,7 @@ const FuelDispenser = () => {
           <ArrowLeft className="w-4 h-4" />
         </Button>
         
-        <h1 className="text-white font-semibold text-base">Fuel Dispensers</h1>
+        <h1 className="text-white font-semibold text-base">Fuel Dispensers <span className="text-sm text-slate-300 font-normal">(For Petrolpump Only)</span></h1>
         
         <div className="w-8"></div> {/* Spacer for centering */}
       </div>
