@@ -456,7 +456,12 @@ const FuelDispenserDetails = () => {
                       <X className="w-3 h-3" />
                     </Button>
                     <div className="mb-3">
-                      <h3 className="text-white text-sm font-medium">Party: {party.partyName} - {party.vehicleNo}</h3>
+                      <h3 className="text-white text-sm font-medium">
+                        {party.partyName && party.vehicleNo 
+                          ? `Party: ${party.partyName} - ${party.vehicleNo}` 
+                          : 'Credit Sale Entry'
+                        }
+                      </h3>
                     </div>
                     <div className="space-y-3">
                       {/* First row - 2 boxes */}
