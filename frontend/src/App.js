@@ -331,6 +331,7 @@ function AppRoutes() {
       <Route path="/cash-in" element={token ? <CashInEntry onBack={() => window.history.back()} /> : <Navigate to="/login" />} />
       <Route path="/cash-out" element={token ? <CashOutEntry onBack={() => window.history.back()} /> : <Navigate to="/login" />} />
       <Route path="/fuel-dispenser" element={token ? <FuelDispenser /> : <Navigate to="/login" />} />
+      <Route path="/fuel-dispenser/:dispenserId" element={token ? <FuelDispenserDetails /> : <Navigate to="/login" />} />
       <Route path="/todo" element={token ? <ToDoList /> : <Navigate to="/login" />} />
       <Route path="/" element={token ? <Dashboard user={user} logout={logout} /> : <Navigate to="/login" />} />
     </Routes>
