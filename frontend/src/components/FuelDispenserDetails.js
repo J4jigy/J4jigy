@@ -70,6 +70,10 @@ const FuelDispenserDetails = () => {
     vehicleNo: ''
   });
 
+  // State for add payment modal
+  const [showAddPaymentModal, setShowAddPaymentModal] = useState(false);
+  const [newPaymentMethod, setNewPaymentMethod] = useState('');
+
   // State for available parties (for dropdowns)
   const [availableParties, setAvailableParties] = useState([]);
 
