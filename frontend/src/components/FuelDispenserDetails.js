@@ -237,6 +237,16 @@ const FuelDispenserDetails = () => {
     setShowDeleteConfirmModal(true);
   };
 
+  const removeDigitalPayment = (index) => {
+    const payment = digitalPayments[index];
+    setDeleteAction({
+      type: 'payment',
+      index: index,
+      name: payment.method
+    });
+    setShowDeleteConfirmModal(true);
+  };
+
   const handleCreditSalePartyChange = (index, field, value) => {
     setCreditSaleParties(prev => {
       const newParties = [...prev];
