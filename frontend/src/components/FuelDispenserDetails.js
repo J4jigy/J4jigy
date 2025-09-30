@@ -42,16 +42,9 @@ const FuelDispenserDetails = () => {
         totalSale: '',
         rate: '',
         totalSalesAmount: ''
-      },
-      newProduct: {
-        name: '',
-        openingMeter: '',
-        closingMeter: '',
-        totalSale: '',
-        rate: '',
-        totalSalesAmount: ''
       }
     },
+    customProducts: [], // Array to hold dynamically added products
     creditSale: '',
     digitalPayments: '', // HP Pay / Paytm / Gpay / Phonepe / Other
     fuelCards: '', // DT Plus / Fleet Card / Xtrapower / Other
