@@ -86,6 +86,20 @@ const FuelDispenserDetails = () => {
     }
   ]);
 
+  // State for digital payment methods
+  const [digitalPayments, setDigitalPayments] = useState([
+    {
+      id: Date.now() + 1,
+      method: 'HP Pay',
+      amount: ''
+    },
+    {
+      id: Date.now() + 2,
+      method: 'Paytm',
+      amount: ''
+    }
+  ]);
+
   // State for delete confirmation modal
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const [deleteAction, setDeleteAction] = useState({
