@@ -401,10 +401,10 @@ const FuelDispenserDetails = () => {
                       {/* Second row - 2 boxes */}
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <label className="text-slate-400 text-xs mb-1 block">Total Sale</label>
+                          <label className="text-slate-400 text-xs mb-1 block">Total Sales In Ltr</label>
                           <Input
                             type="number"
-                            placeholder="Total Sale"
+                            placeholder="Total Sales In Ltr"
                             value={product.totalSale}
                             onChange={(e) => handleCustomProductChange(index, 'totalSale', e.target.value)}
                             className="bg-slate-700 border-slate-600 text-white h-8"
