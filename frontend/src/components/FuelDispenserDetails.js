@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Input } from './ui/input';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { ArrowLeft, Plus, X } from 'lucide-react';
 
 const FuelDispenserDetails = () => {
