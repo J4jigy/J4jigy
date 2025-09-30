@@ -14,6 +14,14 @@ const FuelDispenserDetails = () => {
     date: new Date().toISOString().split('T')[0], // Current date in YYYY-MM-DD format
     time: new Date().toTimeString().slice(0, 5), // Current time in HH:MM format
     product: '',
+    productTypes: {
+      petrol: '',
+      diesel: '',
+      powerPetrol: '',
+      turboDiesel: '',
+      newProduct: ''
+    },
+    productGrid: Array(5).fill().map(() => Array(5).fill('')), // 5x5 grid of empty strings
     creditSale: '',
     digitalPayments: '', // HP Pay / Paytm / Gpay / Phonepe / Other
     fuelCards: '', // DT Plus / Fleet Card / Xtrapower / Other
