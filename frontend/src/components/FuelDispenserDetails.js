@@ -473,6 +473,30 @@ const FuelDispenserDetails = () => {
                   </div>
                 </div>
 
+                {/* Total Sale Amount Summary */}
+                <div className="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
+                  <h3 className="text-white text-sm font-medium mb-3">Total Sale Amount</h3>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="text-slate-400 text-xs mb-1 block">Total Sales Amount</label>
+                      <Input
+                        type="number"
+                        placeholder="Total Amount"
+                        value={
+                          (parseFloat(formData.productTypes.petrol.totalSalesAmount || 0) +
+                           parseFloat(formData.productTypes.diesel.totalSalesAmount || 0) +
+                           parseFloat(formData.productTypes.powerPetrol.totalSalesAmount || 0) +
+                           parseFloat(formData.productTypes.turboDiesel.totalSalesAmount || 0) +
+                           formData.customProducts.reduce((sum, product) => sum + parseFloat(product.totalSalesAmount || 0), 0)).toFixed(2)
+                        }
+                        readOnly
+                        className="bg-slate-600 border-slate-500 text-white h-8 font-medium"
+                      />
+                    </div>
+                    <div></div> {/* Empty space */}
+                  </div>
+                </div>
+
                 {/* Custom Products */}
                 {formData.customProducts.map((product, index) => (
                   <div key={index}>
