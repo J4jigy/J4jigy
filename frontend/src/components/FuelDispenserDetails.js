@@ -167,6 +167,7 @@ const FuelDispenserDetails = () => {
           id: newParty.id,
           partyName: newParty.partyName,
           vehicleNo: newParty.vehicleNo,
+          productSelection: '',
           ltr: '',
           rate: '',
           totalCreditSalesAmount: ''
