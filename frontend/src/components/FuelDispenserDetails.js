@@ -644,16 +644,68 @@ const FuelDispenserDetails = () => {
           {/* HP Pay / Paytm / Gpay / Phonepe / Other */}
           <Card className="bg-slate-800 border-slate-700">
             <CardHeader className="pb-3">
-              <CardTitle className="text-white text-sm font-medium">HP Pay / Paytm / Gpay / Phonepe / Other</CardTitle>
+              <CardTitle className="text-white text-sm font-medium flex items-center justify-between">
+                HP Pay / Paytm / Gpay / Phonepe / Other
+                <Button
+                  type="button"
+                  onClick={addNewPayment}
+                  className="bg-green-600 hover:bg-green-700 text-white h-8 px-3 text-xs"
+                >
+                  <Plus className="w-3 h-3 mr-1" />
+                  Add Payment
+                </Button>
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <Input
-                type="number"
-                placeholder="Enter digital payment amount"
-                value={formData.digitalPayments}
-                onChange={(e) => handleInputChange('digitalPayments', e.target.value)}
-                className="bg-slate-700 border-slate-600 text-white"
-              />
+              <div className="space-y-6">
+                {/* Digital Payment Methods */}
+                {digitalPayments.map((payment, index) => (
+                  <div key={payment.id} className="relative border border-slate-600 rounded-lg p-4">
+                    <Button
+                      type="button"
+                      onClick={() => removeDigitalPayment(index)}
+                      variant="outline"
+                      className="absolute -top-2 -right-2 border-red-600 text-red-400 hover:bg-red-600 hover:text-white h-6 w-6 p-0 bg-slate-800 rounded-full"
+                    >
+                      <X className="w-3 h-3" />
+                    </Button>
+                    <div className="mb-3">
+                      <h3 className="text-white text-sm font-medium">{payment.method}</h3>
+                    </div>
+                    <div className="space-y-3">
+                      <div>
+                        <label className="text-slate-400 text-xs mb-1 block">Amount</label>
+                        <Input
+                          type="number"
+                          placeholder="Enter amount"
+                          value={payment.amount}
+                          onChange={(e) => handleDigitalPaymentChange(index, 'amount', e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                {/* Total Online Amount Summary - Always at bottom */}
+                <div className="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
+                  <h3 className="text-white text-sm font-medium mb-3">Total Online Amount</h3>
+                  <div className="w-full">
+                    <div>
+                      <label className="text-slate-400 text-xs mb-1 block">Total Online Amount</label>
+                      <Input
+                        type="number"
+                        placeholder="Total Amount"
+                        value={
+                          (digitalPayments.reduce((sum, payment) => sum + parseFloat(payment.amount || 0), 0)).toFixed(2)
+                        }
+                        readOnly
+                        className="bg-slate-600 border-slate-500 text-white h-8 font-medium w-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </CardContent>
           </Card>
 
