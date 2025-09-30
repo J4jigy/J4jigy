@@ -103,51 +103,118 @@ const FuelDispenserDetails = () => {
 
       {/* Form Content */}
       <div className="flex-1 p-4 overflow-y-auto">
-        <div className="max-w-2xl mx-auto space-y-4">
+        <div className="max-w-6xl mx-auto space-y-4">
           {/* Date and Time Selection */}
           <div className="grid grid-cols-2 gap-4 mb-4">
             <Card className="bg-slate-800 border-slate-700">
-              <CardHeader className="pb-3">
+              <CardHeader className="pb-2">
                 <CardTitle className="text-white text-sm font-medium">Date</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pb-2">
                 <Input
                   type="date"
                   value={formData.date}
                   onChange={(e) => handleInputChange('date', e.target.value)}
-                  className="bg-slate-700 border-slate-600 text-white"
+                  className="bg-slate-700 border-slate-600 text-white h-8"
                 />
               </CardContent>
             </Card>
 
             <Card className="bg-slate-800 border-slate-700">
-              <CardHeader className="pb-3">
+              <CardHeader className="pb-2">
                 <CardTitle className="text-white text-sm font-medium">Time</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pb-2">
                 <Input
                   type="time"
                   value={formData.time}
                   onChange={(e) => handleInputChange('time', e.target.value)}
-                  className="bg-slate-700 border-slate-600 text-white"
+                  className="bg-slate-700 border-slate-600 text-white h-8"
                 />
               </CardContent>
             </Card>
           </div>
 
-          {/* Product */}
+          {/* Product Section with Types and Grid */}
           <Card className="bg-slate-800 border-slate-700">
             <CardHeader className="pb-3">
               <CardTitle className="text-white text-sm font-medium">Product</CardTitle>
             </CardHeader>
             <CardContent>
-              <Input
-                type="number"
-                placeholder="Enter product amount"
-                value={formData.product}
-                onChange={(e) => handleInputChange('product', e.target.value)}
-                className="bg-slate-700 border-slate-600 text-white"
-              />
+              <div className="grid grid-cols-2 gap-6">
+                {/* Left side - Product types */}
+                <div className="space-y-3">
+                  <div>
+                    <label className="text-white text-xs font-medium mb-1 block">Petrol</label>
+                    <Input
+                      type="number"
+                      placeholder="Enter petrol amount"
+                      value={formData.productTypes.petrol}
+                      onChange={(e) => handleProductTypeChange('petrol', e.target.value)}
+                      className="bg-slate-700 border-slate-600 text-white h-8"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-white text-xs font-medium mb-1 block">Diesel</label>
+                    <Input
+                      type="number"
+                      placeholder="Enter diesel amount"
+                      value={formData.productTypes.diesel}
+                      onChange={(e) => handleProductTypeChange('diesel', e.target.value)}
+                      className="bg-slate-700 border-slate-600 text-white h-8"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-white text-xs font-medium mb-1 block">Power Petrol</label>
+                    <Input
+                      type="number"
+                      placeholder="Enter power petrol amount"
+                      value={formData.productTypes.powerPetrol}
+                      onChange={(e) => handleProductTypeChange('powerPetrol', e.target.value)}
+                      className="bg-slate-700 border-slate-600 text-white h-8"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-white text-xs font-medium mb-1 block">Turbo Diesel</label>
+                    <Input
+                      type="number"
+                      placeholder="Enter turbo diesel amount"
+                      value={formData.productTypes.turboDiesel}
+                      onChange={(e) => handleProductTypeChange('turboDiesel', e.target.value)}
+                      className="bg-slate-700 border-slate-600 text-white h-8"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-white text-xs font-medium mb-1 block">Add New Product</label>
+                    <Input
+                      type="text"
+                      placeholder="Enter new product name"
+                      value={formData.productTypes.newProduct}
+                      onChange={(e) => handleProductTypeChange('newProduct', e.target.value)}
+                      className="bg-slate-700 border-slate-600 text-white h-8"
+                    />
+                  </div>
+                </div>
+
+                {/* Right side - 5x5 Grid */}
+                <div>
+                  <label className="text-white text-xs font-medium mb-2 block">Product Details Grid</label>
+                  <div className="grid grid-cols-5 gap-1">
+                    {formData.productGrid.map((row, rowIndex) =>
+                      row.map((cell, colIndex) => (
+                        <Input
+                          key={`${rowIndex}-${colIndex}`}
+                          type="text"
+                          value={cell}
+                          onChange={(e) => handleGridChange(rowIndex, colIndex, e.target.value)}
+                          className="bg-slate-700 border-slate-600 text-white h-8 text-xs p-1"
+                          placeholder={`${rowIndex + 1}${colIndex + 1}`}
+                        />
+                      ))
+                    )}
+                  </div>
+                </div>
+              </div>
             </CardContent>
           </Card>
 
