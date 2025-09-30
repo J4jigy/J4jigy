@@ -502,6 +502,21 @@ const FuelDispenserDetails = () => {
                       {/* Second row - 2 boxes */}
                       <div className="grid grid-cols-2 gap-3">
                         <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Product Selection</label>
+                          <select
+                            value={party.productSelection}
+                            onChange={(e) => handleCreditSalePartyChange(index, 'productSelection', e.target.value)}
+                            className="bg-slate-700 border border-slate-600 text-white h-8 w-full rounded px-2 text-sm"
+                          >
+                            <option value="">Select Product</option>
+                            {formData.customProducts.map((product, productIndex) => (
+                              <option key={productIndex} value={product.name}>
+                                {product.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div>
                           <label className="text-slate-400 text-xs mb-1 block">Ltr</label>
                           <Input
                             type="number"
@@ -511,6 +526,9 @@ const FuelDispenserDetails = () => {
                             className="bg-slate-700 border-slate-600 text-white h-8"
                           />
                         </div>
+                      </div>
+                      {/* Third row - 2 boxes */}
+                      <div className="grid grid-cols-2 gap-3">
                         <div>
                           <label className="text-slate-400 text-xs mb-1 block">Rate</label>
                           <Input
@@ -521,9 +539,6 @@ const FuelDispenserDetails = () => {
                             className="bg-slate-700 border-slate-600 text-white h-8"
                           />
                         </div>
-                      </div>
-                      {/* Third row - 1 box */}
-                      <div className="grid grid-cols-2 gap-3">
                         <div>
                           <label className="text-slate-400 text-xs mb-1 block">Total Credit Sales Amount</label>
                           <Input
@@ -534,7 +549,6 @@ const FuelDispenserDetails = () => {
                             className="bg-slate-700 border-slate-600 text-white h-8"
                           />
                         </div>
-                        <div></div> {/* Empty space */}
                       </div>
                     </div>
                   </div>
