@@ -70,19 +70,6 @@ const FuelDispenserDetails = () => {
     }));
   };
 
-  const handleProductTypeChange = (productType, field, value) => {
-    setFormData(prev => ({
-      ...prev,
-      productTypes: {
-        ...prev.productTypes,
-        [productType]: {
-          ...prev.productTypes[productType],
-          [field]: value
-        }
-      }
-    }));
-  };
-
   const handleCustomProductChange = (index, field, value) => {
     setFormData(prev => {
       const newCustomProducts = [...prev.customProducts];
