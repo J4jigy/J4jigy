@@ -11,10 +11,13 @@ const FuelDispenserDetails = () => {
   
   // State for form data
   const [formData, setFormData] = useState({
+    date: new Date().toISOString().split('T')[0], // Current date in YYYY-MM-DD format
+    time: new Date().toTimeString().slice(0, 5), // Current time in HH:MM format
     product: '',
     creditSale: '',
     digitalPayments: '', // HP Pay / Paytm / Gpay / Phonepe / Other
     fuelCards: '', // DT Plus / Fleet Card / Xtrapower / Other
+    discounts: '',
     expenses: '',
     lubes: '',
     cashOnHand: ''
@@ -25,6 +28,13 @@ const FuelDispenserDetails = () => {
       ...prev,
       [field]: value
     }));
+  };
+
+  const handleConfirmAndSave = () => {
+    // Handle confirm and save logic here
+    console.log('Confirming and saving data for dispenser', dispenserId, formData);
+    // You can add API call here
+    navigate('/fuel-dispenser');
   };
 
   const handleSave = () => {
@@ -65,6 +75,37 @@ const FuelDispenserDetails = () => {
       {/* Form Content */}
       <div className="flex-1 p-4 overflow-y-auto">
         <div className="max-w-2xl mx-auto space-y-4">
+          {/* Date and Time Selection */}
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <Card className="bg-slate-800 border-slate-700">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-white text-sm font-medium">Date</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Input
+                  type="date"
+                  value={formData.date}
+                  onChange={(e) => handleInputChange('date', e.target.value)}
+                  className="bg-slate-700 border-slate-600 text-white"
+                />
+              </CardContent>
+            </Card>
+
+            <Card className="bg-slate-800 border-slate-700">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-white text-sm font-medium">Time</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Input
+                  type="time"
+                  value={formData.time}
+                  onChange={(e) => handleInputChange('time', e.target.value)}
+                  className="bg-slate-700 border-slate-600 text-white"
+                />
+              </CardContent>
+            </Card>
+          </div>
+
           {/* Product */}
           <Card className="bg-slate-800 border-slate-700">
             <CardHeader className="pb-3">
@@ -129,6 +170,22 @@ const FuelDispenserDetails = () => {
             </CardContent>
           </Card>
 
+          {/* Discounts */}
+          <Card className="bg-slate-800 border-slate-700">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-white text-sm font-medium">Discounts</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Input
+                type="number"
+                placeholder="Enter discounts amount"
+                value={formData.discounts}
+                onChange={(e) => handleInputChange('discounts', e.target.value)}
+                className="bg-slate-700 border-slate-600 text-white"
+              />
+            </CardContent>
+          </Card>
+
           {/* Expenses */}
           <Card className="bg-slate-800 border-slate-700">
             <CardHeader className="pb-3">
@@ -181,24 +238,30 @@ const FuelDispenserDetails = () => {
 
       {/* Bottom Action Buttons */}
       <div className="p-4 border-t border-slate-700">
-        <div className="flex gap-3 max-w-2xl mx-auto">
+        <div className="grid grid-cols-2 gap-3 max-w-2xl mx-auto">
+          <Button
+            onClick={handleConfirmAndSave}
+            className="bg-blue-600 hover:bg-blue-700 text-white"
+          >
+            Confirm & Save
+          </Button>
           <Button
             onClick={handleSave}
-            className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+            className="bg-green-600 hover:bg-green-700 text-white"
           >
             Save
           </Button>
           <Button
             onClick={handleEdit}
             variant="outline"
-            className="flex-1 border-slate-600 text-slate-200 hover:bg-slate-700"
+            className="border-slate-600 text-slate-200 hover:bg-slate-700"
           >
             Edit
           </Button>
           <Button
             onClick={handleCancel}
             variant="outline"
-            className="flex-1 border-slate-600 text-slate-200 hover:bg-slate-700"
+            className="border-slate-600 text-slate-200 hover:bg-slate-700"
           >
             Cancel
           </Button>
