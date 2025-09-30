@@ -29,23 +29,26 @@ const FuelDispenserDetails = () => {
         totalSale: '',
         rate: '',
         totalSalesAmount: ''
-      },
-      powerPetrol: {
+      }
+    },
+    customProducts: [
+      {
+        name: 'Power Petrol',
         openingMeter: '',
         closingMeter: '',
         totalSale: '',
         rate: '',
         totalSalesAmount: ''
       },
-      turboDiesel: {
+      {
+        name: 'Turbo Diesel',
         openingMeter: '',
         closingMeter: '',
         totalSale: '',
         rate: '',
         totalSalesAmount: ''
       }
-    },
-    customProducts: [], // Array to hold dynamically added products
+    ], // Array to hold dynamically added products
     creditSale: '',
     digitalPayments: '', // HP Pay / Paytm / Gpay / Phonepe / Other
     fuelCards: '', // DT Plus / Fleet Card / Xtrapower / Other
