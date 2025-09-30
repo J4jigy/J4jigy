@@ -174,7 +174,14 @@ const FuelDispenserDetails = () => {
   };
 
   const removeCreditSaleParty = (index) => {
-    setCreditSaleParties(prev => prev.filter((_, i) => i !== index));
+    const party = creditSaleParties[index];
+    const partyName = `${party.partyName} - ${party.vehicleNo}`;
+    setDeleteAction({
+      type: 'party',
+      index: index,
+      name: partyName
+    });
+    setShowDeleteConfirmModal(true);
   };
 
   const handleCreditSalePartyChange = (index, field, value) => {
