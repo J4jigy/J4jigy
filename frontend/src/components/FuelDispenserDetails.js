@@ -641,6 +641,58 @@ const FuelDispenserDetails = () => {
         </div>
       </div>
 
+      {/* Add New Party Modal */}
+      <Dialog open={showAddPartyModal} onOpenChange={setShowAddPartyModal}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-white">Add New Party</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <label className="text-slate-200 text-sm font-medium mb-2 block">Party Name</label>
+              <Input
+                type="text"
+                placeholder="Enter party name"
+                value={newPartyData.partyName}
+                onChange={(e) => setNewPartyData(prev => ({ ...prev, partyName: e.target.value }))}
+                className="bg-slate-700 border-slate-600 text-white"
+              />
+            </div>
+            <div>
+              <label className="text-slate-200 text-sm font-medium mb-2 block">Vehicle No</label>
+              <Input
+                type="text"
+                placeholder="Enter vehicle number"
+                value={newPartyData.vehicleNo}
+                onChange={(e) => setNewPartyData(prev => ({ ...prev, vehicleNo: e.target.value }))}
+                className="bg-slate-700 border-slate-600 text-white"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    saveNewParty();
+                  }
+                }}
+              />
+            </div>
+            <div className="flex gap-3">
+              <Button
+                onClick={saveNewParty}
+                className="flex-1 bg-green-600 hover:bg-green-700"
+                disabled={!newPartyData.partyName.trim() || !newPartyData.vehicleNo.trim()}
+              >
+                Save
+              </Button>
+              <Button
+                onClick={cancelAddParty}
+                variant="outline"
+                className="flex-1 border-slate-600 text-slate-200 hover:bg-slate-700"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Add Product Modal */}
       <Dialog open={showAddProductModal} onOpenChange={setShowAddProductModal}>
         <DialogContent className="bg-slate-800 border-slate-700 max-w-md">
