@@ -205,6 +205,25 @@ const FuelDispenserDetails = () => {
     setShowDeleteConfirmModal(true);
   };
 
+  const confirmDelete = () => {
+    if (deleteAction.type === 'product') {
+      setFormData(prev => ({
+        ...prev,
+        customProducts: prev.customProducts.filter((_, i) => i !== deleteAction.index)
+      }));
+    } else if (deleteAction.type === 'party') {
+      setCreditSaleParties(prev => prev.filter((_, i) => i !== deleteAction.index));
+    }
+    
+    setShowDeleteConfirmModal(false);
+    setDeleteAction({ type: '', index: null, name: '' });
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteConfirmModal(false);
+    setDeleteAction({ type: '', index: null, name: '' });
+  };
+
   const handleConfirmAndSave = () => {
     // Handle confirm and save logic here
     console.log('Confirming and saving data for dispenser', dispenserId, formData);
