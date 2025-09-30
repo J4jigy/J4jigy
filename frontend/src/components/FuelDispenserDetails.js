@@ -107,7 +107,7 @@ const FuelDispenserDetails = () => {
   // State for delete confirmation modal
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const [deleteAction, setDeleteAction] = useState({
-    type: '', // 'product' or 'party'
+    type: '', // 'product', 'party', or 'payment'
     index: null,
     name: ''
   });
