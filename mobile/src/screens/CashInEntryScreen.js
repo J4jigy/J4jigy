@@ -100,7 +100,7 @@ export default function CashInEntryScreen({ navigation }) {
       amount: '',
       items: [],
       total: 0,
-      customerName: `Customer ${selectedSlotIndex + 1}` // Reset to default name
+      customerName: '' // Empty - no default name
     };
     setPosSlots(newSlots);
     setShowClearConfirmModal(false);
