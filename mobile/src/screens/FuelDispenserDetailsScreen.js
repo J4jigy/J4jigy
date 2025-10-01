@@ -144,6 +144,8 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
   const getAvailableParties = () => {
     return availableParties.filter(party => party && party.partyName && party.vehicleNo);
   };
+
+  const handleCustomProductChange = (index, field, value) => {
     setFormData(prev => {
       const newCustomProducts = [...prev.customProducts];
       newCustomProducts[index] = {
