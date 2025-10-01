@@ -174,7 +174,7 @@ export default function CashInEntryScreen({ navigation }) {
     setDescription('');
     setSelectedCustomer('');
     setSelectedProduct('');
-    setPaymentMode('Cash');
+    setPaymentMode(''); // Reset to empty
   };
 
   return (
