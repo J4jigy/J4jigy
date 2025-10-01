@@ -22,6 +22,19 @@ const { width: screenWidth } = Dimensions.get('window');
 export default function FuelDispenserDetailsScreen({ route, navigation }) {
   const { dispenserId } = route.params;
 
+  // Handle hardware back button
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        navigation.goBack();
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      return () => subscription?.remove();
+    }, [navigation])
+  );
+
   // State for form data
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split('T')[0],
