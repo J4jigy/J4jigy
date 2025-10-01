@@ -135,6 +135,9 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     setRefreshKey(prev => prev + 1);
   };
 
+  // State for available parties (for dropdowns)
+  const [availableParties, setAvailableParties] = useState([]);
+
   const handleInputChange = (field, value) => {
     setFormData(prev => ({
       ...prev,
