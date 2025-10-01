@@ -36,28 +36,9 @@ export default function DashboardScreen({ navigation }) {
   const tabs = ['Business', 'Finance', 'Personal'];
 
   const featureTiles = {
-    Business: [
-      { title: 'Bank', icon: 'business-outline', color: colors.blue600, onPress: () => navigation.navigate('ListView', { title: 'Bank', type: 'bank' }) },
-      { title: 'Customers/Debtors', subtitle: 'ग्राहक/देनदार', icon: 'people-outline', color: colors.green600, onPress: () => navigation.navigate('ListView', { title: 'Customers/Debtors', type: 'customers' }) },
-      { title: 'Suppliers/Creditors', subtitle: 'आपूर्तिकर्ता/लेनदार', icon: 'storefront-outline', color: colors.orange600, onPress: () => navigation.navigate('ListView', { title: 'Suppliers/Creditors', type: 'suppliers' }) },
-      { title: 'Community/Ratings', icon: 'star-outline', color: colors.yellow400, onPress: () => navigation.navigate('ListView', { title: 'Community/Ratings', type: 'community' }) },
-      { title: 'Staff', icon: 'person-outline', color: colors.purple600, onPress: () => navigation.navigate('ListView', { title: 'Staff', type: 'staff' }) },
-    ],
-    Finance: [
-      { title: 'Company Purchase', icon: 'card-outline', color: colors.blue600, onPress: () => navigation.navigate('ListView', { title: 'Company Purchase', type: 'purchase' }) },
-      { title: 'Bills Recharge', icon: 'receipt-outline', color: colors.green600, onPress: () => navigation.navigate('ListView', { title: 'Bills Recharge', type: 'recharge' }) },
-      { title: 'Stock Management', icon: 'cube-outline', color: colors.blue600, onPress: () => navigation.navigate('ListView', { title: 'Stock Management', type: 'stock' }) },
-      { title: 'Profit & Loss', icon: 'bar-chart-outline', color: colors.emerald600, onPress: () => navigation.navigate('ListView', { title: 'Profit & Loss', type: 'profit' }) },
-      { title: 'Balance Sheet', icon: 'pie-chart-outline', color: colors.indigo600, onPress: () => navigation.navigate('ListView', { title: 'Balance Sheet', type: 'balance' }) },
-      { title: 'Rent', icon: 'home-outline', color: colors.orange600, onPress: () => navigation.navigate('ListView', { title: 'Rent', type: 'rent' }) },
-      { title: 'Other Expenses', icon: 'wallet-outline', color: colors.red600, onPress: () => navigation.navigate('ListView', { title: 'Other Expenses', type: 'expenses' }) },
-      { title: 'Bills & Invoices', icon: 'document-text-outline', color: colors.yellow400, onPress: () => navigation.navigate('ListView', { title: 'Bills & Invoices', type: 'invoices' }) },
-    ],
-    Personal: [
-      { title: 'Offers & Discounts', icon: 'pricetag-outline', color: colors.green600, onPress: () => navigation.navigate('ListView', { title: 'Offers & Discounts', type: 'offers' }) },
-      { title: 'Fuel Station', icon: 'car-outline', color: colors.orange600, onPress: () => navigation.navigate('FuelDispenser') },
-      { title: 'Personal Finance', icon: 'person-outline', color: colors.blue600, onPress: () => navigation.navigate('ListView', { title: 'Personal Finance', type: 'personal' }) },
-    ],
+    Business: [], // Empty - no default business features
+    Finance: [], // Empty - no default finance features  
+    Personal: [], // Empty - no default personal features
   };
 
   const renderSummaryCard = (card, index) => (
