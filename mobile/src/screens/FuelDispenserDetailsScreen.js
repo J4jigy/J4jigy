@@ -471,11 +471,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
               <View key={party.id} style={styles.partySection}>
                 <TouchableOpacity
                   style={globalStyles.deleteButton}
-                  onPress={() => {
-                    const partyName = `${party.partyName} - ${party.vehicleNo}`;
-                    setDeleteAction({ type: 'party', index, name: partyName });
-                    setShowDeleteConfirmModal(true);
-                  }}
+                  onPress={() => removeCreditSaleParty(index)}
                 >
                   <Ionicons name="close" size={16} color={colors.red400} />
                 </TouchableOpacity>
