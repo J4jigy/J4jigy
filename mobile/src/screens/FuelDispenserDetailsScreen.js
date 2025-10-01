@@ -72,53 +72,41 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
   // Loading state to prevent premature rendering
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize default data ONLY on first launch
-  const initializeDefaultData = async () => {
+  // Simple, reliable data loading - NO complex initialization logic
+  const loadAllData = async () => {
     try {
-      // Check if this dispenser has been initialized before
-      const isInitialized = await AsyncStorage.getItem(STORAGE_KEYS.INITIALIZED);
+      setIsLoading(true);
+      console.log(`=== LOADING DATA FOR DISPENSER ${dispenserId} ===`);
+
+      // Load products - if none exist, use defaults ONLY ONCE
+      const savedProducts = await AsyncStorage.getItem(STORAGE_KEYS.CUSTOM_PRODUCTS);
+      let products = [];
       
-      if (!isInitialized) {
-        // First time setup - set default products
-        const defaultProducts = [
-          {
-            name: 'Petrol',
-            openingMeter: '',
-            closingMeter: '',
-            totalSale: '',
-            rate: '',
-            totalSalesAmount: ''
-          },
-          {
-            name: 'Diesel',
-            openingMeter: '',
-            closingMeter: '',
-            totalSale: '',
-            rate: '',
-            totalSalesAmount: ''
-          },
-          {
-            name: 'Power Petrol',
-            openingMeter: '',
-            closingMeter: '',
-            totalSale: '',
-            rate: '',
-            totalSalesAmount: ''
-          },
-          {
-            name: 'Turbo Diesel',
-            openingMeter: '',
-            closingMeter: '',
-            totalSale: '',
-            rate: '',
-            totalSalesAmount: ''
-          }
+      if (savedProducts === null) {
+        // First time ever - set defaults
+        console.log('No saved products found - setting defaults for first time');
+        products = [
+          { name: 'Petrol', openingMeter: '', closingMeter: '', totalSale: '', rate: '', totalSalesAmount: '' },
+          { name: 'Diesel', openingMeter: '', closingMeter: '', totalSale: '', rate: '', totalSalesAmount: '' },
+          { name: 'Power Petrol', openingMeter: '', closingMeter: '', totalSale: '', rate: '', totalSalesAmount: '' },
+          { name: 'Turbo Diesel', openingMeter: '', closingMeter: '', totalSale: '', rate: '', totalSalesAmount: '' }
         ];
-        
-        await AsyncStorage.setItem(STORAGE_KEYS.CUSTOM_PRODUCTS, JSON.stringify(defaultProducts));
-        
-        // Set default credit party
-        const defaultCreditParty = [{
+        await AsyncStorage.setItem(STORAGE_KEYS.CUSTOM_PRODUCTS, JSON.stringify(products));
+      } else {
+        // Load from storage - this could be empty array if user deleted everything
+        products = JSON.parse(savedProducts);
+        console.log(`Loaded ${products.length} products from storage`);
+      }
+      
+      setFormData(prev => ({ ...prev, customProducts: products }));
+
+      // Load credit parties
+      const savedCreditParties = await AsyncStorage.getItem(STORAGE_KEYS.CREDIT_PARTIES);
+      let creditParties = [];
+      
+      if (savedCreditParties === null) {
+        // First time - set default
+        creditParties = [{
           id: Date.now(),
           partyName: '',
           vehicleNo: '',
@@ -127,64 +115,31 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
           rate: '',
           totalCreditSalesAmount: ''
         }];
-        await AsyncStorage.setItem(STORAGE_KEYS.CREDIT_PARTIES, JSON.stringify(defaultCreditParty));
-        
-        // Set default digital payments
-        const defaultDigitalPayments = [
-          {
-            id: Date.now() + 1,
-            method: 'HP Pay',
-            amount: ''
-          },
-          {
-            id: Date.now() + 2,
-            method: 'Paytm',
-            amount: ''
-          }
-        ];
-        await AsyncStorage.setItem(STORAGE_KEYS.DIGITAL_PAYMENTS, JSON.stringify(defaultDigitalPayments));
-        
-        // Mark as initialized
-        await AsyncStorage.setItem(STORAGE_KEYS.INITIALIZED, 'true');
-        
-        console.log(`Dispenser ${dispenserId} initialized with defaults`);
+        await AsyncStorage.setItem(STORAGE_KEYS.CREDIT_PARTIES, JSON.stringify(creditParties));
+      } else {
+        creditParties = JSON.parse(savedCreditParties);
+        console.log(`Loaded ${creditParties.length} credit parties from storage`);
       }
-    } catch (error) {
-      console.error('Error initializing default data:', error);
-    }
-  };
-
-  // Load data from storage - this respects all deletions
-  const loadDataFromStorage = async () => {
-    try {
-      console.log(`Loading data for dispenser ${dispenserId}`);
       
-      // Load custom products (could be empty array if all deleted)
-      const savedProducts = await AsyncStorage.getItem(STORAGE_KEYS.CUSTOM_PRODUCTS);
-      if (savedProducts !== null) {
-        const products = JSON.parse(savedProducts);
-        console.log(`Loaded ${products.length} products for ${dispenserId}`);
-        setFormData(prev => ({
-          ...prev,
-          customProducts: products // This could be empty array - that's correct!
-        }));
-      }
+      setCreditSaleParties(creditParties);
 
-      // Load credit parties (could be empty array if all deleted)
-      const savedCreditParties = await AsyncStorage.getItem(STORAGE_KEYS.CREDIT_PARTIES);
-      if (savedCreditParties !== null) {
-        const parties = JSON.parse(savedCreditParties);
-        console.log(`Loaded ${parties.length} credit parties for ${dispenserId}`);
-        setCreditSaleParties(parties); // This could be empty array - that's correct!
-      }
-
-      // Load digital payments (could be empty array if all deleted)
+      // Load digital payments
       const savedDigitalPayments = await AsyncStorage.getItem(STORAGE_KEYS.DIGITAL_PAYMENTS);
-      if (savedDigitalPayments !== null) {
-        const payments = JSON.parse(savedDigitalPayments);
-        console.log(`Loaded ${payments.length} digital payments for ${dispenserId}`);
-        setDigitalPayments(payments); // This could be empty array - that's correct!
+      let payments = [];
+      
+      if (savedDigitalPayments === null) {
+        // First time - set defaults
+        payments = [
+          { id: Date.now() + 1, method: 'HP Pay', amount: '' },
+          { id: Date.now() + 2, method: 'Paytm', amount: '' }
+        ];
+        await AsyncStorage.setItem(STORAGE_KEYS.DIGITAL_PAYMENTS, JSON.stringify(payments));
+      } else {
+        payments = JSON.parse(savedDigitalPayments);
+        console.log(`Loaded ${payments.length} digital payments from storage`);
       }
+      
+      setDigitalPayments(payments);
 
       // Load available parties
       const savedAvailableParties = await AsyncStorage.getItem(STORAGE_KEYS.AVAILABLE_PARTIES);
@@ -194,18 +149,12 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
         setAvailableParties(availParties);
       }
 
-      // Load other form data
-      const savedFormData = await AsyncStorage.getItem(STORAGE_KEYS.FORM_DATA);
-      if (savedFormData !== null) {
-        const formDataFromStorage = JSON.parse(savedFormData);
-        setFormData(prev => ({
-          ...prev,
-          ...formDataFromStorage,
-          customProducts: prev.customProducts // Keep products from their own storage
-        }));
-      }
+      console.log('=== DATA LOADING COMPLETE ===');
+      setIsLoading(false);
+
     } catch (error) {
-      console.error('Error loading data from storage:', error);
+      console.error('Error loading data:', error);
+      setIsLoading(false);
     }
   };
 
