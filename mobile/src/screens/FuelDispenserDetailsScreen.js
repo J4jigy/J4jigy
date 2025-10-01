@@ -983,6 +983,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
           </View>
         </View>
       </ScrollView>
+      )}
 
       {/* Modals */}
       <Modal
