@@ -586,13 +586,10 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
                           newParties[index] = { ...newParties[index], productSelection: value };
                           setCreditSaleParties(newParties);
                         }}
-                        items={formData.customProducts
-                          .filter(product => product && product.name) // Only show existing products
-                          .map(product => ({ 
-                            label: product.name, 
-                            value: product.name 
-                          }))
-                        }
+                        items={getAvailableProducts().map(product => ({ 
+                          label: product.name, 
+                          value: product.name 
+                        }))}
                         placeholder={{ label: "Select Product", value: null }}
                         style={pickerSelectStyles}
                         value={party.productSelection}
