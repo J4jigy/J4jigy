@@ -224,18 +224,25 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
 
   const confirmDelete = () => {
     if (deleteAction.type === 'product') {
+      // Permanently delete product from customProducts array
       setFormData(prev => ({
         ...prev,
         customProducts: prev.customProducts.filter((_, i) => i !== deleteAction.index)
       }));
     } else if (deleteAction.type === 'party') {
+      // Permanently delete party from creditSaleParties array
       setCreditSaleParties(prev => prev.filter((_, i) => i !== deleteAction.index));
     } else if (deleteAction.type === 'payment') {
+      // Permanently delete payment method from digitalPayments array
       setDigitalPayments(prev => prev.filter((_, i) => i !== deleteAction.index));
     }
     
+    // Clear modal and reset state - NO RECOVERY POSSIBLE
     setShowDeleteConfirmModal(false);
     setDeleteAction({ type: '', index: null, name: '' });
+    
+    // Show confirmation that item is permanently deleted
+    Alert.alert('Deleted', `${deleteAction.name} has been permanently deleted.`, [{ text: 'OK' }]);
   };
 
   const cancelDelete = () => {
