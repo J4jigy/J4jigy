@@ -341,20 +341,28 @@ export default function CashInEntryScreen({ navigation }) {
         onClose={() => setShowProductModal(false)}
         title="Select Products"
       >
-        <View style={styles.productList}>
-          {products.map((product, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.productItem}
-              onPress={() => {
-                setSelectedProduct(product.value);
-                setShowProductModal(false);
-              }}
-            >
-              <Text style={globalStyles.text}>{product.label}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        {products.length === 0 ? (
+          <View style={styles.emptyModalState}>
+            <Ionicons name="cube-outline" size={48} color={colors.slate600} />
+            <Text style={styles.emptyStateText}>No products available</Text>
+            <Text style={styles.emptyStateSubtext}>Products will appear here when added</Text>
+          </View>
+        ) : (
+          <View style={styles.productList}>
+            {products.map((product, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.productItem}
+                onPress={() => {
+                  setSelectedProduct(product.value);
+                  setShowProductModal(false);
+                }}
+              >
+                <Text style={globalStyles.text}>{product.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
       </Modal>
 
       {/* Cheque Details Modal */}
