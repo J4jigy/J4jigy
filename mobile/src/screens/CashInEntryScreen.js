@@ -304,31 +304,39 @@ export default function CashInEntryScreen({ navigation }) {
           {/* Payment Mode */}
           <View style={globalStyles.card}>
             <Text style={globalStyles.cardTitle}>Payment Mode</Text>
-            <View style={styles.paymentModes}>
-              {paymentModes.map((mode) => (
-                <TouchableOpacity
-                  key={mode}
-                  style={[
-                    styles.paymentMode,
-                    paymentMode === mode && styles.selectedPaymentMode
-                  ]}
-                  onPress={() => {
-                    if (mode === 'Cheque') {
-                      handleChequePayment();
-                    } else {
-                      setPaymentMode(mode);
-                    }
-                  }}
-                >
-                  <Text style={[
-                    styles.paymentModeText,
-                    paymentMode === mode && styles.selectedPaymentModeText
-                  ]}>
-                    {mode}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
+            {paymentModes.length === 0 ? (
+              <View style={styles.emptyState}>
+                <Ionicons name="card-outline" size={48} color={colors.slate600} />
+                <Text style={styles.emptyStateText}>No payment modes available</Text>
+                <Text style={styles.emptyStateSubtext}>Payment modes will appear here when added</Text>
+              </View>
+            ) : (
+              <View style={styles.paymentModes}>
+                {paymentModes.map((mode) => (
+                  <TouchableOpacity
+                    key={mode}
+                    style={[
+                      styles.paymentMode,
+                      paymentMode === mode && styles.selectedPaymentMode
+                    ]}
+                    onPress={() => {
+                      if (mode === 'Cheque') {
+                        handleChequePayment();
+                      } else {
+                        setPaymentMode(mode);
+                      }
+                    }}
+                  >
+                    <Text style={[
+                      styles.paymentModeText,
+                      paymentMode === mode && styles.selectedPaymentModeText
+                    ]}>
+                      {mode}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
           </View>
 
           {/* Save Button */}
