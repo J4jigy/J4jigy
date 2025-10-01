@@ -397,7 +397,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     setShowAddPartyModal(true);
   };
 
-  const saveNewParty = () => {
+  const saveNewParty = async () => {
     if (newPartyData.partyName.trim() && newPartyData.vehicleNo.trim()) {
       const newParty = {
         id: Date.now(),
@@ -405,20 +405,23 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
         vehicleNo: newPartyData.vehicleNo.trim()
       };
       
-      setAvailableParties(prev => [...prev, newParty]);
+      const updatedAvailableParties = [...availableParties, newParty];
+      setAvailableParties(updatedAvailableParties);
+      await saveAvailableParties(updatedAvailableParties);
       
-      setCreditSaleParties(prev => [
-        ...prev,
-        {
-          id: newParty.id,
-          partyName: newParty.partyName,
-          vehicleNo: newParty.vehicleNo,
-          productSelection: '',
-          ltr: '',
-          rate: '',
-          totalCreditSalesAmount: ''
-        }
-      ]);
+      const newCreditParty = {
+        id: newParty.id,
+        partyName: newParty.partyName,
+        vehicleNo: newParty.vehicleNo,
+        productSelection: '',
+        ltr: '',
+        rate: '',
+        totalCreditSalesAmount: ''
+      };
+      
+      const updatedCreditParties = [...creditSaleParties, newCreditParty];
+      setCreditSaleParties(updatedCreditParties);
+      await saveCreditParties(updatedCreditParties);
       
       setNewPartyData({ partyName: '', vehicleNo: '' });
       setShowAddPartyModal(false);
