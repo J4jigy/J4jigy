@@ -73,7 +73,7 @@ export default function CashOutEntryScreen({ navigation }) {
     setDescription('');
     setSelectedSupplier('');
     setSelectedExpense('');
-    setPaymentMode('Cash');
+    setPaymentMode(''); // Reset to empty
   };
 
   return (
