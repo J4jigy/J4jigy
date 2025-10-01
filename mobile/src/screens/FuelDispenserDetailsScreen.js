@@ -127,8 +127,13 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     name: ''
   });
 
-  // State for available parties (for dropdowns)
-  const [availableParties, setAvailableParties] = useState([]);
+  // State for forcing re-renders
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Force component refresh
+  const forceRefresh = () => {
+    setRefreshKey(prev => prev + 1);
+  };
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({
