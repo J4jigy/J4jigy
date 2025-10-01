@@ -679,119 +679,129 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
               </TouchableOpacity>
             </View>
             
-            {/* Credit Sale Parties */}
-            {creditSaleParties.map((party, index) => (
-              <View key={party.id} style={styles.partySection}>
-                <TouchableOpacity
-                  style={globalStyles.deleteButton}
-                  onPress={() => removeCreditSaleParty(index)}
-                >
-                  <Ionicons name="close" size={16} color={colors.red400} />
-                </TouchableOpacity>
-                
-                <Text style={styles.partyTitle}>
-                  {party.partyName && party.vehicleNo 
-                    ? `Party: ${party.partyName} - ${party.vehicleNo}` 
-                    : 'Credit Sale Entry'
-                  }
-                </Text>
-                
-                <View style={styles.inputGrid}>
-                  <View style={styles.gridRow}>
-                    <View style={styles.gridItem}>
-                      <Text style={globalStyles.label}>Party Name</Text>
-                      <RNPickerSelect
-                        onValueChange={(value) => handleCreditSalePartyChange(index, 'partyName', value)}
-                        items={getAvailableParties().map(party => ({
-                          label: party.partyName,
-                          value: party.partyName
-                        }))}
-                        placeholder={{ label: "Select Party", value: null }}
-                        style={pickerSelectStyles}
-                        value={party.partyName}
-                      />
-                    </View>
-                    <View style={styles.gridItemLast}>
-                      <Text style={globalStyles.label}>Vehicle No</Text>
-                      <RNPickerSelect
-                        onValueChange={(value) => handleCreditSalePartyChange(index, 'vehicleNo', value)}
-                        items={getAvailableParties().map(party => ({
-                          label: party.vehicleNo,
-                          value: party.vehicleNo
-                        }))}
-                        placeholder={{ label: "Select Vehicle", value: null }}
-                        style={pickerSelectStyles}
-                        value={party.vehicleNo}
-                      />
-                    </View>
-                  </View>
+            {/* Show empty state if no credit parties */}
+            {creditSaleParties.length === 0 ? (
+              <View style={styles.emptyState}>
+                <Ionicons name="people-outline" size={48} color={colors.slate600} />
+                <Text style={styles.emptyStateText}>No credit sale parties</Text>
+                <Text style={styles.emptyStateSubtext}>Click "Add New Party" to get started</Text>
+              </View>
+            ) : (
+              creditSaleParties.map((party, index) => (
+                <View key={party.id} style={styles.partySection}>
+                  <TouchableOpacity
+                    style={globalStyles.deleteButton}
+                    onPress={() => removeCreditSaleParty(index)}
+                  >
+                    <Ionicons name="close" size={16} color={colors.red400} />
+                  </TouchableOpacity>
                   
-                  <View style={styles.gridRow}>
-                    <View style={styles.gridItem}>
-                      <Text style={globalStyles.label}>Product Selection</Text>
-                      <RNPickerSelect
-                        onValueChange={(value) => handleCreditSalePartyChange(index, 'productSelection', value)}
-                        items={getAvailableProducts().map(product => ({ 
-                          label: product.name, 
-                          value: product.name 
-                        }))}
-                        placeholder={{ label: "Select Product", value: null }}
-                        style={pickerSelectStyles}
-                        value={party.productSelection}
-                      />
-                    </View>
-                    <View style={styles.gridItemLast}>
-                      <Text style={globalStyles.label}>Ltr</Text>
-                      <TextInput
-                        style={globalStyles.input}
-                        value={party.ltr}
-                        onChangeText={(value) => handleCreditSalePartyChange(index, 'ltr', value)}
-                        placeholder="Litres"
-                        placeholderTextColor={colors.slate400}
-                        keyboardType="numeric"
-                      />
-                    </View>
-                  </View>
+                  <Text style={styles.partyTitle}>
+                    {party.partyName && party.vehicleNo 
+                      ? `Party: ${party.partyName} - ${party.vehicleNo}` 
+                      : 'Credit Sale Entry'
+                    }
+                  </Text>
                   
-                  <View style={styles.gridRow}>
-                    <View style={styles.gridItem}>
-                      <Text style={globalStyles.label}>Rate</Text>
-                      <TextInput
-                        style={globalStyles.input}
-                        value={party.rate}
-                        onChangeText={(value) => handleCreditSalePartyChange(index, 'rate', value)}
-                        placeholder="Rate"
-                        placeholderTextColor={colors.slate400}
-                        keyboardType="numeric"
-                      />
+                  <View style={styles.inputGrid}>
+                    <View style={styles.gridRow}>
+                      <View style={styles.gridItem}>
+                        <Text style={globalStyles.label}>Party Name</Text>
+                        <RNPickerSelect
+                          onValueChange={(value) => handleCreditSalePartyChange(index, 'partyName', value)}
+                          items={getAvailableParties().map(party => ({
+                            label: party.partyName,
+                            value: party.partyName
+                          }))}
+                          placeholder={{ label: "Select Party", value: null }}
+                          style={pickerSelectStyles}
+                          value={party.partyName}
+                        />
+                      </View>
+                      <View style={styles.gridItemLast}>
+                        <Text style={globalStyles.label}>Vehicle No</Text>
+                        <RNPickerSelect
+                          onValueChange={(value) => handleCreditSalePartyChange(index, 'vehicleNo', value)}
+                          items={getAvailableParties().map(party => ({
+                            label: party.vehicleNo,
+                            value: party.vehicleNo
+                          }))}
+                          placeholder={{ label: "Select Vehicle", value: null }}
+                          style={pickerSelectStyles}
+                          value={party.vehicleNo}
+                        />
+                      </View>
                     </View>
-                    <View style={styles.gridItemLast}>
-                      <Text style={globalStyles.label}>Total Credit Sales Amount</Text>
-                      <TextInput
-                        style={globalStyles.input}
-                        value={party.totalCreditSalesAmount}
-                        onChangeText={(value) => handleCreditSalePartyChange(index, 'totalCreditSalesAmount', value)}
-                        placeholder="Amount"
-                        placeholderTextColor={colors.slate400}
-                        keyboardType="numeric"
-                      />
+                    
+                    <View style={styles.gridRow}>
+                      <View style={styles.gridItem}>
+                        <Text style={globalStyles.label}>Product Selection</Text>
+                        <RNPickerSelect
+                          onValueChange={(value) => handleCreditSalePartyChange(index, 'productSelection', value)}
+                          items={getAvailableProducts().map(product => ({ 
+                            label: product.name, 
+                            value: product.name 
+                          }))}
+                          placeholder={{ label: "Select Product", value: null }}
+                          style={pickerSelectStyles}
+                          value={party.productSelection}
+                        />
+                      </View>
+                      <View style={styles.gridItemLast}>
+                        <Text style={globalStyles.label}>Ltr</Text>
+                        <TextInput
+                          style={globalStyles.input}
+                          value={party.ltr}
+                          onChangeText={(value) => handleCreditSalePartyChange(index, 'ltr', value)}
+                          placeholder="Litres"
+                          placeholderTextColor={colors.slate400}
+                          keyboardType="numeric"
+                        />
+                      </View>
+                    </View>
+                    
+                    <View style={styles.gridRow}>
+                      <View style={styles.gridItem}>
+                        <Text style={globalStyles.label}>Rate</Text>
+                        <TextInput
+                          style={globalStyles.input}
+                          value={party.rate}
+                          onChangeText={(value) => handleCreditSalePartyChange(index, 'rate', value)}
+                          placeholder="Rate"
+                          placeholderTextColor={colors.slate400}
+                          keyboardType="numeric"
+                        />
+                      </View>
+                      <View style={styles.gridItemLast}>
+                        <Text style={globalStyles.label}>Total Credit Sales Amount</Text>
+                        <TextInput
+                          style={globalStyles.input}
+                          value={party.totalCreditSalesAmount}
+                          onChangeText={(value) => handleCreditSalePartyChange(index, 'totalCreditSalesAmount', value)}
+                          placeholder="Amount"
+                          placeholderTextColor={colors.slate400}
+                          keyboardType="numeric"
+                        />
+                      </View>
                     </View>
                   </View>
                 </View>
-              </View>
-            ))}
+              ))
+            )}
             
-            {/* Total Credit Sales Amount */}
-            <View style={globalStyles.summaryBox}>
-              <Text style={styles.summaryTitle}>Total Credit Sales Amount</Text>
-              <TextInput
-                style={[globalStyles.input, styles.totalInput]}
-                value={calculateTotalCreditSalesAmount()}
-                editable={false}
-                placeholder="Total Amount"
-                placeholderTextColor={colors.slate400}
-              />
-            </View>
+            {/* Total Credit Sales Amount - only show if there are parties */}
+            {creditSaleParties.length > 0 && (
+              <View style={globalStyles.summaryBox}>
+                <Text style={styles.summaryTitle}>Total Credit Sales Amount</Text>
+                <TextInput
+                  style={[globalStyles.input, styles.totalInput]}
+                  value={calculateTotalCreditSalesAmount()}
+                  editable={false}
+                  placeholder="Total Amount"
+                  placeholderTextColor={colors.slate400}
+                />
+              </View>
+            )}
           </View>
 
           {/* HP Pay / Paytm / Gpay / Phonepe / Other */}
