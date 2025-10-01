@@ -336,8 +336,8 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
       setDigitalPayments(updatedPayments);
     }
     
-    // Force component re-render by updating state
-    const timestamp = Date.now();
+    // Force component re-render by updating refresh key
+    forceRefresh();
     
     // Clear modal and reset state - NO RECOVERY POSSIBLE
     setShowDeleteConfirmModal(false);
