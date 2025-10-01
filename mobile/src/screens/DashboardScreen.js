@@ -102,7 +102,15 @@ export default function DashboardScreen({ navigation }) {
 
           {/* Feature Tiles */}
           <View style={styles.featuresContainer}>
-            {featureTiles[activeTab]?.map(renderFeatureTile)}
+            {featureTiles[activeTab]?.length === 0 ? (
+              <View style={styles.emptyFeaturesState}>
+                <Ionicons name="apps-outline" size={64} color={colors.slate600} />
+                <Text style={styles.emptyFeaturesText}>No {activeTab.toLowerCase()} features available</Text>
+                <Text style={styles.emptyFeaturesSubtext}>Features will appear here when added</Text>
+              </View>
+            ) : (
+              featureTiles[activeTab]?.map(renderFeatureTile)
+            )}
           </View>
 
           {/* Floating Action Buttons */}
