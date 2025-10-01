@@ -817,41 +817,51 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
               </TouchableOpacity>
             </View>
             
-            {/* Digital Payment Methods */}
-            {digitalPayments.map((payment, index) => (
-              <View key={payment.id} style={styles.paymentSection}>
-                <TouchableOpacity
-                  style={globalStyles.deleteButton}
-                  onPress={() => removeDigitalPayment(index)}
-                >
-                  <Ionicons name="close" size={16} color={colors.red400} />
-                </TouchableOpacity>
-                
-                <Text style={styles.paymentTitle}>{payment.method}</Text>
-                
-                <Text style={globalStyles.label}>Amount</Text>
+            {/* Show empty state if no digital payments */}
+            {digitalPayments.length === 0 ? (
+              <View style={styles.emptyState}>
+                <Ionicons name="card-outline" size={48} color={colors.slate600} />
+                <Text style={styles.emptyStateText}>No payment methods added</Text>
+                <Text style={styles.emptyStateSubtext}>Click "Add Payment" to get started</Text>
+              </View>
+            ) : (
+              digitalPayments.map((payment, index) => (
+                <View key={payment.id} style={styles.paymentSection}>
+                  <TouchableOpacity
+                    style={globalStyles.deleteButton}
+                    onPress={() => removeDigitalPayment(index)}
+                  >
+                    <Ionicons name="close" size={16} color={colors.red400} />
+                  </TouchableOpacity>
+                  
+                  <Text style={styles.paymentTitle}>{payment.method}</Text>
+                  
+                  <Text style={globalStyles.label}>Amount</Text>
+                  <TextInput
+                    style={globalStyles.input}
+                    value={payment.amount}
+                    onChangeText={(value) => handleDigitalPaymentChange(index, 'amount', value)}
+                    placeholder="Enter amount"
+                    placeholderTextColor={colors.slate400}
+                    keyboardType="numeric"
+                  />
+                </View>
+              ))
+            )}
+            
+            {/* Total Online Amount - only show if there are payments */}
+            {digitalPayments.length > 0 && (
+              <View style={globalStyles.summaryBox}>
+                <Text style={styles.summaryTitle}>Total Online Amount</Text>
                 <TextInput
-                  style={globalStyles.input}
-                  value={payment.amount}
-                  onChangeText={(value) => handleDigitalPaymentChange(index, 'amount', value)}
-                  placeholder="Enter amount"
+                  style={[globalStyles.input, styles.totalInput]}
+                  value={calculateTotalOnlineAmount()}
+                  editable={false}
+                  placeholder="Total Amount"
                   placeholderTextColor={colors.slate400}
-                  keyboardType="numeric"
                 />
               </View>
-            ))}
-            
-            {/* Total Online Amount */}
-            <View style={globalStyles.summaryBox}>
-              <Text style={styles.summaryTitle}>Total Online Amount</Text>
-              <TextInput
-                style={[globalStyles.input, styles.totalInput]}
-                value={calculateTotalOnlineAmount()}
-                editable={false}
-                placeholder="Total Amount"
-                placeholderTextColor={colors.slate400}
-              />
-            </View>
+            )}
           </View>
 
           {/* Other Sections */}
