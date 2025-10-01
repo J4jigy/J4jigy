@@ -15,57 +15,38 @@ export default function ListViewScreen({ route, navigation }) {
   const { title, type } = route.params;
   const [activeTab, setActiveTab] = useState('All');
 
-  // Mock data for different list types
+  // Mock data for different list types - now empty
   const getMockData = () => {
     switch (type) {
       case 'customers':
         return {
           tabs: ['All', 'Debtors / देनदार', 'Regular'],
-          data: [
-            { id: 1, name: 'Customer 1', amount: '₹ 5,000', type: 'Debtor', phone: '+91 98765 43210' },
-            { id: 2, name: 'Customer 2', amount: '₹ 2,500', type: 'Regular', phone: '+91 98765 43211' },
-            { id: 3, name: 'Customer 3', amount: '₹ 8,000', type: 'Debtor', phone: '+91 98765 43212' },
-          ],
-          summary: { title: 'You gave', amount: '₹ 15,500' }
+          data: [], // Empty - no default customers
+          summary: { title: 'You gave', amount: '₹ 0' }
         };
       case 'suppliers':
         return {
           tabs: ['All', 'Creditors / लेनदार', 'Regular'],
-          data: [
-            { id: 1, name: 'Supplier 1', amount: '₹ 12,000', type: 'Creditor', phone: '+91 98765 43213' },
-            { id: 2, name: 'Supplier 2', amount: '₹ 6,000', type: 'Regular', phone: '+91 98765 43214' },
-            { id: 3, name: 'Supplier 3', amount: '₹ 9,500', type: 'Creditor', phone: '+91 98765 43215' },
-          ],
-          summary: { title: 'You gave', amount: '₹ 27,500' }
+          data: [], // Empty - no default suppliers
+          summary: { title: 'You gave', amount: '₹ 0' }
         };
       case 'payables':
         return {
           tabs: ['All', 'Overdue', 'Upcoming'],
-          data: [
-            { id: 1, name: 'Rent Payment', amount: '₹ 25,000', dueDate: '2024-01-15', type: 'Overdue' },
-            { id: 2, name: 'Utility Bill', amount: '₹ 3,500', dueDate: '2024-01-20', type: 'Upcoming' },
-            { id: 3, name: 'Equipment Payment', amount: '₹ 18,000', dueDate: '2024-01-10', type: 'Overdue' },
-          ],
-          summary: { title: 'Total Payables', amount: '₹ 46,500' }
+          data: [], // Empty - no default payables
+          summary: { title: 'Total Payables', amount: '₹ 0' }
         };
       case 'receivables':
         return {
           tabs: ['All', 'Overdue', 'Current'],
-          data: [
-            { id: 1, name: 'Invoice #001', amount: '₹ 15,000', dueDate: '2024-01-12', type: 'Overdue' },
-            { id: 2, name: 'Invoice #002', amount: '₹ 8,500', dueDate: '2024-01-25', type: 'Current' },
-            { id: 3, name: 'Invoice #003', amount: '₹ 22,000', dueDate: '2024-01-08', type: 'Overdue' },
-          ],
-          summary: { title: 'Total Receivables', amount: '₹ 45,500' }
+          data: [], // Empty - no default receivables
+          summary: { title: 'Total Receivables', amount: '₹ 0' }
         };
       default:
         return {
           tabs: ['All'],
-          data: [
-            { id: 1, name: 'Item 1', amount: '₹ 1,000', description: 'Sample item' },
-            { id: 2, name: 'Item 2', amount: '₹ 2,000', description: 'Sample item' },
-          ],
-          summary: { title: 'Total', amount: '₹ 3,000' }
+          data: [], // Empty - no default data
+          summary: { title: 'Total', amount: '₹ 0' }
         };
     }
   };
