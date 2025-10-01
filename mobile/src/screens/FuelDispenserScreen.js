@@ -36,12 +36,6 @@ export default function FuelDispenserScreen({ navigation }) {
         <View style={styles.container}>
           {/* Header */}
           <View style={styles.header}>
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              style={styles.backButton}
-            >
-              <Ionicons name="arrow-back" size={24} color={colors.white} />
-            </TouchableOpacity>
             <Text style={styles.headerTitle}>(For Petrolpump Only)</Text>
           </View>
 
