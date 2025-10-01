@@ -1287,6 +1287,15 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 6,
   },
+  debugSection: {
+    marginTop: 20,
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: colors.slate700,
+  },
+  debugButton: {
+    backgroundColor: colors.red600,
+  },
 });
 
 const pickerSelectStyles = StyleSheet.create({
