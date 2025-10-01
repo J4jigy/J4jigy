@@ -36,7 +36,7 @@ export default function CashInEntryScreen({ navigation }) {
   const [description, setDescription] = useState('');
   const [selectedCustomer, setSelectedCustomer] = useState('');
   const [selectedProduct, setSelectedProduct] = useState('');
-  const [paymentMode, setPaymentMode] = useState('Cash');
+  const [paymentMode, setPaymentMode] = useState(''); // Empty - no default payment mode
   const [activeSlot, setActiveSlot] = useState(0);
   const [showProductModal, setShowProductModal] = useState(false);
   const [showChequeModal, setShowChequeModal] = useState(false);
