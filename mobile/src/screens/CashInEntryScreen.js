@@ -97,16 +97,17 @@ export default function CashInEntryScreen({ navigation }) {
     // Permanently clear slot - NO RECOVERY
     const newSlots = [...posSlots];
     newSlots[selectedSlotIndex] = {
-      ...newSlots[selectedSlotIndex],
+      id: selectedSlotIndex,
       amount: '',
       items: [],
-      total: 0
+      total: 0,
+      customerName: `Customer ${selectedSlotIndex + 1}` // Reset to default name
     };
     setPosSlots(newSlots);
     setShowClearConfirmModal(false);
     setSelectedSlotIndex(null);
     
-    Alert.alert('Cleared', `${posSlots[selectedSlotIndex].customerName} slot has been permanently cleared.`);
+    Alert.alert('Permanently Cleared', `Slot has been permanently cleared and reset to default. All data has been permanently removed from the app.`);
   };
 
   const renameSlot = () => {
