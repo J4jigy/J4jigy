@@ -1091,7 +1091,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
           Are you sure you want to permanently delete "{deleteAction.name}"?
         </Text>
         <Text style={[globalStyles.textMuted, { marginTop: 8, fontWeight: 'bold', color: colors.red400 }]}>
-          ⚠️ This item will be permanently removed and will NOT appear anywhere in the app.
+          ⚠️ This item will be permanently removed and will NEVER reappear, even after restarting the app.
         </Text>
         
         <View style={styles.modalButtons}>
