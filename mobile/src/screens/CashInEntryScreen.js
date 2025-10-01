@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -9,11 +9,13 @@ import {
   ScrollView,
   Alert,
   Dimensions,
+  BackHandler,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import RNPickerSelect from 'react-native-picker-select';
 import { colors, globalStyles } from '../styles/globalStyles';
 import Modal from '../components/Modal';
+import { useFocusEffect } from '@react-navigation/native';
 
 const { width: screenWidth } = Dimensions.get('window');
 
