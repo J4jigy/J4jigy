@@ -63,26 +63,11 @@ export default function CashInEntryScreen({ navigation }) {
     chequeNo: ''
   });
 
-  const customers = [
-    { label: 'Select Customer', value: '' },
-    { label: 'Customer 1', value: 'customer1' },
-    { label: 'Customer 2', value: 'customer2' },
-  ];
+  const customers = []; // Empty - no default customers
 
-  const products = [
-    { label: 'Rice', value: 'rice' },
-    { label: 'Wheat', value: 'wheat' },
-    { label: 'Milk', value: 'milk' },
-    { label: 'Sugar', value: 'sugar' },
-  ];
+  const products = []; // Empty - no default products
 
-  const businessCategories = [
-    'General Store / किराना दुकान',
-    'Restaurant / रेस्टोरेंट',
-    'Medical Store / मेडिकल स्टोर',
-    'Electronics / इलेक्ट्रॉनिक्स',
-    'Clothing / कपड़े',
-  ];
+  const businessCategories = []; // Empty - no default categories
 
   const paymentModes = ['Cash', 'Card', 'UPI', 'Cheque'];
 
