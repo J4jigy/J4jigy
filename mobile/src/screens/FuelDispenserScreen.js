@@ -55,14 +55,9 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   header: {
-    flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 24,
     paddingTop: 16,
-  },
-  backButton: {
-    marginRight: 16,
-    padding: 8,
   },
   headerTitle: {
     fontSize: 16,
