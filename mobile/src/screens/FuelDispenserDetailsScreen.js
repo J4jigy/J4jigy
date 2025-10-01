@@ -560,13 +560,10 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
                           newParties[index] = { ...newParties[index], vehicleNo: value };
                           setCreditSaleParties(newParties);
                         }}
-                        items={availableParties
-                          .filter(availableParty => availableParty && availableParty.vehicleNo) // Only show existing parties
-                          .map((availableParty) => ({
-                            label: availableParty.vehicleNo,
-                            value: availableParty.vehicleNo
-                          }))
-                        }
+                        items={getAvailableParties().map(party => ({
+                          label: party.vehicleNo,
+                          value: party.vehicleNo
+                        }))}
                         placeholder={{ label: "Select Vehicle", value: null }}
                         style={pickerSelectStyles}
                         value={party.vehicleNo}
