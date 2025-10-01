@@ -208,20 +208,28 @@ export default function CashOutEntryScreen({ navigation }) {
         onClose={() => setShowExpenseModal(false)}
         title="Select Expenses"
       >
-        <View style={styles.expenseList}>
-          {expenses.map((expense, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.expenseItem}
-              onPress={() => {
-                setSelectedExpense(expense.value);
-                setShowExpenseModal(false);
-              }}
-            >
-              <Text style={globalStyles.text}>{expense.label}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+        {expenses.length === 0 ? (
+          <View style={styles.emptyModalState}>
+            <Ionicons name="receipt-outline" size={48} color={colors.slate600} />
+            <Text style={styles.emptyStateText}>No expenses available</Text>
+            <Text style={styles.emptyStateSubtext}>Expenses will appear here when added</Text>
+          </View>
+        ) : (
+          <View style={styles.expenseList}>
+            {expenses.map((expense, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.expenseItem}
+                onPress={() => {
+                  setSelectedExpense(expense.value);
+                  setShowExpenseModal(false);
+                }}
+              >
+                <Text style={globalStyles.text}>{expense.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
       </Modal>
 
       {/* Cheque Details Modal */}
