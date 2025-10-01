@@ -1225,6 +1225,25 @@ const styles = StyleSheet.create({
   debugButton: {
     backgroundColor: colors.red600,
   },
+  emptyState: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 40,
+    paddingHorizontal: 20,
+  },
+  emptyStateText: {
+    color: colors.slate400,
+    fontSize: 16,
+    fontWeight: '500',
+    marginTop: 12,
+    textAlign: 'center',
+  },
+  emptyStateSubtext: {
+    color: colors.slate500,
+    fontSize: 14,
+    marginTop: 4,
+    textAlign: 'center',
+  },
 });
 
 const pickerSelectStyles = StyleSheet.create({
