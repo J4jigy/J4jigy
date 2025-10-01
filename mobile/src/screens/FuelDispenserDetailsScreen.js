@@ -455,7 +455,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
   );
 
   return (
-    <SafeAreaView style={globalStyles.safeArea}>
+    <SafeAreaView style={globalStyles.safeArea} key={refreshKey}>
       <ScrollView style={globalStyles.scrollView} showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           {/* Date and Time Selection */}
