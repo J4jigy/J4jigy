@@ -46,11 +46,11 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     INITIALIZED: `@initialized_${dispenserId}` // Track if dispenser has been initialized
   };
 
-  // State for form data - will be loaded from storage
+  // State for form data - starts empty, will be populated from storage only
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split('T')[0],
     time: new Date().toTimeString().slice(0, 5),
-    customProducts: [], // Will be loaded from storage
+    customProducts: [], // Start empty - will load from storage or defaults
     creditSale: '',
     digitalPayments: '',
     fuelCards: '',
@@ -60,14 +60,17 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     cashOnHand: ''
   });
 
-  // State for credit sale parties - will be loaded from storage
+  // State for credit sale parties - starts empty
   const [creditSaleParties, setCreditSaleParties] = useState([]);
 
-  // State for digital payment methods - will be loaded from storage
+  // State for digital payment methods - starts empty  
   const [digitalPayments, setDigitalPayments] = useState([]);
 
-  // State for available parties - will be loaded from storage
+  // State for available parties - starts empty
   const [availableParties, setAvailableParties] = useState([]);
+
+  // Loading state to prevent premature rendering
+  const [isLoading, setIsLoading] = useState(true);
 
   // Initialize default data ONLY on first launch
   const initializeDefaultData = async () => {
