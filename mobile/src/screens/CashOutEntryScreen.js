@@ -84,13 +84,19 @@ export default function CashOutEntryScreen({ navigation }) {
           <View style={styles.selectionSection}>
             <View style={styles.selectionItem}>
               <Text style={globalStyles.label}>Supplier</Text>
-              <RNPickerSelect
-                onValueChange={setSelectedSupplier}
-                items={suppliers.slice(1)}
-                placeholder={suppliers[0]}
-                style={pickerSelectStyles}
-                value={selectedSupplier}
-              />
+              {suppliers.length === 0 ? (
+                <View style={styles.emptyDropdown}>
+                  <Text style={styles.emptyDropdownText}>No suppliers available</Text>
+                </View>
+              ) : (
+                <RNPickerSelect
+                  onValueChange={setSelectedSupplier}
+                  items={suppliers.slice(1)}
+                  placeholder={suppliers[0]}
+                  style={pickerSelectStyles}
+                  value={selectedSupplier}
+                />
+              )}
             </View>
 
             <View style={styles.selectionItem}>
