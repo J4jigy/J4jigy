@@ -439,7 +439,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     }
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (deleteAction.type === 'product') {
       const deletedProduct = formData.customProducts[deleteAction.index];
       
@@ -450,28 +450,33 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
         customProducts: updatedProducts
       }));
       
+      // Save to persistent storage
+      await saveCustomProducts(updatedProducts);
+      
       // Clear product selection in ALL credit sale parties if it matches deleted product
-      setCreditSaleParties(prev => 
-        prev.map(party => {
-          if (party.productSelection === deletedProduct.name) {
-            return {
-              ...party,
-              productSelection: '', // Clear the selection since product is deleted
-            };
-          }
-          return party;
-        })
-      );
+      const updatedCreditParties = creditSaleParties.map(party => {
+        if (party.productSelection === deletedProduct.name) {
+          return {
+            ...party,
+            productSelection: '', // Clear the selection since product is deleted
+          };
+        }
+        return party;
+      });
+      setCreditSaleParties(updatedCreditParties);
+      await saveCreditParties(updatedCreditParties);
       
     } else if (deleteAction.type === 'party') {
       // Permanently delete party from creditSaleParties array
       const updatedParties = creditSaleParties.filter((_, i) => i !== deleteAction.index);
       setCreditSaleParties(updatedParties);
+      await saveCreditParties(updatedParties);
       
     } else if (deleteAction.type === 'payment') {
       // Permanently delete payment method from digitalPayments array
       const updatedPayments = digitalPayments.filter((_, i) => i !== deleteAction.index);
       setDigitalPayments(updatedPayments);
+      await saveDigitalPayments(updatedPayments);
     }
     
     // Force component re-render by updating refresh key
@@ -484,7 +489,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     // Show confirmation that item is permanently deleted
     Alert.alert(
       'Permanently Deleted', 
-      `${deleteAction.name} has been permanently removed and will not appear anywhere in the app.`, 
+      `${deleteAction.name} has been permanently removed and will NEVER appear in the app again, even after restarting.`, 
       [{ text: 'OK' }]
     );
   };
