@@ -614,10 +614,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
               <View key={payment.id} style={styles.paymentSection}>
                 <TouchableOpacity
                   style={globalStyles.deleteButton}
-                  onPress={() => {
-                    setDeleteAction({ type: 'payment', index, name: payment.method });
-                    setShowDeleteConfirmModal(true);
-                  }}
+                  onPress={() => removeDigitalPayment(index)}
                 >
                   <Ionicons name="close" size={16} color={colors.red400} />
                 </TouchableOpacity>
