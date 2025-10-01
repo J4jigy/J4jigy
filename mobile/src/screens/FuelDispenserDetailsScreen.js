@@ -65,74 +65,44 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
   const [availableParties, setAvailableParties] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Simple, reliable data loading - NO complex initialization logic
+  // Simple data loading - always respects storage state (including empty arrays)
   const loadAllData = async () => {
     try {
       setIsLoading(true);
       console.log(`=== LOADING DATA FOR DISPENSER ${dispenserId} ===`);
 
-      // Load products - if none exist, use defaults ONLY ONCE
+      // Load products - if storage exists, load it (even if empty array)
       const savedProducts = await AsyncStorage.getItem(STORAGE_KEYS.CUSTOM_PRODUCTS);
-      let products = [];
-      
-      if (savedProducts === null) {
-        // First time ever - set defaults
-        console.log('No saved products found - setting defaults for first time');
-        products = [
-          { name: 'Petrol', openingMeter: '', closingMeter: '', totalSale: '', rate: '', totalSalesAmount: '' },
-          { name: 'Diesel', openingMeter: '', closingMeter: '', totalSale: '', rate: '', totalSalesAmount: '' },
-          { name: 'Power Petrol', openingMeter: '', closingMeter: '', totalSale: '', rate: '', totalSalesAmount: '' },
-          { name: 'Turbo Diesel', openingMeter: '', closingMeter: '', totalSale: '', rate: '', totalSalesAmount: '' }
-        ];
-        await AsyncStorage.setItem(STORAGE_KEYS.CUSTOM_PRODUCTS, JSON.stringify(products));
+      if (savedProducts !== null) {
+        const products = JSON.parse(savedProducts);
+        console.log(`Loaded ${products.length} products from storage (empty is valid)`);
+        setFormData(prev => ({ ...prev, customProducts: products }));
       } else {
-        // Load from storage - this could be empty array if user deleted everything
-        products = JSON.parse(savedProducts);
-        console.log(`Loaded ${products.length} products from storage`);
+        console.log('No products in storage - keeping empty array');
+        // Keep empty array - no defaults
       }
-      
-      setFormData(prev => ({ ...prev, customProducts: products }));
 
-      // Load credit parties
+      // Load credit parties - if storage exists, load it (even if empty array)
       const savedCreditParties = await AsyncStorage.getItem(STORAGE_KEYS.CREDIT_PARTIES);
-      let creditParties = [];
-      
-      if (savedCreditParties === null) {
-        // First time - set default
-        creditParties = [{
-          id: Date.now(),
-          partyName: '',
-          vehicleNo: '',
-          productSelection: '',
-          ltr: '',
-          rate: '',
-          totalCreditSalesAmount: ''
-        }];
-        await AsyncStorage.setItem(STORAGE_KEYS.CREDIT_PARTIES, JSON.stringify(creditParties));
-      } else {
-        creditParties = JSON.parse(savedCreditParties);
+      if (savedCreditParties !== null) {
+        const creditParties = JSON.parse(savedCreditParties);
         console.log(`Loaded ${creditParties.length} credit parties from storage`);
-      }
-      
-      setCreditSaleParties(creditParties);
-
-      // Load digital payments
-      const savedDigitalPayments = await AsyncStorage.getItem(STORAGE_KEYS.DIGITAL_PAYMENTS);
-      let payments = [];
-      
-      if (savedDigitalPayments === null) {
-        // First time - set defaults
-        payments = [
-          { id: Date.now() + 1, method: 'HP Pay', amount: '' },
-          { id: Date.now() + 2, method: 'Paytm', amount: '' }
-        ];
-        await AsyncStorage.setItem(STORAGE_KEYS.DIGITAL_PAYMENTS, JSON.stringify(payments));
+        setCreditSaleParties(creditParties);
       } else {
-        payments = JSON.parse(savedDigitalPayments);
-        console.log(`Loaded ${payments.length} digital payments from storage`);
+        console.log('No credit parties in storage - keeping empty array');
+        // Keep empty array - no defaults
       }
-      
-      setDigitalPayments(payments);
+
+      // Load digital payments - if storage exists, load it (even if empty array)
+      const savedDigitalPayments = await AsyncStorage.getItem(STORAGE_KEYS.DIGITAL_PAYMENTS);
+      if (savedDigitalPayments !== null) {
+        const payments = JSON.parse(savedDigitalPayments);
+        console.log(`Loaded ${payments.length} digital payments from storage`);
+        setDigitalPayments(payments);
+      } else {
+        console.log('No digital payments in storage - keeping empty array');
+        // Keep empty array - no defaults
+      }
 
       // Load available parties
       const savedAvailableParties = await AsyncStorage.getItem(STORAGE_KEYS.AVAILABLE_PARTIES);
@@ -140,9 +110,11 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
         const availParties = JSON.parse(savedAvailableParties);
         console.log(`Loaded ${availParties.length} available parties`);
         setAvailableParties(availParties);
+      } else {
+        console.log('No available parties in storage - keeping empty array');
       }
 
-      console.log('=== DATA LOADING COMPLETE ===');
+      console.log('=== DATA LOADING COMPLETE - RESPECTING EMPTY STATE ===');
       setIsLoading(false);
 
     } catch (error) {
