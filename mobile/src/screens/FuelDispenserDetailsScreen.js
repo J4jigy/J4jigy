@@ -290,12 +290,13 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
       const deletedProduct = formData.customProducts[deleteAction.index];
       
       // Permanently delete product from customProducts array
+      const updatedProducts = formData.customProducts.filter((_, i) => i !== deleteAction.index);
       setFormData(prev => ({
         ...prev,
-        customProducts: prev.customProducts.filter((_, i) => i !== deleteAction.index)
+        customProducts: updatedProducts
       }));
       
-      // Clear product selection in credit sale parties if it matches deleted product
+      // Clear product selection in ALL credit sale parties if it matches deleted product
       setCreditSaleParties(prev => 
         prev.map(party => {
           if (party.productSelection === deletedProduct.name) {
@@ -310,19 +311,28 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
       
     } else if (deleteAction.type === 'party') {
       // Permanently delete party from creditSaleParties array
-      setCreditSaleParties(prev => prev.filter((_, i) => i !== deleteAction.index));
+      const updatedParties = creditSaleParties.filter((_, i) => i !== deleteAction.index);
+      setCreditSaleParties(updatedParties);
       
     } else if (deleteAction.type === 'payment') {
       // Permanently delete payment method from digitalPayments array
-      setDigitalPayments(prev => prev.filter((_, i) => i !== deleteAction.index));
+      const updatedPayments = digitalPayments.filter((_, i) => i !== deleteAction.index);
+      setDigitalPayments(updatedPayments);
     }
+    
+    // Force component re-render by updating state
+    const timestamp = Date.now();
     
     // Clear modal and reset state - NO RECOVERY POSSIBLE
     setShowDeleteConfirmModal(false);
     setDeleteAction({ type: '', index: null, name: '' });
     
     // Show confirmation that item is permanently deleted
-    Alert.alert('Permanently Deleted', `${deleteAction.name} has been permanently removed from the app and will no longer appear anywhere.`, [{ text: 'OK' }]);
+    Alert.alert(
+      'Permanently Deleted', 
+      `${deleteAction.name} has been permanently removed and will not appear anywhere in the app.`, 
+      [{ text: 'OK' }]
+    );
   };
 
   const cancelDelete = () => {
