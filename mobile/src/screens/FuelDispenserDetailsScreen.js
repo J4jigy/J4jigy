@@ -627,8 +627,13 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={globalStyles.safeArea} key={refreshKey}>
-      <ScrollView style={globalStyles.scrollView} showsVerticalScrollIndicator={false}>
-        <View style={styles.container}>
+      {isLoading ? (
+        <View style={[globalStyles.container, globalStyles.center]}>
+          <Text style={globalStyles.text}>Loading...</Text>
+        </View>
+      ) : (
+        <ScrollView style={globalStyles.scrollView} showsVerticalScrollIndicator={false}>
+          <View style={styles.container}>
           {/* Date and Time Selection */}
           <View style={styles.dateTimeSection}>
             <View style={globalStyles.card}>
