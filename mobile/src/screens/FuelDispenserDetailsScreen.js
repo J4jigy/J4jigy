@@ -173,10 +173,19 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
       ]);
       console.log(`Cleared all storage for dispenser ${dispenserId}`);
       
-      // Reload data to get fresh defaults
-      await loadAllData();
+      // Reset all state to empty
+      setFormData(prev => ({
+        ...prev,
+        customProducts: []
+      }));
+      setCreditSaleParties([]);
+      setDigitalPayments([]);
+      setAvailableParties([]);
       
-      Alert.alert('Debug', 'All storage cleared and reloaded with defaults.');
+      // Force refresh
+      forceRefresh();
+      
+      Alert.alert('Debug', 'All storage cleared - app is now completely empty.');
     } catch (error) {
       console.error('Error clearing storage:', error);
     }
