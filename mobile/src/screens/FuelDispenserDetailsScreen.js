@@ -292,17 +292,52 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
   };
 
   const handleCustomProductChange = (index, field, value) => {
-    setFormData(prev => {
-      const newCustomProducts = [...prev.customProducts];
-      newCustomProducts[index] = {
-        ...newCustomProducts[index],
-        [field]: value
-      };
-      return {
-        ...prev,
-        customProducts: newCustomProducts
-      };
-    });
+    const updatedProducts = [...formData.customProducts];
+    updatedProducts[index] = {
+      ...updatedProducts[index],
+      [field]: value
+    };
+    
+    setFormData(prev => ({
+      ...prev,
+      customProducts: updatedProducts
+    }));
+    
+    // Save to storage (debounced to avoid too many writes)
+    clearTimeout(window.saveTimeout);
+    window.saveTimeout = setTimeout(() => {
+      saveCustomProducts(updatedProducts);
+    }, 1000);
+  };
+
+  const handleCreditSalePartyChange = (index, field, value) => {
+    const newParties = [...creditSaleParties];
+    newParties[index] = {
+      ...newParties[index],
+      [field]: value
+    };
+    setCreditSaleParties(newParties);
+    
+    // Save to storage (debounced)
+    clearTimeout(window.saveCreditTimeout);
+    window.saveCreditTimeout = setTimeout(() => {
+      saveCreditParties(newParties);
+    }, 1000);
+  };
+
+  const handleDigitalPaymentChange = (index, field, value) => {
+    const newPayments = [...digitalPayments];
+    newPayments[index] = {
+      ...newPayments[index],
+      [field]: value
+    };
+    setDigitalPayments(newPayments);
+    
+    // Save to storage (debounced)
+    clearTimeout(window.savePaymentTimeout);
+    window.savePaymentTimeout = setTimeout(() => {
+      saveDigitalPayments(newPayments);
+    }, 1000);
   };
 
   const addNewProduct = () => {
