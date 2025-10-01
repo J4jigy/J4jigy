@@ -158,18 +158,10 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     }
   };
 
-  // Initialize data on component mount
+  // Load data on component mount
   useEffect(() => {
-    const initializeData = async () => {
-      // Step 1: Initialize defaults ONLY if this is first time
-      await initializeDefaultData();
-      
-      // Step 2: Load current data from storage (respects deletions)
-      await loadDataFromStorage();
-    };
-    
-    initializeData();
-  }, [dispenserId]); // Re-run when dispenserId changes
+    loadAllData();
+  }, [dispenserId]);
 
   // Save data to storage whenever state changes
   const saveCustomProducts = async (products) => {
