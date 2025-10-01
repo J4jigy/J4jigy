@@ -778,11 +778,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
                       <TextInput
                         style={globalStyles.input}
                         value={party.ltr}
-                        onChangeText={(value) => {
-                          const newParties = [...creditSaleParties];
-                          newParties[index] = { ...newParties[index], ltr: value };
-                          setCreditSaleParties(newParties);
-                        }}
+                        onChangeText={(value) => handleCreditSalePartyChange(index, 'ltr', value)}
                         placeholder="Litres"
                         placeholderTextColor={colors.slate400}
                         keyboardType="numeric"
