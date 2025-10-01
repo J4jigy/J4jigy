@@ -47,7 +47,7 @@ export default function CashInEntryScreen({ navigation }) {
     amount: '',
     items: [],
     total: 0,
-    customerName: `Customer ${i + 1}` // Default name, can be renamed
+    customerName: '' // Empty - no default names
   })));
 
   // State for slot management modals
