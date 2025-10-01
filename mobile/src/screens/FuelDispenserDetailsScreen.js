@@ -171,6 +171,54 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     setShowDeleteConfirmModal(true);
   };
 
+  const removeCreditSaleParty = (index) => {
+    const party = creditSaleParties[index];
+    const partyName = `${party.partyName} - ${party.vehicleNo}`;
+    setDeleteAction({
+      type: 'party',
+      index: index,
+      name: partyName
+    });
+    setShowDeleteConfirmModal(true);
+  };
+
+  const removeDigitalPayment = (index) => {
+    const payment = digitalPayments[index];
+    setDeleteAction({
+      type: 'payment',
+      index: index,
+      name: payment.method
+    });
+    setShowDeleteConfirmModal(true);
+  };
+
+  const removePartyFromAvailable = (partyToRemove) => {
+    // Remove party from available parties list completely
+    setAvailableParties(prev => 
+      prev.filter(party => 
+        !(party.partyName === partyToRemove.partyName && party.vehicleNo === partyToRemove.vehicleNo)
+      )
+    );
+    
+    // Clear any credit sale parties that reference this deleted party
+    setCreditSaleParties(prev => 
+      prev.map(party => {
+        if (party.partyName === partyToRemove.partyName && party.vehicleNo === partyToRemove.vehicleNo) {
+          return {
+            ...party,
+            partyName: '',
+            vehicleNo: '',
+            productSelection: '',
+            ltr: '',
+            rate: '',
+            totalCreditSalesAmount: ''
+          };
+        }
+        return party;
+      })
+    );
+  };
+
   const addNewParty = () => {
     setShowAddPartyModal(true);
   };
