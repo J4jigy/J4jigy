@@ -432,16 +432,18 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     setShowAddPaymentModal(true);
   };
 
-  const saveNewPayment = () => {
+  const saveNewPayment = async () => {
     if (newPaymentMethod.trim()) {
-      setDigitalPayments(prev => [
-        ...prev,
-        {
-          id: Date.now(),
-          method: newPaymentMethod.trim(),
-          amount: ''
-        }
-      ]);
+      const newPayment = {
+        id: Date.now(),
+        method: newPaymentMethod.trim(),
+        amount: ''
+      };
+      
+      const updatedPayments = [...digitalPayments, newPayment];
+      setDigitalPayments(updatedPayments);
+      await saveDigitalPayments(updatedPayments);
+      
       setNewPaymentMethod('');
       setShowAddPaymentModal(false);
     }
