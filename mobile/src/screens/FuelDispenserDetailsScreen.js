@@ -68,6 +68,185 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
   // State for available parties - will be loaded from storage
   const [availableParties, setAvailableParties] = useState([]);
 
+  // Initialize default data if none exists
+  const initializeDefaultData = async () => {
+    try {
+      // Check if custom products already exist
+      const existingProducts = await AsyncStorage.getItem(STORAGE_KEYS.CUSTOM_PRODUCTS);
+      if (!existingProducts) {
+        // Set default products only if none exist
+        const defaultProducts = [
+          {
+            name: 'Petrol',
+            openingMeter: '',
+            closingMeter: '',
+            totalSale: '',
+            rate: '',
+            totalSalesAmount: ''
+          },
+          {
+            name: 'Diesel',
+            openingMeter: '',
+            closingMeter: '',
+            totalSale: '',
+            rate: '',
+            totalSalesAmount: ''
+          },
+          {
+            name: 'Power Petrol',
+            openingMeter: '',
+            closingMeter: '',
+            totalSale: '',
+            rate: '',
+            totalSalesAmount: ''
+          },
+          {
+            name: 'Turbo Diesel',
+            openingMeter: '',
+            closingMeter: '',
+            totalSale: '',
+            rate: '',
+            totalSalesAmount: ''
+          }
+        ];
+        
+        setFormData(prev => ({
+          ...prev,
+          customProducts: defaultProducts
+        }));
+        await AsyncStorage.setItem(STORAGE_KEYS.CUSTOM_PRODUCTS, JSON.stringify(defaultProducts));
+      }
+
+      // Check if credit parties already exist
+      const existingCreditParties = await AsyncStorage.getItem(STORAGE_KEYS.CREDIT_PARTIES);
+      if (!existingCreditParties) {
+        const defaultCreditParty = [{
+          id: Date.now(),
+          partyName: '',
+          vehicleNo: '',
+          productSelection: '',
+          ltr: '',
+          rate: '',
+          totalCreditSalesAmount: ''
+        }];
+        
+        setCreditSaleParties(defaultCreditParty);
+        await AsyncStorage.setItem(STORAGE_KEYS.CREDIT_PARTIES, JSON.stringify(defaultCreditParty));
+      }
+
+      // Check if digital payments already exist
+      const existingDigitalPayments = await AsyncStorage.getItem(STORAGE_KEYS.DIGITAL_PAYMENTS);
+      if (!existingDigitalPayments) {
+        const defaultDigitalPayments = [
+          {
+            id: Date.now() + 1,
+            method: 'HP Pay',
+            amount: ''
+          },
+          {
+            id: Date.now() + 2,
+            method: 'Paytm',
+            amount: ''
+          }
+        ];
+        
+        setDigitalPayments(defaultDigitalPayments);
+        await AsyncStorage.setItem(STORAGE_KEYS.DIGITAL_PAYMENTS, JSON.stringify(defaultDigitalPayments));
+      }
+    } catch (error) {
+      console.error('Error initializing default data:', error);
+    }
+  };
+
+  // Load data from storage
+  const loadDataFromStorage = async () => {
+    try {
+      // Load custom products
+      const savedProducts = await AsyncStorage.getItem(STORAGE_KEYS.CUSTOM_PRODUCTS);
+      if (savedProducts) {
+        const products = JSON.parse(savedProducts);
+        setFormData(prev => ({
+          ...prev,
+          customProducts: products
+        }));
+      }
+
+      // Load credit parties
+      const savedCreditParties = await AsyncStorage.getItem(STORAGE_KEYS.CREDIT_PARTIES);
+      if (savedCreditParties) {
+        setCreditSaleParties(JSON.parse(savedCreditParties));
+      }
+
+      // Load digital payments
+      const savedDigitalPayments = await AsyncStorage.getItem(STORAGE_KEYS.DIGITAL_PAYMENTS);
+      if (savedDigitalPayments) {
+        setDigitalPayments(JSON.parse(savedDigitalPayments));
+      }
+
+      // Load available parties
+      const savedAvailableParties = await AsyncStorage.getItem(STORAGE_KEYS.AVAILABLE_PARTIES);
+      if (savedAvailableParties) {
+        setAvailableParties(JSON.parse(savedAvailableParties));
+      }
+
+      // Load other form data
+      const savedFormData = await AsyncStorage.getItem(STORAGE_KEYS.FORM_DATA);
+      if (savedFormData) {
+        const formDataFromStorage = JSON.parse(savedFormData);
+        setFormData(prev => ({
+          ...prev,
+          ...formDataFromStorage,
+          customProducts: prev.customProducts // Keep products from their own storage
+        }));
+      }
+    } catch (error) {
+      console.error('Error loading data from storage:', error);
+    }
+  };
+
+  // Initialize data on component mount
+  useEffect(() => {
+    const initializeData = async () => {
+      await loadDataFromStorage();
+      await initializeDefaultData();
+    };
+    
+    initializeData();
+  }, []);
+
+  // Save data to storage whenever state changes
+  const saveCustomProducts = async (products) => {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEYS.CUSTOM_PRODUCTS, JSON.stringify(products));
+    } catch (error) {
+      console.error('Error saving custom products:', error);
+    }
+  };
+
+  const saveCreditParties = async (parties) => {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEYS.CREDIT_PARTIES, JSON.stringify(parties));
+    } catch (error) {
+      console.error('Error saving credit parties:', error);
+    }
+  };
+
+  const saveDigitalPayments = async (payments) => {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEYS.DIGITAL_PAYMENTS, JSON.stringify(payments));
+    } catch (error) {
+      console.error('Error saving digital payments:', error);
+    }
+  };
+
+  const saveAvailableParties = async (parties) => {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEYS.AVAILABLE_PARTIES, JSON.stringify(parties));
+    } catch (error) {
+      console.error('Error saving available parties:', error);
+    }
+  };
+
   // State for modals
   const [showAddProductModal, setShowAddProductModal] = useState(false);
   const [showAddPartyModal, setShowAddPartyModal] = useState(false);
