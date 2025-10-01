@@ -36,44 +36,20 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     }, [navigation])
   );
 
-  // State for form data
+  // Storage keys for persistence
+  const STORAGE_KEYS = {
+    CUSTOM_PRODUCTS: `@fuel_products_${dispenserId}`,
+    CREDIT_PARTIES: `@credit_parties_${dispenserId}`,
+    DIGITAL_PAYMENTS: `@digital_payments_${dispenserId}`,
+    AVAILABLE_PARTIES: '@available_parties',
+    FORM_DATA: `@form_data_${dispenserId}`
+  };
+
+  // State for form data - will be loaded from storage
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split('T')[0],
     time: new Date().toTimeString().slice(0, 5),
-    customProducts: [
-      {
-        name: 'Petrol',
-        openingMeter: '',
-        closingMeter: '',
-        totalSale: '',
-        rate: '',
-        totalSalesAmount: ''
-      },
-      {
-        name: 'Diesel',
-        openingMeter: '',
-        closingMeter: '',
-        totalSale: '',
-        rate: '',
-        totalSalesAmount: ''
-      },
-      {
-        name: 'Power Petrol',
-        openingMeter: '',
-        closingMeter: '',
-        totalSale: '',
-        rate: '',
-        totalSalesAmount: ''
-      },
-      {
-        name: 'Turbo Diesel',
-        openingMeter: '',
-        closingMeter: '',
-        totalSale: '',
-        rate: '',
-        totalSalesAmount: ''
-      }
-    ],
+    customProducts: [], // Will be loaded from storage
     creditSale: '',
     digitalPayments: '',
     fuelCards: '',
@@ -83,32 +59,14 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     cashOnHand: ''
   });
 
-  // State for credit sale parties
-  const [creditSaleParties, setCreditSaleParties] = useState([
-    {
-      id: Date.now(),
-      partyName: '',
-      vehicleNo: '',
-      productSelection: '',
-      ltr: '',
-      rate: '',
-      totalCreditSalesAmount: ''
-    }
-  ]);
+  // State for credit sale parties - will be loaded from storage
+  const [creditSaleParties, setCreditSaleParties] = useState([]);
 
-  // State for digital payment methods
-  const [digitalPayments, setDigitalPayments] = useState([
-    {
-      id: Date.now() + 1,
-      method: 'HP Pay',
-      amount: ''
-    },
-    {
-      id: Date.now() + 2,
-      method: 'Paytm',
-      amount: ''
-    }
-  ]);
+  // State for digital payment methods - will be loaded from storage
+  const [digitalPayments, setDigitalPayments] = useState([]);
+
+  // State for available parties - will be loaded from storage
+  const [availableParties, setAvailableParties] = useState([]);
 
   // State for modals
   const [showAddProductModal, setShowAddProductModal] = useState(false);
