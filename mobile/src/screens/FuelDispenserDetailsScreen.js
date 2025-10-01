@@ -508,11 +508,16 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
   };
 
   const confirmDelete = async () => {
+    console.log(`DELETING: ${deleteAction.type} at index ${deleteAction.index} - ${deleteAction.name}`);
+    
     if (deleteAction.type === 'product') {
       const deletedProduct = formData.customProducts[deleteAction.index];
+      console.log(`Deleting product: ${deletedProduct.name}`);
       
       // Permanently delete product from customProducts array
       const updatedProducts = formData.customProducts.filter((_, i) => i !== deleteAction.index);
+      console.log(`Products after deletion: ${updatedProducts.length} items`);
+      
       setFormData(prev => ({
         ...prev,
         customProducts: updatedProducts
@@ -520,6 +525,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
       
       // Save to persistent storage
       await saveCustomProducts(updatedProducts);
+      console.log(`Saved ${updatedProducts.length} products to storage for ${dispenserId}`);
       
       // Clear product selection in ALL credit sale parties if it matches deleted product
       const updatedCreditParties = creditSaleParties.map(party => {
@@ -535,16 +541,26 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
       await saveCreditParties(updatedCreditParties);
       
     } else if (deleteAction.type === 'party') {
+      console.log(`Deleting party at index ${deleteAction.index}`);
+      
       // Permanently delete party from creditSaleParties array
       const updatedParties = creditSaleParties.filter((_, i) => i !== deleteAction.index);
+      console.log(`Parties after deletion: ${updatedParties.length} items`);
+      
       setCreditSaleParties(updatedParties);
       await saveCreditParties(updatedParties);
+      console.log(`Saved ${updatedParties.length} parties to storage for ${dispenserId}`);
       
     } else if (deleteAction.type === 'payment') {
+      console.log(`Deleting payment method: ${deleteAction.name}`);
+      
       // Permanently delete payment method from digitalPayments array
       const updatedPayments = digitalPayments.filter((_, i) => i !== deleteAction.index);
+      console.log(`Payments after deletion: ${updatedPayments.length} items`);
+      
       setDigitalPayments(updatedPayments);
       await saveDigitalPayments(updatedPayments);
+      console.log(`Saved ${updatedPayments.length} payments to storage for ${dispenserId}`);
     }
     
     // Force component re-render by updating refresh key
