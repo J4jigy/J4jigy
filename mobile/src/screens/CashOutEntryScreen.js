@@ -29,30 +29,11 @@ export default function CashOutEntryScreen({ navigation }) {
     chequeNo: ''
   });
 
-  const suppliers = [
-    { label: 'Select Supplier', value: '' },
-    { label: 'Supplier 1', value: 'supplier1' },
-    { label: 'Supplier 2', value: 'supplier2' },
-  ];
+  const suppliers = []; // Empty - no default suppliers
 
-  const expenses = [
-    { label: 'Office Supplies', value: 'office' },
-    { label: 'Utilities', value: 'utilities' },
-    { label: 'Rent', value: 'rent' },
-    { label: 'Transportation', value: 'transport' },
-    { label: 'Marketing', value: 'marketing' },
-    { label: 'Equipment', value: 'equipment' },
-    { label: 'Software', value: 'software' },
-    { label: 'Insurance', value: 'insurance' },
-  ];
+  const expenses = []; // Empty - no default expenses
 
-  const businessCategories = [
-    'Office Expenses / कार्यालय व्यय',
-    'Travel Expenses / यात्रा व्यय',
-    'Utility Bills / उपयोगिता बिल',
-    'Rent Payment / किराया भुगतान',
-    'Equipment Purchase / उपकरण खरीद',
-  ];
+  const businessCategories = []; // Empty - no default categories
 
   const paymentModes = ['Cash', 'Card', 'UPI', 'Cheque'];
 
