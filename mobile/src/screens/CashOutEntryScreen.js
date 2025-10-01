@@ -381,6 +381,41 @@ const styles = StyleSheet.create({
   buttonSecondary: {
     backgroundColor: colors.slate600,
   },
+  emptyState: {
+    alignItems: 'center',
+    paddingVertical: 40,
+    paddingHorizontal: 20,
+  },
+  emptyStateText: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: colors.slate400,
+    marginTop: 12,
+    textAlign: 'center',
+  },
+  emptyStateSubtext: {
+    fontSize: 14,
+    color: colors.slate500,
+    marginTop: 4,
+    textAlign: 'center',
+  },
+  emptyModalState: {
+    alignItems: 'center',
+    paddingVertical: 20,
+  },
+  emptyDropdown: {
+    backgroundColor: colors.slate700,
+    borderWidth: 1,
+    borderColor: colors.slate600,
+    borderRadius: 4,
+    height: 32,
+    paddingHorizontal: 8,
+    justifyContent: 'center',
+  },
+  emptyDropdownText: {
+    color: colors.slate500,
+    fontSize: 14,
+  },
 });
 
 const pickerSelectStyles = StyleSheet.create({
