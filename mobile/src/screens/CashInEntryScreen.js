@@ -482,7 +482,7 @@ export default function CashInEntryScreen({ navigation }) {
           Are you sure you want to permanently clear "{posSlots[selectedSlotIndex]?.customerName}"?
         </Text>
         <Text style={[globalStyles.textMuted, { marginTop: 8, fontWeight: 'bold', color: colors.red400 }]}>
-          ⚠️ All data in this slot will be permanently lost and CANNOT be recovered.
+          ⚠️ All data will be permanently lost and will NOT appear anywhere in the app.
         </Text>
         
         <View style={styles.modalButtons}>
