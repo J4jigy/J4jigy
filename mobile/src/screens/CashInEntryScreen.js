@@ -193,12 +193,13 @@ export default function CashInEntryScreen({ navigation }) {
                     index === activeSlot && styles.activeSlot
                   ]}
                   onPress={() => handleSlotPress(index)}
+                  onLongPress={() => handleSlotLongPress(index)}
                 >
                   <Text style={[
                     styles.slotText,
                     index === activeSlot && styles.activeSlotText
                   ]}>
-                    C{index + 1}
+                    {slot.customerName || `C${index + 1}`}
                   </Text>
                   <Text style={[
                     styles.slotAmount,
