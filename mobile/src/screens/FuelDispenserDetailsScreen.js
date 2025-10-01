@@ -823,14 +823,14 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
       <Modal
         visible={showDeleteConfirmModal}
         onClose={cancelDelete}
-        title="Confirm Delete"
+        title="⚠️ Permanent Delete"
         showCloseButton={false}
       >
         <Text style={globalStyles.text}>
-          Are you sure you want to delete "{deleteAction.name}"?
+          Are you sure you want to permanently delete "{deleteAction.name}"?
         </Text>
-        <Text style={[globalStyles.textMuted, { marginTop: 8 }]}>
-          This action cannot be undone.
+        <Text style={[globalStyles.textMuted, { marginTop: 8, fontWeight: 'bold', color: colors.red400 }]}>
+          ⚠️ This action CANNOT be undone. The item will be permanently removed.
         </Text>
         
         <View style={styles.modalButtons}>
@@ -838,7 +838,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
             style={[globalStyles.button, globalStyles.buttonDanger, styles.modalButton]}
             onPress={confirmDelete}
           >
-            <Text style={globalStyles.buttonText}>Delete</Text>
+            <Text style={globalStyles.buttonText}>Delete Permanently</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[globalStyles.button, styles.buttonSecondary, styles.modalButton]}
