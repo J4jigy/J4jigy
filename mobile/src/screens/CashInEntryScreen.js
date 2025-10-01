@@ -199,7 +199,7 @@ export default function CashInEntryScreen({ navigation }) {
                     styles.slotText,
                     index === activeSlot && styles.activeSlotText
                   ]}>
-                    {slot.customerName || `C${index + 1}`}
+                    {slot.customerName || `Slot ${index + 1}`}
                   </Text>
                   <Text style={[
                     styles.slotAmount,
