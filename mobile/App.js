@@ -53,13 +53,31 @@ export default function App() {
         <Stack.Screen 
           name="FuelDispenser" 
           component={FuelDispenserScreen} 
-          options={{ title: 'Fuel Dispensers' }}
+          options={{
+            title: 'Fuel Dispensers',
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                style={{ marginLeft: 15 }}
+              >
+                <Ionicons name="arrow-back" size={24} color="#fff" />
+              </TouchableOpacity>
+            ),
+          }}
         />
         <Stack.Screen 
           name="FuelDispenserDetails" 
           component={FuelDispenserDetailsScreen} 
-          options={({ route }) => ({ 
-            title: `Dispenser ${route.params?.dispenserId || ''}` 
+          options={({ route, navigation }) => ({ 
+            title: `Dispenser ${route.params?.dispenserId || ''}`,
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                style={{ marginLeft: 15 }}
+              >
+                <Ionicons name="arrow-back" size={24} color="#fff" />
+              </TouchableOpacity>
+            ),
           })}
         />
         <Stack.Screen 
