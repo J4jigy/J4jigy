@@ -18,6 +18,18 @@ import Modal from '../components/Modal';
 const { width: screenWidth } = Dimensions.get('window');
 
 export default function CashInEntryScreen({ navigation }) {
+  // Handle hardware back button
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        navigation.goBack();
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      return () => subscription?.remove();
+    }, [navigation])
+  );
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [selectedCustomer, setSelectedCustomer] = useState('');
