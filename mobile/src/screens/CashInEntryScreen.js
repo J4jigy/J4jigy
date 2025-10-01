@@ -216,13 +216,19 @@ export default function CashInEntryScreen({ navigation }) {
           <View style={styles.selectionSection}>
             <View style={styles.selectionItem}>
               <Text style={globalStyles.label}>Customer</Text>
-              <RNPickerSelect
-                onValueChange={setSelectedCustomer}
-                items={customers.slice(1)}
-                placeholder={customers[0]}
-                style={pickerSelectStyles}
-                value={selectedCustomer}
-              />
+              {customers.length === 0 ? (
+                <View style={styles.emptyDropdown}>
+                  <Text style={styles.emptyDropdownText}>No customers available</Text>
+                </View>
+              ) : (
+                <RNPickerSelect
+                  onValueChange={setSelectedCustomer}
+                  items={customers.slice(1)}
+                  placeholder={customers[0]}
+                  style={pickerSelectStyles}
+                  value={selectedCustomer}
+                />
+              )}
             </View>
 
             <View style={styles.selectionItem}>
