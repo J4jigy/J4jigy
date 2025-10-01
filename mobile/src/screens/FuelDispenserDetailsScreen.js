@@ -203,8 +203,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
         STORAGE_KEYS.CREDIT_PARTIES,
         STORAGE_KEYS.DIGITAL_PAYMENTS,
         STORAGE_KEYS.AVAILABLE_PARTIES,
-        STORAGE_KEYS.FORM_DATA,
-        STORAGE_KEYS.INITIALIZED
+        STORAGE_KEYS.FORM_DATA
       ]);
       console.log(`Cleared all storage for dispenser ${dispenserId}`);
       
