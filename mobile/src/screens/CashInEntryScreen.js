@@ -28,13 +28,20 @@ export default function CashInEntryScreen({ navigation }) {
   const [showChequeModal, setShowChequeModal] = useState(false);
   const [showBillModal, setShowBillModal] = useState(false);
 
-  // POS Slots data
   const [posSlots, setPosSlots] = useState(Array(6).fill(null).map((_, i) => ({
     id: i,
     amount: '',
     items: [],
-    total: 0
+    total: 0,
+    customerName: `Customer ${i + 1}` // Default name, can be renamed
   })));
+
+  // State for slot management modals
+  const [showSlotOptionsModal, setShowSlotOptionsModal] = useState(false);
+  const [showClearConfirmModal, setShowClearConfirmModal] = useState(false);
+  const [showRenameModal, setShowRenameModal] = useState(false);
+  const [selectedSlotIndex, setSelectedSlotIndex] = useState(null);
+  const [newSlotName, setNewSlotName] = useState('');
 
   const [chequeDetails, setChequeDetails] = useState({
     bankName: '',
