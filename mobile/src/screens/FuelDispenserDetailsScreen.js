@@ -252,6 +252,24 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     }
   };
 
+  // Debug function to clear all storage (for testing)
+  const clearAllStorage = async () => {
+    try {
+      await AsyncStorage.multiRemove([
+        STORAGE_KEYS.CUSTOM_PRODUCTS,
+        STORAGE_KEYS.CREDIT_PARTIES,
+        STORAGE_KEYS.DIGITAL_PAYMENTS,
+        STORAGE_KEYS.AVAILABLE_PARTIES,
+        STORAGE_KEYS.FORM_DATA,
+        STORAGE_KEYS.INITIALIZED
+      ]);
+      console.log(`Cleared all storage for dispenser ${dispenserId}`);
+      Alert.alert('Debug', 'All storage cleared. App will reinitialize with defaults.');
+    } catch (error) {
+      console.error('Error clearing storage:', error);
+    }
+  };
+
   // State for modals
   const [showAddProductModal, setShowAddProductModal] = useState(false);
   const [showAddPartyModal, setShowAddPartyModal] = useState(false);
