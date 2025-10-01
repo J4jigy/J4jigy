@@ -714,6 +714,13 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 6,
   },
+  slotOptionsContainer: {
+    marginTop: 8,
+  },
+  optionButton: {
+    marginBottom: 12,
+    height: 44,
+  },
 });
 
 const pickerSelectStyles = StyleSheet.create({
