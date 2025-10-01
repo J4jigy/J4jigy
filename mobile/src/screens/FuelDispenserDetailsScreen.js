@@ -137,7 +137,13 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     }));
   };
 
-  const handleCustomProductChange = (index, field, value) => {
+  const getAvailableProducts = () => {
+    return formData.customProducts.filter(product => product && product.name && product.name.trim());
+  };
+
+  const getAvailableParties = () => {
+    return availableParties.filter(party => party && party.partyName && party.vehicleNo);
+  };
     setFormData(prev => {
       const newCustomProducts = [...prev.customProducts];
       newCustomProducts[index] = {
