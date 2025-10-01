@@ -856,11 +856,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
                 <TextInput
                   style={globalStyles.input}
                   value={payment.amount}
-                  onChangeText={(value) => {
-                    const newPayments = [...digitalPayments];
-                    newPayments[index] = { ...newPayments[index], amount: value };
-                    setDigitalPayments(newPayments);
-                  }}
+                  onChangeText={(value) => handleDigitalPaymentChange(index, 'amount', value)}
                   placeholder="Enter amount"
                   placeholderTextColor={colors.slate400}
                   keyboardType="numeric"
