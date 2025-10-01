@@ -439,6 +439,101 @@ export default function CashInEntryScreen({ navigation }) {
           </View>
         </View>
       </Modal>
+
+      {/* Slot Options Modal */}
+      <Modal
+        visible={showSlotOptionsModal}
+        onClose={() => setShowSlotOptionsModal(false)}
+        title={`Manage ${posSlots[selectedSlotIndex]?.customerName || 'Slot'}`}
+      >
+        <View style={styles.slotOptionsContainer}>
+          <TouchableOpacity
+            style={[globalStyles.button, globalStyles.buttonDanger, styles.optionButton]}
+            onPress={clearCurrentSlot}
+          >
+            <Text style={globalStyles.buttonText}>Clear Current Slot</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity
+            style={[globalStyles.button, globalStyles.buttonPrimary, styles.optionButton]}
+            onPress={renameSlot}
+          >
+            <Text style={globalStyles.buttonText}>Rename Slot</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity
+            style={[globalStyles.button, styles.buttonSecondary, styles.optionButton]}
+            onPress={() => setShowSlotOptionsModal(false)}
+          >
+            <Text style={globalStyles.buttonText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      {/* Clear Slot Confirmation Modal */}
+      <Modal
+        visible={showClearConfirmModal}
+        onClose={() => setShowClearConfirmModal(false)}
+        title="⚠️ Permanently Clear Slot"
+        showCloseButton={false}
+      >
+        <Text style={globalStyles.text}>
+          Are you sure you want to permanently clear "{posSlots[selectedSlotIndex]?.customerName}"?
+        </Text>
+        <Text style={[globalStyles.textMuted, { marginTop: 8, fontWeight: 'bold', color: colors.red400 }]}>
+          ⚠️ All data in this slot will be permanently lost and CANNOT be recovered.
+        </Text>
+        
+        <View style={styles.modalButtons}>
+          <TouchableOpacity
+            style={[globalStyles.button, globalStyles.buttonDanger, styles.modalButton]}
+            onPress={confirmClearSlot}
+          >
+            <Text style={globalStyles.buttonText}>Clear Permanently</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[globalStyles.button, styles.buttonSecondary, styles.modalButton]}
+            onPress={() => setShowClearConfirmModal(false)}
+          >
+            <Text style={globalStyles.buttonText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
+
+      {/* Rename Slot Modal */}
+      <Modal
+        visible={showRenameModal}
+        onClose={() => setShowRenameModal(false)}
+        title="Rename Slot"
+      >
+        <Text style={globalStyles.label}>Slot Name</Text>
+        <TextInput
+          style={globalStyles.input}
+          value={newSlotName}
+          onChangeText={setNewSlotName}
+          placeholder="Enter new slot name"
+          placeholderTextColor={colors.slate400}
+        />
+        
+        <View style={styles.modalButtons}>
+          <TouchableOpacity
+            style={[globalStyles.button, globalStyles.buttonSuccess, styles.modalButton]}
+            onPress={confirmRenameSlot}
+            disabled={!newSlotName.trim()}
+          >
+            <Text style={globalStyles.buttonText}>Rename</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[globalStyles.button, styles.buttonSecondary, styles.modalButton]}
+            onPress={() => {
+              setShowRenameModal(false);
+              setNewSlotName('');
+            }}
+          >
+            <Text style={globalStyles.buttonText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
