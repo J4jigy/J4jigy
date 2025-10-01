@@ -289,4 +289,23 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     marginLeft: 8,
   },
+  emptyFeaturesState: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 60,
+  },
+  emptyFeaturesText: {
+    fontSize: 18,
+    fontWeight: '500',
+    color: colors.slate400,
+    marginTop: 16,
+    textAlign: 'center',
+  },
+  emptyFeaturesSubtext: {
+    fontSize: 14,
+    color: colors.slate500,
+    marginTop: 8,
+    textAlign: 'center',
+  },
 });
