@@ -208,7 +208,11 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
         STORAGE_KEYS.INITIALIZED
       ]);
       console.log(`Cleared all storage for dispenser ${dispenserId}`);
-      Alert.alert('Debug', 'All storage cleared. App will reinitialize with defaults.');
+      
+      // Reload data to get fresh defaults
+      await loadAllData();
+      
+      Alert.alert('Debug', 'All storage cleared and reloaded with defaults.');
     } catch (error) {
       console.error('Error clearing storage:', error);
     }
