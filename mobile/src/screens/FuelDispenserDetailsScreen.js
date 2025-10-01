@@ -309,22 +309,27 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     setShowAddProductModal(true);
   };
 
-  const saveNewProduct = () => {
+  const saveNewProduct = async () => {
     if (newProductName.trim()) {
+      const newProduct = {
+        name: newProductName.trim(),
+        openingMeter: '',
+        closingMeter: '',
+        totalSale: '',
+        rate: '',
+        totalSalesAmount: ''
+      };
+      
+      const updatedProducts = [...formData.customProducts, newProduct];
+      
       setFormData(prev => ({
         ...prev,
-        customProducts: [
-          ...prev.customProducts,
-          {
-            name: newProductName.trim(),
-            openingMeter: '',
-            closingMeter: '',
-            totalSale: '',
-            rate: '',
-            totalSalesAmount: ''
-          }
-        ]
+        customProducts: updatedProducts
       }));
+      
+      // Save to persistent storage
+      await saveCustomProducts(updatedProducts);
+      
       setNewProductName('');
       setShowAddProductModal(false);
     }
