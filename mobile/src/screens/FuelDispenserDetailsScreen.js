@@ -1013,6 +1013,25 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
               <Text style={globalStyles.buttonText}>Cancel</Text>
             </TouchableOpacity>
           </View>
+
+          {/* Debug Button - Remove in production */}
+          <View style={styles.debugSection}>
+            <TouchableOpacity
+              style={[globalStyles.button, styles.debugButton, styles.actionButton]}
+              onPress={() => {
+                Alert.alert(
+                  'Debug Storage', 
+                  'Clear all storage for this dispenser?',
+                  [
+                    { text: 'Cancel', style: 'cancel' },
+                    { text: 'Clear', style: 'destructive', onPress: clearAllStorage }
+                  ]
+                );
+              }}
+            >
+              <Text style={globalStyles.buttonText}>🐛 Debug: Clear Storage</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
 
