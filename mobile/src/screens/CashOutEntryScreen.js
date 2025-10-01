@@ -19,7 +19,7 @@ export default function CashOutEntryScreen({ navigation }) {
   const [description, setDescription] = useState('');
   const [selectedSupplier, setSelectedSupplier] = useState('');
   const [selectedExpense, setSelectedExpense] = useState('');
-  const [paymentMode, setPaymentMode] = useState('Cash');
+  const [paymentMode, setPaymentMode] = useState(''); // Empty - no default payment mode
   const [showExpenseModal, setShowExpenseModal] = useState(false);
   const [showChequeModal, setShowChequeModal] = useState(false);
 
