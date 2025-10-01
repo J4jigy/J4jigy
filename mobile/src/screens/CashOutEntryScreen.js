@@ -136,22 +136,30 @@ export default function CashOutEntryScreen({ navigation }) {
             />
           </View>
 
-          {/* Business Categories */}
+          {/* Expense Categories */}
           <View style={globalStyles.card}>
             <Text style={globalStyles.cardTitle}>Expense Categories</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <View style={styles.categoriesContainer}>
-                {businessCategories.map((category, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    style={styles.categoryChip}
-                    onPress={() => setDescription(category)}
-                  >
-                    <Text style={styles.categoryText}>{category}</Text>
-                  </TouchableOpacity>
-                ))}
+            {businessCategories.length === 0 ? (
+              <View style={styles.emptyState}>
+                <Ionicons name="receipt-outline" size={48} color={colors.slate600} />
+                <Text style={styles.emptyStateText}>No categories available</Text>
+                <Text style={styles.emptyStateSubtext}>Categories will appear here when added</Text>
               </View>
-            </ScrollView>
+            ) : (
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                <View style={styles.categoriesContainer}>
+                  {businessCategories.map((category, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      style={styles.categoryChip}
+                      onPress={() => setDescription(category)}
+                    >
+                      <Text style={styles.categoryText}>{category}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </ScrollView>
+            )}
           </View>
 
           {/* Payment Mode */}
