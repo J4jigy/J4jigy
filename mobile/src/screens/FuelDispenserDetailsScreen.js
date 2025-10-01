@@ -747,11 +747,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
                     <View style={styles.gridItemLast}>
                       <Text style={globalStyles.label}>Vehicle No</Text>
                       <RNPickerSelect
-                        onValueChange={(value) => {
-                          const newParties = [...creditSaleParties];
-                          newParties[index] = { ...newParties[index], vehicleNo: value };
-                          setCreditSaleParties(newParties);
-                        }}
+                        onValueChange={(value) => handleCreditSalePartyChange(index, 'vehicleNo', value)}
                         items={getAvailableParties().map(party => ({
                           label: party.vehicleNo,
                           value: party.vehicleNo
