@@ -69,7 +69,7 @@ export default function CashInEntryScreen({ navigation }) {
 
   const businessCategories = []; // Empty - no default categories
 
-  const paymentModes = ['Cash', 'Card', 'UPI', 'Cheque'];
+  const paymentModes = []; // Empty - no default payment modes
 
   const handleSlotPress = (index) => {
     if (index === activeSlot) {
