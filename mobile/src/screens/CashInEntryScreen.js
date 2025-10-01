@@ -82,6 +82,53 @@ export default function CashInEntryScreen({ navigation }) {
     }
   };
 
+  const handleSlotLongPress = (index) => {
+    // Show slot management options on long press
+    setSelectedSlotIndex(index);
+    setShowSlotOptionsModal(true);
+  };
+
+  const clearCurrentSlot = () => {
+    setShowSlotOptionsModal(false);
+    setShowClearConfirmModal(true);
+  };
+
+  const confirmClearSlot = () => {
+    // Permanently clear slot - NO RECOVERY
+    const newSlots = [...posSlots];
+    newSlots[selectedSlotIndex] = {
+      ...newSlots[selectedSlotIndex],
+      amount: '',
+      items: [],
+      total: 0
+    };
+    setPosSlots(newSlots);
+    setShowClearConfirmModal(false);
+    setSelectedSlotIndex(null);
+    
+    Alert.alert('Cleared', `${posSlots[selectedSlotIndex].customerName} slot has been permanently cleared.`);
+  };
+
+  const renameSlot = () => {
+    setShowSlotOptionsModal(false);
+    setNewSlotName(posSlots[selectedSlotIndex].customerName);
+    setShowRenameModal(true);
+  };
+
+  const confirmRenameSlot = () => {
+    if (newSlotName.trim()) {
+      const newSlots = [...posSlots];
+      newSlots[selectedSlotIndex] = {
+        ...newSlots[selectedSlotIndex],
+        customerName: newSlotName.trim()
+      };
+      setPosSlots(newSlots);
+      setShowRenameModal(false);
+      setNewSlotName('');
+      setSelectedSlotIndex(null);
+    }
+  };
+
   const handleChequePayment = () => {
     setShowChequeModal(true);
   };
