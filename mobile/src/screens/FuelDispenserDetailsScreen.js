@@ -640,19 +640,30 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
               </TouchableOpacity>
             </View>
             
-            {formData.customProducts.map(renderProductSection)}
+            {/* Show empty state if no products */}
+            {formData.customProducts.length === 0 ? (
+              <View style={styles.emptyState}>
+                <Ionicons name="cube-outline" size={48} color={colors.slate600} />
+                <Text style={styles.emptyStateText}>No products added</Text>
+                <Text style={styles.emptyStateSubtext}>Click "Add Product" to get started</Text>
+              </View>
+            ) : (
+              formData.customProducts.map(renderProductSection)
+            )}
             
-            {/* Total Sales Amount */}
-            <View style={globalStyles.summaryBox}>
-              <Text style={styles.summaryTitle}>Total Sales Amount</Text>
-              <TextInput
-                style={[globalStyles.input, styles.totalInput]}
-                value={calculateTotalSalesAmount()}
-                editable={false}
-                placeholder="Total Amount"
-                placeholderTextColor={colors.slate400}
-              />
-            </View>
+            {/* Total Sales Amount - only show if there are products */}
+            {formData.customProducts.length > 0 && (
+              <View style={globalStyles.summaryBox}>
+                <Text style={styles.summaryTitle}>Total Sales Amount</Text>
+                <TextInput
+                  style={[globalStyles.input, styles.totalInput]}
+                  value={calculateTotalSalesAmount()}
+                  editable={false}
+                  placeholder="Total Amount"
+                  placeholderTextColor={colors.slate400}
+                />
+              </View>
+            )}
           </View>
 
           {/* Credit Sale Section */}
