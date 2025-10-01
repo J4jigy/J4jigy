@@ -42,8 +42,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
     CREDIT_PARTIES: `@credit_parties_${dispenserId}`,
     DIGITAL_PAYMENTS: `@digital_payments_${dispenserId}`,
     AVAILABLE_PARTIES: '@available_parties',
-    FORM_DATA: `@form_data_${dispenserId}`,
-    INITIALIZED: `@initialized_${dispenserId}` // Track if dispenser has been initialized
+    FORM_DATA: `@form_data_${dispenserId}`
   };
 
   // State for form data - starts empty, will be populated from storage only
