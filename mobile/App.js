@@ -45,19 +45,25 @@ export default function App() {
         <Stack.Screen 
           name="CashIn" 
           component={CashInEntryScreen} 
-          options={{ title: 'Cash In Entry' }}
+          options={{ 
+            title: 'Cash In Entry',
+            headerBackTitle: 'Dashboard',
+          }}
         />
         <Stack.Screen 
           name="CashOut" 
           component={CashOutEntryScreen} 
-          options={{ title: 'Cash Out Entry' }}
+          options={{ 
+            title: 'Cash Out Entry',
+            headerBackTitle: 'Dashboard',
+          }}
         />
         <Stack.Screen 
           name="FuelDispenser" 
           component={FuelDispenserScreen} 
           options={{
             title: 'Fuel Dispensers',
-            headerBackTitle: 'Back',
+            headerBackTitle: 'Dashboard',
           }}
         />
         <Stack.Screen 
@@ -65,14 +71,15 @@ export default function App() {
           component={FuelDispenserDetailsScreen} 
           options={({ route }) => ({ 
             title: `Dispenser ${route.params?.dispenserId || ''}`,
-            headerBackTitle: 'Back',
+            headerBackTitle: 'Dispensers',
           })}
         />
         <Stack.Screen 
           name="ListView" 
           component={ListViewScreen} 
           options={({ route }) => ({ 
-            title: route.params?.title || 'List View' 
+            title: route.params?.title || 'List View',
+            headerBackTitle: 'Dashboard',
           })}
         />
       </Stack.Navigator>
