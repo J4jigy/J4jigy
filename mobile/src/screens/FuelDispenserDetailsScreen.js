@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import RNPickerSelect from 'react-native-picker-select';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { colors, globalStyles } from '../styles/globalStyles';
 import Modal from '../components/Modal';
 import { useFocusEffect } from '@react-navigation/native';
