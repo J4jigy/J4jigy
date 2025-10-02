@@ -50,10 +50,13 @@ const FuelDispenserDetails = () => {
   // State for digital payment methods
   const [digitalPayments, setDigitalPayments] = useState([]); // Empty - no default payment methods
 
+  // State for expense entries
+  const [expenseEntries, setExpenseEntries] = useState([]); // Empty - no default expenses
+
   // State for delete confirmation modal
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const [deleteAction, setDeleteAction] = useState({
-    type: '', // 'product', 'party', or 'payment'
+    type: '', // 'product', 'party', 'payment', or 'expense'
     index: null,
     name: ''
   });
