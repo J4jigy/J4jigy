@@ -299,23 +299,28 @@ const FuelDispenserDetails = () => {
   };
 
   // Lube management functions
-  const addNewLube = (afterIndex = null) => {
-    const newLube = {
-      id: Date.now() + Math.random(),
-      lubeName: '',
-      quantity: '',
-      amount: ''
-    };
-    
-    if (afterIndex !== null) {
-      // Insert after the specified index
-      const updatedLubes = [...lubeEntries];
-      updatedLubes.splice(afterIndex + 1, 0, newLube);
-      setLubeEntries(updatedLubes);
-    } else {
-      // Add at the end
+  const addNewLube = () => {
+    setShowAddLubeModal(true);
+  };
+
+  const saveNewLube = () => {
+    if (newLubeData.lubeName.trim()) {
+      const newLube = {
+        id: Date.now() + Math.random(),
+        lubeName: newLubeData.lubeName.trim(),
+        quantity: newLubeData.quantity,
+        rate: newLubeData.rate
+      };
+      
       setLubeEntries(prev => [...prev, newLube]);
+      setNewLubeData({ lubeName: '', quantity: '', rate: '' });
+      setShowAddLubeModal(false);
     }
+  };
+
+  const cancelAddLube = () => {
+    setNewLubeData({ lubeName: '', quantity: '', rate: '' });
+    setShowAddLubeModal(false);
   };
 
   const handleLubeChange = (index, field, value) => {
