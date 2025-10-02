@@ -241,11 +241,7 @@ const CashInEntry = ({ onBack }) => {
     }
   };
 
-  const sampleNames = [
-    'Aarav Sharma', 'Vivaan Patel', 'Aditya Kumar', 'Vihaan Singh', 'Arjun Gupta',
-    'Sai Krishna', 'Reyansh Agarwal', 'Ayaan Shah', 'Krishna Reddy', 'Ishaan Jain',
-    'Shaurya Yadav', 'Atharv Mehta', 'Rudra Verma', 'Aadhya Mishra', 'Kiara Nair'
-  ];
+  const sampleNames = []; // Empty - no default staff names
 
   const handleCalculatorInput = (value) => {
     // Get current amount from the active slot
