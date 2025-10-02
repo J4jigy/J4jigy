@@ -48,18 +48,7 @@ const FuelDispenserDetails = () => {
   const [creditSaleParties, setCreditSaleParties] = useState([]); // Empty - no default credit sales
 
   // State for digital payment methods
-  const [digitalPayments, setDigitalPayments] = useState([
-    {
-      id: Date.now() + 1,
-      method: 'HP Pay',
-      amount: ''
-    },
-    {
-      id: Date.now() + 2,
-      method: 'Paytm',
-      amount: ''
-    }
-  ]);
+  const [digitalPayments, setDigitalPayments] = useState([]); // Empty - no default payment methods
 
   // State for delete confirmation modal
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
