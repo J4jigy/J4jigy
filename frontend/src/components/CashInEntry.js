@@ -166,7 +166,7 @@ const CashInEntry = ({ onBack }) => {
 
   // Sample data
   const quickAmounts = [1, 2, 5, 10, 20, 50, 100, 200, 500];
-  const [products, setProducts] = useState(['Groceries', 'T-Shirts', 'Rice', 'Wheat', 'Sugar', 'Oil', 'Milk', 'Bread']);
+  const [products, setProducts] = useState([]); // Empty - no default products
   const businessCategories = [
     { name: 'Customers / Debtors (देनदार)', icon: Users, selectable: true },
     { name: 'Suppliers / Creditors (लेनदार)', icon: Building, selectable: true },
