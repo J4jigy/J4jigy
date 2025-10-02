@@ -45,17 +45,7 @@ const FuelDispenserDetails = () => {
   const [availableParties, setAvailableParties] = useState([]);
 
   // State for credit sale parties
-  const [creditSaleParties, setCreditSaleParties] = useState([
-    {
-      id: Date.now(),
-      partyName: '',
-      vehicleNo: '',
-      productSelection: '',
-      ltr: '',
-      rate: '',
-      totalCreditSalesAmount: ''
-    }
-  ]);
+  const [creditSaleParties, setCreditSaleParties] = useState([]); // Empty - no default credit sales
 
   // State for digital payment methods
   const [digitalPayments, setDigitalPayments] = useState([
