@@ -912,43 +912,41 @@ const FuelDispenserDetails = () => {
                         </h3>
                       </div>
                       
-                      <div className="grid grid-cols-3 gap-3 mb-4">
-                        <div>
-                          <label className="text-slate-400 text-xs mb-1 block">Lube</label>
-                          <select
-                            value={lube.lubeName}
-                            onChange={(e) => handleLubeChange(index, 'lubeName', e.target.value)}
-                            className="bg-slate-700 border-slate-600 text-white h-8 w-full rounded px-2 text-sm"
-                          >
-                            <option value="">Select Lube</option>
-                            <option value="Engine Oil">Engine Oil</option>
-                            <option value="Gear Oil">Gear Oil</option>
-                            <option value="Brake Oil">Brake Oil</option>
-                            <option value="Hydraulic Oil">Hydraulic Oil</option>
-                            <option value="Coolant">Coolant</option>
-                            <option value="Power Steering Oil">Power Steering Oil</option>
-                            <option value="Other">Other</option>
-                          </select>
+                      <div className="space-y-3">
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <label className="text-slate-400 text-xs mb-1 block">Lube</label>
+                            <Input
+                              type="text"
+                              placeholder="Lube name"
+                              value={lube.lubeName}
+                              onChange={(e) => handleLubeChange(index, 'lubeName', e.target.value)}
+                              className="bg-slate-700 border-slate-600 text-white h-8"
+                              readOnly
+                            />
+                          </div>
+                          <div>
+                            <label className="text-slate-400 text-xs mb-1 block">Ltr/ml</label>
+                            <Input
+                              type="text"
+                              placeholder="Enter quantity"
+                              value={lube.quantity}
+                              onChange={(e) => handleLubeChange(index, 'quantity', e.target.value)}
+                              className="bg-slate-700 border-slate-600 text-white h-8"
+                            />
+                          </div>
                         </div>
-                        <div>
-                          <label className="text-slate-400 text-xs mb-1 block">Ltr/ml</label>
-                          <Input
-                            type="text"
-                            placeholder="Enter quantity"
-                            value={lube.quantity}
-                            onChange={(e) => handleLubeChange(index, 'quantity', e.target.value)}
-                            className="bg-slate-700 border-slate-600 text-white h-8"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-slate-400 text-xs mb-1 block">Amount</label>
-                          <Input
-                            type="number"
-                            placeholder="Enter amount"
-                            value={lube.amount}
-                            onChange={(e) => handleLubeChange(index, 'amount', e.target.value)}
-                            className="bg-slate-700 border-slate-600 text-white h-8"
-                          />
+                        <div className="grid grid-cols-1">
+                          <div>
+                            <label className="text-slate-400 text-xs mb-1 block">Rate</label>
+                            <Input
+                              type="number"
+                              placeholder="Enter rate"
+                              value={lube.rate}
+                              onChange={(e) => handleLubeChange(index, 'rate', e.target.value)}
+                              className="bg-slate-700 border-slate-600 text-white h-8"
+                            />
+                          </div>
                         </div>
                       </div>
                       
