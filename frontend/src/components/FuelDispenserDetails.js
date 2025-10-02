@@ -53,10 +53,13 @@ const FuelDispenserDetails = () => {
   // State for expense entries
   const [expenseEntries, setExpenseEntries] = useState([]); // Empty - no default expenses
 
+  // State for lube entries
+  const [lubeEntries, setLubeEntries] = useState([]); // Empty - no default lubes
+
   // State for delete confirmation modal
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const [deleteAction, setDeleteAction] = useState({
-    type: '', // 'product', 'party', 'payment', or 'expense'
+    type: '', // 'product', 'party', 'payment', 'expense', or 'lube'
     index: null,
     name: ''
   });
