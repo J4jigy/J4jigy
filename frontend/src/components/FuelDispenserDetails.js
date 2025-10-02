@@ -288,6 +288,50 @@ const FuelDispenserDetails = () => {
     ).toFixed(2);
   };
 
+  // Lube management functions
+  const addNewLube = (afterIndex = null) => {
+    const newLube = {
+      id: Date.now() + Math.random(),
+      lubeName: '',
+      quantity: '',
+      amount: ''
+    };
+    
+    if (afterIndex !== null) {
+      // Insert after the specified index
+      const updatedLubes = [...lubeEntries];
+      updatedLubes.splice(afterIndex + 1, 0, newLube);
+      setLubeEntries(updatedLubes);
+    } else {
+      // Add at the end
+      setLubeEntries(prev => [...prev, newLube]);
+    }
+  };
+
+  const handleLubeChange = (index, field, value) => {
+    setLubeEntries(prev => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], [field]: value };
+      return updated;
+    });
+  };
+
+  const removeLube = (index) => {
+    const lube = lubeEntries[index];
+    setDeleteAction({
+      type: 'lube',
+      index: index,
+      name: lube.lubeName || 'Lube Entry'
+    });
+    setShowDeleteConfirmModal(true);
+  };
+
+  const calculateTotalLubes = () => {
+    return lubeEntries.reduce((sum, lube) => 
+      sum + parseFloat(lube.amount || 0), 0
+    ).toFixed(2);
+  };
+
   const handleConfirmAndSave = () => {
     // Handle confirm and save logic here
     console.log('Confirming and saving data for dispenser', dispenserId, formData);
