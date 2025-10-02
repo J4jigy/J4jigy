@@ -862,16 +862,111 @@ const FuelDispenserDetails = () => {
           {/* Lubes */}
           <Card className="bg-slate-800 border-slate-700">
             <CardHeader className="pb-3">
-              <CardTitle className="text-white text-sm font-medium">Lubes</CardTitle>
+              <CardTitle className="text-white text-sm font-medium flex items-center justify-between">
+                Lubes
+                <Button
+                  type="button"
+                  onClick={() => addNewLube()}
+                  className="bg-green-600 hover:bg-green-700 text-white text-xs h-7 px-3"
+                >
+                  <Plus className="w-3 h-3 mr-1" />
+                  Add Lubes
+                </Button>
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <Input
-                type="number"
-                placeholder="Enter lubes amount"
-                value={formData.lubes}
-                onChange={(e) => handleInputChange('lubes', e.target.value)}
-                className="bg-slate-700 border-slate-600 text-white"
-              />
+              <div className="space-y-4">
+                {/* Lube Entries */}
+                {lubeEntries.length === 0 ? (
+                  <div className="text-center py-8 text-slate-400">
+                    <div className="text-4xl mb-2">🛢️</div>
+                    <div className="text-sm">No lube entries</div>
+                    <div className="text-xs mt-1">Click "Add Lubes" to get started</div>
+                  </div>
+                ) : (
+                  lubeEntries.map((lube, index) => (
+                    <div key={lube.id} className="relative border border-slate-600 rounded-lg p-4">
+                      <Button
+                        type="button"
+                        onClick={() => removeLube(index)}
+                        className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white w-6 h-6 p-0 rounded-full"
+                      >
+                        <X className="w-3 h-3" />
+                      </Button>
+                      <div className="mb-3">
+                        <h3 className="text-white text-sm font-medium">
+                          {lube.lubeName ? `Lube ${index + 1}: ${lube.lubeName}` : `Lube Entry ${index + 1}`}
+                        </h3>
+                      </div>
+                      
+                      <div className="grid grid-cols-3 gap-3 mb-4">
+                        <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Lube</label>
+                          <select
+                            value={lube.lubeName}
+                            onChange={(e) => handleLubeChange(index, 'lubeName', e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white h-8 w-full rounded px-2 text-sm"
+                          >
+                            <option value="">Select Lube</option>
+                            <option value="Engine Oil">Engine Oil</option>
+                            <option value="Gear Oil">Gear Oil</option>
+                            <option value="Brake Oil">Brake Oil</option>
+                            <option value="Hydraulic Oil">Hydraulic Oil</option>
+                            <option value="Coolant">Coolant</option>
+                            <option value="Power Steering Oil">Power Steering Oil</option>
+                            <option value="Other">Other</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Ltr/ml</label>
+                          <Input
+                            type="text"
+                            placeholder="Enter quantity"
+                            value={lube.quantity}
+                            onChange={(e) => handleLubeChange(index, 'quantity', e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white h-8"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Amount</label>
+                          <Input
+                            type="number"
+                            placeholder="Enter amount"
+                            value={lube.amount}
+                            onChange={(e) => handleLubeChange(index, 'amount', e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white h-8"
+                          />
+                        </div>
+                      </div>
+                      
+                      {/* Plus icon to add more lube entries instantly */}
+                      <div className="flex justify-center pt-2 border-t border-slate-600">
+                        <Button
+                          type="button"
+                          onClick={() => addNewLube(index)}
+                          variant="ghost"
+                          className="text-green-400 hover:text-green-300 hover:bg-green-500/10 h-8 px-3"
+                        >
+                          <Plus className="w-4 h-4 mr-2" />
+                          <span className="text-sm">Add More Lube</span>
+                        </Button>
+                      </div>
+                    </div>
+                  ))
+                )}
+                
+                {/* Total Lubes Amount - only show if there are lubes */}
+                {lubeEntries.length > 0 && (
+                  <div className="bg-slate-700/50 border border-slate-600 rounded-lg p-4 mt-4">
+                    <div className="flex justify-between items-center">
+                      <h3 className="text-white text-sm font-medium">Total Lubes Amount</h3>
+                      <div className="text-white font-bold text-lg">
+                        ₹{calculateTotalLubes()}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </CardContent>
           </Card>
 
