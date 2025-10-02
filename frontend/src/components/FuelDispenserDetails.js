@@ -243,6 +243,8 @@ const FuelDispenserDetails = () => {
       setDigitalPayments(prev => prev.filter((_, i) => i !== deleteAction.index));
     } else if (deleteAction.type === 'expense') {
       setExpenseEntries(prev => prev.filter((_, i) => i !== deleteAction.index));
+    } else if (deleteAction.type === 'lube') {
+      setLubeEntries(prev => prev.filter((_, i) => i !== deleteAction.index));
     }
     
     setShowDeleteConfirmModal(false);
