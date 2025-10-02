@@ -732,16 +732,81 @@ const FuelDispenserDetails = () => {
           {/* Expenses */}
           <Card className="bg-slate-800 border-slate-700">
             <CardHeader className="pb-3">
-              <CardTitle className="text-white text-sm font-medium">Expenses</CardTitle>
+              <CardTitle className="text-white text-sm font-medium flex items-center justify-between">
+                Expenses
+                <Button
+                  type="button"
+                  onClick={addNewExpense}
+                  className="bg-green-600 hover:bg-green-700 text-white text-xs h-7 px-3"
+                >
+                  <Plus className="w-3 h-3 mr-1" />
+                  Add Expenses
+                </Button>
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <Input
-                type="number"
-                placeholder="Enter expenses amount"
-                value={formData.expenses}
-                onChange={(e) => handleInputChange('expenses', e.target.value)}
-                className="bg-slate-700 border-slate-600 text-white"
-              />
+              <div className="space-y-4">
+                {/* Expense Entries */}
+                {expenseEntries.length === 0 ? (
+                  <div className="text-center py-8 text-slate-400">
+                    <div className="text-4xl mb-2">💰</div>
+                    <div className="text-sm">No expense entries</div>
+                    <div className="text-xs mt-1">Click "Add Expenses" to get started</div>
+                  </div>
+                ) : (
+                  expenseEntries.map((expense, index) => (
+                    <div key={expense.id} className="relative border border-slate-600 rounded-lg p-4">
+                      <Button
+                        type="button"
+                        onClick={() => removeExpense(index)}
+                        className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white w-6 h-6 p-0 rounded-full"
+                      >
+                        <X className="w-3 h-3" />
+                      </Button>
+                      <div className="mb-3">
+                        <h3 className="text-white text-sm font-medium">
+                          {expense.expenseName ? `Expense ${index + 1}: ${expense.expenseName}` : `Expense ${index + 1}`}
+                        </h3>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Text</label>
+                          <Input
+                            type="text"
+                            placeholder="Enter expense name"
+                            value={expense.expenseName}
+                            onChange={(e) => handleExpenseChange(index, 'expenseName', e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white h-8"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-slate-400 text-xs mb-1 block">Amount</label>
+                          <Input
+                            type="number"
+                            placeholder="Enter amount"
+                            value={expense.amount}
+                            onChange={(e) => handleExpenseChange(index, 'amount', e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white h-8"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+                
+                {/* Total Expenses Amount - only show if there are expenses */}
+                {expenseEntries.length > 0 && (
+                  <div className="bg-slate-700/50 border border-slate-600 rounded-lg p-4 mt-4">
+                    <div className="flex justify-between items-center">
+                      <h3 className="text-white text-sm font-medium">Total Expenses Amount</h3>
+                      <div className="text-white font-bold text-lg">
+                        ₹{calculateTotalExpenses()}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </CardContent>
           </Card>
 
