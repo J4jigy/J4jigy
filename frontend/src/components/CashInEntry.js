@@ -576,7 +576,11 @@ const CashInEntry = ({ onBack }) => {
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => { resetAmount(); onBack(); }}
+          onClick={() => { 
+            console.log('Cash In back arrow clicked - navigating to Home page');
+            resetAmount(); 
+            navigate('/'); // Navigate directly to home page
+          }}
           className="text-white hover:bg-white/10"
         >
           <ArrowLeft className="w-4 h-4" />
