@@ -56,6 +56,14 @@ const FuelDispenserDetails = () => {
   // State for lube entries
   const [lubeEntries, setLubeEntries] = useState([]); // Empty - no default lubes
 
+  // State for add lube modal
+  const [showAddLubeModal, setShowAddLubeModal] = useState(false);
+  const [newLubeData, setNewLubeData] = useState({
+    lubeName: '',
+    quantity: '',
+    rate: ''
+  });
+
   // State for delete confirmation modal
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const [deleteAction, setDeleteAction] = useState({
