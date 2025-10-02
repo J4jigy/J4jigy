@@ -343,7 +343,7 @@ const FuelDispenserDetails = () => {
 
   const calculateTotalLubes = () => {
     return lubeEntries.reduce((sum, lube) => 
-      sum + parseFloat(lube.amount || 0), 0
+      sum + parseFloat(lube.rate || 0), 0
     ).toFixed(2);
   };
 
