@@ -1155,6 +1155,65 @@ const FuelDispenserDetails = () => {
         </DialogContent>
       </Dialog>
 
+      {/* Add Lube Modal */}
+      <Dialog open={showAddLubeModal} onOpenChange={setShowAddLubeModal}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-white">Add New Lube</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <label className="text-slate-400 text-xs mb-1 block">Lubes</label>
+              <Input
+                type="text"
+                placeholder="Enter lube name"
+                value={newLubeData.lubeName}
+                onChange={(e) => setNewLubeData(prev => ({...prev, lubeName: e.target.value}))}
+                className="bg-slate-700 border-slate-600 text-white"
+              />
+            </div>
+            <div>
+              <label className="text-slate-400 text-xs mb-1 block">LTR/ml</label>
+              <Input
+                type="text"
+                placeholder="Enter quantity (e.g., 5L, 500ml)"
+                value={newLubeData.quantity}
+                onChange={(e) => setNewLubeData(prev => ({...prev, quantity: e.target.value}))}
+                className="bg-slate-700 border-slate-600 text-white"
+              />
+            </div>
+            <div>
+              <label className="text-slate-400 text-xs mb-1 block">Rate</label>
+              <Input
+                type="number"
+                placeholder="Enter rate amount"
+                value={newLubeData.rate}
+                onChange={(e) => setNewLubeData(prev => ({...prev, rate: e.target.value}))}
+                className="bg-slate-700 border-slate-600 text-white"
+              />
+            </div>
+          </div>
+          <div className="flex justify-end space-x-2 mt-6">
+            <Button
+              type="button"
+              onClick={cancelAddLube}
+              variant="outline"
+              className="border-slate-600 text-slate-300 hover:bg-slate-700"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              onClick={saveNewLube}
+              disabled={!newLubeData.lubeName.trim()}
+              className="bg-green-600 hover:bg-green-700 text-white"
+            >
+              Add Lube
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Delete Confirmation Modal */}
       <Dialog open={showDeleteConfirmModal} onOpenChange={setShowDeleteConfirmModal}>
         <DialogContent className="bg-slate-800 border-slate-700 max-w-md">
