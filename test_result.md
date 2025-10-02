@@ -381,7 +381,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Expenses subsections functionality in FuelDispenserDetails"
+    - "Lubes subsections functionality in FuelDispenserDetails"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
