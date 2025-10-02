@@ -352,9 +352,24 @@ metadata:
           agent: "testing"
           comment: "🎉 CREDIT SALE PRODUCT SELECTION DROPDOWN FULLY WORKING: Conducted comprehensive testing of the updated Credit Sale section with new Product Selection dropdown as requested. VERIFIED ALL REQUIREMENTS: ✅ LOGIN: Successfully authenticated with admin/admin123 using direct token approach, ✅ NAVIGATION: Successfully navigated to /fuel-dispenser page showing D1-D20 dispensers in grid layout, clicked D1 dispenser to access details page, ✅ CREDIT SALE SECTION: Found Credit Sale section with default visible subsection, subsection header shows 'Credit Sale Entry' when no party selected, ✅ 2-2-2 LAYOUT VERIFIED: Layout successfully changed from 2-2-1 to 2-2-2 structure with 16 2-column grid elements found, Row 1: Party Name dropdown + Vehicle No dropdown, Row 2: Product Selection dropdown + Ltr input field, Row 3: Rate input field + Total Credit Sales Amount input field, ✅ PRODUCT SELECTION DROPDOWN: Found Product Selection dropdown in correct position (3rd field before Ltr), Shows 'Select Product' as placeholder, Dropdown populated with all expected products: Petrol, Diesel, Power Petrol, Turbo Diesel, Successfully tested product selection (selected Petrol and confirmed), ✅ WORKFLOW TESTING: Products from main section appear in Credit Sale dropdown, All existing functionality working (Add New Party button opens modal with Party Name and Vehicle No inputs), ✅ FIELD FUNCTIONALITY: All 5 required Credit Sale fields found and working: Party Name, Vehicle No, Product Selection, Ltr, Rate, Total Credit Sales Amount, ✅ TOTAL CALCULATION: Total Credit Sales Amount summary section working with proper calculation display, ✅ DELETE CONFIRMATION: Delete buttons (X) found for subsections with proper confirmation modal functionality. All requirements from the review request successfully verified and working perfectly."
 
+  - task: "Hardcoded HP Pay and Paytm payment methods removal"
+    implemented: true
+    working: true
+    file: "FuelDispenserDetails.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Removed hardcoded HP Pay and Paytm entries from digitalPayments useState array, ensuring users can add and delete payment methods as per their own needs."
+        - working: true
+          agent: "testing"
+          comment: "🎉 HARDCODED HP PAY AND PAYTM REMOVAL TEST FULLY SUCCESSFUL: Conducted comprehensive testing of the updated fuel dispenser details payment section as requested. VERIFIED ALL CRITICAL REQUIREMENTS: ✅ LOGIN AND NAVIGATION: Successfully logged in with admin/admin123, navigated to /fuel-dispenser page, clicked D1 dispenser to access details page, ✅ PAYMENT SECTION VERIFICATION: Found 'HP Pay / Paytm / Gpay / Phonepe / Other' section header exactly as specified, 'Add Payment' button exists in top right corner and is functional, ✅ CRITICAL EMPTY STATE VERIFICATION: NO hardcoded HP Pay boxes found (0 instances), NO hardcoded Paytm boxes found (0 instances), Section starts completely clean without any pre-populated payment methods, ✅ ADD PAYMENT FUNCTIONALITY TESTING: 'Add Payment' button opens modal successfully, Modal titled 'Add New Payment Method' with proper input field, Successfully added test payment method 'GPay Test', Payment method appears with delete button (X) in top-right corner, 'Total Online Amount' section appears correctly after adding payment, ✅ USER CUSTOMIZATION READY: Users can now add their own payment methods (GPay, PhonePe, Paytm, etc.), Each added payment method has delete functionality, Clean professional appearance ready for user input, No hardcoded data blocking customization. TECHNICAL VERIFICATION: digitalPayments state initialized as empty array, Payment section maps over empty array initially, Add Payment modal functionality working correctly, Delete buttons appear for user-added payments only, Total Online Amount calculation working properly. All requirements from the review request successfully verified and working perfectly."
+
 test_plan:
   current_focus:
-    - "Comprehensive hardcoded data removal verification"
+    - "Hardcoded HP Pay and Paytm payment methods removal"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
