@@ -277,7 +277,10 @@ const FuelDispenserDetails = () => {
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => navigate('/fuel-dispenser')}
+          onClick={() => {
+            console.log('FuelDispenserDetails back arrow clicked - navigating to Fuel Dispenser screen');
+            navigate('/fuel-dispenser');
+          }}
           className="text-white hover:bg-white/10"
         >
           <ArrowLeft className="w-4 h-4" />
