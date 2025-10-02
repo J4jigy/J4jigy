@@ -16,40 +16,7 @@ const FuelDispenserDetails = () => {
     time: new Date().toTimeString().slice(0, 5), // Current time in HH:MM format
     product: '',
     productTypes: {},
-    customProducts: [
-      {
-        name: 'Petrol',
-        openingMeter: '',
-        closingMeter: '',
-        totalSale: '',
-        rate: '',
-        totalSalesAmount: ''
-      },
-      {
-        name: 'Diesel',
-        openingMeter: '',
-        closingMeter: '',
-        totalSale: '',
-        rate: '',
-        totalSalesAmount: ''
-      },
-      {
-        name: 'Power Petrol',
-        openingMeter: '',
-        closingMeter: '',
-        totalSale: '',
-        rate: '',
-        totalSalesAmount: ''
-      },
-      {
-        name: 'Turbo Diesel',
-        openingMeter: '',
-        closingMeter: '',
-        totalSale: '',
-        rate: '',
-        totalSalesAmount: ''
-      }
-    ], // Array to hold all products (now all deletable)
+    customProducts: [], // Empty - no default products
     creditSale: '',
     digitalPayments: '', // HP Pay / Paytm / Gpay / Phonepe / Other
     fuelCards: '', // DT Plus / Fleet Card / Xtrapower / Other
