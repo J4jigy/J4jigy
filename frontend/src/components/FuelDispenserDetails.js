@@ -249,6 +249,40 @@ const FuelDispenserDetails = () => {
     setDeleteAction({ type: '', index: null, name: '' });
   };
 
+  // Expense management functions
+  const addNewExpense = () => {
+    const newExpense = {
+      id: Date.now() + Math.random(),
+      expenseName: '',
+      amount: ''
+    };
+    setExpenseEntries(prev => [...prev, newExpense]);
+  };
+
+  const handleExpenseChange = (index, field, value) => {
+    setExpenseEntries(prev => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], [field]: value };
+      return updated;
+    });
+  };
+
+  const removeExpense = (index) => {
+    const expense = expenseEntries[index];
+    setDeleteAction({
+      type: 'expense',
+      index: index,
+      name: expense.expenseName || 'Expense Entry'
+    });
+    setShowDeleteConfirmModal(true);
+  };
+
+  const calculateTotalExpenses = () => {
+    return expenseEntries.reduce((sum, expense) => 
+      sum + parseFloat(expense.amount || 0), 0
+    ).toFixed(2);
+  };
+
   const handleConfirmAndSave = () => {
     // Handle confirm and save logic here
     console.log('Confirming and saving data for dispenser', dispenserId, formData);
