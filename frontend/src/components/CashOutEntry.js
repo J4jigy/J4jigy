@@ -121,7 +121,7 @@ const CashOutEntry = ({ onBack }) => {
   }, [slots, activeSlot]);
 
   const quickAmounts = [1, 2, 5, 10, 20, 50, 100, 200, 500];
-  const [expenses, setExpenses] = useState(['Office Supplies', 'Utilities', 'Rent', 'Transportation', 'Marketing', 'Equipment', 'Software', 'Insurance']);
+  const [expenses, setExpenses] = useState([]); // Empty - no default expenses
   const businessCategories = [
     { name: 'Customers / Debtors (देनदार)', icon: Users },
     { name: 'Suppliers / Creditors (लेनदार)', icon: Building },
