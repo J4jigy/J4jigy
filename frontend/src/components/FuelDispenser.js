@@ -20,7 +20,10 @@ const FuelDispenser = () => {
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => navigate('/cash-in')}
+          onClick={() => {
+            console.log('Fuel Dispenser back arrow clicked - navigating to Cash In screen');
+            navigate('/cash-in');
+          }}
           className="text-white hover:bg-white/10"
         >
           <ArrowLeft className="w-4 h-4" />
