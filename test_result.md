@@ -746,6 +746,18 @@ test_plan:
           agent: "testing"
           comment: "🎉 HP PAY / PAYTM / GPAY / PHONEPE / OTHER SECTION FULLY WORKING: Conducted comprehensive testing of the new HP Pay payment section as requested in review. VERIFIED ALL REQUIREMENTS: ✅ LOGIN: Successfully logged in with admin/admin123, ✅ NAVIGATION: Successfully navigated to /fuel-dispenser and clicked D1 to access details page, ✅ SECTION HEADER: Found 'HP Pay / Paytm / Gpay / Phonepe / Other' section header with proper styling, ✅ ADD PAYMENT BUTTON: Add Payment button found in top-right corner of section header (green button with Plus icon), ✅ DEFAULT SUBSECTIONS: Both HP Pay and Paytm subsections visible by default as required, ✅ AMOUNT TEXT BOXES: Each subsection has amount text box with 'Enter amount' placeholder, ✅ DELETE BUTTONS: Red X delete buttons found in top-right corner of each subsection, ✅ TOTAL ONLINE AMOUNT: Full-width Total Online Amount summary box found at bottom of section, ✅ ADD PAYMENT MODAL: Add Payment button opens modal with 'Add New Payment Method' title, modal has input field for payment method name with proper placeholder, modal has Save (green) and Cancel buttons, ✅ MODAL FUNCTIONALITY: Successfully entered 'Gpay' as test payment method, modal closes after save, ✅ DELETE CONFIRMATION: Delete buttons trigger confirmation modal with 'Confirm Delete' title, modal shows payment method name being deleted, modal has warning 'This action cannot be undone', modal has Delete (red) and Cancel buttons, ✅ CALCULATION SYSTEM: Total Online Amount automatically calculates sum of all payment method amounts, calculation updates in real-time as amounts are entered, ✅ LAYOUT VERIFICATION: Section positioned correctly after Credit Sale section, Add Payment button properly positioned in header, subsections have proper spacing and styling, Total Online Amount box spans full width as required. TECHNICAL VERIFICATION: digitalPayments state initialized with HP Pay and Paytm entries, Add Payment functionality creates new payment method entries, Delete functionality removes payment methods with confirmation, Total calculation uses reduce function to sum all payment amounts, All UI components render with proper dark theme styling. All requirements from the review request successfully verified and working perfectly."
 
+  - task: "Expenses subsections functionality in FuelDispenserDetails"
+    implemented: true
+    working: "NA"
+    file: "FuelDispenserDetails.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented complete expenses subsections functionality with Add Expenses button in top right corner, empty state with 💰 emoji, text/amount fields in each subsection, delete buttons (X) in top right corner of subsections, and total expenses amount calculation at bottom. Ready for comprehensive testing."
+
 agent_communication:
     - agent: "main"
       message: "✅ FUEL BUTTON REMOVAL AND SUMMARY SECTION REDUCTION COMPLETED: Successfully implemented both requested changes: 1) Fuel floating button removal (confirmed it was already removed in previous repositioning update - only Chat button remains), 2) Reduced summary section vertical size by changing margin from mb-3 to mb-1 for tighter, more compact layout. Dashboard now displays with optimal spacing and single Chat floating button."
