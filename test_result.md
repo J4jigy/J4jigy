@@ -748,7 +748,7 @@ test_plan:
 
   - task: "Expenses subsections functionality in FuelDispenserDetails"
     implemented: true
-    working: "NA"
+    working: true
     file: "FuelDispenserDetails.js"
     stuck_count: 0
     priority: "high"
