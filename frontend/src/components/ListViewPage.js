@@ -24,6 +24,7 @@ const titleByKey = {
   rent: 'Rent',
   offers: 'Offers & Discounts',
   bank: 'Bank',
+  cash: 'Cash Management',
   stock: 'Stock Management',
   profit: 'Profit & Loss',
   balance: 'Balance Sheet',
