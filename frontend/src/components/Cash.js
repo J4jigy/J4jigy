@@ -14,21 +14,8 @@ export default function Cash() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   
-  // Sample cash data
-  const [cashEntries] = useState([
-    { id: 1, date: '2025-01-02', description: 'Opening Balance', amount: 50000, type: 'credit' },
-    { id: 2, date: '2025-01-02', description: 'Cash Sale', amount: 15000, type: 'credit' },
-    { id: 3, date: '2025-01-02', description: 'Office Expenses', amount: 5000, type: 'debit' },
-    { id: 4, date: '2025-01-02', description: 'Fuel Purchase', amount: 25000, type: 'debit' },
-    { id: 5, date: '2025-01-02', description: 'Customer Payment', amount: 12000, type: 'credit' },
-    { id: 6, date: '2025-01-02', description: 'Utility Bills', amount: 3000, type: 'debit' },
-    { id: 7, date: '2025-01-02', description: 'Cash Sale', amount: 8000, type: 'credit' },
-    { id: 8, date: '2025-01-02', description: 'Maintenance', amount: 2000, type: 'debit' },
-    { id: 9, date: '2025-01-02', description: 'Product Sale', amount: 18000, type: 'credit' },
-    { id: 10, date: '2025-01-02', description: 'Staff Salary', amount: 15000, type: 'debit' },
-    { id: 11, date: '2025-01-02', description: 'Petrol Sale', amount: 22000, type: 'credit' },
-    { id: 12, date: '2025-01-02', description: 'Equipment Purchase', amount: 10000, type: 'debit' },
-  ]);
+  // Cash entries - empty by default
+  const [cashEntries] = useState([]); // Empty - no default cash entries
 
   // Filter entries based on search term
   const filteredEntries = cashEntries.filter(entry =>
