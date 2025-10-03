@@ -45,6 +45,7 @@ const defaultSortByKey = {
   rent: 'newest',
   offers: 'newest',
   bank: 'newest',
+  cash: 'newest',
   stock: 'name_asc',
   profit: 'newest',
   balance: 'newest',
