@@ -411,7 +411,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Plus icons under all sections for instant adding in FuelDispenserDetails"
+    - "Hardcoded cash entries removal from Cash page"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
