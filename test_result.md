@@ -396,7 +396,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Lubes subsections functionality in FuelDispenserDetails"
+    - "Plus icons under all sections for instant adding in FuelDispenserDetails"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
