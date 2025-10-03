@@ -425,6 +425,7 @@ It's completely free to try!`;
     { name: 'Bank', subtitle: '', icon: Landmark, iconColor: 'text-blue-400' },
     { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400' },
     { name: 'Suppliers', subtitle: 'Creditors', icon: Truck, iconColor: 'text-indigo-400' },
+    { name: 'Cash', subtitle: '', icon: Coins, iconColor: 'text-green-500' },
     { name: 'Community', subtitle: 'Ratings', icon: Star, iconColor: 'text-yellow-400' },
     { name: 'Staff', subtitle: '', icon: Users, iconColor: 'text-purple-400' },
   ];
