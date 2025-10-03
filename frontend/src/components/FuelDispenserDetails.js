@@ -975,7 +975,19 @@ const FuelDispenserDetails = () => {
                           </div>
                         </div>
                       </div>
-                      {/* Plus icon removed - using modal instead */}
+                      
+                      {/* Plus icon to add more lube entries instantly */}
+                      <div className="flex justify-center pt-3 mt-3 border-t border-slate-600">
+                        <Button
+                          type="button"
+                          onClick={addNewLube}
+                          variant="ghost"
+                          className="text-green-400 hover:text-green-300 hover:bg-green-500/10 h-8 px-3"
+                        >
+                          <Plus className="w-4 h-4 mr-2" />
+                          <span className="text-sm">Add More Lube</span>
+                        </Button>
+                      </div>
                     </div>
                   ))
                 )}
