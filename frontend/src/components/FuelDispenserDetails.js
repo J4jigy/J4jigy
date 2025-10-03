@@ -521,6 +521,19 @@ const FuelDispenserDetails = () => {
                     </div>
                   </div>
                 ))}
+                
+                {/* Plus icon to add more products instantly */}
+                <div className="flex justify-center pt-3 mt-3 border-t border-slate-600">
+                  <Button
+                    type="button"
+                    onClick={addNewProduct}
+                    variant="ghost"
+                    className="text-green-400 hover:text-green-300 hover:bg-green-500/10 h-8 px-3"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    <span className="text-sm">Add More Product</span>
+                  </Button>
+                </div>
 
                 {/* Total Sales Amount Summary - Always at bottom */}
                 <div className="bg-slate-700/50 p-4 rounded-lg border border-slate-600">
