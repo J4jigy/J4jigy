@@ -461,6 +461,7 @@ It's completely free to try!`;
     if (name.startsWith('bank')) handleNavigate('/list/bank');
     else if (name.startsWith('customers')) handleNavigate('/list/customers');
     else if (name.startsWith('suppliers')) handleNavigate('/list/suppliers');
+    else if (name.startsWith('cash')) handleNavigate('/list/cash');
     else if (name.startsWith('community')) handleNavigate('/list/ratings');
     else if (name.startsWith('staff')) handleNavigate('/list/staff');
     else if (name.startsWith('rent')) handleNavigate('/list/rent');
