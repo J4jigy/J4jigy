@@ -100,19 +100,23 @@ export default function Cash() {
         </Card>
 
         {/* Sorting Toggle Box */}
-        <div className="flex items-center justify-between mb-3">
-          <div className="text-white text-sm font-medium flex items-center">
-            {sortOrder === 'asc' ? <SortAsc className="w-4 h-4 mr-2" /> : <SortDesc className="w-4 h-4 mr-2" />}
-            Sort by Amount
-          </div>
-          <Button
-            onClick={toggleSort}
-            size="sm"
-            className="bg-blue-600 hover:bg-blue-700 text-white"
-          >
-            {sortOrder === 'asc' ? 'Low to High' : 'High to Low'}
-          </Button>
-        </div>
+        <Card className="bg-slate-800 border-slate-700 mb-3">
+          <CardContent className="p-3">
+            <div className="flex items-center justify-between">
+              <div className="text-white text-sm font-medium flex items-center">
+                {sortOrder === 'asc' ? <SortAsc className="w-4 h-4 mr-2" /> : <SortDesc className="w-4 h-4 mr-2" />}
+                Sort by Amount
+              </div>
+              <Button
+                onClick={toggleSort}
+                size="sm"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                {sortOrder === 'asc' ? 'Low to High' : 'High to Low'}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Page Box */}
         <div className="flex items-center justify-between mb-3">
