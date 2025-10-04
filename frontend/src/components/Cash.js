@@ -83,23 +83,19 @@ export default function Cash() {
         </div>
 
         {/* Search Box */}
-        <Card className="bg-slate-800 border-slate-700 mb-4">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-white text-sm font-medium flex items-center">
-              <Search className="w-4 h-4 mr-2" />
-              Search Cash Entries
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Input
-              type="text"
-              placeholder="Search by description or amount..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-slate-700 border-slate-600 text-white"
-            />
-          </CardContent>
-        </Card>
+        <div className="mb-3">
+          <div className="text-white text-sm font-medium flex items-center mb-2">
+            <Search className="w-4 h-4 mr-2" />
+            Search Cash Entries
+          </div>
+          <Input
+            type="text"
+            placeholder="Search by description or amount..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="bg-slate-700 border-slate-600 text-white"
+          />
+        </div>
 
         {/* Sorting Toggle Box */}
         <Card className="bg-slate-800 border-slate-700 mb-4">
