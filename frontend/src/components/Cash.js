@@ -145,31 +145,29 @@ export default function Cash() {
         <div className="space-y-2">
           {paginatedEntries.length > 0 ? (
             paginatedEntries.map((entry) => (
-              <Card key={entry.id} className="bg-slate-800 border-slate-700">
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between mb-2">
-                        <p className="text-white font-medium">{entry.description}</p>
-                        <div className="text-right">
-                          <p className={`font-bold ${entry.type === 'credit' ? 'text-green-400' : 'text-red-400'}`}>
-                            {entry.type === 'credit' ? '+' : '-'}₹{entry.amount.toLocaleString()}
-                          </p>
-                          <p className="text-slate-400 text-xs">{entry.date}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between text-xs text-slate-400">
-                        <span>Entry ID: #{entry.id}</span>
-                        <span className={`px-2 py-1 rounded text-xs ${
-                          entry.type === 'credit' ? 'bg-green-600/20 text-green-300' : 'bg-red-600/20 text-red-300'
-                        }`}>
-                          {entry.type === 'credit' ? 'Credit' : 'Debit'}
-                        </span>
+              <div key={entry.id} className="p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-white font-medium">{entry.description}</p>
+                      <div className="text-right">
+                        <p className={`font-bold ${entry.type === 'credit' ? 'text-green-400' : 'text-red-400'}`}>
+                          {entry.type === 'credit' ? '+' : '-'}₹{entry.amount.toLocaleString()}
+                        </p>
+                        <p className="text-slate-400 text-xs">{entry.date}</p>
                       </div>
                     </div>
+                    <div className="flex items-center justify-between text-xs text-slate-400">
+                      <span>Entry ID: #{entry.id}</span>
+                      <span className={`px-2 py-1 rounded text-xs ${
+                        entry.type === 'credit' ? 'bg-green-600/20 text-green-300' : 'bg-red-600/20 text-red-300'
+                      }`}>
+                        {entry.type === 'credit' ? 'Credit' : 'Debit'}
+                      </span>
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))
           ) : (
             <div className="text-center py-6">
