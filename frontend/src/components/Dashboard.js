@@ -371,8 +371,10 @@ It's completely free to try!`;
     setShowPeerList(false);
   };
 
-  // Navigation with chat hiding
+  // Navigation with chat hiding and tab state saving
   const handleNavigate = (path) => {
+    // Save current active tab to localStorage before navigating
+    localStorage.setItem('dashboardActiveTab', activeTab);
     setShowFloatingChat(false);
     navigate(path);
   };
