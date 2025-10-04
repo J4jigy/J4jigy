@@ -475,7 +475,7 @@ metadata:
 test_plan:
   current_focus:
     - "Dashboard tile reorganization - Bank/Cash to Finance, Company Purchase/Stock Management to Business"
-    - "Pagination component creation and integration"
+    - "Pagination component with page boxes for Cash subsections"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
