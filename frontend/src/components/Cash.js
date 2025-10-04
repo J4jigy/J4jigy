@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Search, SortAsc, SortDesc } from 'lucide-react';
+import { ArrowLeft, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { Card, CardContent } from './ui/card';
-import Pagination from './ui/pagination';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 
 export default function Cash() {
   const navigate = useNavigate();
