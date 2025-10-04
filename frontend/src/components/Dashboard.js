@@ -642,7 +642,10 @@ It's completely free to try!`;
 
       {/* Tabs and Tiles */}
       <div className="px-4 mb-1">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs value={activeTab} onValueChange={(tab) => {
+          setActiveTab(tab);
+          localStorage.setItem('dashboardActiveTab', tab);
+        }} className="w-full">
           <TabsList className="grid w-full grid-cols-3 bg-slate-800/80 border border-slate-700 rounded-lg mb-3">
             <TabsTrigger value="business" className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md">Business</TabsTrigger>
             <TabsTrigger value="finance" className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md">Finance</TabsTrigger>
