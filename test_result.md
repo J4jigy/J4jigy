@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the new Stock Management, Profit & Loss, and Balance Sheet functionality"
+user_problem_statement: "Add pagination to Cash page subsections and reorganize Dashboard tiles between Business and Finance tabs"
 
 backend:
   - task: "Backend services running"
