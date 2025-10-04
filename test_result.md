@@ -593,7 +593,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Cash page UI improvements - Balance in card, remove empty state card"
+    - "Dashboard tab persistence - remember active tab on back navigation"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
