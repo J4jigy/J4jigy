@@ -15,8 +15,12 @@ export default function Cash() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   
-  // Cash entries - empty by default
-  const [cashEntries] = useState([]); // Empty - no default cash entries
+  // Cash entries - temporarily adding test data to check pagination
+  const [cashEntries] = useState([
+    { id: 1, description: 'Test Entry 1', amount: 100, type: 'credit', date: '2024-01-01' },
+    { id: 2, description: 'Test Entry 2', amount: 200, type: 'debit', date: '2024-01-02' },
+    { id: 3, description: 'Test Entry 3', amount: 300, type: 'credit', date: '2024-01-03' }
+  ]);
 
   // Filter entries based on search term
   const filteredEntries = cashEntries.filter(entry =>
