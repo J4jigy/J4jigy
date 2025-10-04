@@ -422,21 +422,21 @@ It's completely free to try!`;
   };
 
   const businessTiles = [
-    { name: 'Bank', subtitle: '', icon: Landmark, iconColor: 'text-blue-400' },
     { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400' },
     { name: 'Suppliers', subtitle: 'Creditors', icon: Truck, iconColor: 'text-indigo-400' },
-    { name: 'Cash', subtitle: '', icon: Coins, iconColor: 'text-green-500' },
     { name: 'Community', subtitle: 'Ratings', icon: Star, iconColor: 'text-yellow-400' },
+    { name: 'Company', subtitle: 'Purchase', icon: ShoppingCart, iconColor: 'text-orange-400' },
+    { name: 'Stock', subtitle: 'Management', icon: Package, iconColor: 'text-orange-400' },
     { name: 'Staff', subtitle: '', icon: Users, iconColor: 'text-purple-400' },
   ];
 
   const financeTiles = [
-    { name: 'Company', subtitle: 'Purchase', icon: ShoppingCart, iconColor: 'text-orange-400' },
+    { name: 'Bank', subtitle: '', icon: Landmark, iconColor: 'text-blue-400' },
+    { name: 'Cash', subtitle: '', icon: Coins, iconColor: 'text-green-500' },
     { name: 'Bills', subtitle: 'Recharge', icon: Zap, iconColor: 'text-green-400' },
     { name: 'Rent', subtitle: '', icon: Building, iconColor: 'text-blue-400' },
     { name: 'Other', subtitle: 'Expenses', icon: Coins, iconColor: 'text-purple-400' },
     { name: 'Bills &', subtitle: 'Invoices', icon: FileBarChart, iconColor: 'text-yellow-400' },
-    { name: 'Stock', subtitle: 'Management', icon: Package, iconColor: 'text-orange-400' },
     { name: 'Profit', subtitle: 'Loss', icon: PieChart, iconColor: 'text-emerald-400' },
     { name: 'Balance', subtitle: 'Sheet', icon: BarChart3, iconColor: 'text-indigo-400' },
   ];
