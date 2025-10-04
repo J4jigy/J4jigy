@@ -533,8 +533,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Dashboard tile reorganization - Bank/Cash to Finance, Company Purchase/Stock Management to Business"
-    - "Pagination component with page boxes for Cash subsections"
+    - "Cash page layout reorganization - move controls to bottom"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
