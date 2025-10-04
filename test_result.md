@@ -450,7 +450,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Updated compact Cash page layout without rounded corner outlines"
+    - "Cash page with small card design for all subsections"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
