@@ -25,7 +25,10 @@ try {
 } catch (e) {}
 
 export default function Dashboard({ user, logout }) {
-  const [activeTab, setActiveTab] = useState('business');
+  // Restore activeTab from localStorage or default to 'business'
+  const [activeTab, setActiveTab] = useState(() => {
+    return localStorage.getItem('dashboardActiveTab') || 'business';
+  });
   const [summary, setSummary] = useState({ you_will_give: 0, you_will_receive: 0, net_position: 0 });
   const [showProfileDialog, setShowProfileDialog] = useState(false);
   const [showInviteCodesDialog, setShowInviteCodesDialog] = useState(false);
