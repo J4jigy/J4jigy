@@ -119,34 +119,38 @@ export default function Cash() {
         </Card>
 
         {/* Page Box */}
-        <div className="flex items-center justify-between mb-3">
-          <div className="text-sm text-slate-400">
-            Showing {startIndex + 1} - {Math.min(startIndex + itemsPerPage, sortedEntries.length)} of {sortedEntries.length} entries
-          </div>
-          <div className="flex items-center gap-2">
-            <Button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-              size="sm"
-              variant="outline"
-              className="border-slate-600 text-slate-300 hover:bg-slate-700"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </Button>
-            <span className="text-sm text-white px-3 py-1 bg-slate-700 rounded">
-              {currentPage} of {totalPages}
-            </span>
-            <Button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              size="sm"
-              variant="outline"
-              className="border-slate-600 text-slate-300 hover:bg-slate-700"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </Button>
-          </div>
-        </div>
+        <Card className="bg-slate-800 border-slate-700 mb-3">
+          <CardContent className="p-3">
+            <div className="flex items-center justify-between">
+              <div className="text-sm text-slate-400">
+                Showing {startIndex + 1} - {Math.min(startIndex + itemsPerPage, sortedEntries.length)} of {sortedEntries.length} entries
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  size="sm"
+                  variant="outline"
+                  className="border-slate-600 text-slate-300 hover:bg-slate-700"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </Button>
+                <span className="text-sm text-white px-3 py-1 bg-slate-700 rounded">
+                  {currentPage} of {totalPages}
+                </span>
+                <Button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  size="sm"
+                  variant="outline"
+                  className="border-slate-600 text-slate-300 hover:bg-slate-700"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Cash Entries List */}
         <div className="space-y-2">
