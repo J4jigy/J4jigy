@@ -57,8 +57,8 @@
 ##   test_priority: "high_first"  # or "sequential" or "stuck_first"
 ##
 ## agent_communication:
-##     -agent: "main"  # or "testing" or "user"
-##     -message: "Communication message between agents"
+    - agent: "main"
+      message: "Completed Dashboard tile reorganization phase. Bank and Cash moved to Finance tab as 1st and 2nd items. Company Purchase and Stock Management moved to Business tab as 4th and 5th items. Ready for testing of reorganized dashboard layout."
 
 # Protocol Guidelines for Main agent
 #
