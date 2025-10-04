@@ -462,7 +462,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Cash page with small card design for all subsections"
+    - "Dashboard tile reorganization - Bank/Cash to Finance, Company Purchase/Stock Management to Business"
+    - "Pagination component creation and integration"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
