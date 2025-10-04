@@ -122,50 +122,46 @@ export default function Cash() {
           )}
         </div>
 
-        {/* Search Box - Moved to Bottom */}
-        <Card className="bg-slate-800 border-slate-700 mb-3">
-          <CardContent className="p-3">
-            <Input
-              type="text"
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-slate-700 border-slate-600 text-white"
-            />
-          </CardContent>
-        </Card>
+        {/* Search Box */}
+        <Input
+          type="text"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="bg-slate-700 border-slate-600 text-white mb-4"
+        />
 
-        {/* Sorting Toggle Box - Moved to Bottom */}
-        <Card className="bg-slate-800 border-slate-700 mb-3">
-          <CardContent className="p-3">
-            <div className="flex items-center justify-between">
-              <div className="text-white text-sm font-medium">
-                {sortOrder === 'asc' ? 'Newest' : 'Oldest'}
-              </div>
-              <Button
-                onClick={toggleSort}
-                size="sm"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4"
-              >
-                {sortOrder === 'asc' ? 'Newest' : 'Oldest'}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Controls Row */}
+        <div className="flex gap-4 mb-4">
+          {/* Sort Dropdown */}
+          <Select value={sortOrder} onValueChange={setSortOrder}>
+            <SelectTrigger className="bg-slate-700 border-slate-600 text-white flex-1">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="desc">Newest</SelectItem>
+              <SelectItem value="asc">Oldest</SelectItem>
+            </SelectContent>
+          </Select>
 
-        {/* Page Selection - Moved to Bottom */}
-        <Card className="bg-slate-800 border-slate-700">
-          <CardContent className="p-3">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-              itemsPerPage={itemsPerPage}
-              totalItems={sortedEntries.length}
-              showInfo={false}
-            />
-          </CardContent>
-        </Card>
+          {/* Items per page */}
+          <Select value={itemsPerPage.toString()} onValueChange={(value) => setItemsPerPage(Number(value))}>
+            <SelectTrigger className="bg-slate-700 border-slate-600 text-white flex-1">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="10">10 / page</SelectItem>
+              <SelectItem value="25">25 / page</SelectItem>
+              <SelectItem value="50">50 / page</SelectItem>
+              <SelectItem value="100">100 / page</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Page Info */}
+        <div className="text-center text-slate-400 text-sm">
+          Page {currentPage} / {totalPages}
+        </div>
       </div>
     </div>
   );
