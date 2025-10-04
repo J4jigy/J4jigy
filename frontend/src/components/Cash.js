@@ -34,7 +34,7 @@ export default function Cash() {
   });
 
   // Pagination
-  const totalPages = Math.ceil(sortedEntries.length / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(sortedEntries.length / itemsPerPage));
   const startIndex = (currentPage - 1) * itemsPerPage;
   const paginatedEntries = sortedEntries.slice(startIndex, startIndex + itemsPerPage);
 
