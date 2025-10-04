@@ -487,6 +487,18 @@ metadata:
           agent: "testing"
           comment: "✅ DASHBOARD TILE REORGANIZATION FULLY WORKING: Conducted comprehensive testing of dashboard tile reorganization as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ Login with admin/admin123 successful, 2) ✅ BUSINESS TAB VERIFICATION: Company Purchase is correctly positioned as 4th tile, Stock Management is correctly positioned as 5th tile, both tiles maintain proper icons and navigation, 3) ✅ FINANCE TAB VERIFICATION: Bank is correctly positioned as 1st tile with blue Landmark icon, Cash is correctly positioned as 2nd tile with green Coins icon, both tiles maintain proper colors and navigation functionality, 4) ✅ TILE FUNCTIONALITY: Bank tile navigation to /list/bank working correctly, tile icons and colors preserved correctly, all existing functionality maintained. Dashboard tile reorganization successfully implemented and tested."
 
+  - task: "Cash page layout reorganization - move controls to bottom"
+    implemented: true
+    working: "NA"
+    file: "Cash.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Reorganized Cash page layout to match Bank page design: Moved search box, sorting toggle, and pagination controls to bottom of page after cash entries list. Updated search placeholder to 'Search...', simplified sorting display to 'Newest/Oldest', and removed pagination info text for cleaner bottom layout."
+
   - task: "Pagination component with page boxes for Cash subsections"
     implemented: true
     working: true
