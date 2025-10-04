@@ -75,52 +75,45 @@ export default function Cash() {
       </div>
 
       <div className="p-4">
-        {/* Cash Balance Summary */}
-        <div className="text-center mb-3">
-          <p className="text-slate-400 text-sm mb-1">Current Cash Balance</p>
-          <p className={`text-2xl font-bold ${calculateBalance() >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-            ₹{calculateBalance().toLocaleString()}
-          </p>
-        </div>
+        {/* Cash Balance Summary in Card */}
+        <Card className="bg-slate-800 border-slate-700 mb-4">
+          <CardContent className="p-4 text-center">
+            <p className="text-slate-400 text-sm mb-1">Current Cash Balance</p>
+            <p className={`text-2xl font-bold ${calculateBalance() >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+              ₹{calculateBalance().toLocaleString()}
+            </p>
+          </CardContent>
+        </Card>
 
         {/* Cash Entries List */}
         <div className="space-y-2 mb-4">
-          {paginatedEntries.length > 0 ? (
-            paginatedEntries.map((entry) => (
-              <Card key={entry.id} className="bg-slate-800 border-slate-700">
-                <CardContent className="p-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between mb-2">
-                        <p className="text-white font-medium">{entry.description}</p>
-                        <div className="text-right">
-                          <p className={`font-bold ${entry.type === 'credit' ? 'text-green-400' : 'text-red-400'}`}>
-                            {entry.type === 'credit' ? '+' : '-'}₹{entry.amount.toLocaleString()}
-                          </p>
-                          <p className="text-slate-400 text-xs">{entry.date}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between text-xs text-slate-400">
-                        <span>Entry ID: #{entry.id}</span>
-                        <span className={`px-2 py-1 rounded text-xs ${
-                          entry.type === 'credit' ? 'bg-green-600/20 text-green-300' : 'bg-red-600/20 text-red-300'
-                        }`}>
-                          {entry.type === 'credit' ? 'Credit' : 'Debit'}
-                        </span>
+          {paginatedEntries.length > 0 && paginatedEntries.map((entry) => (
+            <Card key={entry.id} className="bg-slate-800 border-slate-700">
+              <CardContent className="p-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-white font-medium">{entry.description}</p>
+                      <div className="text-right">
+                        <p className={`font-bold ${entry.type === 'credit' ? 'text-green-400' : 'text-red-400'}`}>
+                          {entry.type === 'credit' ? '+' : '-'}₹{entry.amount.toLocaleString()}
+                        </p>
+                        <p className="text-slate-400 text-xs">{entry.date}</p>
                       </div>
                     </div>
+                    <div className="flex items-center justify-between text-xs text-slate-400">
+                      <span>Entry ID: #{entry.id}</span>
+                      <span className={`px-2 py-1 rounded text-xs ${
+                        entry.type === 'credit' ? 'bg-green-600/20 text-green-300' : 'bg-red-600/20 text-red-300'
+                      }`}>
+                        {entry.type === 'credit' ? 'Credit' : 'Debit'}
+                      </span>
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
-            ))
-          ) : (
-            <Card className="bg-slate-800 border-slate-700">
-              <CardContent className="p-6 text-center">
-                <Search className="w-8 h-8 text-slate-600 mx-auto mb-2" />
-                <p className="text-slate-400 text-sm">No cash entries found matching your search.</p>
+                </div>
               </CardContent>
             </Card>
-          )}
+          ))}
         </div>
 
         {/* Search Box */}
