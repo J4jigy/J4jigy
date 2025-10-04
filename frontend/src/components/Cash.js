@@ -12,7 +12,7 @@ export default function Cash() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState('asc'); // 'asc' or 'desc'
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
   
   // Cash entries - empty by default
   const [cashEntries] = useState([]); // Empty - no default cash entries
