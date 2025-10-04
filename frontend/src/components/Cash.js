@@ -83,58 +83,8 @@ export default function Cash() {
           </p>
         </div>
 
-        {/* Search Box */}
-        <Card className="bg-slate-800 border-slate-700 mb-3">
-          <CardContent className="p-3">
-            <div className="text-white text-sm font-medium flex items-center mb-2">
-              <Search className="w-4 h-4 mr-2" />
-              Search Cash Entries
-            </div>
-            <Input
-              type="text"
-              placeholder="Search by description or amount..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-slate-700 border-slate-600 text-white"
-            />
-          </CardContent>
-        </Card>
-
-        {/* Sorting Toggle Box */}
-        <Card className="bg-slate-800 border-slate-700 mb-3">
-          <CardContent className="p-3">
-            <div className="flex items-center justify-between">
-              <div className="text-white text-sm font-medium flex items-center">
-                {sortOrder === 'asc' ? <SortAsc className="w-4 h-4 mr-2" /> : <SortDesc className="w-4 h-4 mr-2" />}
-                Sort by Amount
-              </div>
-              <Button
-                onClick={toggleSort}
-                size="sm"
-                className="bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                {sortOrder === 'asc' ? 'Low to High' : 'High to Low'}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Page Box */}
-        <Card className="bg-slate-800 border-slate-700 mb-3">
-          <CardContent className="p-3">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-              itemsPerPage={itemsPerPage}
-              totalItems={sortedEntries.length}
-              showInfo={true}
-            />
-          </CardContent>
-        </Card>
-
         {/* Cash Entries List */}
-        <div className="space-y-2">
+        <div className="space-y-2 mb-4">
           {paginatedEntries.length > 0 ? (
             paginatedEntries.map((entry) => (
               <Card key={entry.id} className="bg-slate-800 border-slate-700">
@@ -172,6 +122,51 @@ export default function Cash() {
             </Card>
           )}
         </div>
+
+        {/* Search Box - Moved to Bottom */}
+        <Card className="bg-slate-800 border-slate-700 mb-3">
+          <CardContent className="p-3">
+            <Input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="bg-slate-700 border-slate-600 text-white"
+            />
+          </CardContent>
+        </Card>
+
+        {/* Sorting Toggle Box - Moved to Bottom */}
+        <Card className="bg-slate-800 border-slate-700 mb-3">
+          <CardContent className="p-3">
+            <div className="flex items-center justify-between">
+              <div className="text-white text-sm font-medium">
+                {sortOrder === 'asc' ? 'Newest' : 'Oldest'}
+              </div>
+              <Button
+                onClick={toggleSort}
+                size="sm"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4"
+              >
+                {sortOrder === 'asc' ? 'Newest' : 'Oldest'}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Page Selection - Moved to Bottom */}
+        <Card className="bg-slate-800 border-slate-700">
+          <CardContent className="p-3">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              itemsPerPage={itemsPerPage}
+              totalItems={sortedEntries.length}
+              showInfo={false}
+            />
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
