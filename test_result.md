@@ -438,7 +438,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Hardcoded cash entries removal from Cash page"
+    - "Updated compact Cash page layout without rounded corner outlines"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
