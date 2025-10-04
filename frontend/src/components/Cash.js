@@ -75,16 +75,12 @@ export default function Cash() {
 
       <div className="p-4">
         {/* Cash Balance Summary */}
-        <Card className="bg-slate-800 border-slate-700 mb-4">
-          <CardContent className="p-4">
-            <div className="text-center">
-              <p className="text-slate-400 text-sm mb-1">Current Cash Balance</p>
-              <p className={`text-2xl font-bold ${calculateBalance() >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                ₹{calculateBalance().toLocaleString()}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="text-center mb-3">
+          <p className="text-slate-400 text-sm mb-1">Current Cash Balance</p>
+          <p className={`text-2xl font-bold ${calculateBalance() >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+            ₹{calculateBalance().toLocaleString()}
+          </p>
+        </div>
 
         {/* Search Box */}
         <Card className="bg-slate-800 border-slate-700 mb-4">
