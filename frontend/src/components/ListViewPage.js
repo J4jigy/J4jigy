@@ -342,6 +342,20 @@ export default function ListViewPage() {
         </div>
       )}
 
+      {/* Bank Balance Card */}
+      {key === 'bank' && (
+        <div className="px-3 pb-3">
+          <Card className="bg-slate-800 border-slate-700">
+            <CardContent className="p-4 text-center">
+              <p className="text-slate-400 text-sm mb-1">Bank Balance</p>
+              <p className="text-2xl font-bold text-green-400">
+                ₹0
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
       {/* Controls */}
       <div className="p-3 flex items-center gap-2 flex-wrap">
         <div className="flex-1 min-w-[200px]">
