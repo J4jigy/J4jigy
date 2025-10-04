@@ -42,13 +42,14 @@ export default function Pagination({
 
   const visiblePages = getVisiblePages();
 
-  if (totalPages === 0) {
+  // Handle empty state - when totalItems is 0, show simplified pagination
+  if (totalItems === 0) {
     return (
       <div className="flex items-center justify-between">
         <div className="text-sm text-slate-400">
           Showing 0 entries
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <Button
             disabled
             size="sm"
@@ -57,9 +58,14 @@ export default function Pagination({
           >
             <ChevronLeft className="w-4 h-4" />
           </Button>
-          <span className="text-sm text-slate-300 px-2 py-1 bg-slate-700 rounded">
-            0 of 0
-          </span>
+          <Button
+            disabled
+            size="sm"
+            variant="default"
+            className="bg-blue-600 text-white"
+          >
+            1
+          </Button>
           <Button
             disabled
             size="sm"
