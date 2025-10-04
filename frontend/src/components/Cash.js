@@ -173,12 +173,10 @@ export default function Cash() {
               </Card>
             ))
           ) : (
-            <Card className="bg-slate-800 border-slate-700">
-              <CardContent className="p-8 text-center">
-                <Search className="w-12 h-12 text-slate-600 mx-auto mb-4" />
-                <p className="text-slate-400">No cash entries found matching your search.</p>
-              </CardContent>
-            </Card>
+            <div className="text-center py-6">
+              <Search className="w-8 h-8 text-slate-600 mx-auto mb-2" />
+              <p className="text-slate-400 text-sm">No cash entries found matching your search.</p>
+            </div>
           )}
         </div>
       </div>
