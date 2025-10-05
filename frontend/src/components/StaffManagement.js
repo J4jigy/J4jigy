@@ -62,7 +62,7 @@ const StaffManagement = () => {
   // Handle staff invitation
   const handleInviteStaff = async () => {
     if (!inviteForm.email || !inviteForm.name || !inviteForm.role) {
-      setMessage({ type: 'error', text: 'Please fill in all fields' });
+      setMessage({ type: 'error', text: 'Please fill in all required fields (Name, Email, Role)' });
       return;
     }
 
