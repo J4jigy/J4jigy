@@ -149,7 +149,7 @@ export const STANDARD_ROLES = {
       reports_view: false
     },
     color: 'text-gray-400',
-    icon: '👤'
+    icon: User
   }
 };
 
