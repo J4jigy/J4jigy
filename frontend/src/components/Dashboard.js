@@ -681,6 +681,16 @@ It's completely free to try!`;
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Role Badge */}
+          {userRole && standardRoles[userRole] && (
+            <div className="flex items-center gap-1 px-2 py-1 bg-slate-800 rounded-lg border border-slate-600">
+              <span className="text-sm">{standardRoles[userRole].icon}</span>
+              <span className={`text-xs font-medium ${standardRoles[userRole].color}`}>
+                {standardRoles[userRole].name}
+              </span>
+            </div>
+          )}
+          
           <Dialog open={showProfileDialog} onOpenChange={setShowProfileDialog}>
             <DialogTrigger asChild>
               <Button variant="ghost" size="sm" data-testid="profile-icon">
