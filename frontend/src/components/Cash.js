@@ -9,6 +9,7 @@ import { useBusiness } from '../contexts/BusinessContext';
 
 export default function Cash() {
   const navigate = useNavigate();
+  const { getData, setData, activeBusiness } = useBusiness();
   
   // State for subsections
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,8 +17,20 @@ export default function Cash() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(25);
   
-  // Cash entries - empty by default
-  const [cashEntries] = useState([]); // Empty - no default cash entries
+  // Load cash entries for current business
+  const [cashEntries, setCashEntries] = useState([]);
+
+  // Load business-specific data when component mounts or business changes
+  useEffect(() => {
+    const businessCashEntries = getData('cash_entries', []);
+    setCashEntries(businessCashEntries);
+  }, [activeBusiness.id, getData]);
+
+  // Save cash entries when they change
+  const updateCashEntries = (newEntries) => {
+    setCashEntries(newEntries);
+    setData('cash_entries', newEntries);
+  };
 
   // Filter entries based on search term
   const filteredEntries = cashEntries.filter(entry =>
