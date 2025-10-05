@@ -350,26 +350,37 @@ export const RoleProvider = ({ children, currentUser }) => {
   // Load user role for current business
   useEffect(() => {
     if (activeBusiness && currentUser) {
-      // Check if user is owner (created the business)
-      if (currentUser.email === 'admin@example.com') { // Demo owner check
+      console.log('RoleContext: Loading role for user:', currentUser.email, 'in business:', activeBusiness.name);
+      
+      // Check if user is owner (for demo, treat admin as owner)
+      if (currentUser.email === 'admin' || currentUser.username === 'admin' || currentUser.role === 'admin') {
+        console.log('RoleContext: Setting user as owner');
         setUserRole('owner');
         setUserPermissions(STANDARD_ROLES.owner.permissions);
       } else {
         // Check staff assignments
         const staff = BusinessStaffManager.getBusinessStaff(activeBusiness.id);
-        const userStaff = staff.find(s => s.email === currentUser.email);
+        const userStaff = staff.find(s => s.email === currentUser.email || s.email === currentUser.username);
         
         if (userStaff) {
+          console.log('RoleContext: Found staff role:', userStaff.role);
           setUserRole(userStaff.role);
           setUserPermissions(userStaff.permissions || STANDARD_ROLES[userStaff.role]?.permissions);
         } else {
-          // No access to this business
-          setUserRole(null);
-          setUserPermissions({});
+          console.log('RoleContext: No staff assignment found, defaulting to staff role');
+          // Default to staff role if no assignment found
+          setUserRole('staff');
+          setUserPermissions(STANDARD_ROLES.staff.permissions);
         }
       }
       
       // Load business staff
+      setBusinessStaff(BusinessStaffManager.getBusinessStaff(activeBusiness.id));
+    } else if (activeBusiness) {
+      console.log('RoleContext: No current user, defaulting to owner for demo');
+      // If no currentUser provided, default to owner for demo
+      setUserRole('owner');
+      setUserPermissions(STANDARD_ROLES.owner.permissions);
       setBusinessStaff(BusinessStaffManager.getBusinessStaff(activeBusiness.id));
     }
   }, [activeBusiness, currentUser]);
