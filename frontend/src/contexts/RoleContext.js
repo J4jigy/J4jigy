@@ -89,7 +89,7 @@ export const STANDARD_ROLES = {
       audit_view: true
     },
     color: 'text-blue-400',
-    icon: '👨‍💼'
+    icon: UserCheck
   },
   
   cashier: {
