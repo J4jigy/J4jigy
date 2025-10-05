@@ -335,7 +335,9 @@ const StaffManagement = () => {
             {Object.entries(standardRoles).map(([roleKey, role]) => (
               <div key={roleKey} className="p-3 bg-slate-700 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xl">{role.icon}</span>
+                  {React.createElement(role.icon, { 
+                    className: `w-5 h-5 ${role.color}` 
+                  })}
                   <span className="font-medium text-white">{role.name}</span>
                 </div>
                 <p className="text-xs text-slate-400 mb-3">{role.description}</p>
