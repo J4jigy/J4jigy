@@ -137,28 +137,25 @@ const CashInEntry = ({ onBack }) => {
   const [soundEffects, setSoundEffects] = useState(true);
   const [defaultPaymentMode, setDefaultPaymentMode] = useState('Cash');
 
-  // load slots from localStorage
+  // load slots from business-specific storage
   useEffect(() => {
-    const saved = localStorage.getItem('cashin_slots');
-    if (saved) {
+    const savedData = getData('cashin_data', null);
+    if (savedData) {
       try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length === 6) {
-          // Ensure each slot has paymentMode and selectedItems properties
-          const slotsWithPaymentMode = parsed.map(slot => ({
-            ...slot,
-            paymentMode: slot.paymentMode || 'Cash',
-            selectedItems: slot.selectedItems || {}
-          }));
-          setSlots(slotsWithPaymentMode);
-          const activeIndex = parseInt(localStorage.getItem('cashin_active') || '0', 10) || 0;
-          setActiveSlot(activeIndex);
-          setAmount(slotsWithPaymentMode[activeIndex]?.amount || '0');
-          setPaymentMode(slotsWithPaymentMode[activeIndex]?.paymentMode || 'Cash');
+        const { slots, activeSlot } = savedData;
+        
+        if (slots && Array.isArray(slots) && slots.length > 0) {
+          setSlots(slots);
         }
-      } catch {}
+        
+        if (typeof activeSlot === 'number' && activeSlot >= 0 && activeSlot < slots.length) {
+          setActiveSlot(activeSlot);
+        }
+      } catch (e) {
+        console.error('Failed to parse saved slots:', e);
+      }
     }
-  }, []);
+  }, [activeBusiness.id, getData]); // reload when business changes
 
   // persist slots and active slot
   useEffect(() => {
