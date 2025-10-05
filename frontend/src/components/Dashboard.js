@@ -35,15 +35,22 @@ export default function Dashboard({ user, logout }) {
   const [showInviteCodesDialog, setShowInviteCodesDialog] = useState(false);
   const [inviteCodes, setInviteCodes] = useState([]);
   
-  // Business switching states
-  const [businesses, setBusinesses] = useState([
-    { id: 1, name: 'Main Business', type: 'Retail' },
-    { id: 2, name: 'Online Store', type: 'E-commerce' },
-    { id: 3, name: 'Consulting Firm', type: 'Services' }
-  ]);
-  const [activeBusiness, setActiveBusiness] = useState(businesses[0]);
+  // Use BusinessContext for business management
+  const {
+    businesses,
+    activeBusiness,
+    switchBusiness,
+    addBusiness,
+    deleteBusiness,
+    exportBusiness,
+    importBusiness,
+    getDataSize
+  } = useBusiness();
+  
   const [showBusinessDialog, setShowBusinessDialog] = useState(false);
   const [showAddBusinessDialog, setShowAddBusinessDialog] = useState(false);
+  const [showImportDialog, setShowImportDialog] = useState(false);
+  const [showExportDialog, setShowExportDialog] = useState(false);
   const [showDeleteConfirmDialog, setShowDeleteConfirmDialog] = useState(false);
   const [businessToDelete, setBusinessToDelete] = useState(null);
   const [newBusinessName, setNewBusinessName] = useState('');
