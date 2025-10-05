@@ -548,7 +548,11 @@ It's completely free to try!`;
     else if (name.startsWith('suppliers')) handleNavigate('/list/suppliers');
     else if (name.startsWith('cash')) handleNavigate('/list/cash');
     else if (name.startsWith('community')) handleNavigate('/list/ratings');
-    else if (name.startsWith('staff')) handleNavigate('/list/staff');
+    else if (name.startsWith('staff')) {
+      // Switch to Staff Management tab instead of navigating away
+      setActiveTab('staff');
+      localStorage.setItem('dashboardActiveTab', 'staff');
+    }
     else if (name.startsWith('rent')) handleNavigate('/list/rent');
     else if (name.startsWith('offers')) handleNavigate('/list/offers');
     else if (name.startsWith('stock')) handleNavigate('/list/stock');
