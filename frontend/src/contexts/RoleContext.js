@@ -56,7 +56,7 @@ export const STANDARD_ROLES = {
       audit_view: true
     },
     color: 'text-purple-400',
-    icon: '👑'
+    icon: Crown
   },
   
   manager: {
