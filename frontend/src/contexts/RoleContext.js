@@ -176,6 +176,7 @@ export class BusinessStaffManager {
         email: staffData.email,
         name: staffData.name,
         role: staffData.role,
+        whatsapp: staffData.whatsapp || '',
         permissions: staffData.permissions || STANDARD_ROLES[staffData.role]?.permissions,
         invitedAt: new Date().toISOString(),
         status: 'invited', // invited, active, suspended
