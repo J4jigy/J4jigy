@@ -109,7 +109,7 @@ export const STANDARD_ROLES = {
       cash_reports: true
     },
     color: 'text-green-400',
-    icon: '💰'
+    icon: Coins
   },
   
   accountant: {
