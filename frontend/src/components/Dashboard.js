@@ -172,6 +172,63 @@ export default function Dashboard({ user, logout }) {
       console.error('Error deleting business:', error);
       alert(error.message);
     }
+  };
+
+  // Import/Export functions
+  const handleExportBusiness = (businessId) => {
+    try {
+      const exportData = exportBusiness(businessId || activeBusiness.id);
+      const business = businesses.find(b => b.id === (businessId || activeBusiness.id));
+      
+      // Create download
+      const dataStr = JSON.stringify(exportData, null, 2);
+      const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
+      
+      const exportFileDefaultName = `${business.name}_export_${new Date().toISOString().split('T')[0]}.json`;
+      
+      const linkElement = document.createElement('a');
+      linkElement.setAttribute('href', dataUri);
+      linkElement.setAttribute('download', exportFileDefaultName);
+      linkElement.click();
+      
+      console.log('Business data exported successfully');
+    } catch (error) {
+      console.error('Error exporting business:', error);
+      alert('Failed to export business data');
+    }
+  };
+
+  const handleImportBusiness = (file, options = {}) => {
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const importData = JSON.parse(e.target.result);
+        
+        // Ask for confirmation
+        const confirmMessage = options.createNew 
+          ? `Import data as new business "${importData.business?.name || 'Imported Business'}"?`
+          : `Import data into current business "${activeBusiness.name}"? This will overwrite existing data.`;
+          
+        if (confirm(confirmMessage)) {
+          const success = importBusiness(importData, options);
+          if (success) {
+            alert('Business data imported successfully!');
+            setShowImportDialog(false);
+            // Refresh page to show imported data
+            window.location.reload();
+          } else {
+            alert('Failed to import business data');
+          }
+        }
+      } catch (error) {
+        console.error('Error importing business:', error);
+        alert('Invalid file format or corrupted data');
+      }
+    };
+    reader.readAsText(file);
+  };
       
       setShowDeleteConfirmDialog(false);
       setBusinessToDelete(null);
