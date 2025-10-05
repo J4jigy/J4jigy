@@ -339,6 +339,7 @@ function AppRoutes() {
         <Route path="/fuel-dispenser" element={token ? <FuelDispenser /> : <Navigate to="/login" />} />
         <Route path="/fuel-dispenser/:dispenserId" element={token ? <FuelDispenserDetails /> : <Navigate to="/login" />} />
         <Route path="/todo" element={token ? <ToDoList /> : <Navigate to="/login" />} />
+        <Route path="/staff-management" element={token ? <StaffManagementPage /> : <Navigate to="/login" />} />
         <Route path="/" element={token ? <Dashboard user={user} logout={logout} /> : <Navigate to="/login" />} />
       </Routes>
     </RoleProvider>
