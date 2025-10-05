@@ -68,14 +68,14 @@ const StaffManagement = () => {
 
     setLoading(true);
     try {
-      const result = await inviteStaff(inviteForm.email, inviteForm.name, inviteForm.role);
+      const result = await inviteStaff(inviteForm.email, inviteForm.name, inviteForm.role, { whatsapp: inviteForm.whatsapp });
       
       if (result.success) {
         setMessage({ 
           type: 'success', 
-          text: `Invitation sent to ${inviteForm.email}` 
+          text: `Invitation sent to ${inviteForm.email}${inviteForm.whatsapp ? ` and WhatsApp ${inviteForm.whatsapp}` : ''}` 
         });
-        setInviteForm({ email: '', name: '', role: 'staff' });
+        setInviteForm({ whatsapp: '', email: '', name: '', role: 'staff' });
         setShowInviteDialog(false);
         
         // Clear message after 3 seconds
