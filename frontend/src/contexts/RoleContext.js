@@ -374,7 +374,7 @@ export const RoleProvider = ({ children, currentUser }) => {
   };
 
   // Invite staff member
-  const inviteStaff = async (email, name, role, customPermissions = null) => {
+  const inviteStaff = async (email, name, role, additionalData = {}) => {
     try {
       if (!hasPermission('staff_invite')) {
         throw new Error('No permission to invite staff');
@@ -384,8 +384,9 @@ export const RoleProvider = ({ children, currentUser }) => {
         email,
         name,
         role,
-        permissions: customPermissions,
-        invitedBy: currentUser.name || currentUser.email
+        whatsapp: additionalData.whatsapp || '',
+        permissions: additionalData.permissions,
+        invitedBy: currentUser?.name || currentUser?.email || 'Admin'
       };
 
       const newStaff = BusinessStaffManager.addStaffToBusiness(activeBusiness.id, staffData);
