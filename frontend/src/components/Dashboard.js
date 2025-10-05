@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useBusiness } from '../contexts/BusinessContext';
 import { useRole } from '../contexts/RoleContext';
 import { useNavigate } from 'react-router-dom';
-import StaffManagement from './StaffManagement';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
