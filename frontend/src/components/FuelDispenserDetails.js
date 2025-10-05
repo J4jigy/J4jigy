@@ -10,6 +10,7 @@ import { ArrowLeft, Plus, X } from 'lucide-react';
 const FuelDispenserDetails = () => {
   const navigate = useNavigate();
   const { dispenserId } = useParams();
+  const { getData, setData, activeBusiness } = useBusiness();
   
   // State for form data
   const [formData, setFormData] = useState({
