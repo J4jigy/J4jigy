@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Search } from 'lucide-react';
+import { ArrowLeft, Search, Shield } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Card, CardContent } from './ui/card';
 import { useBusiness } from '../contexts/BusinessContext';
+import { useRole } from '../contexts/RoleContext';
 
 export default function Cash() {
   const navigate = useNavigate();
