@@ -439,6 +439,10 @@ const StaffManagement = () => {
                 <Mail className="w-4 h-4 inline mr-1" />
                 An invitation email will be sent to the staff member with instructions to join {activeBusiness.name}.
               </p>
+              <p className="text-sm text-blue-300 mt-2">
+                <MessageCircle className="w-4 h-4 inline mr-1" />
+                If WhatsApp number is provided, you can contact them directly for quick communication.
+              </p>
             </div>
 
             <div className="flex gap-2">
