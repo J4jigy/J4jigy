@@ -763,6 +763,15 @@ It's completely free to try!`;
               </div>
             </TabsContent>
           ))}
+          
+          {/* Staff Management Tab */}
+          {hasPermission('staff_manage') && (
+            <TabsContent value="staff" className="mt-0">
+              <div className="px-4">
+                <StaffManagement />
+              </div>
+            </TabsContent>
+          )}
         </Tabs>
       </div>
 
