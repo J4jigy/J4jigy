@@ -682,11 +682,11 @@ It's completely free to try!`;
 
         <div className="flex items-center gap-2">
           {/* Role Badge */}
-          {userRole && roleDefinitions[userRole] && (
+          {userRole && standardRoles && standardRoles[userRole] && (
             <div className="flex items-center gap-1 px-2 py-1 bg-slate-800 rounded-lg border border-slate-600">
-              <span className="text-sm">{roleDefinitions[userRole].icon}</span>
-              <span className={`text-xs font-medium ${roleDefinitions[userRole].color}`}>
-                {roleDefinitions[userRole].name}
+              <span className="text-sm">{standardRoles[userRole].icon}</span>
+              <span className={`text-xs font-medium ${standardRoles[userRole].color}`}>
+                {standardRoles[userRole].name}
               </span>
             </div>
           )}
