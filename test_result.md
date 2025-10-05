@@ -675,7 +675,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Updated crown icon design to verify the new Lucide React Crown component is working properly in the role-based system"
+    - "WhatsApp invite functionality in Staff Management system"
+    - "Cash page UI improvements - Balance in card, remove empty state card"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
