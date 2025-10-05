@@ -39,6 +39,7 @@ const StaffManagement = () => {
   const [showRoleDialog, setShowRoleDialog] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState(null);
   const [inviteForm, setInviteForm] = useState({
+    whatsapp: '',
     email: '',
     name: '',
     role: 'staff'
