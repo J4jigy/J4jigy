@@ -506,15 +506,18 @@ metadata:
 
   - task: "Role-based staff management system with email invitations and permission control"
     implemented: true
-    working: "NA"
+    working: false
     file: "RoleContext.js, StaffManagement.js, Dashboard.js, Cash.js, App.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "critical"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "main"
           comment: "Implemented comprehensive role-based staff management system with all requested features: 1) Created RoleContext with 5 standard roles (Owner, Manager, Cashier, Accountant, Staff) plus custom role support, 2) Permission-based feature access with complete UI hiding for unauthorized roles, 3) Email invitation system for staff with role assignment, 4) Staff can only see businesses they're assigned to, 5) Business-staff relationship management with BusinessStaffManager, 6) Enhanced Dashboard with Staff Management tab for owners/managers, 7) Role-based tile filtering (Cashiers see only Cash operations, Accountants see financial reports, etc.), 8) Added role indicator badge in Dashboard header, 9) Updated Cash component with access control, 10) StaffManagement component with invite/remove/role update functionality."
+        - working: false
+          agent: "testing"
+          comment: "❌ CRITICAL ISSUES FOUND IN ROLE-BASED STAFF MANAGEMENT SYSTEM: Conducted comprehensive testing of the newly implemented role-based staff management system and identified multiple critical failures. MAJOR PROBLEMS IDENTIFIED: ❌ ROLE BADGE MISSING: No role indicator badge with crown icon found in Dashboard header despite implementation, ❌ STAFF MANAGEMENT TAB MISSING: Staff Management tab not visible in Dashboard - only 3 tabs found (Business, Finance, Personal) instead of expected 4, ❌ ROLE CONTEXT NOT INITIALIZED: RoleProvider not properly providing role data - hasPermission function undefined, user role not set, ❌ PERMISSION SYSTEM BROKEN: Permission checks failing - hasPermission('staff_manage'), hasPermission('staff_invite'), hasPermission('cash_view') all return undefined, ❌ USER OBJECT MISSING ROLE DATA: Current user object doesn't contain role information needed for role-based access control, ❌ BUSINESS MANAGEMENT FEATURES MISSING: Add New Business, Import/Export buttons not visible despite Owner permissions. TECHNICAL FINDINGS: Login successful with admin/admin123, Dashboard loads correctly, Profile dialog shows Admin badge but no role-specific information, BusinessContext working (3 businesses found), Token exists but user role data missing, RoleProvider appears not to be wrapping components properly or not receiving user data. ROOT CAUSE ANALYSIS: The role-based system implementation exists in code but is not functioning due to missing user role initialization and RoleProvider context not being properly established. The system needs user object to contain role information and RoleProvider to be properly initialized with current user data. IMPACT: Complete failure of role-based access control system - no role-based features working, staff management completely inaccessible, permission-based UI filtering not functioning."
 
   - task: "Multi-business data isolation system implementation"
     implemented: true
