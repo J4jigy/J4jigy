@@ -20,7 +20,8 @@ import {
   Users,
   Crown,
   Eye,
-  EyeOff
+  EyeOff,
+  MessageCircle
 } from 'lucide-react';
 
 const StaffManagement = () => {
