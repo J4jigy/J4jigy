@@ -396,21 +396,18 @@ const CashOutEntry = ({ onBack }) => {
     setShowAddProductModal(false);
   };
 
-  // Persist selected items to localStorage
+  // Persist selected items to business-specific storage
   useEffect(() => {
-    localStorage.setItem('cashout_selected_items', JSON.stringify(selectedItems));
-  }, [selectedItems]);
+    setData('cashout_selected_items', selectedItems);
+  }, [selectedItems, setData]);
 
-  // Load selected items from localStorage
+  // Load selected items from business-specific storage
   useEffect(() => {
-    const savedItems = localStorage.getItem('cashout_selected_items');
-    if (savedItems) {
-      try {
-        const parsed = JSON.parse(savedItems);
-        setSelectedItems(parsed);
-      } catch {}
+    const savedItems = getData('cashout_selected_items', {});
+    if (savedItems && Object.keys(savedItems).length > 0) {
+      setSelectedItems(savedItems);
     }
-  }, []);
+  }, [activeBusiness.id, getData]);
 
   // Coin sound effect function
   const playActualCoinSound = () => {
