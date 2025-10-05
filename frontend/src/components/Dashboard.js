@@ -507,9 +507,9 @@ It's completely free to try!`;
   ];
 
   const personalTiles = [
-    { name: 'Offers &', subtitle: 'Discounts', icon: Gift, iconColor: 'text-red-400' },
-    { name: 'Scan', subtitle: 'Documents', icon: ScanLine, iconColor: 'text-cyan-400' },
-    { name: 'To Do List', subtitle: '', icon: CheckSquare, iconColor: 'text-green-400' },
+    { name: 'Offers &', subtitle: 'Discounts', icon: Gift, iconColor: 'text-red-400', permissions: [] }, // Available to all
+    { name: 'Scan', subtitle: 'Documents', icon: ScanLine, iconColor: 'text-cyan-400', permissions: [] }, // Available to all
+    { name: 'To Do List', subtitle: '', icon: CheckSquare, iconColor: 'text-green-400', permissions: [] }, // Available to all
   ];
 
   const getTilesForTab = (tab) => {
