@@ -348,11 +348,9 @@ export default function AppWithAuth() {
   return (
     <AuthProvider>
       <BusinessProvider>
-        <RoleProvider>
-          <BrowserRouter>
-            <AppRoutes />
-          </BrowserRouter>
-        </RoleProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
       </BusinessProvider>
     </AuthProvider>
   );
