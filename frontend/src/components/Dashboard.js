@@ -229,11 +229,6 @@ export default function Dashboard({ user, logout }) {
     };
     reader.readAsText(file);
   };
-      
-      setShowDeleteConfirmDialog(false);
-      setBusinessToDelete(null);
-    }
-  };
 
   const confirmDeleteBusiness = (businessId, businessName) => {
     setBusinessToDelete({ id: businessId, name: businessName });
