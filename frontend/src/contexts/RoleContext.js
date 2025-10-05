@@ -394,13 +394,14 @@ export const RoleProvider = ({ children, currentUser }) => {
       const newStaff = BusinessStaffManager.addStaffToBusiness(activeBusiness.id, staffData);
       
       if (newStaff) {
-        // Send email invitation
+        // Send invitation (email + WhatsApp)
         const result = await EmailInvitationManager.sendInvitation(
           activeBusiness.name,
-          currentUser.name || currentUser.email,
+          currentUser?.name || currentUser?.email || 'Admin',
           email,
           role,
-          activeBusiness.id
+          activeBusiness.id,
+          additionalData.whatsapp
         );
         
         // Refresh staff list
