@@ -776,13 +776,10 @@ It's completely free to try!`;
           setActiveTab(tab);
           localStorage.setItem('dashboardActiveTab', tab);
         }} className="w-full">
-          <TabsList className={`grid w-full ${hasPermission('staff_manage') ? 'grid-cols-4' : 'grid-cols-3'} bg-slate-800/80 border border-slate-700 rounded-lg mb-3`}>
+          <TabsList className="grid w-full grid-cols-3 bg-slate-800/80 border border-slate-700 rounded-lg mb-3">
             <TabsTrigger value="business" className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md">Business</TabsTrigger>
             <TabsTrigger value="finance" className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md">Finance</TabsTrigger>
             <TabsTrigger value="personal" className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md">Personal</TabsTrigger>
-            {hasPermission('staff_manage') && (
-              <TabsTrigger value="staff" className="data-[state=active]:bg-slate-700 data-[state=active]:text-white text-slate-300 rounded-md">Staff</TabsTrigger>
-            )}
           </TabsList>
 
           {['business', 'finance', 'personal'].map((tab) => (
