@@ -266,7 +266,7 @@ export class BusinessStaffManager {
 // Email Invitation Manager
 export class EmailInvitationManager {
   // Send invitation (simulated - in real app would use email service)
-  static async sendInvitation(businessName, inviterName, recipientEmail, role, businessId) {
+  static async sendInvitation(businessName, inviterName, recipientEmail, role, businessId, whatsapp = '') {
     try {
       // In production, this would integrate with email service
       console.log(`Email invitation sent:
