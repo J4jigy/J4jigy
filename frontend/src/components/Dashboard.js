@@ -614,6 +614,32 @@ It's completely free to try!`;
                   <Plus className="w-4 h-4 mr-2" />
                   Add New Business
                 </Button>
+                
+                <div className="grid grid-cols-2 gap-2">
+                  <Button
+                    onClick={() => {
+                      setShowBusinessDialog(false);
+                      setShowExportDialog(true);
+                    }}
+                    variant="outline"
+                    className="border-blue-600 text-blue-400 hover:bg-blue-900/20"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Export Data
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setShowBusinessDialog(false);
+                      setShowImportDialog(true);
+                    }}
+                    variant="outline"
+                    className="border-green-600 text-green-400 hover:bg-green-900/20"
+                  >
+                    <Upload className="w-4 h-4 mr-2" />
+                    Import Data
+                  </Button>
+                </div>
+                
                 <Button
                   onClick={() => setShowBusinessDialog(false)}
                   variant="outline"
