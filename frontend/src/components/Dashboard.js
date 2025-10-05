@@ -607,13 +607,15 @@ It's completely free to try!`;
                     </div>
                   ))}
                 </div>
-                <Button
-                  onClick={() => setShowAddBusinessDialog(true)}
-                  className="w-full bg-green-600 hover:bg-green-700"
-                >
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add New Business
-                </Button>
+                {hasPermission('business_create') && (
+                  <Button
+                    onClick={() => setShowAddBusinessDialog(true)}
+                    className="w-full bg-green-600 hover:bg-green-700"
+                  >
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add New Business
+                  </Button>
+                )}
                 
                 {(hasPermission('business_export') || hasPermission('business_import')) && (
                   <div className="grid grid-cols-2 gap-2">
