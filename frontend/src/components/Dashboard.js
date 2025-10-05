@@ -145,9 +145,9 @@ export default function Dashboard({ user, logout }) {
     }
   };
 
-  // Business management functions
+  // Business management functions using BusinessContext
   const handleBusinessSwitch = (business) => {
-    setActiveBusiness(business);
+    switchBusiness(business);
     setShowBusinessDialog(false);
     // Refresh summary data for the selected business
     fetchSummary();
@@ -155,28 +155,23 @@ export default function Dashboard({ user, logout }) {
 
   const handleAddBusiness = () => {
     if (newBusinessName.trim()) {
-      const newBusiness = {
-        id: businesses.length + 1,
-        name: newBusinessName.trim(),
-        type: newBusinessType,
-        gstNumber: newBusinessGST.trim(),
-        address: newBusinessAddress.trim(),
-        phone: newBusinessPhone.trim()
-      };
-      setBusinesses(prev => [...prev, newBusiness]);
-      // Form reset handled by onClick with setTimeout
+      try {
+        const newBusiness = addBusiness(newBusinessName.trim(), newBusinessType);
+        console.log('New business created:', newBusiness);
+        // Form reset handled by onClick with setTimeout
+      } catch (error) {
+        console.error('Error creating business:', error);
+      }
     }
   };
 
   const handleDeleteBusiness = (businessId) => {
-    if (businesses.length > 1) { // Prevent deleting the last business
-      const updatedBusinesses = businesses.filter(b => b.id !== businessId);
-      setBusinesses(updatedBusinesses);
-      
-      // If deleted business was active, switch to first business
-      if (activeBusiness.id === businessId) {
-        setActiveBusiness(updatedBusinesses[0]);
-      }
+    try {
+      deleteBusiness(businessId);
+    } catch (error) {
+      console.error('Error deleting business:', error);
+      alert(error.message);
+    }
       
       setShowDeleteConfirmDialog(false);
       setBusinessToDelete(null);
