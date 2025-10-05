@@ -100,27 +100,31 @@ const CashOutEntry = ({ onBack }) => {
   const [defaultPaymentMode, setDefaultPaymentMode] = useState('Cash');
 
   // Sample data
-  // load slots from localStorage
+  // load slots from business-specific storage
   useEffect(() => {
-    const saved = localStorage.getItem('cashout_slots');
-    if (saved) {
+    const savedData = getData('cashout_data', null);
+    if (savedData) {
       try {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length === 6) {
-          setSlots(parsed);
-          const activeIndex = parseInt(localStorage.getItem('cashout_active') || '0', 10) || 0;
-          setActiveSlot(activeIndex);
-          setAmount(parsed[activeIndex]?.amount || '0');
+        const { slots, activeSlot } = savedData;
+        
+        if (slots && Array.isArray(slots) && slots.length > 0) {
+          setSlots(slots);
+          setAmount(slots[activeSlot]?.amount || '0');
         }
-      } catch {}
+        
+        if (typeof activeSlot === 'number' && activeSlot >= 0 && activeSlot < slots.length) {
+          setActiveSlot(activeSlot);
+        }
+      } catch (e) {
+        console.error('Failed to parse saved slots:', e);
+      }
     }
-  }, []);
+  }, [activeBusiness.id, getData]); // reload when business changes
 
-  // persist slots and active slot
+  // persist slots and active slot to business-specific storage
   useEffect(() => {
-    localStorage.setItem('cashout_slots', JSON.stringify(slots));
-    localStorage.setItem('cashout_active', String(activeSlot));
-  }, [slots, activeSlot]);
+    setData('cashout_data', { slots, activeSlot });
+  }, [slots, activeSlot, setData]);
 
   const quickAmounts = [1, 2, 5, 10, 20, 50, 100, 200, 500];
   const [expenses, setExpenses] = useState([]); // Empty - no default expenses
