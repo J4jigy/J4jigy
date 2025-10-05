@@ -209,7 +209,14 @@ const StaffManagement = () => {
         </CardHeader>
         <CardContent>
           <div className="flex items-center gap-4">
-            <div className="text-2xl">{standardRoles[userRole]?.icon || '👤'}</div>
+            <div className="flex items-center justify-center">
+              {standardRoles[userRole]?.icon 
+                ? React.createElement(standardRoles[userRole].icon, { 
+                    className: `w-8 h-8 ${standardRoles[userRole].color}` 
+                  })
+                : <User className="w-8 h-8 text-gray-400" />
+              }
+            </div>
             <div>
               <div className="font-medium text-white">
                 {standardRoles[userRole]?.name || 'Unknown Role'}
