@@ -157,11 +157,10 @@ const CashInEntry = ({ onBack }) => {
     }
   }, [activeBusiness.id, getData]); // reload when business changes
 
-  // persist slots and active slot
+  // persist slots and active slot to business-specific storage
   useEffect(() => {
-    localStorage.setItem('cashin_slots', JSON.stringify(slots));
-    localStorage.setItem('cashin_active', String(activeSlot));
-  }, [slots, activeSlot]);
+    setData('cashin_data', { slots, activeSlot });
+  }, [slots, activeSlot, setData]);
 
   // Sample data
   const quickAmounts = [1, 2, 5, 10, 20, 50, 100, 200, 500];
