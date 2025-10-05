@@ -487,12 +487,12 @@ It's completely free to try!`;
   };
 
   const businessTiles = [
-    { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400' },
-    { name: 'Suppliers', subtitle: 'Creditors', icon: Truck, iconColor: 'text-indigo-400' },
-    { name: 'Community', subtitle: 'Ratings', icon: Star, iconColor: 'text-yellow-400' },
-    { name: 'Company', subtitle: 'Purchase', icon: ShoppingCart, iconColor: 'text-orange-400' },
-    { name: 'Stock', subtitle: 'Management', icon: Package, iconColor: 'text-orange-400' },
-    { name: 'Staff', subtitle: '', icon: Users, iconColor: 'text-purple-400' },
+    { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400', permissions: ['customers_manage', 'customers_view'] },
+    { name: 'Suppliers', subtitle: 'Creditors', icon: Truck, iconColor: 'text-indigo-400', permissions: ['suppliers_manage', 'suppliers_view'] },
+    { name: 'Community', subtitle: 'Ratings', icon: Star, iconColor: 'text-yellow-400', permissions: ['customers_view'] },
+    { name: 'Company', subtitle: 'Purchase', icon: ShoppingCart, iconColor: 'text-orange-400', permissions: ['expenses_manage'] },
+    { name: 'Stock', subtitle: 'Management', icon: Package, iconColor: 'text-orange-400', permissions: ['inventory_manage', 'inventory_view'] },
+    { name: 'Staff', subtitle: '', icon: Users, iconColor: 'text-purple-400', permissions: ['staff_manage'] },
   ];
 
   const financeTiles = [
