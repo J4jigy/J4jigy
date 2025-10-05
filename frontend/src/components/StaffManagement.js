@@ -277,7 +277,10 @@ const StaffManagement = () => {
                       <div className="font-medium text-white">{staff.name}</div>
                       <div className="text-sm text-slate-400">{staff.email}</div>
                       {staff.whatsapp && (
-                        <div className="text-sm text-slate-500">WhatsApp: {staff.whatsapp}</div>
+                        <div className="text-sm text-slate-500 flex items-center gap-1">
+                          <MessageCircle className="w-3 h-3" />
+                          WhatsApp: {staff.whatsapp}
+                        </div>
                       )}
                       <div className="flex items-center gap-2 mt-1">
                         {getStatusIcon(staff.status)}
