@@ -269,8 +269,9 @@ export class EmailInvitationManager {
   static async sendInvitation(businessName, inviterName, recipientEmail, role, businessId, whatsapp = '') {
     try {
       // In production, this would integrate with email service
-      console.log(`Email invitation sent:
-        To: ${recipientEmail}
+      console.log(`Invitation sent:
+        Email: ${recipientEmail}
+        WhatsApp: ${whatsapp || 'Not provided'}
         From: ${inviterName}
         Business: ${businessName}
         Role: ${role}
