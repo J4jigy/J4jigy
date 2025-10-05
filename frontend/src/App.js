@@ -344,9 +344,11 @@ function AppRoutes() {
 export default function AppWithAuth() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <BusinessProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </BusinessProvider>
     </AuthProvider>
   );
 }
