@@ -688,7 +688,9 @@ It's completely free to try!`;
           {/* Role Badge */}
           {userRole && standardRoles && standardRoles[userRole] && (
             <div className="flex items-center gap-1 px-2 py-1 bg-slate-800 rounded-lg border border-slate-600">
-              <span className="text-sm">{standardRoles[userRole].icon}</span>
+              {React.createElement(standardRoles[userRole].icon, { 
+                className: `w-4 h-4 ${standardRoles[userRole].color}` 
+              })}
               <span className={`text-xs font-medium ${standardRoles[userRole].color}`}>
                 {standardRoles[userRole].name}
               </span>
