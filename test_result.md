@@ -709,7 +709,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Cash page UI improvements - Balance in card, remove empty state card"
+    - "Corrected back navigation flow for staff management"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
