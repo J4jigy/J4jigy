@@ -49,6 +49,9 @@ export default function Dashboard({ user, logout }) {
     getDataSize
   } = useBusiness();
   
+  // Use RoleContext for permission-based UI
+  const { hasPermission, userRole, standardRoles } = useRole();
+  
   const [showBusinessDialog, setShowBusinessDialog] = useState(false);
   const [showAddBusinessDialog, setShowAddBusinessDialog] = useState(false);
   const [showImportDialog, setShowImportDialog] = useState(false);
