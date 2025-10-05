@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useBusiness } from './BusinessContext';
+import { Crown, UserCheck, Coins, BarChart3, User } from 'lucide-react';
 
 // Role Context for managing user roles and permissions
 const RoleContext = createContext();
