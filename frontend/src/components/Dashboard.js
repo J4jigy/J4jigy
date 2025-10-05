@@ -496,14 +496,14 @@ It's completely free to try!`;
   ];
 
   const financeTiles = [
-    { name: 'Bank', subtitle: '', icon: Landmark, iconColor: 'text-blue-400' },
-    { name: 'Cash', subtitle: '', icon: Coins, iconColor: 'text-green-500' },
-    { name: 'Bills', subtitle: 'Recharge', icon: Zap, iconColor: 'text-green-400' },
-    { name: 'Rent', subtitle: '', icon: Building, iconColor: 'text-blue-400' },
-    { name: 'Other', subtitle: 'Expenses', icon: Coins, iconColor: 'text-purple-400' },
-    { name: 'Bills &', subtitle: 'Invoices', icon: FileBarChart, iconColor: 'text-yellow-400' },
-    { name: 'Profit', subtitle: 'Loss', icon: PieChart, iconColor: 'text-emerald-400' },
-    { name: 'Balance', subtitle: 'Sheet', icon: BarChart3, iconColor: 'text-indigo-400' },
+    { name: 'Bank', subtitle: '', icon: Landmark, iconColor: 'text-blue-400', permissions: ['bank_manage', 'cash_view'] },
+    { name: 'Cash', subtitle: '', icon: Coins, iconColor: 'text-green-500', permissions: ['cash_in', 'cash_out', 'cash_view'] },
+    { name: 'Bills', subtitle: 'Recharge', icon: Zap, iconColor: 'text-green-400', permissions: ['expenses_manage'] },
+    { name: 'Rent', subtitle: '', icon: Building, iconColor: 'text-blue-400', permissions: ['expenses_manage'] },
+    { name: 'Other', subtitle: 'Expenses', icon: Coins, iconColor: 'text-purple-400', permissions: ['expenses_manage'] },
+    { name: 'Bills &', subtitle: 'Invoices', icon: FileBarChart, iconColor: 'text-yellow-400', permissions: ['reports_view'] },
+    { name: 'Profit', subtitle: 'Loss', icon: PieChart, iconColor: 'text-emerald-400', permissions: ['reports_view', 'analytics_view'] },
+    { name: 'Balance', subtitle: 'Sheet', icon: BarChart3, iconColor: 'text-indigo-400', permissions: ['reports_view', 'analytics_view'] },
   ];
 
   const personalTiles = [
