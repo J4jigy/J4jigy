@@ -513,12 +513,32 @@ It's completely free to try!`;
   ];
 
   const getTilesForTab = (tab) => {
+    let tiles = [];
+    
     switch (tab) {
-      case 'business': return businessTiles;
-      case 'finance': return financeTiles;
-      case 'personal': return personalTiles;
-      default: return businessTiles;
+      case 'business': 
+        tiles = businessTiles;
+        break;
+      case 'finance': 
+        tiles = financeTiles;
+        break;
+      case 'personal': 
+        tiles = personalTiles;
+        break;
+      default: 
+        tiles = businessTiles;
     }
+    
+    // Filter tiles based on user permissions
+    return tiles.filter(tile => {
+      // If tile has no permissions specified, it's available to all
+      if (!tile.permissions || tile.permissions.length === 0) {
+        return true;
+      }
+      
+      // Check if user has any of the required permissions
+      return tile.permissions.some(permission => hasPermission(permission));
+    });
   };
 
   const handleTileClick = (tile) => {
