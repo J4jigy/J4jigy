@@ -135,7 +135,7 @@ export const STANDARD_ROLES = {
       audit_view: true
     },
     color: 'text-yellow-400',
-    icon: '📊'
+    icon: BarChart3
   },
   
   staff: {
