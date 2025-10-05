@@ -1357,6 +1357,110 @@ It's completely free to try!`;
           </Button>
         </div>
       </div>
+
+      {/* Export Dialog */}
+      <Dialog open={showExportDialog} onOpenChange={setShowExportDialog}>
+        <DialogContent className="bg-slate-800 border-slate-700">
+          <DialogHeader>
+            <DialogTitle className="text-white">Export Business Data</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="text-slate-300">
+              <p>Export all data for "{activeBusiness.name}" including:</p>
+              <ul className="list-disc list-inside mt-2 space-y-1 text-sm">
+                <li>Cash entries and bank records</li>
+                <li>Customers and suppliers</li>
+                <li>Products and inventory</li>
+                <li>Expenses and invoices</li>
+                <li>Fuel dispenser data</li>
+                <li>All other business records</li>
+              </ul>
+            </div>
+            <div className="bg-slate-700 p-3 rounded-lg">
+              <p className="text-sm text-slate-300">
+                <strong>Data Size:</strong> ~{Math.round(getDataSize() / 1024)} KB
+              </p>
+              <p className="text-xs text-slate-400 mt-1">
+                Exported file will be in JSON format
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                onClick={() => setShowExportDialog(false)}
+                variant="outline"
+                className="border-slate-600 text-slate-200 hover:bg-slate-700"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  handleExportBusiness();
+                  setShowExportDialog(false);
+                }}
+                className="bg-blue-600 hover:bg-blue-700"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Export Now
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Import Dialog */}
+      <Dialog open={showImportDialog} onOpenChange={setShowImportDialog}>
+        <DialogContent className="bg-slate-800 border-slate-700">
+          <DialogHeader>
+            <DialogTitle className="text-white">Import Business Data</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="text-slate-300">
+              <p className="mb-2">Choose how to import the business data:</p>
+            </div>
+            
+            <div className="space-y-3">
+              <div className="bg-orange-900/20 border border-orange-700/50 p-3 rounded-lg">
+                <h4 className="text-orange-300 font-medium mb-1">⚠️ Import into Current Business</h4>
+                <p className="text-sm text-slate-300 mb-2">
+                  This will <strong>overwrite all existing data</strong> in "{activeBusiness.name}"
+                </p>
+                <input
+                  type="file"
+                  accept=".json"
+                  onChange={(e) => handleImportBusiness(e.target.files[0], { createNew: false })}
+                  className="text-sm text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-600 file:text-white hover:file:bg-orange-700"
+                />
+              </div>
+
+              <div className="bg-green-900/20 border border-green-700/50 p-3 rounded-lg">
+                <h4 className="text-green-300 font-medium mb-1">✅ Create New Business</h4>
+                <p className="text-sm text-slate-300 mb-2">
+                  Import as a new business (recommended - keeps existing data safe)
+                </p>
+                <input
+                  type="file"
+                  accept=".json"
+                  onChange={(e) => handleImportBusiness(e.target.files[0], { createNew: true, switchTo: true })}
+                  className="text-sm text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-600 file:text-white hover:file:bg-green-700"
+                />
+              </div>
+            </div>
+
+            <div className="text-xs text-slate-400">
+              <p><strong>Supported format:</strong> JSON files exported from this application</p>
+              <p><strong>File size limit:</strong> 10MB</p>
+            </div>
+            
+            <Button
+              onClick={() => setShowImportDialog(false)}
+              variant="outline"
+              className="w-full border-slate-600 text-slate-200 hover:bg-slate-700"
+            >
+              Cancel
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
