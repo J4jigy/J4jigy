@@ -327,18 +327,20 @@ function AppRoutes() {
   }
 
   return (
-    <Routes>
-      <Route path="/login" element={!token ? <LoginPage /> : <Navigate to="/" />} />
-      <Route path="/admin" element={token && (user?.role === 'admin' || user?.role === 'super_admin' || user?.is_admin) ? <AdminDashboard user={user} /> : <Navigate to="/login" />} />
-      <Route path="/list/cash" element={token ? <Cash /> : <Navigate to="/login" />} />
-      <Route path="/list/:key" element={token ? <ListViewPage /> : <Navigate to="/login" />} />
-      <Route path="/cash-in" element={token ? <CashInEntry onBack={() => window.history.back()} /> : <Navigate to="/login" />} />
-      <Route path="/cash-out" element={token ? <CashOutEntry onBack={() => window.history.back()} /> : <Navigate to="/login" />} />
-      <Route path="/fuel-dispenser" element={token ? <FuelDispenser /> : <Navigate to="/login" />} />
-      <Route path="/fuel-dispenser/:dispenserId" element={token ? <FuelDispenserDetails /> : <Navigate to="/login" />} />
-      <Route path="/todo" element={token ? <ToDoList /> : <Navigate to="/login" />} />
-      <Route path="/" element={token ? <Dashboard user={user} logout={logout} /> : <Navigate to="/login" />} />
-    </Routes>
+    <RoleProvider currentUser={user}>
+      <Routes>
+        <Route path="/login" element={!token ? <LoginPage /> : <Navigate to="/" />} />
+        <Route path="/admin" element={token && (user?.role === 'admin' || user?.role === 'super_admin' || user?.is_admin) ? <AdminDashboard user={user} /> : <Navigate to="/login" />} />
+        <Route path="/list/cash" element={token ? <Cash /> : <Navigate to="/login" />} />
+        <Route path="/list/:key" element={token ? <ListViewPage /> : <Navigate to="/login" />} />
+        <Route path="/cash-in" element={token ? <CashInEntry onBack={() => window.history.back()} /> : <Navigate to="/login" />} />
+        <Route path="/cash-out" element={token ? <CashOutEntry onBack={() => window.history.back()} /> : <Navigate to="/login" />} />
+        <Route path="/fuel-dispenser" element={token ? <FuelDispenser /> : <Navigate to="/login" />} />
+        <Route path="/fuel-dispenser/:dispenserId" element={token ? <FuelDispenserDetails /> : <Navigate to="/login" />} />
+        <Route path="/todo" element={token ? <ToDoList /> : <Navigate to="/login" />} />
+        <Route path="/" element={token ? <Dashboard user={user} logout={logout} /> : <Navigate to="/login" />} />
+      </Routes>
+    </RoleProvider>
   );
 }
 
