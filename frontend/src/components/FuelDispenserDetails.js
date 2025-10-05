@@ -58,6 +58,43 @@ const FuelDispenserDetails = () => {
   // State for lube entries
   const [lubeEntries, setLubeEntries] = useState([]); // Empty - no default lubes
 
+  // Load business-specific data when component mounts or business changes
+  useEffect(() => {
+    const businessFuelData = getData(`fuel_dispenser_${dispenserId}`, {
+      availableParties: [],
+      creditSaleParties: [],
+      digitalPayments: [],
+      expenseEntries: [],
+      lubeEntries: [],
+      customProducts: []
+    });
+
+    setAvailableParties(businessFuelData.availableParties);
+    setCreditSaleParties(businessFuelData.creditSaleParties);
+    setDigitalPayments(businessFuelData.digitalPayments);
+    setExpenseEntries(businessFuelData.expenseEntries);
+    setLubeEntries(businessFuelData.lubeEntries);
+    
+    // Update formData with custom products
+    setFormData(prev => ({
+      ...prev,
+      customProducts: businessFuelData.customProducts
+    }));
+  }, [activeBusiness.id, dispenserId, getData]);
+
+  // Save business-specific data when it changes
+  useEffect(() => {
+    const fuelData = {
+      availableParties,
+      creditSaleParties,
+      digitalPayments,
+      expenseEntries,
+      lubeEntries,
+      customProducts: formData.customProducts
+    };
+    setData(`fuel_dispenser_${dispenserId}`, fuelData);
+  }, [availableParties, creditSaleParties, digitalPayments, expenseEntries, lubeEntries, formData.customProducts, dispenserId, setData]);
+
   // State for add lube modal
   const [showAddLubeModal, setShowAddLubeModal] = useState(false);
   const [newLubeData, setNewLubeData] = useState({
