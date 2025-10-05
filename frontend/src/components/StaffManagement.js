@@ -263,8 +263,13 @@ const StaffManagement = () => {
                   className="flex items-center justify-between p-4 bg-slate-700 rounded-lg"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="text-2xl">
-                      {standardRoles[staff.role]?.icon || '👤'}
+                    <div className="flex items-center justify-center">
+                      {standardRoles[staff.role]?.icon 
+                        ? React.createElement(standardRoles[staff.role].icon, { 
+                            className: `w-8 h-8 ${standardRoles[staff.role].color}` 
+                          })
+                        : <User className="w-8 h-8 text-gray-400" />
+                      }
                     </div>
                     <div>
                       <div className="font-medium text-white">{staff.name}</div>
