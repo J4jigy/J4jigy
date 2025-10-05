@@ -374,7 +374,19 @@ const StaffManagement = () => {
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label className="text-slate-300">Email Address</Label>
+              <Label className="text-slate-300">WhatsApp Number</Label>
+              <Input
+                type="tel"
+                placeholder="+1 234 567 8900"
+                value={inviteForm.whatsapp}
+                onChange={(e) => setInviteForm(prev => ({ ...prev, whatsapp: e.target.value }))}
+                className="bg-slate-700 border-slate-600 text-white"
+              />
+              <p className="text-xs text-slate-500 mt-1">Optional - for quick communication</p>
+            </div>
+
+            <div>
+              <Label className="text-slate-300">Email Address *</Label>
               <Input
                 type="email"
                 placeholder="staff@example.com"
