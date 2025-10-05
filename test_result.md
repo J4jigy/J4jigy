@@ -675,7 +675,6 @@ metadata:
 
 test_plan:
   current_focus:
-    - "WhatsApp invite functionality in Staff Management system"
     - "Cash page UI improvements - Balance in card, remove empty state card"
   stuck_tasks: []
   test_all: false
