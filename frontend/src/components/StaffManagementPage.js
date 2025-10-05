@@ -33,10 +33,10 @@ const StaffManagementPage = () => {
               Contact your business owner for staff management access.
             </p>
             <Button 
-              onClick={() => navigate('/')} 
+              onClick={() => navigate('/staff')} 
               className="mt-4 bg-blue-600 hover:bg-blue-700"
             >
-              Back to Dashboard
+              Back to Staff
             </Button>
           </div>
         </div>
