@@ -19,6 +19,7 @@ import FuelDispenserDetails from './components/FuelDispenserDetails';
 import ListViewPage from './components/ListViewPage';
 import Dashboard from './components/Dashboard';
 import { BusinessProvider } from './contexts/BusinessContext';
+import { RoleProvider } from './contexts/RoleContext';
 import ToDoList from './components/ToDoList';
 
 
