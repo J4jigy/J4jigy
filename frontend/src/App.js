@@ -21,6 +21,7 @@ import Dashboard from './components/Dashboard';
 import { BusinessProvider } from './contexts/BusinessContext';
 import { RoleProvider } from './contexts/RoleContext';
 import ToDoList from './components/ToDoList';
+import StaffPage from './components/StaffPage';
 import StaffManagementPage from './components/StaffManagementPage';
 
 
