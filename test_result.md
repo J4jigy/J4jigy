@@ -673,10 +673,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Role-based staff management system with email invitations and permission control"
+    - "Updated crown icon design to verify the new Lucide React Crown component is working properly in the role-based system"
   stuck_tasks: []
   test_all: false
-  test_priority: "critical_first"
+  test_priority: "high_first"
 
   - task: "Credit Sale section with default visible subsection"
     implemented: true
