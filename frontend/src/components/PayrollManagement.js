@@ -89,7 +89,7 @@ const PayrollManagement = () => {
         <div className="flex-1 flex items-center justify-center">
           <Card className="bg-slate-800 border-slate-700">
             <CardContent className="p-8 text-center">
-              <DollarSign className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+              <IndianRupee className="w-16 h-16 text-slate-600 mx-auto mb-4" />
               <h2 className="text-xl font-semibold text-white mb-2">Access Denied</h2>
               <p className="text-slate-400 mb-4">You don't have permission to access payroll management.</p>
               <p className="text-sm text-slate-500">Contact your business owner for payroll access.</p>
