@@ -673,6 +673,105 @@ const PayrollManagement = () => {
             </div>
           </DialogContent>
         </Dialog>
+
+        {/* Attendance Dialog */}
+        <Dialog open={showAttendanceDialog} onOpenChange={setShowAttendanceDialog}>
+          <DialogContent className="bg-slate-800 border-slate-700">
+            <DialogHeader>
+              <DialogTitle className="text-white">Mark Attendance</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <Label className="text-slate-300">Staff Member</Label>
+                  <Select value={attendanceForm.staffId} onValueChange={(value) => setAttendanceForm(prev => ({ ...prev, staffId: value }))}>
+                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                      <SelectValue placeholder="Select staff member" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {businessStaff.map((staff) => (
+                        <SelectItem key={staff.id} value={staff.id.toString()}>
+                          {staff.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label className="text-slate-300">Date</Label>
+                  <Input
+                    type="date"
+                    value={attendanceForm.date}
+                    onChange={(e) => setAttendanceForm(prev => ({ ...prev, date: e.target.value }))}
+                    className="bg-slate-700 border-slate-600 text-white"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <Label className="text-slate-300">Status</Label>
+                <Select value={attendanceForm.status} onValueChange={(value) => setAttendanceForm(prev => ({ ...prev, status: value }))}>
+                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="present">Present</SelectItem>
+                    <SelectItem value="absent">Absent</SelectItem>
+                    <SelectItem value="half_day">Half Day</SelectItem>
+                    <SelectItem value="late">Late</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <Label className="text-slate-300">Check In Time</Label>
+                  <Input
+                    type="time"
+                    value={attendanceForm.checkIn}
+                    onChange={(e) => setAttendanceForm(prev => ({ ...prev, checkIn: e.target.value }))}
+                    className="bg-slate-700 border-slate-600 text-white"
+                  />
+                </div>
+                <div>
+                  <Label className="text-slate-300">Check Out Time</Label>
+                  <Input
+                    type="time"
+                    value={attendanceForm.checkOut}
+                    onChange={(e) => setAttendanceForm(prev => ({ ...prev, checkOut: e.target.value }))}
+                    className="bg-slate-700 border-slate-600 text-white"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <Label className="text-slate-300">Notes (Optional)</Label>
+                <Input
+                  placeholder="Late due to traffic..."
+                  value={attendanceForm.notes}
+                  onChange={(e) => setAttendanceForm(prev => ({ ...prev, notes: e.target.value }))}
+                  className="bg-slate-700 border-slate-600 text-white"
+                />
+              </div>
+
+              <div className="flex gap-2">
+                <Button
+                  onClick={() => setShowAttendanceDialog(false)}
+                  variant="outline"
+                  className="flex-1 border-slate-600 text-slate-300"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleAddAttendance}
+                  className="flex-1 bg-yellow-600 hover:bg-yellow-700"
+                >
+                  Mark Attendance
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
