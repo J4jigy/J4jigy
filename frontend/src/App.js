@@ -343,6 +343,7 @@ function AppRoutes() {
         <Route path="/todo" element={token ? <ToDoList /> : <Navigate to="/login" />} />
         <Route path="/staff" element={token ? <StaffPage /> : <Navigate to="/login" />} />
         <Route path="/staff-management" element={token ? <StaffManagementPage /> : <Navigate to="/login" />} />
+        <Route path="/payroll-management" element={token ? <PayrollManagement /> : <Navigate to="/login" />} />
         <Route path="/" element={token ? <Dashboard user={user} logout={logout} /> : <Navigate to="/login" />} />
       </Routes>
     </RoleProvider>
