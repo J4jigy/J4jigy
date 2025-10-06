@@ -170,6 +170,41 @@ const PayrollManagement = () => {
     setShowPaymentDialog(false);
   };
 
+  // Add attendance record
+  const handleAddAttendance = () => {
+    if (!attendanceForm.staffId || !attendanceForm.date) {
+      alert('Please select staff member and date');
+      return;
+    }
+
+    const staff = businessStaff.find(s => s.id === parseInt(attendanceForm.staffId));
+    if (!staff) return;
+
+    const newAttendance = {
+      id: Date.now(),
+      staffId: parseInt(attendanceForm.staffId),
+      staffName: staff.name,
+      date: attendanceForm.date,
+      status: attendanceForm.status,
+      checkIn: attendanceForm.checkIn,
+      checkOut: attendanceForm.checkOut,
+      notes: attendanceForm.notes,
+      recordedAt: new Date().toISOString()
+    };
+
+    const updatedAttendance = [...attendanceData, newAttendance];
+    saveAttendanceData(updatedAttendance);
+    setAttendanceForm({
+      staffId: '',
+      date: new Date().toISOString().split('T')[0],
+      status: 'present',
+      checkIn: '',
+      checkOut: '',
+      notes: ''
+    });
+    setShowAttendanceDialog(false);
+  };
+
   // Calculate total monthly payroll
   const totalMonthlyPayroll = payrollData
     .filter(p => p.paymentType === 'monthly')
