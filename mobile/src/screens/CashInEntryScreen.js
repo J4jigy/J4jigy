@@ -54,8 +54,14 @@ export default function CashInEntryScreen({ navigation }) {
   const [showSlotOptionsModal, setShowSlotOptionsModal] = useState(false);
   const [showClearConfirmModal, setShowClearConfirmModal] = useState(false);
   const [showRenameModal, setShowRenameModal] = useState(false);
+  const [showTransferModal, setShowTransferModal] = useState(false);
   const [selectedSlotIndex, setSelectedSlotIndex] = useState(null);
   const [newSlotName, setNewSlotName] = useState('');
+  const [transferForm, setTransferForm] = useState({
+    sourceSlot: null,
+    destinationSlot: null,
+    amount: ''
+  });
 
   const [chequeDetails, setChequeDetails] = useState({
     bankName: '',
