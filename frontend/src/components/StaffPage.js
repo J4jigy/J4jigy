@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, Users, Shield, UserPlus, DollarSign, BarChart3 } from 'lucide-react';
+import { ArrowLeft, Users, Shield, UserPlus, IndianRupee, BarChart3 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
