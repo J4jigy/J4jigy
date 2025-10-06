@@ -220,63 +220,121 @@ const PayrollManagement = () => {
         <h1 className="text-base font-semibold">PayRoll Management</h1>
       </div>
       
-      <div className="p-4 space-y-6">
-        {/* Payroll Summary */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Card className="bg-slate-800 border-slate-700">
-            <CardContent className="p-4 text-center">
-              <Users className="w-8 h-8 text-blue-400 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white">{payrollData.length}</div>
-              <div className="text-sm text-slate-400">Staff on Payroll</div>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-slate-800 border-slate-700">
-            <CardContent className="p-4 text-center">
-              <DollarSign className="w-8 h-8 text-green-400 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white">₹{totalMonthlyPayroll.toLocaleString()}</div>
-              <div className="text-sm text-slate-400">Monthly Payroll</div>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-slate-800 border-slate-700">
-            <CardContent className="p-4 text-center">
-              <Calendar className="w-8 h-8 text-yellow-400 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white">{paymentHistory.length}</div>
-              <div className="text-sm text-slate-400">Payments Made</div>
-            </CardContent>
-          </Card>
-          
-          <Card className="bg-slate-800 border-slate-700">
-            <CardContent className="p-4 text-center">
-              <Calculator className="w-8 h-8 text-purple-400 mx-auto mb-2" />
-              <div className="text-2xl font-bold text-white">
-                ₹{paymentHistory.reduce((sum, p) => sum + p.amount, 0).toLocaleString()}
-              </div>
-              <div className="text-sm text-slate-400">Total Paid</div>
-            </CardContent>
-          </Card>
+      <div className="p-3 space-y-4">
+        {/* Section Navigation */}
+        <div className="flex gap-2 overflow-x-auto">
+          <Button
+            variant={activeSection === 'overview' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveSection('overview')}
+            className={activeSection === 'overview' ? 'bg-blue-600 text-white' : 'border-slate-600 text-slate-300'}
+          >
+            <Eye className="w-4 h-4 mr-1" />
+            Overview
+          </Button>
+          <Button
+            variant={activeSection === 'salary' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveSection('salary')}
+            className={activeSection === 'salary' ? 'bg-green-600 text-white' : 'border-slate-600 text-slate-300'}
+          >
+            <IndianRupee className="w-4 h-4 mr-1" />
+            Salaries
+          </Button>
+          <Button
+            variant={activeSection === 'payments' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveSection('payments')}
+            className={activeSection === 'payments' ? 'bg-purple-600 text-white' : 'border-slate-600 text-slate-300'}
+          >
+            <Calculator className="w-4 h-4 mr-1" />
+            Payments
+          </Button>
+          <Button
+            variant={activeSection === 'attendance' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setActiveSection('attendance')}
+            className={activeSection === 'attendance' ? 'bg-yellow-600 text-white' : 'border-slate-600 text-slate-300'}
+          >
+            <Clock className="w-4 h-4 mr-1" />
+            Attendance
+          </Button>
         </div>
 
-        {/* Action Buttons */}
-        {hasPermission('payroll_manage') && (
-          <div className="flex gap-3">
-            <Button
-              onClick={() => setShowAddSalaryDialog(true)}
-              className="bg-green-600 hover:bg-green-700"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Salary Structure
-            </Button>
-            <Button
-              onClick={() => setShowPaymentDialog(true)}
-              className="bg-blue-600 hover:bg-blue-700"
-            >
-              <DollarSign className="w-4 h-4 mr-2" />
-              Record Payment
-            </Button>
-          </div>
+        {/* Overview Section */}
+        {activeSection === 'overview' && (
+          <>
+            {/* Payroll Summary */}
+            <div className="grid grid-cols-2 gap-3">
+              <Card className="bg-slate-800 border-slate-700">
+                <CardContent className="p-3 text-center">
+                  <Users className="w-6 h-6 text-blue-400 mx-auto mb-1" />
+                  <div className="text-lg font-bold text-white">{payrollData.length}</div>
+                  <div className="text-xs text-slate-400">Staff on Payroll</div>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-slate-800 border-slate-700">
+                <CardContent className="p-3 text-center">
+                  <IndianRupee className="w-6 h-6 text-green-400 mx-auto mb-1" />
+                  <div className="text-lg font-bold text-white">₹{totalMonthlyPayroll.toLocaleString()}</div>
+                  <div className="text-xs text-slate-400">Monthly Payroll</div>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-slate-800 border-slate-700">
+                <CardContent className="p-3 text-center">
+                  <Calendar className="w-6 h-6 text-yellow-400 mx-auto mb-1" />
+                  <div className="text-lg font-bold text-white">{paymentHistory.length}</div>
+                  <div className="text-xs text-slate-400">Payments Made</div>
+                </CardContent>
+              </Card>
+              
+              <Card className="bg-slate-800 border-slate-700">
+                <CardContent className="p-3 text-center">
+                  <Clock className="w-6 h-6 text-purple-400 mx-auto mb-1" />
+                  <div className="text-lg font-bold text-white">{attendanceData.length}</div>
+                  <div className="text-xs text-slate-400">Attendance Records</div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Quick Actions */}
+            {hasPermission('payroll_manage') && (
+              <div className="grid grid-cols-2 gap-3">
+                <Button
+                  onClick={() => setActiveSection('salary')}
+                  variant="outline"
+                  className="border-green-600 text-green-400 hover:bg-green-900/20"
+                >
+                  <IndianRupee className="w-4 h-4 mr-2" />
+                  Manage Salaries
+                </Button>
+                <Button
+                  onClick={() => setActiveSection('attendance')}
+                  variant="outline"
+                  className="border-yellow-600 text-yellow-400 hover:bg-yellow-900/20"
+                >
+                  <Clock className="w-4 h-4 mr-2" />
+                  Mark Attendance
+                </Button>
+              </div>
+            )}
+          </>
         )}
+
+        {/* Salary Section */}
+        {activeSection === 'salary' && (
+          <>
+            {hasPermission('payroll_manage') && (
+              <Button
+                onClick={() => setShowAddSalaryDialog(true)}
+                className="w-full bg-green-600 hover:bg-green-700"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add Salary Structure
+              </Button>
+            )}
 
         {/* Salary Structures */}
         <Card className="bg-slate-800 border-slate-700">
