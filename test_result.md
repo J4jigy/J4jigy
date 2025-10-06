@@ -334,6 +334,14 @@ metadata:
     stuck_count: 0
     priority: "high"
     needs_retesting: false
+
+  - task: "Mobile App POS Slot Management Features - Clear, Transfer, and Rename functionality"
+    implemented: true
+    working: "NA"
+    file: "mobile/src/screens/CashInEntryScreen.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
     status_history:
         - working: true
           agent: "testing"
