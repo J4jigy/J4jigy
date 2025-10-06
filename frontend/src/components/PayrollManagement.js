@@ -54,8 +54,10 @@ const PayrollManagement = () => {
   useEffect(() => {
     const businessPayroll = getData('payroll_data', []);
     const businessPayments = getData('payment_history', []);
+    const businessAttendance = getData('attendance_data', []);
     setPayrollData(businessPayroll);
     setPaymentHistory(businessPayments);
+    setAttendanceData(businessAttendance);
   }, [activeBusiness.id, getData]);
 
   // Save payroll data
