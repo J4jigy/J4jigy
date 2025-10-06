@@ -40,6 +40,7 @@ export const STANDARD_ROLES = {
       cash_view: true,
       bank_manage: true,
       expenses_manage: true,
+      payroll_manage: true,
       
       // Inventory & Operations
       fuel_manage: true,
