@@ -71,6 +71,11 @@ const PayrollManagement = () => {
     setData('payment_history', newPayments);
   };
 
+  const saveAttendanceData = (newAttendance) => {
+    setAttendanceData(newAttendance);
+    setData('attendance_data', newAttendance);
+  };
+
   // Check permissions
   if (!hasPermission('payroll_manage') && !hasPermission('payroll_view')) {
     return (
