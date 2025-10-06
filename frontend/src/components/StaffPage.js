@@ -25,7 +25,7 @@ const StaffPage = () => {
     {
       name: 'PayRoll Management',
       subtitle: 'Salary & Benefits',
-      icon: Settings,
+      icon: DollarSign,
       iconColor: 'text-green-400',
       description: 'Manage salaries, payments, and employee benefits',
       onClick: () => navigate('/payroll-management'),
