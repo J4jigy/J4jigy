@@ -560,6 +560,13 @@ export default function CashInEntryScreen({ navigation }) {
           </TouchableOpacity>
           
           <TouchableOpacity
+            style={[globalStyles.button, { backgroundColor: colors.purple600 }, styles.optionButton]}
+            onPress={transferAmountBetweenSlots}
+          >
+            <Text style={globalStyles.buttonText}>Transfer Amount</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity
             style={[globalStyles.button, styles.buttonSecondary, styles.optionButton]}
             onPress={() => setShowSlotOptionsModal(false)}
           >
