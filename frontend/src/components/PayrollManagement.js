@@ -492,44 +492,7 @@ const PayrollManagement = () => {
           </>
         )}
 
-        {/* Payment History */}
-        <Card className="bg-slate-800 border-slate-700">
-          <CardHeader>
-            <CardTitle className="text-white">Recent Payments</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {paymentHistory.length === 0 ? (
-              <div className="text-center py-8">
-                <Calendar className="w-12 h-12 text-slate-600 mx-auto mb-4" />
-                <p className="text-slate-400">No payments recorded yet</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {paymentHistory.slice(-5).reverse().map((payment) => (
-                  <div key={payment.id} className="p-3 bg-slate-700 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h5 className="font-medium text-white">{payment.staffName}</h5>
-                        <div className="flex items-center gap-2 text-sm text-slate-400">
-                          <span>{payment.paymentDate}</span>
-                          <Badge variant="outline" className="border-slate-600 text-slate-300 text-xs">
-                            {payment.paymentMethod}
-                          </Badge>
-                        </div>
-                        {payment.notes && (
-                          <p className="text-xs text-slate-500 mt-1">{payment.notes}</p>
-                        )}
-                      </div>
-                      <div className="text-right">
-                        <div className="font-bold text-green-400">₹{payment.amount.toLocaleString()}</div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+        {/* End of sections */}
 
         {/* Add Salary Dialog */}
         <Dialog open={showAddSalaryDialog} onOpenChange={setShowAddSalaryDialog}>
