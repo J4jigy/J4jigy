@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, DollarSign, Calendar, Users, Plus, Edit, Trash2, Download, Eye, Calculator } from 'lucide-react';
+import { ArrowLeft, IndianRupee, Calendar, Users, Plus, Edit, Trash2, Download, Eye, Calculator, Clock, CheckCircle, XCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
