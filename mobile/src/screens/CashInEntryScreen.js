@@ -639,6 +639,109 @@ export default function CashInEntryScreen({ navigation }) {
           </TouchableOpacity>
         </View>
       </Modal>
+
+      {/* Transfer Amount Modal */}
+      <Modal
+        visible={showTransferModal}
+        onClose={() => setShowTransferModal(false)}
+        title="Transfer Amount Between Slots"
+      >
+        <Text style={globalStyles.label}>From Slot (Source)</Text>
+        <View style={styles.slotSelector}>
+          {posSlots.map((slot, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.transferSlotOption,
+                transferForm.sourceSlot === index && styles.selectedTransferSlot
+              ]}
+              onPress={() => setTransferForm(prev => ({ ...prev, sourceSlot: index }))}
+            >
+              <Text style={[
+                styles.transferSlotText,
+                transferForm.sourceSlot === index && styles.selectedTransferSlotText
+              ]}>
+                {slot.customerName || `Slot ${index + 1}`}
+              </Text>
+              <Text style={[
+                styles.transferSlotAmount,
+                transferForm.sourceSlot === index && styles.selectedTransferSlotText
+              ]}>
+                ₹{slot.total || 0}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        
+        <Text style={[globalStyles.label, { marginTop: 16 }]}>To Slot (Destination)</Text>
+        <View style={styles.slotSelector}>
+          {posSlots.map((slot, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.transferSlotOption,
+                transferForm.destinationSlot === index && styles.selectedTransferSlot,
+                transferForm.sourceSlot === index && styles.disabledTransferSlot
+              ]}
+              onPress={() => {
+                if (transferForm.sourceSlot !== index) {
+                  setTransferForm(prev => ({ ...prev, destinationSlot: index }));
+                }
+              }}
+              disabled={transferForm.sourceSlot === index}
+            >
+              <Text style={[
+                styles.transferSlotText,
+                transferForm.destinationSlot === index && styles.selectedTransferSlotText,
+                transferForm.sourceSlot === index && styles.disabledTransferSlotText
+              ]}>
+                {slot.customerName || `Slot ${index + 1}`}
+              </Text>
+              <Text style={[
+                styles.transferSlotAmount,
+                transferForm.destinationSlot === index && styles.selectedTransferSlotText,
+                transferForm.sourceSlot === index && styles.disabledTransferSlotText
+              ]}>
+                ₹{slot.total || 0}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        <Text style={[globalStyles.label, { marginTop: 16 }]}>Amount to Transfer</Text>
+        <TextInput
+          style={globalStyles.input}
+          value={transferForm.amount}
+          onChangeText={(value) => setTransferForm(prev => ({ ...prev, amount: value }))}
+          placeholder="Enter amount"
+          placeholderTextColor={colors.slate400}
+          keyboardType="numeric"
+        />
+        {transferForm.sourceSlot !== null && (
+          <Text style={styles.availableAmount}>
+            Available: ₹{posSlots[transferForm.sourceSlot]?.total || 0}
+          </Text>
+        )}
+        
+        <View style={styles.modalButtons}>
+          <TouchableOpacity
+            style={[globalStyles.button, { backgroundColor: colors.purple600 }, styles.modalButton]}
+            onPress={confirmTransferAmount}
+            disabled={!transferForm.amount.trim() || transferForm.sourceSlot === null || transferForm.destinationSlot === null}
+          >
+            <Text style={globalStyles.buttonText}>Transfer</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[globalStyles.button, styles.buttonSecondary, styles.modalButton]}
+            onPress={() => {
+              setShowTransferModal(false);
+              setTransferForm({ sourceSlot: null, destinationSlot: null, amount: '' });
+            }}
+          >
+            <Text style={globalStyles.buttonText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
