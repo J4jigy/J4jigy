@@ -41,6 +41,15 @@ const PayrollManagement = () => {
     notes: ''
   });
 
+  const [attendanceForm, setAttendanceForm] = useState({
+    staffId: '',
+    date: new Date().toISOString().split('T')[0],
+    status: 'present', // present, absent, half_day, late
+    checkIn: '',
+    checkOut: '',
+    notes: ''
+  });
+
   // Load payroll data
   useEffect(() => {
     const businessPayroll = getData('payroll_data', []);
