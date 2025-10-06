@@ -32,6 +32,7 @@ export const STANDARD_ROLES = {
       staff_manage: true,
       staff_roles: true,
       staff_remove: true,
+      payroll_manage: true,
       
       // Financial Operations
       cash_in: true,
