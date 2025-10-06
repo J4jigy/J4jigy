@@ -336,55 +336,161 @@ const PayrollManagement = () => {
               </Button>
             )}
 
-        {/* Salary Structures */}
-        <Card className="bg-slate-800 border-slate-700">
-          <CardHeader>
-            <CardTitle className="text-white">Salary Structures</CardTitle>
-          </CardHeader>
-          <CardContent>
             {payrollData.length === 0 ? (
-              <div className="text-center py-8">
-                <DollarSign className="w-12 h-12 text-slate-600 mx-auto mb-4" />
-                <p className="text-slate-400 mb-4">No salary structures configured</p>
-                {hasPermission('payroll_manage') && (
-                  <Button
-                    onClick={() => setShowAddSalaryDialog(true)}
-                    variant="outline"
-                    className="border-slate-600 text-slate-300"
-                  >
-                    Add First Salary Structure
-                  </Button>
-                )}
-              </div>
+              <Card className="bg-slate-800 border-slate-700">
+                <CardContent className="p-6 text-center">
+                  <IndianRupee className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+                  <p className="text-slate-400 mb-4">No salary structures configured</p>
+                  {hasPermission('payroll_manage') && (
+                    <Button
+                      onClick={() => setShowAddSalaryDialog(true)}
+                      variant="outline"
+                      className="border-slate-600 text-slate-300"
+                    >
+                      Add First Salary Structure
+                    </Button>
+                  )}
+                </CardContent>
+              </Card>
             ) : (
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {payrollData.map((salary) => (
-                  <div key={salary.id} className="p-4 bg-slate-700 rounded-lg">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h4 className="font-medium text-white">{salary.staffName}</h4>
-                        <p className="text-sm text-slate-400">Basic: ₹{salary.basicSalary.toLocaleString()}</p>
-                        <div className="flex items-center gap-4 mt-1">
-                          <span className="text-xs text-green-400">+₹{salary.allowances}</span>
-                          <span className="text-xs text-red-400">-₹{salary.deductions}</span>
-                          <Badge className="bg-blue-600 text-white text-xs">
-                            {salary.paymentType}
-                          </Badge>
+                  <Card key={salary.id} className="bg-slate-800 border-slate-700">
+                    <CardContent className="p-3">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h4 className="font-medium text-white text-sm">{salary.staffName}</h4>
+                          <p className="text-xs text-slate-400">Basic: ₹{salary.basicSalary.toLocaleString()}</p>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-xs text-green-400">+₹{salary.allowances}</span>
+                            <span className="text-xs text-red-400">-₹{salary.deductions}</span>
+                            <Badge className="bg-blue-600 text-white text-xs">
+                              {salary.paymentType}
+                            </Badge>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-lg font-bold text-white">
+                            ₹{salary.totalSalary.toLocaleString()}
+                          </div>
+                          <div className="text-xs text-slate-400">Total</div>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-lg font-bold text-white">
-                          ₹{salary.totalSalary.toLocaleString()}
-                        </div>
-                        <div className="text-sm text-slate-400">Total</div>
-                      </div>
-                    </div>
-                  </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
             )}
-          </CardContent>
-        </Card>
+          </>
+        )}
+
+        {/* Payments Section */}
+        {activeSection === 'payments' && (
+          <>
+            {hasPermission('payroll_manage') && (
+              <Button
+                onClick={() => setShowPaymentDialog(true)}
+                className="w-full bg-blue-600 hover:bg-blue-700"
+              >
+                <IndianRupee className="w-4 h-4 mr-2" />
+                Record Payment
+              </Button>
+            )}
+
+            {paymentHistory.length === 0 ? (
+              <Card className="bg-slate-800 border-slate-700">
+                <CardContent className="p-6 text-center">
+                  <Calendar className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+                  <p className="text-slate-400">No payments recorded yet</p>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="space-y-2">
+                {paymentHistory.slice(-10).reverse().map((payment) => (
+                  <Card key={payment.id} className="bg-slate-800 border-slate-700">
+                    <CardContent className="p-3">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h5 className="font-medium text-white text-sm">{payment.staffName}</h5>
+                          <div className="flex items-center gap-2 text-xs text-slate-400">
+                            <span>{payment.paymentDate}</span>
+                            <Badge variant="outline" className="border-slate-600 text-slate-300 text-xs">
+                              {payment.paymentMethod}
+                            </Badge>
+                          </div>
+                          {payment.notes && (
+                            <p className="text-xs text-slate-500 mt-1">{payment.notes}</p>
+                          )}
+                        </div>
+                        <div className="text-right">
+                          <div className="font-bold text-green-400">₹{payment.amount.toLocaleString()}</div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
+        {/* Attendance Section */}
+        {activeSection === 'attendance' && (
+          <>
+            {hasPermission('payroll_manage') && (
+              <Button
+                onClick={() => setShowAttendanceDialog(true)}
+                className="w-full bg-yellow-600 hover:bg-yellow-700"
+              >
+                <Clock className="w-4 h-4 mr-2" />
+                Mark Attendance
+              </Button>
+            )}
+
+            {attendanceData.length === 0 ? (
+              <Card className="bg-slate-800 border-slate-700">
+                <CardContent className="p-6 text-center">
+                  <Clock className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+                  <p className="text-slate-400">No attendance records yet</p>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="space-y-2">
+                {attendanceData.slice(-10).reverse().map((attendance) => (
+                  <Card key={attendance.id} className="bg-slate-800 border-slate-700">
+                    <CardContent className="p-3">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <h5 className="font-medium text-white text-sm">{attendance.staffName}</h5>
+                          <div className="flex items-center gap-2 text-xs text-slate-400">
+                            <span>{attendance.date}</span>
+                            {attendance.checkIn && <span>In: {attendance.checkIn}</span>}
+                            {attendance.checkOut && <span>Out: {attendance.checkOut}</span>}
+                          </div>
+                          {attendance.notes && (
+                            <p className="text-xs text-slate-500 mt-1">{attendance.notes}</p>
+                          )}
+                        </div>
+                        <div className="text-right">
+                          <Badge className={`text-xs ${
+                            attendance.status === 'present' ? 'bg-green-600 text-white' :
+                            attendance.status === 'absent' ? 'bg-red-600 text-white' :
+                            attendance.status === 'half_day' ? 'bg-yellow-600 text-white' :
+                            'bg-orange-600 text-white'
+                          }`}>
+                            {attendance.status === 'present' && <CheckCircle className="w-3 h-3 mr-1" />}
+                            {attendance.status === 'absent' && <XCircle className="w-3 h-3 mr-1" />}
+                            {attendance.status}
+                          </Badge>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </>
+        )}
 
         {/* Payment History */}
         <Card className="bg-slate-800 border-slate-700">
