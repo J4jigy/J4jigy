@@ -23,6 +23,7 @@ import { RoleProvider } from './contexts/RoleContext';
 import ToDoList from './components/ToDoList';
 import StaffPage from './components/StaffPage';
 import StaffManagementPage from './components/StaffManagementPage';
+import PayrollManagement from './components/PayrollManagement';
 
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
