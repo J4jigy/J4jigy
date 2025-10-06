@@ -135,6 +135,68 @@ export default function CashInEntryScreen({ navigation }) {
     }
   };
 
+  const transferAmountBetweenSlots = () => {
+    setShowSlotOptionsModal(false);
+    setTransferForm({
+      sourceSlot: selectedSlotIndex,
+      destinationSlot: null,
+      amount: ''
+    });
+    setShowTransferModal(true);
+  };
+
+  const confirmTransferAmount = () => {
+    const { sourceSlot, destinationSlot, amount } = transferForm;
+    const transferAmount = parseFloat(amount);
+
+    // Validation
+    if (sourceSlot === null || destinationSlot === null) {
+      Alert.alert('Error', 'Please select both source and destination slots');
+      return;
+    }
+    
+    if (sourceSlot === destinationSlot) {
+      Alert.alert('Error', 'Source and destination slots cannot be the same');
+      return;
+    }
+
+    if (!amount.trim() || isNaN(transferAmount) || transferAmount <= 0) {
+      Alert.alert('Error', 'Please enter a valid amount greater than 0');
+      return;
+    }
+
+    if (transferAmount > posSlots[sourceSlot].total) {
+      Alert.alert('Error', `Insufficient amount in source slot. Available: ₹${posSlots[sourceSlot].total}`);
+      return;
+    }
+
+    // Perform transfer
+    const newSlots = [...posSlots];
+    newSlots[sourceSlot] = {
+      ...newSlots[sourceSlot],
+      total: newSlots[sourceSlot].total - transferAmount
+    };
+    newSlots[destinationSlot] = {
+      ...newSlots[destinationSlot],
+      total: newSlots[destinationSlot].total + transferAmount
+    };
+
+    setPosSlots(newSlots);
+    
+    const sourceSlotName = newSlots[sourceSlot].customerName || `Slot ${sourceSlot + 1}`;
+    const destinationSlotName = newSlots[destinationSlot].customerName || `Slot ${destinationSlot + 1}`;
+    
+    Alert.alert(
+      'Transfer Successful', 
+      `₹${transferAmount} transferred from ${sourceSlotName} to ${destinationSlotName}`
+    );
+    
+    // Reset form and close modal
+    setTransferForm({ sourceSlot: null, destinationSlot: null, amount: '' });
+    setShowTransferModal(false);
+    setSelectedSlotIndex(null);
+  };
+
   const handleChequePayment = () => {
     setShowChequeModal(true);
   };
