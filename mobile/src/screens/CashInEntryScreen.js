@@ -964,6 +964,54 @@ const styles = StyleSheet.create({
     color: colors.slate500,
     fontSize: 14,
   },
+  slotSelector: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginTop: 8,
+  },
+  transferSlotOption: {
+    backgroundColor: colors.slate700,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.slate600,
+    padding: 10,
+    width: (screenWidth - 80) / 3,
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  selectedTransferSlot: {
+    backgroundColor: colors.purple600,
+    borderColor: colors.purple500,
+  },
+  disabledTransferSlot: {
+    backgroundColor: colors.slate800,
+    borderColor: colors.slate700,
+    opacity: 0.5,
+  },
+  transferSlotText: {
+    color: colors.white,
+    fontSize: 12,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  transferSlotAmount: {
+    color: colors.slate400,
+    fontSize: 10,
+    marginTop: 2,
+  },
+  selectedTransferSlotText: {
+    color: colors.white,
+  },
+  disabledTransferSlotText: {
+    color: colors.slate600,
+  },
+  availableAmount: {
+    color: colors.green400,
+    fontSize: 12,
+    marginTop: 4,
+    textAlign: 'right',
+  },
 });
 
 const pickerSelectStyles = StyleSheet.create({
