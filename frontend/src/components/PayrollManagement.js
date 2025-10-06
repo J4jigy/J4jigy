@@ -16,11 +16,14 @@ const PayrollManagement = () => {
   const { hasPermission, businessStaff } = useRole();
   const { activeBusiness, getData, setData } = useBusiness();
   
+  const [activeSection, setActiveSection] = useState('overview'); // overview, salary, payments, attendance
   const [showAddSalaryDialog, setShowAddSalaryDialog] = useState(false);
   const [showPaymentDialog, setShowPaymentDialog] = useState(false);
+  const [showAttendanceDialog, setShowAttendanceDialog] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState(null);
   const [payrollData, setPayrollData] = useState([]);
   const [paymentHistory, setPaymentHistory] = useState([]);
+  const [attendanceData, setAttendanceData] = useState([]);
   
   const [salaryForm, setSalaryForm] = useState({
     staffId: '',
