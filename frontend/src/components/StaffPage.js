@@ -23,6 +23,15 @@ const StaffPage = () => {
       permission: 'staff_manage'
     },
     {
+      name: 'PayRoll Management',
+      subtitle: 'Salary & Benefits',
+      icon: Settings,
+      iconColor: 'text-green-400',
+      description: 'Manage salaries, payments, and employee benefits',
+      onClick: () => navigate('/payroll-management'),
+      permission: 'payroll_manage'
+    },
+    {
       name: 'Staff Directory',
       subtitle: 'Contact List', 
       icon: Users,
@@ -35,7 +44,7 @@ const StaffPage = () => {
       name: 'Performance',
       subtitle: 'Reports',
       icon: BarChart3,
-      iconColor: 'text-green-400', 
+      iconColor: 'text-yellow-400', 
       description: 'View staff performance and activity reports',
       onClick: () => {}, // Future implementation
       permission: 'staff_view'
