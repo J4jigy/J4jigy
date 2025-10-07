@@ -1,90 +1,91 @@
 <analysis>
-The trajectory describes the evolution of a financial management application, initially intended as a React Native mobile app. A critical early phase involved a persistent bug where deleted items reappeared, attributed to hardcoded default data conflicting with persistent storage. The AI engineer initially focused on the mobile app, thoroughly removing all default data.
+The trajectory outlines the progressive development of a React web application for financial management, specifically for petrol pump operations. Initially, the AI engineer focused on resolving data persistence issues by systematically removing all hardcoded default data across the web frontend components (, , ).
 
-A significant pivot occurred when user feedback, via screenshots, revealed the user was interacting with the *React web frontend*, not the mobile app. This necessitated a complete re-evaluation, and the AI engineer successfully purged all hardcoded data (products, expenses, names, payment methods) from the web frontend components.
-
-Subsequent development centered on enhancing the web frontend's  screen, adding dynamic subsections for DT Plus/Fleet Card, Expenses, and Lubes, complete with add/delete functionalities and totals. Navigation logic, particularly the back arrow behavior, was a recurring challenge, evolving from browser history to specific predefined routes based on user requests. A Git corruption incident temporarily reverted hardcoded data, requiring a repeat of the cleanup process. The latest work involves restructuring the Dashboard, introducing a Cash feature with search, sorting, and pagination, and reorganizing tab content.
+Subsequent phases involved significant feature additions and UI/UX refinements. Key areas of development included implementing dashboard reorganization, creating a custom pagination component for list views, and enhancing the Cash page's layout and display of balances. A major architectural shift introduced a multi-business data isolation system, allowing separate data management for each business. Building upon this, a comprehensive role-based staff management system was implemented, featuring staff invitation via email and WhatsApp, role assignment (Owner, Manager, Cashier, Accountant, Staff), and permission-based UI restrictions. The staff management interface itself underwent reorganization, moving from a dedicated tab to a sub-section under a Staff tile, and finally, a Payroll Management feature with attendance tracking and Rupee currency integration was added. The trajectory ends with a request to simplify the product selection in the Cash In screen.
 </analysis>
 
 <product_requirements>
-The application serves as a comprehensive financial management tool for petrol pump operations, accessible via a web interface (previously also mobile-focused). It must start in a completely empty state, allowing users to dynamically add and manage all data. Key features include:
-- **Fuel Dispenser Management**: Users can add unlimited custom product types, record sales, and manage credit sales (party name, vehicle number, product, LTR, amount), DT Plus/Fleet Card entries (party name, LTR, amount), Expenses (name, amount), and Lubes (name, LTR/ml, rate, amount) with detailed fields. All these sections must support adding multiple entries via Plus icons and individual deletion.
-- **Cash Management**: A dedicated Cash section on the home page (business tab, now to be moved to finance tab) for tracking cash flow, featuring search, sorting, and pagination. It must also start empty.
-- **Persistence**: All user-added data and deletions must persist across sessions.
-- **Navigation**: Back arrows must follow a predefined flow (Dispenser Details → Fuel Dispenser → Cash In → Home), overriding browser history.
-- **UI**: Clean, responsive design, with empty state messages and compact layouts, utilizing small card containers for subsections.
+The application is a web-based financial management tool for petrol pumps, designed to operate from an empty state and allow dynamic data management.
+**Key Features & Implemented Solutions:**
+-   **Data Management & Persistence**: All data (products, expenses, cash entries, credit sales, DT Plus, Lubes, staff, payroll) is user-managed, starts empty, and persists across sessions, leveraging local storage for business-specific data and cloud storage (eventual backend sync). Hardcoded data was removed from , , .
+-   **Dashboard & Navigation**: The dashboard displays feature tiles across tabs (Business, Finance, Personal). It remembers the last active tab. Back arrows follow a predefined flow (e.g., Staff Management → Staff Page → Home).
+-   **Cash Management**: A Cash section (moved to the Finance tab) features search, sorting, and pagination (matching Bank page layout) with a Current Cash Balance card.
+-   **Fuel Dispenser Details**: Dynamic subsections for , , , and  with add/delete functionality and total calculations.
+-   **Multi-Business Data Isolation**: Each business maintains completely separate data records, with dedicated import/export functionality.
+-   **Role-Based Staff Management**: Allows multiple staff users per business with roles (Owner, Manager, Cashier, Accountant, Staff). Features include staff invitation (email, WhatsApp), role assignment, and permission-based access to features/UI elements. Default login is as an Owner. Professional Lucide React icons replaced emojis for roles.
+-   **Payroll Management**: Integrated under staff management, includes staff salary, attendance tracking, and payment history. Uses Indian Rupee symbols.
+-   **UI/UX**: Clean, responsive design with compact layouts and empty state messages, evolving towards consistency (e.g., Cash page matching Bank page layout).
 </product_requirements>
 
 <key_technical_concepts>
-- **Frontend Framework**: React.js (web application focus).
-- **State Management**:  for component-level data.
-- **Routing**:  for navigation.
-- **UI/UX**: Custom components (, , , ) and Tailwind CSS for styling.
-- **Data Persistence**:  (implicitly, given app-wide empty state and persistence, though not explicitly mentioned for web app in provided code snippets).
+-   **Frontend Framework**: React.js
+-   **State Management**:  hook,  for global state (Auth, Business, Role).
+-   **Routing**:  for client-side navigation.
+-   **UI Components**: Custom components (, , , , , ) and Lucide React for icons.
+-   **Data Persistence**:  for client-side business data and active tab. Eventual backend/cloud sync is intended.
+-   **Styling**: Tailwind CSS (implied by component structure).
 </key_technical_concepts>
 
 <code_architecture>
-The application has two distinct frontends: a legacy React web application () and a React Native mobile application (). All recent and current development work focuses exclusively on the  web application.
+The application consists of a React web frontend (). The primary development focus has been on this frontend.
 
 **Directory Structure:**
 
 
 -   ****
-    -   **Importance**: The main entry point for the React web app. Sets up  routes and handles authentication.
-    -   **Changes**: Updated to include a dedicated route  for the new  component.
-
+    -   **Importance**: Main entry point, sets up  and authentication.
+    -   **Changes**: Wrapped with  and  for global context. Added new routes: , , , .
 -   ****
-    -   **Importance**: Displays the main dashboard with different tabs (Business, Finance, Personal) and their respective tiles for navigation to features.
-    -   **Changes**: Modified to insert Cash as the 4th tile in the  array (initially). Also handles navigation logic for the new Cash tile.
-
+    -   **Importance**: Main dashboard, displays tabs and feature tiles.
+    -   **Changes**: Reorganized tiles (,  to Finance; ,  to Business). Implemented tab persistence via . Integrated  for business management (, , , import/export dialogs). Integrated  for role-based UI restrictions (tabs, tiles, import/export buttons) and role display. Removed Staff tab and reconfigured Staff tile navigation.
+-   ****
+    -   **Importance**: Manages cash entries.
+    -   **Changes**: Integrated  component. Redesigned layout to match  (Bank page) with search, sort, and pagination controls at the bottom. Removed No cash entries message and added Current Cash Balance in a card. Integrated  for business-specific cash data. Integrated  for permission-based access.
 -   ** (NEW FILE)**
-    -   **Importance**: A newly created component to manage cash entries. It features a search box, sorting toggle, and placeholders for pagination.
-    -   **Changes**:
-        -   Initialized with an empty  array (removed hardcoded data).
-        -   Implemented UI for search, sorting, and pagination elements.
-        -   Styled using compact card containers for all subsections.
-
+    -   **Importance**: Reusable pagination component with numbered page boxes.
+    -   **Changes**: Created, then deprecated for -style pagination in  as per user request.
 -   ****
     -   **Importance**: Handles cash-in transactions and POS slot management.
-    -   **Changes**:
-        -   Removed all hardcoded  and  (e.g., Groceries, Aarav Sharma).
-        -   Back arrow navigation was initially removed, then re-added to directly navigate to the  (Home) route, following a predefined flow.
-
+    -   **Changes**: Removed all hardcoded data. Integrated  for business-specific slot and selected item persistence.
 -   ****
     -   **Importance**: Manages cash-out transactions and expense logging.
-    -   **Changes**: Removed all hardcoded  and  (e.g., Office Supplies, Aarav Sharma).
-
+    -   **Changes**: Removed all hardcoded data. Integrated  for business-specific expense persistence.
 -   ****
-    -   **Importance**: Displays the main fuel dispenser selection grid.
-    -   **Changes**: Back arrow navigation was initially removed, then re-added to directly navigate to the  route as part of the predefined flow.
-
+    -   **Importance**: Complex screen for detailed fuel dispenser data entry.
+    -   **Changes**: Removed all hardcoded data. Implemented dynamic subsections. Integrated  for business-specific product, credit sales, DT Plus, expenses, and lubes data storage.
 -   ****
-    -   **Importance**: The most complex screen, handling detailed data entry for fuel dispensers including products, credit sales, DT Plus, Expenses, and Lubes.
-    -   **Changes**:
-        -   Removed all hardcoded data (fuel products, digital payments like HP Pay/Paytm, credit sale parties).
-        -   Implemented dynamic subsections for , , , and , each with its own state, add buttons, delete icons, and total calculations.
-        -   Added Plus icons under each entry in Products, Credit Sale, Expenses, and Lubes sections for instant adding.
-        -   For Lubes, implemented a modal for adding new items with specific fields (Lubes, LTR/ml, Rate).
-        -   Back arrow navigation was changed multiple times, finally settling on directly navigating to  as part of the predefined flow.
-
+    -   **Importance**: Generic list view component used for various data types (e.g., Bank).
+    -   **Changes**: Added a Bank Balance card at the top when used for the 'bank' list.
+-   ** (NEW FILE)**
+    -   **Importance**: Provides a React Context for managing the active business and its isolated data.
+    -   **Changes**: Implemented , , , , , and placeholder functions for , .
+-   ** (NEW FILE)**
+    -   **Importance**: Provides a React Context for managing user roles, permissions, and staff invitations.
+    -   **Changes**: Defined  with detailed permissions. Implemented , , , . Sets default user role to Owner. Uses Lucide React icons for roles.
+-   ** (NEW/Re-purposed)**
+    -   **Importance**: UI for managing staff (inviting, assigning roles, viewing permissions).
+    -   **Changes**: Initially used as a tab content, then converted into a dedicated page (). Incorporated WhatsApp invite field. Displays staff with email and WhatsApp. Replaced emoji icons with Lucide React icons.
+-   ** (NEW FILE)**
+    -   **Importance**: The actual page rendering the  component.
+    -   **Changes**: Created to host the  component at route . Corrected back navigation to .
+-   ** (NEW FILE)**
+    -   **Importance**: Overview page for staff-related options, serving as an intermediary before  or .
+    -   **Changes**: Created with buttons to navigate to Staff Management and Payroll Management.
+-   ** (NEW FILE)**
+    -   **Importance**: Manages staff payroll, attendance, and payment history.
+    -   **Changes**: Created with sections for Staff Salary, Attendance Management, and Payment History. Uses  icon. Optimized UI layout for screen utilization.
 </code_architecture>
 
 <pending_tasks>
-- The original pending task to implement Clear current slot, Transfer amount between slots, and Rename slot functionality for the POS feature in  (mobile app) has not been completed.
-- The latest user request involves adding page boxes for pagination to all relevant subsections (except Profit & Loss, Balance Sheet, To-Do List), and reorganizing Bank, Cash, Company Purchase, and Stock Management tiles across the Finance and Business tabs.
+-   Implement Clear current slot, Transfer amount between slots, and Rename slot functionality for the POS feature in  (mobile app) (Original pending task, not addressed in web app).
+-   The user explicitly requested to remove Add new product, Reset quantity, and Delete products from the product selection box in the Cash In screen, leaving only the search box. This task was just initiated.
 </pending_tasks>
 
 <current_work>
-The immediate task at hand is to address the user's latest request regarding the home page dashboard. This involves two main parts:
-1.  **Pagination Integration**: Adding page boxes at the bottom of all subsections (excluding Profit & Loss, Balance Sheet, and To-Do List) to allow users to navigate through multiple entries. This will likely affect sections like Cash, Fuel Dispenser Details (products, credit sales, DT Plus, expenses, lubes), and potentially other list views.
-2.  **Dashboard Tab Reorganization**:
-    *   Moving Bank and the newly created Cash features to the Finance tab, positioning them as the 1st and 2nd items, respectively.
-    *   Moving Company Purchase and Stock Management to the Business tab, positioning them as the 4th and 5th items.
-
-Before this request, the AI engineer had just completed styling the Cash page with small card containers for its subsections (search, sorting, page box) and confirmed that all hardcoded sample entries were removed. The next step is to start implementing the pagination and tab reorganization.
+Immediately before this summary request, the AI engineer was tasked with simplifying the product selection dialog within the  screen. The explicit request from the user was to remove the Add New Product, Reset Quantity, and Delete Products buttons, retaining only the search box. The previous AI engineer's last action in the trajectory was to acknowledge this request and state the intention to proceed with these changes. This means the  file is the current focus, and the removal of these specific UI elements from the product selection interface is the ongoing task. The current state is that the task has been acknowledged and is about to be implemented, meaning no actual code changes for this specific task have been reported as completed yet in the trajectory.
 </current_work>
 
 <optional_next_step>
-I will start by reorganizing the Bank, Cash, Company Purchase, and Stock Management tiles on the Dashboard.
+Remove Add new product, Reset quantity, and Delete products from the product selection box in , keeping only the search box.
 </optional_next_step>
 
