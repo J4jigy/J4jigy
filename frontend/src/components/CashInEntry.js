@@ -1021,42 +1021,15 @@ const CashInEntry = ({ onBack }) => {
             <DialogTitle className="text-white text-lg">Select Products</DialogTitle>
           </DialogHeader>
           <div className="space-y-2 max-h-[60vh] overflow-y-auto">
-            <div className="flex flex-col gap-2 mb-3">
-              <Button
-                onClick={() => {
-                  setShowProductModal(false);
-                  setShowAddProductModal(true);
-                }}
-                className="bg-green-600 hover:bg-green-700 text-white h-8 text-sm"
-              >
-                <Plus className="w-3 h-3 mr-2" />
-                Add New Product
-              </Button>
-              <div className="flex gap-2">
-                <Button
-                  onClick={resetQuantities}
-                  className="bg-orange-600 hover:bg-orange-700 text-white flex-1 h-8 text-sm"
-                >
-                  Reset Quantity
-                </Button>
-                <Button
-                  onClick={confirmDeleteAllProducts}
-                  className="bg-red-600 hover:bg-red-700 text-white flex-1 h-8 text-sm"
-                >
-                  Delete Product
-                </Button>
-              </div>
-              
-              {/* Search Box */}
-              <div className="relative">
-                <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
-                <Input
-                  value={productSearchQuery}
-                  onChange={(e) => setProductSearchQuery(e.target.value)}
-                  placeholder="Search products..."
-                  className="bg-slate-700 border-slate-600 text-white pl-10 h-8 text-sm"
-                />
-              </div>
+            {/* Search Box */}
+            <div className="relative mb-3">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+              <Input
+                value={productSearchQuery}
+                onChange={(e) => setProductSearchQuery(e.target.value)}
+                placeholder="Search products..."
+                className="bg-slate-700 border-slate-600 text-white pl-10 h-8 text-sm"
+              />
             </div>
             {products
               .filter(product => 
