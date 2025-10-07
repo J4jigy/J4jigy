@@ -399,6 +399,18 @@ metadata:
           agent: "testing"
           comment: "✅ BILLS & INVOICES ICON UPDATE FULLY VERIFIED: Conducted comprehensive testing of the FileBarChart icon changes as requested. VERIFIED ALL REQUIREMENTS: 1) ✅ Login with admin/admin123 successful, 2) ✅ HOME PAGE TESTING: Navigate to Finance tab successful, Bills & Invoices tile found with FileBarChart icon, Yellow color (text-yellow-400) confirmed, Tile functionality (navigation to /list/invoices) working correctly, 3) ✅ RECEIPT MODAL TESTING: Navigate to Cash In screen successful, Added ₹100 to POS slot C1, Clicked active slot to open bill/invoice modal, Modal title 'Bill / Invoice - C1' displayed with FileBarChart icon, Green color (text-green-400) confirmed on modal title icon, Print button found and functional, Share button found and functional, Close button found and working correctly (modal closes successfully), 4) ✅ TECHNICAL VERIFICATION: FileBarChart icon properly imported and used in both locations, Color classes correctly applied (text-yellow-400 for dashboard tile, text-green-400 for modal), All existing functionality maintained, Icon change from Receipt to FileBarChart successfully implemented. The Bills & Invoices icon update has been fully implemented and tested successfully in both the Dashboard Finance tab and the Cash In bill/invoice modal."
 
+  - task: "Simplify product selection modal in Cash In screen - remove buttons, keep only search"
+    implemented: true
+    working: "NA"
+    file: "CashInEntry.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Simplified product selection modal by removing 'Add New Product', 'Reset Quantity', and 'Delete Products' buttons from the modal. Only search box with 'Search products...' placeholder remains for product filtering. Modal now has cleaner, minimal interface focused on product search and selection functionality."
+
   - task: "Rent sub-tabs functionality"
     implemented: true
     working: true
