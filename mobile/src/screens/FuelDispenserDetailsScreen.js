@@ -940,7 +940,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
               style={[globalStyles.button, globalStyles.buttonPrimary, styles.actionButton]}
               onPress={() => {
                 Alert.alert('Success', 'Data confirmed and saved!');
-                navigation.goBack();
+                navigation.navigate('FuelDispenser');
               }}
             >
               <Text style={globalStyles.buttonText}>Confirm & Save</Text>
@@ -950,7 +950,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
               style={[globalStyles.button, globalStyles.buttonSuccess, styles.actionButton]}
               onPress={() => {
                 Alert.alert('Success', 'Data saved!');
-                navigation.goBack();
+                navigation.navigate('FuelDispenser');
               }}
             >
               <Text style={globalStyles.buttonText}>Save</Text>
@@ -965,7 +965,7 @@ export default function FuelDispenserDetailsScreen({ route, navigation }) {
             
             <TouchableOpacity
               style={[globalStyles.button, styles.buttonSecondary, styles.actionButton]}
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.navigate('FuelDispenser')}
             >
               <Text style={globalStyles.buttonText}>Cancel</Text>
             </TouchableOpacity>
