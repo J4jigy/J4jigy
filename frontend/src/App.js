@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
-import LoginPage from './components/Login';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import axios from 'axios';
+import { Button } from './components/ui/button';
+import { Card, CardContent } from './components/ui/card';
+import { Input } from './components/ui/input';
+import { Label } from './components/ui/label';
 import Dashboard from './components/Dashboard';
 import AdminDashboard from './components/AdminDashboard';
 import Cash from './components/Cash';
