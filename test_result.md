@@ -58,6 +58,8 @@
 ##
 ## agent_communication:
     - agent: "main"
+      message: "Updated ALL back arrow navigation across web and mobile apps to use explicit route navigation instead of history-based navigation. WEB: Updated Cash.js, ListViewPage.js, ToDoList.js, CashInEntry.js, CashOutEntry.js to navigate('/'). MOBILE: Updated CashInEntryScreen to navigate('Dashboard'), FuelDispenserDetailsScreen to navigate('FuelDispenser'). Removed App.js onBack props. All back arrows now use predictable, explicit navigation paths for consistent UX. Ready for testing."
+    - agent: "main"
       message: "Simplified Cash In product selection modal by removing 'Add New Product', 'Reset Quantity', and 'Delete Products' buttons. Only search box with 'Search products...' placeholder remains for filtering. Modal now has cleaner, minimal interface focused on product search and selection. Individual product delete buttons (✕) on each product row are preserved. Ready for testing."
     - agent: "main"
       message: "Completed Dashboard tile reorganization and pagination implementation. Phase 1: Moved Bank/Cash to Finance tab as 1st/2nd items, moved Company Purchase/Stock Management to Business tab as 4th/5th items. Phase 2: Created reusable Pagination component with numbered page boxes and integrated into Cash page. Ready for comprehensive testing of both dashboard reorganization and pagination functionality."
