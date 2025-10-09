@@ -500,7 +500,11 @@ const CashOutEntry = ({ onBack }) => {
         <Button 
           variant="ghost" 
           size="sm" 
-          onClick={() => { resetAmount(); onBack(); }}
+          onClick={() => { 
+            console.log('Cash Out back arrow clicked - navigating to Home page');
+            resetAmount(); 
+            navigate('/'); 
+          }}
           className="text-white hover:bg-white/10"
         >
           <ArrowLeft className="w-4 h-4" />
