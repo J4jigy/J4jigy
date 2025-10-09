@@ -23,11 +23,11 @@ const { width: screenWidth } = Dimensions.get('window');
 export default function FuelDispenserDetailsScreen({ route, navigation }) {
   const { dispenserId } = route.params;
 
-  // Handle hardware back button
+  // Handle hardware back button - navigate to FuelDispenser
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
-        navigation.goBack();
+        navigation.navigate('FuelDispenser');
         return true;
       };
 
