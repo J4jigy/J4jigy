@@ -32,6 +32,7 @@ import {
 
 const CashOutEntry = ({ onBack }) => {
   const API = process.env.REACT_APP_BACKEND_URL;
+  const navigate = useNavigate();
   const { getData, setData, activeBusiness } = useBusiness();
   const [amount, setAmount] = useState('0');
   // POS multi-customer slots
