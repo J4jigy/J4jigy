@@ -429,6 +429,18 @@ metadata:
           agent: "testing"
           comment: "🎉 SIMPLIFIED PRODUCT SELECTION MODAL TESTING COMPLETED SUCCESSFULLY: Conducted comprehensive testing of the simplified product selection modal in Cash In screen as requested in the review. VERIFIED ALL CRITICAL REQUIREMENTS: ✅ PRIORITY 1 - SIMPLIFIED DESIGN VERIFICATION: Search box with placeholder 'Search products...' is present and working correctly, 'Add New Product' button is NOT present (correctly removed), 'Reset Quantity' button is NOT present (correctly removed), 'Delete Product' button is NOT present (correctly removed), ✅ PRIORITY 2 - SEARCH FUNCTIONALITY: Search box accepts input correctly, search functionality working for filtering products, search can be cleared and all products return, case-insensitive search working properly, ✅ PRIORITY 3 - EXISTING FUNCTIONALITY PRESERVED: Product list displays correctly in modal, individual product +/- buttons work (1/1 found and functional), individual product delete (✕) buttons preserved on each product row, product selection and quantity management working correctly, modal opens and closes properly, ✅ PRIORITY 4 - NAVIGATION FLOW: Login with admin/admin123 successful, Dashboard → Finance tab → Cash tile → Cash In screen navigation working, 'Select Products' button opens modal correctly, modal has correct title 'Select Products', clean minimal interface focused on product search and selection as requested. EXPECTED RESULT ACHIEVED: The product selection modal now has ONLY the search box at the top, with all three buttons (Add New Product, Reset Quantity, Delete Product) successfully removed, creating the cleaner, minimal interface focused on product search and selection exactly as specified in the review request. The simplification is working correctly and meets all requirements."
 
+  - task: "Update all back arrow navigation to explicit routes instead of history-based navigation"
+    implemented: true
+    working: "NA"
+    file: "App.js, Cash.js, ListViewPage.js, ToDoList.js, CashInEntry.js, CashOutEntry.js, CashInEntryScreen.js, FuelDispenserDetailsScreen.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Updated ALL back arrow navigation in both web and mobile apps to use explicit route navigation instead of history-based navigation. WEB APP: Cash.js navigate('/'), ListViewPage.js navigate('/'), ToDoList.js navigate('/'), CashInEntry.js navigate('/'), CashOutEntry.js navigate('/'). MOBILE APP: CashInEntryScreen navigation.navigate('Dashboard'), FuelDispenserDetailsScreen navigation.navigate('FuelDispenser'). Removed history.back(), navigate(-1), and goBack() calls. All back arrows now have predictable, explicit navigation paths for consistent user experience across the app."
+
   - task: "Rent sub-tabs functionality"
     implemented: true
     working: true
