@@ -20,11 +20,11 @@ import { useFocusEffect } from '@react-navigation/native';
 const { width: screenWidth } = Dimensions.get('window');
 
 export default function CashInEntryScreen({ navigation }) {
-  // Handle hardware back button
+  // Handle hardware back button - navigate to Dashboard
   useFocusEffect(
     useCallback(() => {
       const onBackPress = () => {
-        navigation.goBack();
+        navigation.navigate('Dashboard');
         return true;
       };
 
