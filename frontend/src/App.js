@@ -17,6 +17,8 @@ import ToDoList from './components/ToDoList';
 import StaffPage from './components/StaffPage';
 import StaffManagementPage from './components/StaffManagementPage';
 import PayrollManagement from './components/PayrollManagement';
+import BalanceSheet from './components/BalanceSheet';
+import ProfitLoss from './components/ProfitLoss';
 import { BusinessProvider } from './contexts/BusinessContext';
 import { RoleProvider } from './contexts/RoleContext';
 
