@@ -474,6 +474,18 @@ metadata:
           agent: "main"
           comment: "Created beautiful Balance Sheet and Profit & Loss pages with double-entry accounting system. BALANCE SHEET: Assets (Current + Fixed), Liabilities (Current + Long-term), Equity sections with accounting equation validation. PROFIT & LOSS: Revenue, COGS, Operating Expenses, Other Income/Expenses, Net Profit calculation with margins. FEATURES: Time period filters (Monthly, Quarterly, Yearly), Comparison toggle, Summary cards with gradients, Traditional accounting tables, Financial ratios, Export functionality. DESIGN: Mix of modern cards with charts and traditional tables. Uses business-specific data from cash entries and ledger. Both pages accessible from Finance tab tiles. Ready for testing."
 
+  - task: "Add Daily Sales Report and Community Ratings under Business tab"
+    implemented: true
+    working: "NA"
+    file: "DailySalesReport.js, CommunityRatings.js, App.js, Dashboard.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Created Daily Sales Report and Community Ratings pages under Business tab. DAILY SALES REPORT: Date selector, Summary cards (Total Sales, Expenses, Net Profit, Transactions), Product-wise sales with progress bars, Payment method breakdown, Top selling products, Peak hours analysis, Three view modes (Summary, Products, Payments), Financial metrics (Avg transaction, Gross margin). COMMUNITY RATINGS: Overall rating card with 5-star display, Rating breakdown (5-4-3-2-1 stars) with visual bars, Recent reviews list with customer feedback, Response management system, Quick stats (Response rate, Weekly reviews, Avg response time), Review interaction buttons. DESIGN: Gradient cards, modern UI, role-based access. Both pages accessible from Business tab. Ready for testing."
+
   - task: "Rent sub-tabs functionality"
     implemented: true
     working: true
