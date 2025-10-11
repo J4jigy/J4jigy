@@ -323,22 +323,7 @@ export default function ListViewPage() {
         </div>
       )}
 
-      {/* Payables/Receivables Redirect to New Pages */}
-      {(key === 'payables' || key === 'receivables') && (
-        <div className="px-3 py-3 border-b border-slate-700">
-          <div className="text-center py-4">
-            <p className="text-slate-300 text-sm mb-3">
-              Enhanced {key === 'payables' ? 'Suppliers (Creditors)' : 'Customers (Debtors)'} management is now available!
-            </p>
-            <Button 
-              onClick={() => navigate(key === 'payables' ? '/payables-you-will-give' : '/receivables-you-will-receive')}
-              className={`${key === 'payables' ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'} text-white w-full`}
-            >
-              Open {key === 'payables' ? 'Suppliers (Creditors)' : 'Customers (Debtors)'} Page
-            </Button>
-          </div>
-        </div>
-      )}
+      {/* No special content for payables/receivables - handled by early return above */}
 
       {/* Fuel Station Action Buttons */}
       {key === 'fuel-station' && (
