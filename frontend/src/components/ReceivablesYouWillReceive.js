@@ -156,41 +156,24 @@ export default function ReceivablesYouWillReceive() {
         {/* Search and Filter Row */}
         <div className="grid grid-cols-2 gap-3 mb-4">
 
-        {/* Search Bar */}
-        <div className="relative mb-3">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
-          <Input
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search..."
-            className="bg-slate-800 border-slate-600 text-white pl-10"
-          />
-        </div>
-
-        {/* Sort and Pagination Controls */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <Select value={sortBy} onValueChange={setSortBy}>
+          <div className="relative">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+            <Input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search customers..."
+              className="bg-slate-800 border-slate-600 text-white pl-10"
+            />
+          </div>
+          
+          <Select value={filterBy} onValueChange={setFilterBy}>
             <SelectTrigger className="bg-slate-800 border-slate-600 text-white">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-slate-700 border-slate-600">
-              <SelectItem value="amount-high">Amount (High→Low)</SelectItem>
-              <SelectItem value="amount-low">Amount (Low→High)</SelectItem>
-              <SelectItem value="date-new">Date (Newest First)</SelectItem>
-              <SelectItem value="date-old">Date (Oldest First)</SelectItem>
-              <SelectItem value="overdue">By Overdue Days</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select value={itemsPerPage} onValueChange={setItemsPerPage}>
-            <SelectTrigger className="bg-slate-800 border-slate-600 text-white">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-slate-700 border-slate-600">
-              <SelectItem value="10">10 / page</SelectItem>
-              <SelectItem value="25">25 / page</SelectItem>
-              <SelectItem value="50">50 / page</SelectItem>
-              <SelectItem value="100">100 / page</SelectItem>
+              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="active">Active</SelectItem>
+              <SelectItem value="overdue">Overdue</SelectItem>
             </SelectContent>
           </Select>
         </div>
