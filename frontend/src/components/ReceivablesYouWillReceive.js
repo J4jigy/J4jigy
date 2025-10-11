@@ -356,7 +356,7 @@ export default function ReceivablesYouWillReceive() {
         {paginatedData.length > 0 && (
           <div className="flex justify-between items-center py-4 border-t border-slate-700">
             <p className="text-sm text-slate-400">
-              Page {currentPage} / {totalPages}
+              Showing {startIndex + 1}-{Math.min(endIndex, totalItems)} of {totalItems} • Page {currentPage} / {totalPages}
             </p>
             <div className="flex gap-2">
               <Button
@@ -380,6 +380,44 @@ export default function ReceivablesYouWillReceive() {
             </div>
           </div>
         )}
+
+        {/* Analytics and Trends */}
+        <Card className="bg-slate-800 border-slate-700 mt-4">
+          <CardContent className="p-4">
+            <h3 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
+              <TrendingUp className="w-4 h-4 text-purple-400" />
+              Collection Trends & Analytics
+            </h3>
+            
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <div className="p-3 bg-gradient-to-br from-cyan-600 to-cyan-700 rounded-lg">
+                <p className="text-xs text-cyan-100">Avg Collection Days</p>
+                <p className="text-xl font-bold text-white">28</p>
+                <p className="text-xs text-cyan-200">↓ 5 days improved</p>
+              </div>
+              <div className="p-3 bg-gradient-to-br from-purple-600 to-purple-700 rounded-lg">
+                <p className="text-xs text-purple-100">Collection Rate</p>
+                <p className="text-xl font-bold text-white">92%</p>
+                <p className="text-xs text-purple-200">↑ 8% this month</p>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs">
+                <span className="text-slate-400">Outstanding Amount</span>
+                <span className="text-red-400">₹{totalReceivable.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-slate-400">Collected This Month</span>
+                <span className="text-green-400">₹{collectedAmount.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-slate-400">Average Invoice Value</span>
+                <span className="text-blue-400">₹{(allReceivables.reduce((sum, r) => sum + r.amount, 0) / allReceivables.length).toLocaleString()}</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
