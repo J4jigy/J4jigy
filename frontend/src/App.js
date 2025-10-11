@@ -19,6 +19,8 @@ import StaffManagementPage from './components/StaffManagementPage';
 import PayrollManagement from './components/PayrollManagement';
 import BalanceSheet from './components/BalanceSheet';
 import ProfitLoss from './components/ProfitLoss';
+import DailySalesReport from './components/DailySalesReport';
+import CommunityRatings from './components/CommunityRatings';
 import { BusinessProvider } from './contexts/BusinessContext';
 import { RoleProvider } from './contexts/RoleContext';
 
