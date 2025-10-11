@@ -178,48 +178,55 @@ export default function ReceivablesYouWillReceive() {
           </Select>
         </div>
 
-        {/* Results */}
-        {paginatedData.length === 0 ? (
+        {/* Customer List */}
+        {filteredData.length === 0 ? (
           <div className="text-center py-20">
-            <p className="text-slate-400 text-lg">No results</p>
+            <p className="text-slate-400 text-lg">No customers found</p>
           </div>
         ) : (
           <div className="space-y-3 mb-4">
-            {paginatedData.map(item => (
-              <Card key={item.id} className={`bg-slate-800 border-slate-700 ${
-                item.status === 'overdue' ? 'border-l-4 border-l-red-500' : 
-                item.status === 'due-soon' ? 'border-l-4 border-l-orange-500' : 
-                item.status === 'collected' ? 'border-l-4 border-l-green-500' : ''
-              }`}>
+            {filteredData.map(customer => (
+              <Card key={customer.id} className="bg-slate-800 border-slate-700">
                 <CardContent className="p-4">
-                  <div className="flex justify-between items-start mb-2">
+                  <div className="flex justify-between items-start mb-3">
                     <div className="flex-1">
-                      <p className="text-sm font-bold text-white">{item.customer}</p>
-                      <p className="text-xs text-slate-400">{item.invoiceNo} • {item.description}</p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs bg-slate-700 text-slate-300 px-2 py-0.5 rounded">{item.category}</span>
-                        <span className="text-xs bg-blue-700/30 text-blue-300 px-2 py-0.5 rounded">{item.customerType}</span>
-                        {item.status === 'overdue' && item.daysOverdue > 0 && (
-                          <span className="text-xs bg-red-900/50 text-red-300 px-2 py-0.5 rounded">
-                            {item.daysOverdue} days overdue
-                          </span>
-                        )}
-                        {item.status === 'due-soon' && (
-                          <span className="text-xs bg-orange-900/50 text-orange-300 px-2 py-0.5 rounded">
-                            Due soon
-                          </span>
-                        )}
-                        {item.status === 'collected' && (
-                          <span className="text-xs bg-green-900/50 text-green-300 px-2 py-0.5 rounded">
-                            Collected
-                          </span>
-                        )}
+                      <h3 className="text-base font-bold text-white mb-2">{customer.name}</h3>
+                      
+                      <div className="flex items-center gap-4 mb-2">
+                        <div className="flex items-center gap-1 text-slate-400">
+                          <Phone className="w-3 h-3" />
+                          <span className="text-xs">{customer.phone}</span>
+                        </div>
+                        <div className="flex items-center gap-1 text-slate-400">
+                          <Mail className="w-3 h-3" />
+                          <span className="text-xs">{customer.email}</span>
+                        </div>
                       </div>
-                      <p className="text-xs text-slate-500 mt-1">Date: {item.date}</p>
+
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs text-slate-400">Limit: ₹{customer.creditLimit.toLocaleString()}</span>
+                        <span className="text-xs text-slate-400">Last: {customer.lastTransaction}</span>
+                      </div>
+
+                      {/* Progress Bar */}
+                      <div className="w-full bg-slate-700 rounded-full h-2">
+                        <div 
+                          className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${customer.utilizationPercent}%` }}
+                        />
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-sm font-bold text-green-400">₹{item.amount.toLocaleString()}</p>
-                      <p className="text-xs text-slate-400">Due: {item.dueDate}</p>
+
+                    <div className="text-right ml-4">
+                      <p className="text-lg font-bold text-green-400">₹{customer.outstandingAmount.toLocaleString()}</p>
+                      <p className="text-xs text-slate-400 mb-1">
+                        {customer.status === 'overdue' ? 'Overdue' : 'Outstanding'}
+                      </p>
+                      {customer.status === 'overdue' && (
+                        <span className="text-xs bg-red-900/50 text-red-300 px-2 py-0.5 rounded">
+                          {customer.daysOverdue} days overdue
+                        </span>
+                      )}
                     </div>
                   </div>
                 </CardContent>
