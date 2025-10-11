@@ -447,15 +447,30 @@ metadata:
 
   - task: "Update all back arrow navigation to explicit routes instead of history-based navigation"
     implemented: true
-    working: "NA"
+    working: true
     file: "App.js, Cash.js, ListViewPage.js, ToDoList.js, CashInEntry.js, CashOutEntry.js, CashInEntryScreen.js, FuelDispenserDetailsScreen.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Updated ALL back arrow navigation in both web and mobile apps to use explicit route navigation instead of history-based navigation. WEB APP: Cash.js navigate('/'), ListViewPage.js navigate('/'), ToDoList.js navigate('/'), CashInEntry.js navigate('/'), CashOutEntry.js navigate('/'). MOBILE APP: CashInEntryScreen navigation.navigate('Dashboard'), FuelDispenserDetailsScreen navigation.navigate('FuelDispenser'). Removed history.back(), navigate(-1), and goBack() calls. All back arrows now have predictable, explicit navigation paths for consistent user experience across the app."
+        - working: true
+          agent: "testing"
+          comment: "Testing completed successfully for all web app back navigation."
+
+  - task: "Design and implement Balance Sheet and Profit & Loss pages with double-entry accounting"
+    implemented: true
+    working: "NA"
+    file: "BalanceSheet.js, ProfitLoss.js, App.js, Dashboard.js"
     stuck_count: 0
     priority: "high"
     needs_retesting: true
     status_history:
         - working: "NA"
           agent: "main"
-          comment: "Updated ALL back arrow navigation in both web and mobile apps to use explicit route navigation instead of history-based navigation. WEB APP: Cash.js navigate('/'), ListViewPage.js navigate('/'), ToDoList.js navigate('/'), CashInEntry.js navigate('/'), CashOutEntry.js navigate('/'). MOBILE APP: CashInEntryScreen navigation.navigate('Dashboard'), FuelDispenserDetailsScreen navigation.navigate('FuelDispenser'). Removed history.back(), navigate(-1), and goBack() calls. All back arrows now have predictable, explicit navigation paths for consistent user experience across the app."
+          comment: "Created beautiful Balance Sheet and Profit & Loss pages with double-entry accounting system. BALANCE SHEET: Assets (Current + Fixed), Liabilities (Current + Long-term), Equity sections with accounting equation validation. PROFIT & LOSS: Revenue, COGS, Operating Expenses, Other Income/Expenses, Net Profit calculation with margins. FEATURES: Time period filters (Monthly, Quarterly, Yearly), Comparison toggle, Summary cards with gradients, Traditional accounting tables, Financial ratios, Export functionality. DESIGN: Mix of modern cards with charts and traditional tables. Uses business-specific data from cash entries and ledger. Both pages accessible from Finance tab tiles. Ready for testing."
 
   - task: "Rent sub-tabs functionality"
     implemented: true
