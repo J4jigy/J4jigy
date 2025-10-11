@@ -310,12 +310,35 @@ export default function ReceivablesYouWillReceive() {
         ) : (
           <div className="space-y-3 mb-4">
             {paginatedData.map(item => (
-              <Card key={item.id} className="bg-slate-800 border-slate-700">
+              <Card key={item.id} className={`bg-slate-800 border-slate-700 ${
+                item.status === 'overdue' ? 'border-l-4 border-l-red-500' : 
+                item.status === 'due-soon' ? 'border-l-4 border-l-orange-500' : 
+                item.status === 'collected' ? 'border-l-4 border-l-green-500' : ''
+              }`}>
                 <CardContent className="p-4">
                   <div className="flex justify-between items-start mb-2">
-                    <div>
+                    <div className="flex-1">
                       <p className="text-sm font-bold text-white">{item.customer}</p>
                       <p className="text-xs text-slate-400">{item.invoiceNo} • {item.description}</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs bg-slate-700 text-slate-300 px-2 py-0.5 rounded">{item.category}</span>
+                        <span className="text-xs bg-blue-700/30 text-blue-300 px-2 py-0.5 rounded">{item.customerType}</span>
+                        {item.status === 'overdue' && item.daysOverdue > 0 && (
+                          <span className="text-xs bg-red-900/50 text-red-300 px-2 py-0.5 rounded">
+                            {item.daysOverdue} days overdue
+                          </span>
+                        )}
+                        {item.status === 'due-soon' && (
+                          <span className="text-xs bg-orange-900/50 text-orange-300 px-2 py-0.5 rounded">
+                            Due soon
+                          </span>
+                        )}
+                        {item.status === 'collected' && (
+                          <span className="text-xs bg-green-900/50 text-green-300 px-2 py-0.5 rounded">
+                            Collected
+                          </span>
+                        )}
+                      </div>
                       <p className="text-xs text-slate-500 mt-1">Date: {item.date}</p>
                     </div>
                     <div className="text-right">
