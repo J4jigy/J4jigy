@@ -29,6 +29,8 @@ import BillsRecharge from './components/BillsRecharge';
 import Rent from './components/Rent';
 import OtherExpenses from './components/OtherExpenses';
 import BillsInvoices from './components/BillsInvoices';
+import Bank from './components/Bank';
+import CashEnhanced from './components/CashEnhanced';
 import { BusinessProvider } from './contexts/BusinessContext';
 import { RoleProvider } from './contexts/RoleContext';
 
