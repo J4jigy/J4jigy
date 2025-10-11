@@ -285,6 +285,7 @@ export default function ReceivablesYouWillReceive() {
               <SelectItem value="amount-low">Amount (Low→High)</SelectItem>
               <SelectItem value="date-new">Date (Newest First)</SelectItem>
               <SelectItem value="date-old">Date (Oldest First)</SelectItem>
+              <SelectItem value="overdue">By Overdue Days</SelectItem>
             </SelectContent>
           </Select>
 
