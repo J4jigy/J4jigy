@@ -19,14 +19,18 @@ export default function ReceivablesYouWillReceive() {
   const [itemsPerPage, setItemsPerPage] = useState('25');
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredData, setFilteredData] = useState([]);
+  const [activeTab, setActiveTab] = useState('all');
 
-  // Sample receivables data
+  // Enhanced receivables data with categories and status
   const allReceivables = [
-    { id: 1, customer: 'Rajesh Enterprises', amount: 25000, date: '2025-09-12', dueDate: '2025-10-12', invoiceNo: 'INV-001', description: 'Fuel Sales' },
-    { id: 2, customer: 'Sharma Transport', amount: 15000, date: '2025-09-18', dueDate: '2025-10-18', invoiceNo: 'INV-002', description: 'Diesel Supply' },
-    { id: 3, customer: 'Kumar Industries', amount: 45000, date: '2025-09-25', dueDate: '2025-10-25', invoiceNo: 'INV-003', description: 'Monthly Billing' },
-    { id: 4, customer: 'Patel & Sons', amount: 8000, date: '2025-10-02', dueDate: '2025-11-02', invoiceNo: 'INV-004', description: 'Petrol Sales' },
-    { id: 5, customer: 'Singh Motors', amount: 32000, date: '2025-10-08', dueDate: '2025-11-08', invoiceNo: 'INV-005', description: 'Fleet Services' },
+    { id: 1, customer: 'Rajesh Enterprises', amount: 25000, date: '2025-09-12', dueDate: '2025-10-12', invoiceNo: 'INV-001', description: 'Fuel Sales', status: 'overdue', category: 'Fuel Sales', daysOverdue: 8, customerType: 'Enterprise' },
+    { id: 2, customer: 'Sharma Transport', amount: 15000, date: '2025-09-18', dueDate: '2025-10-18', invoiceNo: 'INV-002', description: 'Diesel Supply', status: 'due-soon', category: 'Fuel Sales', daysOverdue: 0, customerType: 'Transport' },
+    { id: 3, customer: 'Kumar Industries', amount: 45000, date: '2025-09-25', dueDate: '2025-10-25', invoiceNo: 'INV-003', description: 'Monthly Billing', status: 'current', category: 'Monthly Billing', daysOverdue: 0, customerType: 'Industry' },
+    { id: 4, customer: 'Patel & Sons', amount: 8000, date: '2025-10-02', dueDate: '2025-11-02', invoiceNo: 'INV-004', description: 'Petrol Sales', status: 'current', category: 'Fuel Sales', daysOverdue: 0, customerType: 'Retail' },
+    { id: 5, customer: 'Singh Motors', amount: 32000, date: '2025-10-08', dueDate: '2025-11-08', invoiceNo: 'INV-005', description: 'Fleet Services', status: 'current', category: 'Services', daysOverdue: 0, customerType: 'Fleet' },
+    { id: 6, customer: 'Gupta Logistics', amount: 22000, date: '2025-09-05', dueDate: '2025-10-05', invoiceNo: 'INV-006', description: 'Bulk Diesel', status: 'overdue', category: 'Fuel Sales', daysOverdue: 15, customerType: 'Transport' },
+    { id: 7, customer: 'Reddy Construction', amount: 18500, date: '2025-09-28', dueDate: '2025-10-28', invoiceNo: 'INV-007', description: 'Equipment Fuel', status: 'current', category: 'Fuel Sales', daysOverdue: 0, customerType: 'Construction' },
+    { id: 8, customer: 'Verma Auto', amount: 12000, date: '2025-08-20', dueDate: '2025-09-20', invoiceNo: 'INV-008', description: 'Service Station', status: 'collected', category: 'Services', daysOverdue: 0, customerType: 'Automotive' },
   ];
 
   const handleFilterByDate = () => {
