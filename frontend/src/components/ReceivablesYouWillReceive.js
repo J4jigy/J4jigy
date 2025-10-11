@@ -33,6 +33,35 @@ export default function ReceivablesYouWillReceive() {
     { id: 8, customer: 'Verma Auto', amount: 12000, date: '2025-08-20', dueDate: '2025-09-20', invoiceNo: 'INV-008', description: 'Service Station', status: 'collected', category: 'Services', daysOverdue: 0, customerType: 'Automotive' },
   ];
 
+  // Calculate summary statistics
+  const totalReceivable = allReceivables.filter(r => r.status !== 'collected').reduce((sum, r) => sum + r.amount, 0);
+  const overdueAmount = allReceivables.filter(r => r.status === 'overdue').reduce((sum, r) => sum + r.amount, 0);
+  const dueSoonAmount = allReceivables.filter(r => r.status === 'due-soon').reduce((sum, r) => sum + r.amount, 0);
+  const currentAmount = allReceivables.filter(r => r.status === 'current').reduce((sum, r) => sum + r.amount, 0);
+  const collectedAmount = allReceivables.filter(r => r.status === 'collected').reduce((sum, r) => sum + r.amount, 0);
+
+  const overdueCount = allReceivables.filter(r => r.status === 'overdue').length;
+  const dueSoonCount = allReceivables.filter(r => r.status === 'due-soon').length;
+
+  // Category breakdown
+  const categoryBreakdown = allReceivables.reduce((acc, item) => {
+    if (!acc[item.category]) {
+      acc[item.category] = 0;
+    }
+    acc[item.category] += item.amount;
+    return acc;
+  }, {});
+
+  // Customer type breakdown
+  const customerTypeBreakdown = allReceivables.reduce((acc, item) => {
+    if (!acc[item.customerType]) {
+      acc[item.customerType] = { count: 0, amount: 0 };
+    }
+    acc[item.customerType].count += 1;
+    acc[item.customerType].amount += item.amount;
+    return acc;
+  }, {});
+
   const handleFilterByDate = () => {
     const filtered = allReceivables.filter(item => {
       const itemDate = new Date(item.date);
@@ -46,16 +75,22 @@ export default function ReceivablesYouWillReceive() {
 
   const handleGeneratePDF = () => {
     alert('Generating PDF Report...');
-    // PDF generation logic here
   };
 
-  const displayData = filteredData.length > 0 ? filteredData : allReceivables;
+  let displayData = filteredData.length > 0 ? filteredData : allReceivables;
+
+  // Filter by tab
+  if (activeTab !== 'all') {
+    displayData = displayData.filter(item => item.status === activeTab);
+  }
 
   // Apply search filter
   const searchedData = displayData.filter(item => 
     item.customer.toLowerCase().includes(searchQuery.toLowerCase()) ||
     item.invoiceNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.description.toLowerCase().includes(searchQuery.toLowerCase())
+    item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.customerType.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   // Apply sorting
@@ -64,6 +99,7 @@ export default function ReceivablesYouWillReceive() {
     if (sortBy === 'amount-low') return a.amount - b.amount;
     if (sortBy === 'date-new') return new Date(b.date) - new Date(a.date);
     if (sortBy === 'date-old') return new Date(a.date) - new Date(b.date);
+    if (sortBy === 'overdue') return b.daysOverdue - a.daysOverdue;
     return 0;
   });
 
