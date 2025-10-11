@@ -21,6 +21,14 @@ import BalanceSheet from './components/BalanceSheet';
 import ProfitLoss from './components/ProfitLoss';
 import DailySalesReport from './components/DailySalesReport';
 import CommunityRatings from './components/CommunityRatings';
+import CustomersDebtors from './components/CustomersDebtors';
+import SuppliersCreditors from './components/SuppliersCreditors';
+import StockManagement from './components/StockManagement';
+import CompanyPurchase from './components/CompanyPurchase';
+import BillsRecharge from './components/BillsRecharge';
+import Rent from './components/Rent';
+import OtherExpenses from './components/OtherExpenses';
+import BillsInvoices from './components/BillsInvoices';
 import { BusinessProvider } from './contexts/BusinessContext';
 import { RoleProvider } from './contexts/RoleContext';
 
