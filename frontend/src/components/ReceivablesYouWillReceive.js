@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { ArrowLeft, FileText, Calendar, Search, TrendingUp, Clock, CheckCircle, DollarSign, Filter, Users, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Download, Search, TrendingUp, Clock, CheckCircle, DollarSign, Users, AlertCircle, Plus, Phone, Mail, ChevronDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { useBusiness } from '../contexts/BusinessContext';
 
 export default function ReceivablesYouWillReceive() {
