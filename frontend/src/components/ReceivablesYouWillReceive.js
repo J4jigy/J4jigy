@@ -66,82 +66,29 @@ export default function ReceivablesYouWillReceive() {
     },
   ];
 
-  // Calculate summary statistics
-  const totalReceivable = allReceivables.filter(r => r.status !== 'collected').reduce((sum, r) => sum + r.amount, 0);
-  const overdueAmount = allReceivables.filter(r => r.status === 'overdue').reduce((sum, r) => sum + r.amount, 0);
-  const dueSoonAmount = allReceivables.filter(r => r.status === 'due-soon').reduce((sum, r) => sum + r.amount, 0);
-  const currentAmount = allReceivables.filter(r => r.status === 'current').reduce((sum, r) => sum + r.amount, 0);
-  const collectedAmount = allReceivables.filter(r => r.status === 'collected').reduce((sum, r) => sum + r.amount, 0);
-
-  const overdueCount = allReceivables.filter(r => r.status === 'overdue').length;
-  const dueSoonCount = allReceivables.filter(r => r.status === 'due-soon').length;
-
-  // Category breakdown
-  const categoryBreakdown = allReceivables.reduce((acc, item) => {
-    if (!acc[item.category]) {
-      acc[item.category] = 0;
-    }
-    acc[item.category] += item.amount;
-    return acc;
-  }, {});
-
-  // Customer type breakdown
-  const customerTypeBreakdown = allReceivables.reduce((acc, item) => {
-    if (!acc[item.customerType]) {
-      acc[item.customerType] = { count: 0, amount: 0 };
-    }
-    acc[item.customerType].count += 1;
-    acc[item.customerType].amount += item.amount;
-    return acc;
-  }, {});
-
-  const handleFilterByDate = () => {
-    const filtered = allReceivables.filter(item => {
-      const itemDate = new Date(item.date);
-      const from = new Date(fromDate);
-      const to = new Date(toDate);
-      return itemDate >= from && itemDate <= to;
-    });
-    setFilteredData(filtered);
-    setCurrentPage(1);
-  };
-
-  const handleGeneratePDF = () => {
-    alert('Generating PDF Report...');
-  };
-
-  let displayData = filteredData.length > 0 ? filteredData : allReceivables;
-
-  // Filter by tab
-  if (activeTab !== 'all') {
-    displayData = displayData.filter(item => item.status === activeTab);
-  }
+  // Calculate summary statistics based on customers
+  const totalReceivable = allCustomers.reduce((sum, customer) => sum + customer.outstandingAmount, 0);
+  const totalCustomers = allCustomers.length;
+  const avgBalance = totalCustomers > 0 ? totalReceivable / totalCustomers : 0;
+  const activeCustomers = allCustomers.filter(c => c.status === 'active').length;
+  const overdueCustomers = allCustomers.filter(c => c.status === 'overdue').length;
 
   // Apply search filter
-  const searchedData = displayData.filter(item => 
-    item.customer.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.invoiceNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    item.customerType.toLowerCase().includes(searchQuery.toLowerCase())
+  const searchedData = allCustomers.filter(customer => 
+    customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    customer.phone.includes(searchQuery) ||
+    customer.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Apply sorting
-  const sortedData = [...searchedData].sort((a, b) => {
-    if (sortBy === 'amount-high') return b.amount - a.amount;
-    if (sortBy === 'amount-low') return a.amount - b.amount;
-    if (sortBy === 'date-new') return new Date(b.date) - new Date(a.date);
-    if (sortBy === 'date-old') return new Date(a.date) - new Date(b.date);
-    if (sortBy === 'overdue') return b.daysOverdue - a.daysOverdue;
-    return 0;
-  });
-
-  // Pagination
-  const totalItems = sortedData.length;
-  const totalPages = Math.ceil(totalItems / parseInt(itemsPerPage));
-  const startIndex = (currentPage - 1) * parseInt(itemsPerPage);
-  const endIndex = startIndex + parseInt(itemsPerPage);
-  const paginatedData = sortedData.slice(startIndex, endIndex);
+  // Apply filter
+  let filteredData = searchedData;
+  if (filterBy !== 'all') {
+    if (filterBy === 'active') {
+      filteredData = searchedData.filter(customer => customer.status === 'active');
+    } else if (filterBy === 'overdue') {
+      filteredData = searchedData.filter(customer => customer.status === 'overdue');
+    }
+  }
 
   return (
     <div className="min-h-screen bg-slate-900 text-white pb-20">
