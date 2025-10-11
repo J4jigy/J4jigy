@@ -153,109 +153,26 @@ export default function PayablesYouWillGive() {
           </Card>
         </div>
 
-        {/* Category Breakdown */}
-        <Card className="bg-slate-800 border-slate-700 mb-4">
-          <CardContent className="p-3">
-            <h3 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
-              <Filter className="w-4 h-4 text-blue-400" />
-              Category Breakdown
-            </h3>
-            <div className="space-y-2">
-              {Object.entries(categoryBreakdown).map(([category, amount]) => (
-                <div key={category} className="flex justify-between items-center">
-                  <span className="text-xs text-slate-400">{category}</span>
-                  <span className="text-sm font-bold text-red-400">₹{amount.toLocaleString()}</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Date Filters */}
-        <div className="grid grid-cols-2 gap-3 mb-3">
-          <div>
-            <label className="text-xs text-slate-400 mb-1 block">From Date</label>
+        {/* Search and Filter Row */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="relative">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
             <Input
-              type="date"
-              value={fromDate}
-              onChange={(e) => setFromDate(e.target.value)}
-              className="bg-slate-800 border-slate-600 text-white"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search suppliers..."
+              className="bg-slate-800 border-slate-600 text-white pl-10"
             />
           </div>
-          <div>
-            <label className="text-xs text-slate-400 mb-1 block">To Date</label>
-            <Input
-              type="date"
-              value={toDate}
-              onChange={(e) => setToDate(e.target.value)}
-              className="bg-slate-800 border-slate-600 text-white"
-            />
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <Button 
-            onClick={handleGeneratePDF}
-            className="bg-red-600 hover:bg-red-700 text-white"
-          >
-            <FileText className="w-4 h-4 mr-2" />
-            Generate PDF Report
-          </Button>
-          <Button 
-            onClick={handleFilterByDate}
-            className="bg-blue-600 hover:bg-blue-700 text-white"
-          >
-            <Calendar className="w-4 h-4 mr-2" />
-            Filter by Date
-          </Button>
-        </div>
-
-        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
-          <TabsList className="grid w-full grid-cols-4 bg-slate-800 border border-slate-700">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="overdue">Overdue</TabsTrigger>
-            <TabsTrigger value="due-soon">Due Soon</TabsTrigger>
-            <TabsTrigger value="current">Current</TabsTrigger>
-          </TabsList>
-        </Tabs>
-
-        {/* Search Bar */}
-        <div className="relative mb-3">
-          <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
-          <Input
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search..."
-            className="bg-slate-800 border-slate-600 text-white pl-10"
-          />
-        </div>
-
-        {/* Sort and Pagination Controls */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <Select value={sortBy} onValueChange={setSortBy}>
+          
+          <Select value={filterBy} onValueChange={setFilterBy}>
             <SelectTrigger className="bg-slate-800 border-slate-600 text-white">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-slate-700 border-slate-600">
-              <SelectItem value="amount-high">Amount (High→Low)</SelectItem>
-              <SelectItem value="amount-low">Amount (Low→High)</SelectItem>
-              <SelectItem value="date-new">Date (Newest First)</SelectItem>
-              <SelectItem value="date-old">Date (Oldest First)</SelectItem>
-              <SelectItem value="overdue">By Overdue Days</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select value={itemsPerPage} onValueChange={setItemsPerPage}>
-            <SelectTrigger className="bg-slate-800 border-slate-600 text-white">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-slate-700 border-slate-600">
-              <SelectItem value="10">10 / page</SelectItem>
-              <SelectItem value="25">25 / page</SelectItem>
-              <SelectItem value="50">50 / page</SelectItem>
-              <SelectItem value="100">100 / page</SelectItem>
+              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="active">Active</SelectItem>
+              <SelectItem value="overdue">Overdue</SelectItem>
             </SelectContent>
           </Select>
         </div>
