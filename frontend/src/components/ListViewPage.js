@@ -164,6 +164,42 @@ export default function ListViewPage() {
 
   const totalPages = useMemo(() => Math.max(1, Math.ceil(total / pageSize)), [total, pageSize]);
 
+  // For payables and receivables, show completely empty pages
+  if (key === 'payables' || key === 'receivables') {
+    return (
+      <div className="flex flex-col h-full bg-slate-900 text-white">
+        {/* Header */}
+        <div className="bg-slate-800 border-b border-slate-700 px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Button variant="ghost" size="sm" onClick={() => navigate('/')} className="text-white hover:bg-white/10 p-2">
+                <ArrowLeft className="w-5 h-5" />
+              </Button>
+              <div>
+                <h1 className="text-lg font-semibold">{key === 'payables' ? 'Suppliers (Creditors)' : 'Customers (Debtors)'}</h1>
+                <p className="text-xs text-slate-400">FinApp Admin</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm" className="text-slate-400 hover:bg-slate-700">
+                <Download className="w-4 h-4" />
+              </Button>
+              <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white">
+                <Plus className="w-4 h-4 mr-1" />
+                Add
+              </Button>
+            </div>
+          </div>
+        </div>
+        
+        {/* Completely Empty Content */}
+        <div className="flex-1 flex items-center justify-center">
+          {/* Nothing here - completely empty as requested */}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col">
       {/* Header */}
