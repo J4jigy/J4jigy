@@ -287,41 +287,19 @@ export default function ListViewPage() {
         </div>
       )}
 
-      {/* Payables/Receivables Action Buttons */}
+      {/* Payables/Receivables Redirect to New Pages */}
       {(key === 'payables' || key === 'receivables') && (
         <div className="px-3 py-3 border-b border-slate-700">
-          <div className="space-y-3">
-            {/* Date Range Selection */}
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <label className="block text-xs text-slate-300 mb-1">From Date</label>
-                <Input
-                  type="date"
-                  className="bg-slate-700 border-slate-600 text-white h-8 text-sm"
-                  defaultValue={new Date(new Date().setMonth(new Date().getMonth() - 1)).toISOString().split('T')[0]}
-                />
-              </div>
-              <div>
-                <label className="block text-xs text-slate-300 mb-1">To Date</label>
-                <Input
-                  type="date"
-                  className="bg-slate-700 border-slate-600 text-white h-8 text-sm"
-                  defaultValue={new Date().toISOString().split('T')[0]}
-                />
-              </div>
-            </div>
-            
-            {/* Action Buttons */}
-            <div className="grid grid-cols-2 gap-2">
-              <Button className={`${key === 'payables' ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'} text-white`}>
-                <FileText className="w-4 h-4 mr-2" />
-                Generate PDF Report
-              </Button>
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white">
-                <Calendar className="w-4 h-4 mr-2" />
-                Filter by Date
-              </Button>
-            </div>
+          <div className="text-center py-4">
+            <p className="text-slate-300 text-sm mb-3">
+              Enhanced {key === 'payables' ? 'Suppliers (Creditors)' : 'Customers (Debtors)'} management is now available!
+            </p>
+            <Button 
+              onClick={() => navigate(key === 'payables' ? '/payables-you-will-give' : '/receivables-you-will-receive')}
+              className={`${key === 'payables' ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'} text-white w-full`}
+            >
+              Open {key === 'payables' ? 'Suppliers (Creditors)' : 'Customers (Debtors)'} Page
+            </Button>
           </div>
         </div>
       )}
