@@ -543,10 +543,10 @@ It's completely free to try!`;
 
   const handleTileClick = (tile) => {
     const name = `${tile.name} ${tile.subtitle}`.trim().toLowerCase();
-    if (name.startsWith('bank')) handleNavigate('/list/bank');
+    if (name.startsWith('bank')) handleNavigate('/bank');
     else if (name.startsWith('customers')) handleNavigate('/customers-debtors');
     else if (name.startsWith('suppliers')) handleNavigate('/suppliers-creditors');
-    else if (name.startsWith('cash')) handleNavigate('/list/cash');
+    else if (name.startsWith('cash')) handleNavigate('/cash-enhanced');
     else if (name.startsWith('daily sales')) handleNavigate('/daily-sales-report');
     else if (name.startsWith('community')) handleNavigate('/community-ratings');
     else if (name.startsWith('staff')) handleNavigate('/staff');
