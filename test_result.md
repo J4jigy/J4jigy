@@ -487,6 +487,14 @@ metadata:
     stuck_count: 0
     priority: "high"
     needs_retesting: false
+
+  - task: "Design comprehensive sub-page sections for all business and finance tiles"
+    implemented: true
+    working: "NA"
+    file: "CustomersDebtors.js, SuppliersCreditors.js, StockManagement.js, CompanyPurchase.js, BillsRecharge.js, Rent.js, OtherExpenses.js, BillsInvoices.js, App.js, Dashboard.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
     status_history:
         - working: "NA"
           agent: "main"
