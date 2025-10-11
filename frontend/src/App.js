@@ -190,6 +190,8 @@ function App() {
             <Route path="/login" element={!token ? <LoginPage onLogin={handleLogin} /> : <Navigate to="/" />} />
             <Route path="/admin" element={token && (user?.role === 'admin' || user?.role === 'super_admin' || user?.is_admin) ? <AdminDashboard user={user} /> : <Navigate to="/login" />} />
             <Route path="/list/cash" element={token ? <Cash /> : <Navigate to="/login" />} />
+            <Route path="/cash-enhanced" element={token ? <CashEnhanced /> : <Navigate to="/login" />} />
+            <Route path="/bank" element={token ? <Bank /> : <Navigate to="/login" />} />
             <Route path="/list/:key" element={token ? <ListViewPage /> : <Navigate to="/login" />} />
             <Route path="/cash-in" element={token ? <CashInEntry /> : <Navigate to="/login" />} />
             <Route path="/cash-out" element={token ? <CashOutEntry /> : <Navigate to="/login" />} />
