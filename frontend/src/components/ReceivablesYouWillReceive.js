@@ -155,7 +155,6 @@ export default function ReceivablesYouWillReceive() {
 
         {/* Search and Filter Row */}
         <div className="grid grid-cols-2 gap-3 mb-4">
-
           <div className="relative">
             <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
             <Input
