@@ -1,0 +1,109 @@
+import React from 'react';
+import { ArrowLeft, Building, Calendar, IndianRupee, CheckCircle, AlertCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from './ui/button';
+import { Card, CardContent } from './ui/card';
+import { useBusiness } from '../contexts/BusinessContext';
+
+export default function Rent() {
+  const navigate = useNavigate();
+  const { activeBusiness } = useBusiness();
+
+  const rentDetails = {
+    monthlyRent: 50000,
+    advance: 100000,
+    agreementStart: '2024-01-01',
+    agreementEnd: '2025-12-31',
+    landlord: 'Property Owner Name',
+    propertyAddress: 'Shop Address, City'
+  };
+
+  const rentHistory = [
+    { id: 1, month: 'January 2025', amount: 50000, paidDate: '2025-01-05', status: 'paid' },
+    { id: 2, month: 'December 2024', amount: 50000, paidDate: '2024-12-05', status: 'paid' },
+    { id: 3, month: 'November 2024', amount: 50000, paidDate: '2024-11-05', status: 'paid' },
+  ];
+
+  return (
+    <div className="min-h-screen bg-slate-900 text-white pb-20">
+      <div className="bg-slate-800/50 backdrop-blur-sm border-b border-slate-700 px-4 py-3 sticky top-0 z-10">
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="sm" onClick={() => navigate('/')} className="text-white hover:bg-white/10">
+            <ArrowLeft className="w-4 h-4" />
+          </Button>
+          <div>
+            <h1 className="text-lg font-bold">Rent Management</h1>
+            <p className="text-xs text-slate-400">{activeBusiness.name}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="px-4 py-4">
+        <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-0 mb-4">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3 mb-3">
+              <Building className="w-8 h-8 text-white" />
+              <div>
+                <p className="text-sm text-blue-100">Monthly Rent</p>
+                <p className="text-2xl font-bold text-white">₹{rentDetails.monthlyRent.toLocaleString()}</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-xs text-blue-100">
+              <div>
+                <p className="text-blue-200">Landlord</p>
+                <p className="font-medium">{rentDetails.landlord}</p>
+              </div>
+              <div>
+                <p className="text-blue-200">Advance</p>
+                <p className="font-medium">₹{rentDetails.advance.toLocaleString()}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-slate-800 border-slate-700 mb-4">
+          <CardContent className="p-4">
+            <h2 className="text-sm font-bold text-white mb-3">Agreement Details</h2>
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className="text-slate-400">Start Date</span>
+                <span className="text-white">{rentDetails.agreementStart}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-400">End Date</span>
+                <span className="text-white">{rentDetails.agreementEnd}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-slate-400">Property</span>
+                <span className="text-white text-right">{rentDetails.propertyAddress}</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <h2 className="text-sm font-bold text-white mb-3">Payment History</h2>
+        <div className="space-y-3">
+          {rentHistory.map(rent => (
+            <Card key={rent.id} className="bg-slate-800 border-slate-700">
+              <CardContent className="p-3">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-3">
+                    <CheckCircle className="w-5 h-5 text-green-400" />
+                    <div>
+                      <p className="text-sm font-medium text-white">{rent.month}</p>
+                      <p className="text-xs text-slate-400">Paid on {rent.paidDate}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-bold text-blue-400">₹{rent.amount.toLocaleString()}</p>
+                    <span className="text-xs bg-green-900/50 text-green-300 px-2 py-0.5 rounded">Paid</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
