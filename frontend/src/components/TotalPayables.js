@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { ArrowLeft, TrendingDown, AlertTriangle, Clock, DollarSign, Truck, Download, Calendar, Filter } from 'lucide-react';
+import { ArrowLeft, Download, Search, TrendingDown, Clock, AlertTriangle, DollarSign, Plus, Phone, Mail } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
+import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { useBusiness } from '../contexts/BusinessContext';
-import { useRole } from '../contexts/RoleContext';
 
 export default function TotalPayables() {
   const navigate = useNavigate();
