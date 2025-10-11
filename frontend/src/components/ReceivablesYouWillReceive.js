@@ -122,45 +122,33 @@ export default function ReceivablesYouWillReceive() {
         <div className="grid grid-cols-2 gap-3 mb-4">
           <Card className="bg-gradient-to-br from-green-600 to-green-700 border-0">
             <CardContent className="p-3">
-              <div className="flex items-center gap-2 mb-1">
-                <TrendingUp className="w-4 h-4 text-white" />
-                <p className="text-xs text-green-100">Total Receivable</p>
-              </div>
-              <p className="text-xl font-bold text-white">₹{totalReceivable.toLocaleString()}</p>
-              <p className="text-xs text-green-100 mt-1">{allReceivables.filter(r => r.status !== 'collected').length} invoices</p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-red-600 to-red-700 border-0">
-            <CardContent className="p-3">
-              <div className="flex items-center gap-2 mb-1">
-                <AlertCircle className="w-4 h-4 text-white" />
-                <p className="text-xs text-red-100">Overdue</p>
-              </div>
-              <p className="text-xl font-bold text-white">₹{overdueAmount.toLocaleString()}</p>
-              <p className="text-xs text-red-100 mt-1">{overdueCount} invoices</p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-yellow-600 to-yellow-700 border-0">
-            <CardContent className="p-3">
-              <div className="flex items-center gap-2 mb-1">
-                <Clock className="w-4 h-4 text-white" />
-                <p className="text-xs text-yellow-100">Due Soon</p>
-              </div>
-              <p className="text-xl font-bold text-white">₹{dueSoonAmount.toLocaleString()}</p>
-              <p className="text-xs text-yellow-100 mt-1">{dueSoonCount} invoices</p>
+              <p className="text-xs text-green-100 mb-1">Total Receivable</p>
+              <p className="text-2xl font-bold text-white">₹{totalReceivable.toLocaleString()}</p>
+              <p className="text-xs text-green-100 mt-1">~ {totalCustomers} customers</p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-0">
             <CardContent className="p-3">
-              <div className="flex items-center gap-2 mb-1">
-                <CheckCircle className="w-4 h-4 text-white" />
-                <p className="text-xs text-blue-100">Collected</p>
-              </div>
-              <p className="text-xl font-bold text-white">₹{collectedAmount.toLocaleString()}</p>
-              <p className="text-xs text-blue-100 mt-1">{allReceivables.filter(r => r.status === 'collected').length} invoices</p>
+              <p className="text-xs text-blue-100 mb-1">Avg Balance</p>
+              <p className="text-2xl font-bold text-white">₹{Math.round(avgBalance).toLocaleString()}</p>
+              <p className="text-xs text-blue-100 mt-1">₹ per customer</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-purple-600 to-purple-700 border-0">
+            <CardContent className="p-3">
+              <p className="text-xs text-purple-100 mb-1">Active</p>
+              <p className="text-2xl font-bold text-white">{activeCustomers}</p>
+              <p className="text-xs text-purple-100 mt-1">⚖ in good standing</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-orange-600 to-orange-700 border-0">
+            <CardContent className="p-3">
+              <p className="text-xs text-orange-100 mb-1">Overdue</p>
+              <p className="text-2xl font-bold text-white">{overdueCustomers}</p>
+              <p className="text-xs text-orange-100 mt-1">⚠ needs attention</p>
             </CardContent>
           </Card>
         </div>
