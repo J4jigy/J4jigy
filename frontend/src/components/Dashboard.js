@@ -498,6 +498,8 @@ It's completely free to try!`;
   const financeTiles = [
     { name: 'Bank', subtitle: '', icon: Landmark, iconColor: 'text-blue-400', permissions: ['bank_manage', 'cash_view'] },
     { name: 'Cash', subtitle: '', icon: Coins, iconColor: 'text-green-500', permissions: ['cash_in', 'cash_out', 'cash_view'] },
+    { name: 'Total', subtitle: 'Receivables', icon: ArrowDownRight, iconColor: 'text-green-400', permissions: ['reports_view', 'customers_view'] },
+    { name: 'Total', subtitle: 'Payables', icon: ArrowUpRight, iconColor: 'text-red-400', permissions: ['reports_view', 'suppliers_view'] },
     { name: 'Bills', subtitle: 'Recharge', icon: Zap, iconColor: 'text-green-400', permissions: ['expenses_manage'] },
     { name: 'Rent', subtitle: '', icon: Building, iconColor: 'text-blue-400', permissions: ['expenses_manage'] },
     { name: 'Other', subtitle: 'Expenses', icon: Coins, iconColor: 'text-purple-400', permissions: ['expenses_manage'] },
