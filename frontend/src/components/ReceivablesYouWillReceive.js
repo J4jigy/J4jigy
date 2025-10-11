@@ -235,34 +235,7 @@ export default function ReceivablesYouWillReceive() {
           </div>
         )}
 
-        {/* Pagination Info */}
-        {paginatedData.length > 0 && (
-          <div className="flex justify-between items-center py-4 border-t border-slate-700">
-            <p className="text-sm text-slate-400">
-              Showing {startIndex + 1}-{Math.min(endIndex, totalItems)} of {totalItems} • Page {currentPage} / {totalPages}
-            </p>
-            <div className="flex gap-2">
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-                className="border-slate-600"
-              >
-                Previous
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages}
-                className="border-slate-600"
-              >
-                Next
-              </Button>
-            </div>
-          </div>
-        )}
+      </div>
 
         {/* Analytics and Trends */}
         <Card className="bg-slate-800 border-slate-700 mt-4">
