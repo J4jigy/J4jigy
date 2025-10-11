@@ -11,25 +11,59 @@ export default function PayablesYouWillGive() {
   const navigate = useNavigate();
   const { activeBusiness } = useBusiness();
   
-  const [fromDate, setFromDate] = useState('2025-09-11');
-  const [toDate, setToDate] = useState('2025-10-11');
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState('amount-high');
-  const [itemsPerPage, setItemsPerPage] = useState('25');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [filteredData, setFilteredData] = useState([]);
-  const [activeTab, setActiveTab] = useState('all');
+  const [filterBy, setFilterBy] = useState('all');
 
-  // Sample payables data with categories and status
-  const allPayables = [
-    { id: 1, supplier: 'Oil India Ltd', amount: 150000, date: '2025-09-15', dueDate: '2025-10-15', billNo: 'BILL-001', description: 'Fuel Purchase', status: 'overdue', category: 'Inventory', daysOverdue: 5 },
-    { id: 2, supplier: 'Bharat Petroleum', amount: 200000, date: '2025-09-20', dueDate: '2025-10-20', billNo: 'BILL-002', description: 'Diesel Stock', status: 'due-soon', category: 'Inventory', daysOverdue: 0 },
-    { id: 3, supplier: 'Equipment Co', amount: 85000, date: '2025-09-25', dueDate: '2025-10-25', billNo: 'BILL-003', description: 'Equipment Purchase', status: 'current', category: 'Assets', daysOverdue: 0 },
-    { id: 4, supplier: 'Parts & Accessories', amount: 45000, date: '2025-10-01', dueDate: '2025-10-30', billNo: 'BILL-004', description: 'Spare Parts', status: 'current', category: 'Inventory', daysOverdue: 0 },
-    { id: 5, supplier: 'Maintenance Services', amount: 35000, date: '2025-10-05', dueDate: '2025-11-05', billNo: 'BILL-005', description: 'Equipment Servicing', status: 'current', category: 'Services', daysOverdue: 0 },
-    { id: 6, supplier: 'Utility Company', amount: 12000, date: '2025-09-10', dueDate: '2025-10-10', billNo: 'BILL-006', description: 'Electricity Bill', status: 'overdue', category: 'Utilities', daysOverdue: 10 },
-    { id: 7, supplier: 'Office Supplies Ltd', amount: 8500, date: '2025-09-28', dueDate: '2025-10-28', billNo: 'BILL-007', description: 'Stationery', status: 'current', category: 'Expenses', daysOverdue: 0 },
-    { id: 8, supplier: 'Construction Materials', amount: 125000, date: '2025-08-15', dueDate: '2025-09-15', billNo: 'BILL-008', description: 'Building Supplies', status: 'paid', category: 'Assets', daysOverdue: 0 },
+  // Supplier-focused payables data matching the screenshot design
+  const allSuppliers = [
+    { 
+      id: 1, 
+      name: 'Oil India Ltd', 
+      phone: '9876543220', 
+      email: 'oil@example.com', 
+      outstandingAmount: 150000, 
+      creditLimit: 300000, 
+      lastTransaction: '2025-01-10',
+      status: 'overdue',
+      daysOverdue: 5,
+      utilizationPercent: 50
+    },
+    { 
+      id: 2, 
+      name: 'Bharat Petroleum', 
+      phone: '9876543221', 
+      email: 'bharat@example.com', 
+      outstandingAmount: 200000, 
+      creditLimit: 400000, 
+      lastTransaction: '2025-01-09',
+      status: 'active',
+      daysOverdue: 0,
+      utilizationPercent: 50
+    },
+    { 
+      id: 3, 
+      name: 'Equipment Co', 
+      phone: '9876543222', 
+      email: 'equipment@example.com', 
+      outstandingAmount: 85000, 
+      creditLimit: 150000, 
+      lastTransaction: '2025-01-08',
+      status: 'active',
+      daysOverdue: 0,
+      utilizationPercent: 57
+    },
+    { 
+      id: 4, 
+      name: 'Utility Company', 
+      phone: '9876543223', 
+      email: 'utility@example.com', 
+      outstandingAmount: 12000, 
+      creditLimit: 50000, 
+      lastTransaction: '2025-01-07',
+      status: 'overdue',
+      daysOverdue: 10,
+      utilizationPercent: 24
+    },
   ];
 
   // Calculate summary statistics
