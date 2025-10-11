@@ -253,6 +253,16 @@ export default function ReceivablesYouWillReceive() {
           </Button>
         </div>
 
+        {/* Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-4">
+          <TabsList className="grid w-full grid-cols-4 bg-slate-800 border border-slate-700">
+            <TabsTrigger value="all">All</TabsTrigger>
+            <TabsTrigger value="overdue">Overdue</TabsTrigger>
+            <TabsTrigger value="due-soon">Due Soon</TabsTrigger>
+            <TabsTrigger value="current">Current</TabsTrigger>
+          </TabsList>
+        </Tabs>
+
         {/* Search Bar */}
         <div className="relative mb-3">
           <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
