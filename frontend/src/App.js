@@ -31,8 +31,8 @@ import OtherExpenses from './components/OtherExpenses';
 import BillsInvoices from './components/BillsInvoices';
 import Bank from './components/Bank';
 import CashEnhanced from './components/CashEnhanced';
-import TotalReceivables from './components/TotalReceivables';
-import TotalPayables from './components/TotalPayables';
+import PayablesYouWillGive from './components/PayablesYouWillGive';
+import ReceivablesYouWillReceive from './components/ReceivablesYouWillReceive';
 import { BusinessProvider } from './contexts/BusinessContext';
 import { RoleProvider } from './contexts/RoleContext';
 
