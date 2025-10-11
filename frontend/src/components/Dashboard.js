@@ -566,7 +566,7 @@ It's completely free to try!`;
   return (
     <div className="min-h-screen bg-slate-900 text-white">
       {/* Header */}
-      <div className="embossed-header flex items-center justify-between p-4">
+      <div className="flex items-center justify-between p-4 border-b border-slate-700">
         <div className="flex items-center gap-2">
           <Home className="w-6 h-6 text-blue-400" />
         </div>
