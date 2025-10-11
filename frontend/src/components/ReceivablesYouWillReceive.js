@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
-import { ArrowLeft, Download, Search, TrendingUp, Clock, CheckCircle, DollarSign, Users, AlertCircle, Plus, Phone, Mail, ChevronDown } from 'lucide-react';
+import React from 'react';
+import { ArrowLeft, Download, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
-import { Card, CardContent } from './ui/card';
-import { Input } from './ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { useBusiness } from '../contexts/BusinessContext';
 
 export default function ReceivablesYouWillReceive() {
