@@ -26,7 +26,7 @@ try {
   }
 } catch (e) {}
 
-export default function Dashboard({ user, logout }) {
+export default function Dashboard({ user, onLogout }) {
   // Restore activeTab from localStorage or default to 'business'
   const [activeTab, setActiveTab] = useState(() => {
     return localStorage.getItem('dashboardActiveTab') || 'business';
