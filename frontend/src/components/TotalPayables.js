@@ -66,34 +66,29 @@ export default function TotalPayables() {
     },
   ];
 
-  // Calculate totals
-  const totalPayable = payables.reduce((sum, p) => sum + p.amount, 0);
-  const overdueAmount = payables.filter(p => p.status === 'overdue').reduce((sum, p) => sum + p.amount, 0);
-  const dueSoonAmount = payables.filter(p => p.status === 'due-soon').reduce((sum, p) => sum + p.amount, 0);
-  const currentAmount = payables.filter(p => p.status === 'current').reduce((sum, p) => sum + p.amount, 0);
+  // Calculate summary statistics based on suppliers
+  const totalPayable = allSuppliers.reduce((sum, supplier) => sum + supplier.outstandingAmount, 0);
+  const totalSuppliers = allSuppliers.length;
+  const avgBalance = totalSuppliers > 0 ? totalPayable / totalSuppliers : 0;
+  const activeSuppliers = allSuppliers.filter(s => s.status === 'active').length;
+  const overdueSuppliers = allSuppliers.filter(s => s.status === 'overdue').length;
 
-  const overdueCount = payables.filter(p => p.status === 'overdue').length;
-  const dueSoonCount = payables.filter(p => p.status === 'due-soon').length;
-  const totalSuppliers = [...new Set(payables.map(p => p.supplier))].length;
+  // Apply search filter
+  const searchedData = allSuppliers.filter(supplier => 
+    supplier.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    supplier.phone.includes(searchQuery) ||
+    supplier.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-  // Aging analysis
-  const aging = {
-    current: payables.filter(p => p.daysOverdue === 0).reduce((sum, p) => sum + p.amount, 0),
-    '1-30': payables.filter(p => p.daysOverdue > 0 && p.daysOverdue <= 30).reduce((sum, p) => sum + p.amount, 0),
-    '31-60': payables.filter(p => p.daysOverdue > 30 && p.daysOverdue <= 60).reduce((sum, p) => sum + p.amount, 0),
-    '60+': payables.filter(p => p.daysOverdue > 60).reduce((sum, p) => sum + p.amount, 0),
-  };
-
-  // Filter payables
-  const filteredPayables = payables.filter(p => {
-    if (filterStatus === 'all') return true;
-    return p.status === filterStatus;
-  }).sort((a, b) => {
-    if (sortBy === 'amount') return b.amount - a.amount;
-    if (sortBy === 'date') return new Date(a.dueDate) - new Date(b.dueDate);
-    if (sortBy === 'overdue') return b.daysOverdue - a.daysOverdue;
-    return 0;
-  });
+  // Apply filter
+  let filteredData = searchedData;
+  if (filterBy !== 'all') {
+    if (filterBy === 'active') {
+      filteredData = searchedData.filter(supplier => supplier.status === 'active');
+    } else if (filterBy === 'overdue') {
+      filteredData = searchedData.filter(supplier => supplier.status === 'overdue');
+    }
+  }
 
   return (
     <div className="min-h-screen bg-slate-900 text-white pb-20">
