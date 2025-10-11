@@ -201,6 +201,14 @@ function App() {
             <Route path="/profit-loss" element={token ? <ProfitLoss /> : <Navigate to="/login" />} />
             <Route path="/daily-sales-report" element={token ? <DailySalesReport /> : <Navigate to="/login" />} />
             <Route path="/community-ratings" element={token ? <CommunityRatings /> : <Navigate to="/login" />} />
+            <Route path="/customers-debtors" element={token ? <CustomersDebtors /> : <Navigate to="/login" />} />
+            <Route path="/suppliers-creditors" element={token ? <SuppliersCreditors /> : <Navigate to="/login" />} />
+            <Route path="/stock-management" element={token ? <StockManagement /> : <Navigate to="/login" />} />
+            <Route path="/company-purchase" element={token ? <CompanyPurchase /> : <Navigate to="/login" />} />
+            <Route path="/bills-recharge" element={token ? <BillsRecharge /> : <Navigate to="/login" />} />
+            <Route path="/rent-management" element={token ? <Rent /> : <Navigate to="/login" />} />
+            <Route path="/other-expenses" element={token ? <OtherExpenses /> : <Navigate to="/login" />} />
+            <Route path="/bills-invoices" element={token ? <BillsInvoices /> : <Navigate to="/login" />} />
           </Routes>
         </Router>
       </RoleProvider>
