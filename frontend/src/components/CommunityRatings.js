@@ -191,6 +191,97 @@ export default function CommunityRatings() {
             <p className="text-sm font-bold text-purple-400">2.5h</p>
           </div>
         </div>
+
+        {/* Customer Feedback Categories */}
+        <Card className="bg-slate-800 border-slate-700 mt-4">
+          <CardContent className="p-4">
+            <h2 className="text-base font-bold text-green-400 mb-3">Feedback Categories</h2>
+            <div className="space-y-2">
+              {[
+                { category: 'Service Quality', positive: 85, negative: 15, icon: '👍' },
+                { category: 'Product Quality', positive: 90, negative: 10, icon: '⭐' },
+                { category: 'Pricing', positive: 78, negative: 22, icon: '💰' },
+                { category: 'Cleanliness', positive: 72, negative: 28, icon: '✨' },
+                { category: 'Staff Behavior', positive: 88, negative: 12, icon: '😊' }
+              ].map(item => (
+                <div key={item.category} className="p-2 bg-slate-700/30 rounded">
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-sm text-white">{item.icon} {item.category}</span>
+                    <span className="text-xs text-green-400">{item.positive}% positive</span>
+                  </div>
+                  <div className="flex gap-1">
+                    <div className="flex-1 bg-slate-600 rounded-full h-1.5">
+                      <div 
+                        className="bg-green-400 h-1.5 rounded-full"
+                        style={{ width: `${item.positive}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Rating Trends */}
+        <Card className="bg-slate-800 border-slate-700 mt-4">
+          <CardContent className="p-4">
+            <h2 className="text-base font-bold text-purple-400 mb-3">Rating Trends</h2>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="p-3 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg">
+                <p className="text-xs text-blue-100">This Month</p>
+                <p className="text-xl font-bold text-white">4.6</p>
+                <p className="text-xs text-green-300">↑ 0.3 from last month</p>
+              </div>
+              <div className="p-3 bg-gradient-to-br from-purple-600 to-purple-700 rounded-lg">
+                <p className="text-xs text-purple-100">Last Month</p>
+                <p className="text-xl font-bold text-white">4.3</p>
+                <p className="text-xs text-purple-200">Previous period</p>
+              </div>
+            </div>
+            <div className="mt-3 p-3 bg-slate-700/50 rounded">
+              <p className="text-xs text-slate-400 mb-2">Monthly Progress</p>
+              <div className="flex justify-between items-end h-20 gap-1">
+                {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'].map((month, idx) => {
+                  const heights = [40, 55, 48, 65, 70, 85];
+                  return (
+                    <div key={month} className="flex-1 flex flex-col items-center gap-1">
+                      <div 
+                        className="w-full bg-gradient-to-t from-yellow-600 to-yellow-400 rounded-t"
+                        style={{ height: `${heights[idx]}%` }}
+                      />
+                      <span className="text-xs text-slate-400">{month}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Customer Sentiment */}
+        <Card className="bg-slate-800 border-slate-700 mt-4">
+          <CardContent className="p-4">
+            <h2 className="text-base font-bold text-orange-400 mb-3">Customer Sentiment</h2>
+            <div className="grid grid-cols-3 gap-2">
+              <div className="p-3 bg-green-900/30 border border-green-700 rounded-lg text-center">
+                <p className="text-2xl mb-1">😊</p>
+                <p className="text-xs text-slate-400">Positive</p>
+                <p className="text-sm font-bold text-green-400">78%</p>
+              </div>
+              <div className="p-3 bg-yellow-900/30 border border-yellow-700 rounded-lg text-center">
+                <p className="text-2xl mb-1">😐</p>
+                <p className="text-xs text-slate-400">Neutral</p>
+                <p className="text-sm font-bold text-yellow-400">15%</p>
+              </div>
+              <div className="p-3 bg-red-900/30 border border-red-700 rounded-lg text-center">
+                <p className="text-2xl mb-1">😞</p>
+                <p className="text-xs text-slate-400">Negative</p>
+                <p className="text-sm font-bold text-red-400">7%</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Response Dialog */}
