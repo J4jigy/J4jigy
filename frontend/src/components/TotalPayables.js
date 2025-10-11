@@ -118,208 +118,121 @@ export default function TotalPayables() {
 
       {/* Content */}
       <div className="px-4 py-4">
-        {/* Main Summary Card */}
-        <Card className="bg-gradient-to-br from-red-600 via-rose-600 to-pink-600 border-0 mb-4">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between mb-3">
-              <div>
-                <p className="text-sm text-red-100">Total Payables</p>
-                <p className="text-3xl font-bold text-white">₹{totalPayable.toLocaleString()}</p>
-                <p className="text-xs text-red-100 mt-1">{payables.length} bills • {totalSuppliers} suppliers</p>
-              </div>
-              <div className="p-3 bg-white/20 rounded-full">
-                <TrendingDown className="w-8 h-8 text-white" />
-              </div>
-            </div>
-            <div className="grid grid-cols-3 gap-2 pt-3 border-t border-white/20">
-              <div className="text-center">
-                <p className="text-xs text-red-100">Current</p>
-                <p className="text-sm font-bold text-white">₹{currentAmount.toLocaleString()}</p>
-              </div>
-              <div className="text-center">
-                <p className="text-xs text-red-100">Due Soon</p>
-                <p className="text-sm font-bold text-white">₹{dueSoonAmount.toLocaleString()}</p>
-              </div>
-              <div className="text-center">
-                <p className="text-xs text-red-100">Overdue</p>
-                <p className="text-sm font-bold text-white">₹{overdueAmount.toLocaleString()}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Summary Cards */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <Card className="bg-gradient-to-br from-red-600 to-red-700 border-0">
+            <CardContent className="p-3">
+              <p className="text-xs text-red-100 mb-1">Total Payable</p>
+              <p className="text-2xl font-bold text-white">₹{totalPayable.toLocaleString()}</p>
+              <p className="text-xs text-red-100 mt-1">~ {totalSuppliers} suppliers</p>
+            </CardContent>
+          </Card>
 
-        {/* Status Cards */}
-        <div className="grid grid-cols-3 gap-3 mb-4">
           <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-0">
             <CardContent className="p-3">
-              <div className="flex items-center gap-2 mb-1">
-                <DollarSign className="w-4 h-4 text-white" />
-                <p className="text-xs text-blue-100">Current</p>
-              </div>
-              <p className="text-lg font-bold text-white">₹{currentAmount.toLocaleString()}</p>
+              <p className="text-xs text-blue-100 mb-1">Avg Balance</p>
+              <p className="text-2xl font-bold text-white">₹{Math.round(avgBalance).toLocaleString()}</p>
+              <p className="text-xs text-blue-100 mt-1">₹ per supplier</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-purple-600 to-purple-700 border-0">
+            <CardContent className="p-3">
+              <p className="text-xs text-purple-100 mb-1">Active</p>
+              <p className="text-2xl font-bold text-white">{activeSuppliers}</p>
+              <p className="text-xs text-purple-100 mt-1">⚖ in good standing</p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-orange-600 to-orange-700 border-0">
             <CardContent className="p-3">
-              <div className="flex items-center gap-2 mb-1">
-                <Clock className="w-4 h-4 text-white" />
-                <p className="text-xs text-orange-100">Due Soon</p>
-              </div>
-              <p className="text-lg font-bold text-white">{dueSoonCount}</p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-red-600 to-red-700 border-0">
-            <CardContent className="p-3">
-              <div className="flex items-center gap-2 mb-1">
-                <AlertTriangle className="w-4 h-4 text-white" />
-                <p className="text-xs text-red-100">Overdue</p>
-              </div>
-              <p className="text-lg font-bold text-white">{overdueCount}</p>
+              <p className="text-xs text-orange-100 mb-1">Overdue</p>
+              <p className="text-2xl font-bold text-white">{overdueSuppliers}</p>
+              <p className="text-xs text-orange-100 mt-1">⚠ needs attention</p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Aging Analysis */}
-        <Card className="bg-slate-800 border-slate-700 mb-4">
-          <CardContent className="p-4">
-            <h2 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-red-400" />
-              Aging Analysis
-            </h2>
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-xs text-slate-400">Current (0 days)</span>
-                <span className="text-sm font-bold text-blue-400">₹{aging.current.toLocaleString()}</span>
-              </div>
-              <div className="bg-slate-700 rounded-full h-1.5">
-                <div className="bg-blue-400 h-1.5 rounded-full" style={{ width: `${(aging.current / totalPayable) * 100}%` }} />
-              </div>
-
-              <div className="flex justify-between items-center">
-                <span className="text-xs text-slate-400">1-30 days</span>
-                <span className="text-sm font-bold text-yellow-400">₹{aging['1-30'].toLocaleString()}</span>
-              </div>
-              <div className="bg-slate-700 rounded-full h-1.5">
-                <div className="bg-yellow-400 h-1.5 rounded-full" style={{ width: `${(aging['1-30'] / totalPayable) * 100}%` }} />
-              </div>
-
-              <div className="flex justify-between items-center">
-                <span className="text-xs text-slate-400">31-60 days</span>
-                <span className="text-sm font-bold text-orange-400">₹{aging['31-60'].toLocaleString()}</span>
-              </div>
-              <div className="bg-slate-700 rounded-full h-1.5">
-                <div className="bg-orange-400 h-1.5 rounded-full" style={{ width: `${(aging['31-60'] / totalPayable) * 100}%` }} />
-              </div>
-
-              <div className="flex justify-between items-center">
-                <span className="text-xs text-slate-400">60+ days</span>
-                <span className="text-sm font-bold text-red-400">₹{aging['60+'].toLocaleString()}</span>
-              </div>
-              <div className="bg-slate-700 rounded-full h-1.5">
-                <div className="bg-red-400 h-1.5 rounded-full" style={{ width: `${(aging['60+'] / totalPayable) * 100}%` }} />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Filters */}
-        <Card className="bg-slate-800 border-slate-700 mb-4">
-          <CardContent className="p-3">
-            <div className="flex gap-2">
-              <Select value={filterStatus} onValueChange={setFilterStatus}>
-                <SelectTrigger className="flex-1 bg-slate-700 border-slate-600 text-white h-9">
-                  <Filter className="w-4 h-4 mr-1" />
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-slate-700 border-slate-600">
-                  <SelectItem value="all">All Status</SelectItem>
-                  <SelectItem value="current">Current</SelectItem>
-                  <SelectItem value="due-soon">Due Soon</SelectItem>
-                  <SelectItem value="overdue">Overdue</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-32 bg-slate-700 border-slate-600 text-white h-9">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-slate-700 border-slate-600">
-                  <SelectItem value="amount">By Amount</SelectItem>
-                  <SelectItem value="date">By Date</SelectItem>
-                  <SelectItem value="overdue">By Overdue</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Payables List */}
-        <h2 className="text-sm font-bold text-white mb-3">Outstanding Bills</h2>
-        <div className="space-y-3">
-          {filteredPayables.map(payable => (
-            <Card key={payable.id} className={`bg-slate-800 border-slate-700 ${
-              payable.status === 'overdue' ? 'border-red-500/50' : ''
-            }`}>
-              <CardContent className="p-3">
-                <div className="flex justify-between items-start mb-2">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <Truck className="w-4 h-4 text-indigo-400" />
-                      <p className="text-sm font-bold text-white">{payable.supplier}</p>
-                    </div>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs text-slate-400">Bill: {payable.billNo}</span>
-                      <span className="text-xs text-slate-500">•</span>
-                      <span className="text-xs text-slate-400">Date: {payable.purchaseDate}</span>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-bold text-red-400">₹{payable.amount.toLocaleString()}</p>
-                    {payable.status === 'overdue' && payable.daysOverdue > 0 && (
-                      <span className="text-xs bg-red-900/50 text-red-300 px-2 py-0.5 rounded">
-                        {payable.daysOverdue} days overdue
-                      </span>
-                    )}
-                    {payable.status === 'due-soon' && (
-                      <span className="text-xs bg-orange-900/50 text-orange-300 px-2 py-0.5 rounded">
-                        Due soon
-                      </span>
-                    )}
-                    {payable.status === 'current' && (
-                      <span className="text-xs bg-blue-900/50 text-blue-300 px-2 py-0.5 rounded">
-                        Current
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="flex justify-between items-center text-xs pt-2 border-t border-slate-700">
-                  <span className="text-slate-400">Due Date: {payable.dueDate}</span>
-                  <Button size="sm" className="h-7 bg-red-600 hover:bg-red-700">
-                    Make Payment
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+        {/* Search and Filter Row */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="relative">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+            <Input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search suppliers..."
+              className="bg-slate-800 border-slate-600 text-white pl-10"
+            />
+          </div>
+          
+          <Select value={filterBy} onValueChange={setFilterBy}>
+            <SelectTrigger className="bg-slate-800 border-slate-600 text-white">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-slate-700 border-slate-600">
+              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="active">Active</SelectItem>
+              <SelectItem value="overdue">Overdue</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
-        {/* Summary Stats */}
-        <Card className="bg-slate-800 border-slate-700 mt-4">
-          <CardContent className="p-4">
-            <h3 className="text-sm font-bold text-white mb-3">Payment Summary</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="text-center p-3 bg-slate-700 rounded">
-                <p className="text-xs text-slate-400">Avg Payment Period</p>
-                <p className="text-lg font-bold text-white">28 days</p>
-              </div>
-              <div className="text-center p-3 bg-slate-700 rounded">
-                <p className="text-xs text-slate-400">On-Time Rate</p>
-                <p className="text-lg font-bold text-green-400">92%</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Supplier List */}
+        {filteredData.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-slate-400 text-lg">No suppliers found</p>
+          </div>
+        ) : (
+          <div className="space-y-3 mb-4">
+            {filteredData.map(supplier => (
+              <Card key={supplier.id} className="bg-slate-800 border-slate-700">
+                <CardContent className="p-4">
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex-1">
+                      <h3 className="text-base font-bold text-white mb-2">{supplier.name}</h3>
+                      
+                      <div className="flex items-center gap-4 mb-2">
+                        <div className="flex items-center gap-1 text-slate-400">
+                          <Phone className="w-3 h-3" />
+                          <span className="text-xs">{supplier.phone}</span>
+                        </div>
+                        <div className="flex items-center gap-1 text-slate-400">
+                          <Mail className="w-3 h-3" />
+                          <span className="text-xs">{supplier.email}</span>
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs text-slate-400">Limit: ₹{supplier.creditLimit.toLocaleString()}</span>
+                        <span className="text-xs text-slate-400">Last: {supplier.lastTransaction}</span>
+                      </div>
+
+                      {/* Progress Bar */}
+                      <div className="w-full bg-slate-700 rounded-full h-2">
+                        <div 
+                          className="bg-red-500 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${supplier.utilizationPercent}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="text-right ml-4">
+                      <p className="text-lg font-bold text-red-400">₹{supplier.outstandingAmount.toLocaleString()}</p>
+                      <p className="text-xs text-slate-400 mb-1">
+                        {supplier.status === 'overdue' ? 'Overdue' : 'Outstanding'}
+                      </p>
+                      {supplier.status === 'overdue' && (
+                        <span className="text-xs bg-red-900/50 text-red-300 px-2 py-0.5 rounded">
+                          {supplier.daysOverdue} days overdue
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
