@@ -11,25 +11,59 @@ export default function ReceivablesYouWillReceive() {
   const navigate = useNavigate();
   const { activeBusiness } = useBusiness();
   
-  const [fromDate, setFromDate] = useState('2025-09-11');
-  const [toDate, setToDate] = useState('2025-10-11');
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState('amount-high');
-  const [itemsPerPage, setItemsPerPage] = useState('25');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [filteredData, setFilteredData] = useState([]);
-  const [activeTab, setActiveTab] = useState('all');
+  const [filterBy, setFilterBy] = useState('all');
 
-  // Enhanced receivables data with categories and status
-  const allReceivables = [
-    { id: 1, customer: 'Rajesh Enterprises', amount: 25000, date: '2025-09-12', dueDate: '2025-10-12', invoiceNo: 'INV-001', description: 'Fuel Sales', status: 'overdue', category: 'Fuel Sales', daysOverdue: 8, customerType: 'Enterprise' },
-    { id: 2, customer: 'Sharma Transport', amount: 15000, date: '2025-09-18', dueDate: '2025-10-18', invoiceNo: 'INV-002', description: 'Diesel Supply', status: 'due-soon', category: 'Fuel Sales', daysOverdue: 0, customerType: 'Transport' },
-    { id: 3, customer: 'Kumar Industries', amount: 45000, date: '2025-09-25', dueDate: '2025-10-25', invoiceNo: 'INV-003', description: 'Monthly Billing', status: 'current', category: 'Monthly Billing', daysOverdue: 0, customerType: 'Industry' },
-    { id: 4, customer: 'Patel & Sons', amount: 8000, date: '2025-10-02', dueDate: '2025-11-02', invoiceNo: 'INV-004', description: 'Petrol Sales', status: 'current', category: 'Fuel Sales', daysOverdue: 0, customerType: 'Retail' },
-    { id: 5, customer: 'Singh Motors', amount: 32000, date: '2025-10-08', dueDate: '2025-11-08', invoiceNo: 'INV-005', description: 'Fleet Services', status: 'current', category: 'Services', daysOverdue: 0, customerType: 'Fleet' },
-    { id: 6, customer: 'Gupta Logistics', amount: 22000, date: '2025-09-05', dueDate: '2025-10-05', invoiceNo: 'INV-006', description: 'Bulk Diesel', status: 'overdue', category: 'Fuel Sales', daysOverdue: 15, customerType: 'Transport' },
-    { id: 7, customer: 'Reddy Construction', amount: 18500, date: '2025-09-28', dueDate: '2025-10-28', invoiceNo: 'INV-007', description: 'Equipment Fuel', status: 'current', category: 'Fuel Sales', daysOverdue: 0, customerType: 'Construction' },
-    { id: 8, customer: 'Verma Auto', amount: 12000, date: '2025-08-20', dueDate: '2025-09-20', invoiceNo: 'INV-008', description: 'Service Station', status: 'collected', category: 'Services', daysOverdue: 0, customerType: 'Automotive' },
+  // Customer-focused receivables data matching the screenshot design
+  const allCustomers = [
+    { 
+      id: 1, 
+      name: 'Rajesh Enterprises', 
+      phone: '9876543210', 
+      email: 'rajesh@example.com', 
+      outstandingAmount: 25000, 
+      creditLimit: 50000, 
+      lastTransaction: '2025-01-10',
+      status: 'overdue',
+      daysOverdue: 8,
+      utilizationPercent: 50
+    },
+    { 
+      id: 2, 
+      name: 'Sharma Transport', 
+      phone: '9876543211', 
+      email: 'sharma@example.com', 
+      outstandingAmount: 15000, 
+      creditLimit: 30000, 
+      lastTransaction: '2025-01-09',
+      status: 'active',
+      daysOverdue: 0,
+      utilizationPercent: 50
+    },
+    { 
+      id: 3, 
+      name: 'Kumar Industries', 
+      phone: '9876543212', 
+      email: 'kumar@example.com', 
+      outstandingAmount: 45000, 
+      creditLimit: 75000, 
+      lastTransaction: '2025-01-08',
+      status: 'active',
+      daysOverdue: 0,
+      utilizationPercent: 60
+    },
+    { 
+      id: 4, 
+      name: 'Patel & Sons', 
+      phone: '9876543213', 
+      email: 'patel@example.com', 
+      outstandingAmount: 8000, 
+      creditLimit: 25000, 
+      lastTransaction: '2025-01-07',
+      status: 'active',
+      daysOverdue: 0,
+      utilizationPercent: 32
+    },
   ];
 
   // Calculate summary statistics
