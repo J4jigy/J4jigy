@@ -127,6 +127,92 @@ export default function ReceivablesYouWillReceive() {
 
       {/* Content */}
       <div className="px-4 py-4">
+        {/* Summary Cards */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <Card className="bg-gradient-to-br from-green-600 to-green-700 border-0">
+            <CardContent className="p-3">
+              <div className="flex items-center gap-2 mb-1">
+                <TrendingUp className="w-4 h-4 text-white" />
+                <p className="text-xs text-green-100">Total Receivable</p>
+              </div>
+              <p className="text-xl font-bold text-white">₹{totalReceivable.toLocaleString()}</p>
+              <p className="text-xs text-green-100 mt-1">{allReceivables.filter(r => r.status !== 'collected').length} invoices</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-red-600 to-red-700 border-0">
+            <CardContent className="p-3">
+              <div className="flex items-center gap-2 mb-1">
+                <AlertCircle className="w-4 h-4 text-white" />
+                <p className="text-xs text-red-100">Overdue</p>
+              </div>
+              <p className="text-xl font-bold text-white">₹{overdueAmount.toLocaleString()}</p>
+              <p className="text-xs text-red-100 mt-1">{overdueCount} invoices</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-yellow-600 to-yellow-700 border-0">
+            <CardContent className="p-3">
+              <div className="flex items-center gap-2 mb-1">
+                <Clock className="w-4 h-4 text-white" />
+                <p className="text-xs text-yellow-100">Due Soon</p>
+              </div>
+              <p className="text-xl font-bold text-white">₹{dueSoonAmount.toLocaleString()}</p>
+              <p className="text-xs text-yellow-100 mt-1">{dueSoonCount} invoices</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-0">
+            <CardContent className="p-3">
+              <div className="flex items-center gap-2 mb-1">
+                <CheckCircle className="w-4 h-4 text-white" />
+                <p className="text-xs text-blue-100">Collected</p>
+              </div>
+              <p className="text-xl font-bold text-white">₹{collectedAmount.toLocaleString()}</p>
+              <p className="text-xs text-blue-100 mt-1">{allReceivables.filter(r => r.status === 'collected').length} invoices</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Category Breakdown */}
+        <Card className="bg-slate-800 border-slate-700 mb-4">
+          <CardContent className="p-3">
+            <h3 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
+              <Filter className="w-4 h-4 text-green-400" />
+              Category Breakdown
+            </h3>
+            <div className="space-y-2">
+              {Object.entries(categoryBreakdown).map(([category, amount]) => (
+                <div key={category} className="flex justify-between items-center">
+                  <span className="text-xs text-slate-400">{category}</span>
+                  <span className="text-sm font-bold text-green-400">₹{amount.toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Customer Type Analysis */}
+        <Card className="bg-slate-800 border-slate-700 mb-4">
+          <CardContent className="p-3">
+            <h3 className="text-sm font-bold text-white mb-2 flex items-center gap-2">
+              <Users className="w-4 h-4 text-blue-400" />
+              Customer Type Analysis
+            </h3>
+            <div className="grid grid-cols-2 gap-2">
+              {Object.entries(customerTypeBreakdown).slice(0, 6).map(([type, data]) => (
+                <div key={type} className="p-2 bg-slate-700/30 rounded">
+                  <div className="flex justify-between items-center mb-1">
+                    <span className="text-xs text-slate-300">{type}</span>
+                    <span className="text-xs text-green-400">{data.count}</span>
+                  </div>
+                  <p className="text-sm font-bold text-white">₹{data.amount.toLocaleString()}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Date Filters */}
         <div className="grid grid-cols-2 gap-3 mb-3">
           <div>
