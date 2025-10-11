@@ -118,7 +118,10 @@ export default function ReceivablesYouWillReceive() {
           <Button variant="ghost" size="sm" onClick={() => navigate('/')} className="text-white hover:bg-white/10 p-2">
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <h1 className="text-lg font-semibold">Receivables - You will Receive</h1>
+          <div>
+            <h1 className="text-lg font-semibold">Receivables - You will Receive</h1>
+            <p className="text-xs text-slate-400">{activeBusiness.name}</p>
+          </div>
         </div>
       </div>
 
