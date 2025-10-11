@@ -549,6 +549,8 @@ It's completely free to try!`;
     else if (name.startsWith('customers')) handleNavigate('/customers-debtors');
     else if (name.startsWith('suppliers')) handleNavigate('/suppliers-creditors');
     else if (name.startsWith('cash')) handleNavigate('/cash-enhanced');
+    else if (name.startsWith('total') && tile.subtitle === 'Receivables') handleNavigate('/total-receivables');
+    else if (name.startsWith('total') && tile.subtitle === 'Payables') handleNavigate('/total-payables');
     else if (name.startsWith('daily sales')) handleNavigate('/daily-sales-report');
     else if (name.startsWith('community')) handleNavigate('/community-ratings');
     else if (name.startsWith('staff')) handleNavigate('/staff');
