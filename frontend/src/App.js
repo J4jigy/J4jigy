@@ -191,6 +191,8 @@ function App() {
             <Route path="/payroll-management" element={token ? <PayrollManagement /> : <Navigate to="/login" />} />
             <Route path="/balance-sheet" element={token ? <BalanceSheet /> : <Navigate to="/login" />} />
             <Route path="/profit-loss" element={token ? <ProfitLoss /> : <Navigate to="/login" />} />
+            <Route path="/daily-sales-report" element={token ? <DailySalesReport /> : <Navigate to="/login" />} />
+            <Route path="/community-ratings" element={token ? <CommunityRatings /> : <Navigate to="/login" />} />
           </Routes>
         </Router>
       </RoleProvider>
