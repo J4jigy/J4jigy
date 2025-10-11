@@ -736,7 +736,7 @@ It's completely free to try!`;
                   </div>
                 </div>
               )}
-              <Button onClick={logout} variant="destructive" className="w-full">
+              <Button onClick={onLogout} variant="destructive" className="w-full">
                 Logout
               </Button>
             </div>
