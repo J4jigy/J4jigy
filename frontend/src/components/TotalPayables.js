@@ -9,20 +9,61 @@ import { useBusiness } from '../contexts/BusinessContext';
 
 export default function TotalPayables() {
   const navigate = useNavigate();
-  const { getData, activeBusiness } = useBusiness();
-  const { hasPermission } = useRole();
+  const { activeBusiness } = useBusiness();
   
-  const [filterStatus, setFilterStatus] = useState('all');
-  const [sortBy, setSortBy] = useState('amount');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterBy, setFilterBy] = useState('all');
 
-  // Sample payables data
-  const payables = [
-    { id: 1, supplier: 'Oil India Ltd', amount: 150000, dueDate: '2025-01-18', purchaseDate: '2024-12-18', billNo: 'BILL-001', status: 'due-soon', daysOverdue: 0 },
-    { id: 2, supplier: 'Bharat Petroleum', amount: 200000, dueDate: '2025-01-12', purchaseDate: '2024-12-12', billNo: 'BILL-002', status: 'overdue', daysOverdue: 8 },
-    { id: 3, supplier: 'Equipment Suppliers Co', amount: 85000, dueDate: '2025-01-25', purchaseDate: '2024-12-25', billNo: 'BILL-003', status: 'current', daysOverdue: 0 },
-    { id: 4, supplier: 'Parts & Accessories', amount: 45000, dueDate: '2025-02-05', purchaseDate: '2025-01-05', billNo: 'BILL-004', status: 'current', daysOverdue: 0 },
-    { id: 5, supplier: 'Maintenance Services', amount: 35000, dueDate: '2025-01-15', purchaseDate: '2024-12-15', billNo: 'BILL-005', status: 'overdue', daysOverdue: 5 },
-    { id: 6, supplier: 'Safety Equipment Ltd', amount: 28000, dueDate: '2025-01-22', purchaseDate: '2024-12-22', billNo: 'BILL-006', status: 'due-soon', daysOverdue: 0 },
+  // Supplier-focused payables data matching the screenshot design
+  const allSuppliers = [
+    { 
+      id: 1, 
+      name: 'Oil India Ltd', 
+      phone: '9876543220', 
+      email: 'oil@example.com', 
+      outstandingAmount: 150000, 
+      creditLimit: 300000, 
+      lastTransaction: '2025-01-10',
+      status: 'overdue',
+      daysOverdue: 5,
+      utilizationPercent: 50
+    },
+    { 
+      id: 2, 
+      name: 'Bharat Petroleum', 
+      phone: '9876543221', 
+      email: 'bharat@example.com', 
+      outstandingAmount: 200000, 
+      creditLimit: 400000, 
+      lastTransaction: '2025-01-09',
+      status: 'active',
+      daysOverdue: 0,
+      utilizationPercent: 50
+    },
+    { 
+      id: 3, 
+      name: 'Equipment Co', 
+      phone: '9876543222', 
+      email: 'equipment@example.com', 
+      outstandingAmount: 85000, 
+      creditLimit: 150000, 
+      lastTransaction: '2025-01-08',
+      status: 'active',
+      daysOverdue: 0,
+      utilizationPercent: 57
+    },
+    { 
+      id: 4, 
+      name: 'Utility Company', 
+      phone: '9876543223', 
+      email: 'utility@example.com', 
+      outstandingAmount: 12000, 
+      creditLimit: 50000, 
+      lastTransaction: '2025-01-07',
+      status: 'overdue',
+      daysOverdue: 10,
+      utilizationPercent: 24
+    },
   ];
 
   // Calculate totals
