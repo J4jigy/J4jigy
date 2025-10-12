@@ -1078,5 +1078,6 @@ def run_all_tests():
     return success
 
 if __name__ == "__main__":
-    success = run_all_tests()
+    # Run focused tests for payables/receivables as requested in review
+    success = run_payables_receivables_tests()
     sys.exit(0 if success else 1)
