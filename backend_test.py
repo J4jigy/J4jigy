@@ -191,6 +191,39 @@ def test_user_login():
     
     return False
 
+def test_admin_login():
+    """Test admin login with admin/admin123 credentials as specified in review"""
+    print("\n🔍 Testing Admin Login (admin/admin123)...")
+    global auth_token, test_user_id
+    
+    admin_login_data = {
+        "username": "admin",
+        "password": "admin123"
+    }
+    
+    response = make_request("POST", "/auth/login", admin_login_data)
+    if not response:
+        results.add_fail("Admin Login", "Request failed")
+        return False
+        
+    if response.status_code == 200:
+        try:
+            data = response.json()
+            if "access_token" in data and "user" in data:
+                auth_token = data["access_token"]
+                test_user_id = data["user"]["id"]
+                results.add_pass("Admin Login (admin/admin123)")
+                print(f"ℹ️  Admin login successful, token expires in {data.get('expires_in', 'unknown')} seconds")
+                return True
+            else:
+                results.add_fail("Admin Login", f"Missing required fields in response: {data}")
+        except json.JSONDecodeError:
+            results.add_fail("Admin Login", "Invalid JSON response")
+    else:
+        results.add_fail("Admin Login", f"HTTP {response.status_code}: {response.text}")
+    
+    return False
+
 def test_dashboard_summary():
     """Test dashboard summary endpoint (requires authentication)"""
     print("\n🔍 Testing Dashboard Summary...")
