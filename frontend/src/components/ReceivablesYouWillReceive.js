@@ -15,7 +15,7 @@ export default function ReceivablesYouWillReceive() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterBy, setFilterBy] = useState('all');
 
-  // Enhanced customers data with comprehensive details
+  // Customers data matching screenshot design
   const allCustomers = [
     { 
       id: 1, 
@@ -25,15 +25,7 @@ export default function ReceivablesYouWillReceive() {
       outstandingAmount: 25000, 
       creditLimit: 50000, 
       lastTransaction: '2025-01-10',
-      status: 'overdue',
-      daysOverdue: 8,
-      utilizationPercent: 50,
-      category: 'Enterprise',
-      customerSince: '2023',
-      totalTransactions: 156,
-      avgMonthlyPurchase: 85000,
-      loyaltyTier: 'gold',
-      paymentHistory: 'good'
+      utilizationPercent: 50
     },
     { 
       id: 2, 
@@ -43,15 +35,7 @@ export default function ReceivablesYouWillReceive() {
       outstandingAmount: 15000, 
       creditLimit: 30000, 
       lastTransaction: '2025-01-09',
-      status: 'active',
-      daysOverdue: 0,
-      utilizationPercent: 50,
-      category: 'Transport',
-      customerSince: '2022',
-      totalTransactions: 89,
-      avgMonthlyPurchase: 45000,
-      loyaltyTier: 'silver',
-      paymentHistory: 'excellent'
+      utilizationPercent: 50
     },
     { 
       id: 3, 
@@ -61,15 +45,7 @@ export default function ReceivablesYouWillReceive() {
       outstandingAmount: 45000, 
       creditLimit: 75000, 
       lastTransaction: '2025-01-08',
-      status: 'active',
-      daysOverdue: 0,
-      utilizationPercent: 60,
-      category: 'Industry',
-      customerSince: '2021',
-      totalTransactions: 234,
-      avgMonthlyPurchase: 120000,
-      loyaltyTier: 'platinum',
-      paymentHistory: 'excellent'
+      utilizationPercent: 60
     },
     { 
       id: 4, 
@@ -79,15 +55,7 @@ export default function ReceivablesYouWillReceive() {
       outstandingAmount: 8000, 
       creditLimit: 25000, 
       lastTransaction: '2025-01-07',
-      status: 'active',
-      daysOverdue: 0,
-      utilizationPercent: 32,
-      category: 'Retail',
-      customerSince: '2024',
-      totalTransactions: 67,
-      avgMonthlyPurchase: 28000,
-      loyaltyTier: 'bronze',
-      paymentHistory: 'good'
+      utilizationPercent: 32
     },
   ];
 
