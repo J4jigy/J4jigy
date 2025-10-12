@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Download, Search, Plus, Phone, Mail, TrendingUp, AlertTriangle, Clock, Filter } from 'lucide-react';
+import { ArrowLeft, Download, Search, Plus, Phone, Mail, Gift, TrendingUp, Calendar, Tag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
@@ -14,75 +14,101 @@ export default function OffersDiscounts() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterBy, setFilterBy] = useState('all');
 
-  // Sample data matching screenshot design
-  const allOffers = [
+  // Sample coupon/discount data
+  const allCoupons = [
     { 
       id: 1, 
-      companyName: 'Rajesh Enterprises', 
-      phone: '9876543220', 
-      email: 'rajesh@example.com', 
-      limit: 50000, 
-      outstanding: 25000, 
-      expiry: '2025-01-10',
-      utilizationPercent: 50
+      code: 'WELCOME50', 
+      title: 'Welcome Discount',
+      description: '50% off on first purchase',
+      discountType: 'Percentage',
+      discountValue: 50,
+      minPurchase: 1000,
+      maxDiscount: 500,
+      validFrom: '2025-01-01',
+      validUntil: '2025-03-31',
+      usageLimit: 100,
+      usedCount: 45,
+      status: 'active'
     },
     { 
       id: 2, 
-      companyName: 'Motor Parts Ltd', 
-      phone: '9876543221', 
-      email: 'motor@example.com', 
-      limit: 75000, 
-      outstanding: 37500, 
-      expiry: '2025-01-12',
-      utilizationPercent: 50
+      code: 'FUEL100', 
+      title: 'Fuel Discount',
+      description: '₹100 off on fuel purchase',
+      discountType: 'Fixed',
+      discountValue: 100,
+      minPurchase: 2000,
+      maxDiscount: 100,
+      validFrom: '2025-01-01',
+      validUntil: '2025-02-28',
+      usageLimit: 50,
+      usedCount: 30,
+      status: 'active'
     },
     { 
       id: 3, 
-      companyName: 'Oil India Ltd', 
-      phone: '9876543222', 
-      email: 'oil@example.com', 
-      limit: 300000, 
-      outstanding: 150000, 
-      expiry: '2025-01-10',
-      utilizationPercent: 50
+      code: 'BULK30', 
+      title: 'Bulk Purchase Offer',
+      description: '30% off on bulk orders',
+      discountType: 'Percentage',
+      discountValue: 30,
+      minPurchase: 5000,
+      maxDiscount: 1500,
+      validFrom: '2025-01-05',
+      validUntil: '2025-06-30',
+      usageLimit: 200,
+      usedCount: 78,
+      status: 'active'
     },
     { 
       id: 4, 
-      companyName: 'Bharat Petroleum', 
-      phone: '9876543223', 
-      email: 'bharat@example.com', 
-      limit: 400000, 
-      outstanding: 200000, 
-      expiry: '2025-01-09',
-      utilizationPercent: 50
-    },
-    { 
-      id: 5, 
-      companyName: 'Equipment Co', 
-      phone: '9876543224', 
-      email: 'equipment@example.com', 
-      limit: 150000, 
-      outstanding: 85000, 
-      expiry: '2025-01-08',
-      utilizationPercent: 57
-    },
-    { 
-      id: 6, 
-      companyName: 'Utility Company', 
-      phone: '9876543225', 
-      email: 'utility@example.com', 
-      limit: 50000, 
-      outstanding: 12000, 
-      expiry: '2025-01-07',
-      utilizationPercent: 24
+      code: 'FESTIVE25', 
+      title: 'Festival Special',
+      description: '25% discount on all items',
+      discountType: 'Percentage',
+      discountValue: 25,
+      minPurchase: 1500,
+      maxDiscount: 750,
+      validFrom: '2024-12-15',
+      validUntil: '2025-01-15',
+      usageLimit: 150,
+      usedCount: 150,
+      status: 'expired'
     },
   ];
 
+  // Calculate statistics
+  const activeCoupons = allCoupons.filter(c => c.status === 'active').length;
+  const totalUsage = allCoupons.reduce((sum, c) => sum + c.usedCount, 0);
+  const totalSavings = allCoupons.reduce((sum, c) => {
+    if (c.discountType === 'Fixed') {
+      return sum + (c.discountValue * c.usedCount);
+    } else {
+      return sum + (c.maxDiscount * c.usedCount * 0.5); // Estimate
+    }
+  }, 0);
+  const expiringCoupons = allCoupons.filter(c => {
+    const expiry = new Date(c.validUntil);
+    const today = new Date();
+    const diffDays = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+    return diffDays <= 30 && diffDays > 0;
+  }).length;
+
   // Apply filters
-  const filteredOffers = allOffers.filter(offer => {
-    const matchesSearch = offer.companyName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         offer.phone.includes(searchQuery) ||
-                         offer.email.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredCoupons = allCoupons.filter(coupon => {
+    const matchesSearch = coupon.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         coupon.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         coupon.description.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    if (filterBy === 'active') return matchesSearch && coupon.status === 'active';
+    if (filterBy === 'expired') return matchesSearch && coupon.status === 'expired';
+    if (filterBy === 'expiring') {
+      const expiry = new Date(coupon.validUntil);
+      const today = new Date();
+      const diffDays = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+      return matchesSearch && diffDays <= 30 && diffDays > 0;
+    }
     
     return matchesSearch;
   });
