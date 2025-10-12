@@ -107,54 +107,38 @@ export default function ReceivablesYouWillReceive() {
       </div>
 
       {/* Main Content */}
-      <div className="px-4 py-6">
-        {/* Enhanced Summary Dashboard */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <Card className="bg-gradient-to-br from-green-600 to-green-700 border-0 shadow-xl">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                <TrendingUp className="w-8 h-8 text-white opacity-80" />
-                <span className="text-xs bg-white/20 text-white px-2 py-1 rounded-full">Total</span>
-              </div>
+      <div className="px-4 py-4">
+        {/* Summary Cards matching screenshot design */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <Card className="bg-gradient-to-br from-green-500 to-green-600 border-0">
+            <CardContent className="p-4 text-center">
+              <p className="text-green-100 text-sm mb-1">Total Receivable</p>
               <p className="text-2xl font-bold text-white">₹{totalReceivable.toLocaleString()}</p>
-              <p className="text-green-100 text-sm">Total Receivable</p>
-              <p className="text-green-200 text-xs mt-1">{totalCustomers} customers</p>
+              <p className="text-green-200 text-xs mt-1">₹ {totalCustomers} customers</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-orange-600 to-orange-700 border-0 shadow-xl">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                <AlertCircle className="w-8 h-8 text-white opacity-80" />
-                <span className="text-xs bg-white/20 text-white px-2 py-1 rounded-full">Alert</span>
-              </div>
-              <p className="text-2xl font-bold text-white">{overdueCustomers}</p>
-              <p className="text-orange-100 text-sm">Overdue Payments</p>
-              <p className="text-orange-200 text-xs mt-1">Need follow-up</p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-0 shadow-xl">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                <BarChart3 className="w-8 h-8 text-white opacity-80" />
-                <span className="text-xs bg-white/20 text-white px-2 py-1 rounded-full">Avg</span>
-              </div>
+          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 border-0">
+            <CardContent className="p-4 text-center">
+              <p className="text-blue-100 text-sm mb-1">Avg Balance</p>
               <p className="text-2xl font-bold text-white">₹{Math.round(avgBalance).toLocaleString()}</p>
-              <p className="text-blue-100 text-sm">Average Balance</p>
-              <p className="text-blue-200 text-xs mt-1">Per customer</p>
+              <p className="text-blue-200 text-xs mt-1">₹ per customer</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-purple-600 to-purple-700 border-0 shadow-xl">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                <Award className="w-8 h-8 text-white opacity-80" />
-                <span className="text-xs bg-white/20 text-white px-2 py-1 rounded-full">Active</span>
-              </div>
+          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 border-0">
+            <CardContent className="p-4 text-center">
+              <p className="text-purple-100 text-sm mb-1">Active</p>
               <p className="text-2xl font-bold text-white">{activeCustomers}</p>
-              <p className="text-purple-100 text-sm">Active Customers</p>
-              <p className="text-purple-200 text-xs mt-1">Good standing</p>
+              <p className="text-purple-200 text-xs mt-1">⚖ in good standing</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-orange-500 to-orange-600 border-0">
+            <CardContent className="p-4 text-center">
+              <p className="text-orange-100 text-sm mb-1">Overdue</p>
+              <p className="text-2xl font-bold text-white">{overdueCustomers}</p>
+              <p className="text-orange-200 text-xs mt-1">⚠ needs attention</p>
             </CardContent>
           </Card>
         </div>
