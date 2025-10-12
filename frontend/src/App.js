@@ -33,6 +33,7 @@ import Bank from './components/Bank';
 import CashEnhanced from './components/CashEnhanced';
 import PayablesYouWillGive from './components/PayablesYouWillGive';
 import ReceivablesYouWillReceive from './components/ReceivablesYouWillReceive';
+import OffersDiscounts from './components/OffersDiscounts';
 import { BusinessProvider } from './contexts/BusinessContext';
 import { RoleProvider } from './contexts/RoleContext';
 
