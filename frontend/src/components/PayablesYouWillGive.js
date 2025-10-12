@@ -14,8 +14,6 @@ export default function PayablesYouWillGive() {
   
   const [searchQuery, setSearchQuery] = useState('');
   const [filterBy, setFilterBy] = useState('all');
-  const [sortBy, setSortBy] = useState('amount-high');
-  const [activeTab, setActiveTab] = useState('overview');
 
   // Enhanced suppliers data with comprehensive details
   const allSuppliers = [
