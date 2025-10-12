@@ -972,9 +972,80 @@ def test_authentication_security():
         results.add_fail("Authentication Security", f"Invalid token accepted: HTTP {response.status_code if response else 'No response'}")
         return False
 
+def test_backend_server_health():
+    """Test backend server health and response times"""
+    print("\n🔍 Testing Backend Server Health & Performance...")
+    
+    start_time = time.time()
+    response = make_request("GET", "/ping")
+    response_time = time.time() - start_time
+    
+    if not response:
+        results.add_fail("Backend Server Health", "Server not responding")
+        return False
+        
+    if response.status_code == 200:
+        try:
+            data = response.json()
+            if "status" in data and data["status"] == "ok":
+                results.add_pass("Backend Server Health")
+                
+                # Check response time
+                if response_time < 2.0:  # Less than 2 seconds is acceptable
+                    results.add_pass(f"Backend Response Time ({response_time:.2f}s)")
+                else:
+                    results.add_fail("Backend Response Time", f"Slow response: {response_time:.2f}s")
+                
+                # Verify /api prefix accessibility
+                print("  Testing /api prefix accessibility...")
+                if API_BASE.endswith("/api"):
+                    results.add_pass("API Routes with /api prefix")
+                else:
+                    results.add_fail("API Routes", "Backend URL does not use /api prefix")
+                
+                return True
+            else:
+                results.add_fail("Backend Server Health", f"Invalid health response: {data}")
+        except json.JSONDecodeError:
+            results.add_fail("Backend Server Health", "Invalid JSON response")
+    else:
+        results.add_fail("Backend Server Health", f"HTTP {response.status_code}: {response.text}")
+    
+    return False
+
+def run_payables_receivables_tests():
+    """Run focused tests for Total Payables and Total Receivables pages backend support"""
+    print(f"🚀 Starting Backend Tests for Total Payables & Total Receivables Pages")
+    print(f"Backend URL: {API_BASE}")
+    print(f"Timestamp: {datetime.now().isoformat()}")
+    print(f"Test Focus: Backend services for newly updated payables/receivables pages")
+    
+    # Test sequence focused on payables/receivables requirements
+    tests = [
+        test_backend_server_health,
+        test_cors_headers,
+        test_authentication_security,
+        test_admin_login,  # Test with admin/admin123 as specified
+        test_dashboard_summary,  # Test payables/receivables data
+        test_payables_receivables_list_endpoints,  # Test customers/suppliers endpoints
+        test_transaction_apis,  # Test transaction creation and filtering
+        test_contact_management_apis,  # Test contact management for customers/suppliers
+    ]
+    
+    for test_func in tests:
+        try:
+            test_func()
+            time.sleep(0.5)  # Brief pause between tests
+        except Exception as e:
+            results.add_fail(test_func.__name__, f"Test execution error: {e}")
+    
+    # Final summary
+    success = results.summary()
+    return success
+
 def run_all_tests():
     """Run all backend tests in sequence"""
-    print(f"🚀 Starting Backend API Tests")
+    print(f"🚀 Starting Comprehensive Backend API Tests")
     print(f"Backend URL: {API_BASE}")
     print(f"Timestamp: {datetime.now().isoformat()}")
     
@@ -986,6 +1057,7 @@ def run_all_tests():
         test_user_registration,
         test_user_login,
         test_dashboard_summary,
+        test_payables_receivables_list_endpoints,
         test_list_endpoints,
         test_transaction_apis,
         test_admin_apis,
