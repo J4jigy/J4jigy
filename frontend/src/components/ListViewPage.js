@@ -164,13 +164,15 @@ export default function ListViewPage() {
 
   const totalPages = useMemo(() => Math.max(1, Math.ceil(total / pageSize)), [total, pageSize]);
 
-  // For payables and receivables, show completely empty pages - no header, no content, nothing
-  if (key === 'payables' || key === 'receivables') {
-    return (
-      <div className="h-full bg-white">
-        {/* Completely empty - no header, no content, nothing */}
-      </div>
-    );
+  // For payables and receivables, redirect to enhanced pages
+  if (key === 'payables') {
+    navigate('/payables-you-will-give');
+    return null;
+  }
+  
+  if (key === 'receivables') {
+    navigate('/receivables-you-will-receive');
+    return null;
   }
 
   return (
