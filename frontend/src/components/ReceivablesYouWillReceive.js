@@ -14,8 +14,6 @@ export default function ReceivablesYouWillReceive() {
   
   const [searchQuery, setSearchQuery] = useState('');
   const [filterBy, setFilterBy] = useState('all');
-  const [sortBy, setSortBy] = useState('amount-high');
-  const [activeTab, setActiveTab] = useState('overview');
 
   // Enhanced customers data with comprehensive details
   const allCustomers = [
