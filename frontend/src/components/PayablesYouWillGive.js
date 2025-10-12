@@ -143,243 +143,73 @@ export default function PayablesYouWillGive() {
           </Card>
         </div>
 
-        {/* Enhanced Tab Navigation */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-          <TabsList className="grid w-full grid-cols-4 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl">
-            <TabsTrigger value="overview" className="rounded-lg">Overview</TabsTrigger>
-            <TabsTrigger value="suppliers" className="rounded-lg">Suppliers</TabsTrigger>
-            <TabsTrigger value="analytics" className="rounded-lg">Analytics</TabsTrigger>
-            <TabsTrigger value="reports" className="rounded-lg">Reports</TabsTrigger>
-          </TabsList>
+        {/* Search and Filter Bar matching screenshot */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="relative">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+            <Input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search suppliers..."
+              className="bg-slate-800 border-slate-600 text-white pl-10 rounded-lg"
+            />
+          </div>
+          
+          <Select value={filterBy} onValueChange={setFilterBy}>
+            <SelectTrigger className="bg-slate-800 border-slate-600 text-white rounded-lg">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-slate-700 border-slate-600">
+              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="active">Active</SelectItem>
+              <SelectItem value="overdue">Overdue</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
-          <TabsContent value="overview" className="mt-6">
-            {/* Quick Stats and Category Breakdown */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-              <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 shadow-xl">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <PieChart className="w-5 h-5 text-red-400" />
-                    Category Breakdown
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {Object.entries(categoryBreakdown).map(([category, data]) => (
-                      <div key={category} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
-                        <div>
-                          <p className="text-white font-medium">{category}</p>
-                          <p className="text-slate-400 text-sm">{data.count} suppliers</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-red-400 font-bold">₹{data.amount.toLocaleString()}</p>
-                          <p className="text-slate-400 text-xs">{((data.amount / totalPayable) * 100).toFixed(1)}%</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 shadow-xl">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <BarChart3 className="w-5 h-5 text-blue-400" />
-                    Payment Insights
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="p-3 bg-gradient-to-r from-red-900/30 to-red-800/30 rounded-lg">
-                      <p className="text-red-300 text-sm">Monthly Spend</p>
-                      <p className="text-2xl font-bold text-white">₹{(avgMonthlySpend).toLocaleString()}</p>
-                    </div>
-                    <div className="p-3 bg-gradient-to-r from-blue-900/30 to-blue-800/30 rounded-lg">
-                      <p className="text-blue-300 text-sm">Total Transactions</p>
-                      <p className="text-2xl font-bold text-white">{totalTransactions}</p>
-                    </div>
-                    <div className="p-3 bg-gradient-to-r from-green-900/30 to-green-800/30 rounded-lg">
-                      <p className="text-green-300 text-sm">Payment Rate</p>
-                      <p className="text-2xl font-bold text-white">92%</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="suppliers" className="mt-6">
-            {/* Enhanced Search and Filters */}
-            <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 shadow-xl mb-6">
+        {/* Supplier Cards matching screenshot design */}
+        <div className="space-y-3">
+          {filteredSuppliers.map(supplier => (
+            <Card key={supplier.id} className="bg-slate-800 border-slate-700">
               <CardContent className="p-4">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                  <div className="relative">
-                    <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
-                    <Input
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Search suppliers, phone, email..."
-                      className="bg-slate-700/50 border-slate-600 text-white pl-10 rounded-lg"
-                    />
-                  </div>
-                  
-                  <Select value={filterBy} onValueChange={setFilterBy}>
-                    <SelectTrigger className="bg-slate-700/50 border-slate-600 text-white rounded-lg">
-                      <Filter className="w-4 h-4 mr-2" />
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
-                      <SelectItem value="all">All Suppliers</SelectItem>
-                      <SelectItem value="active">Active</SelectItem>
-                      <SelectItem value="overdue">Overdue</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={sortBy} onValueChange={setSortBy}>
-                    <SelectTrigger className="bg-slate-700/50 border-slate-600 text-white rounded-lg">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
-                      <SelectItem value="amount-high">Amount (High→Low)</SelectItem>
-                      <SelectItem value="amount-low">Amount (Low→High)</SelectItem>
-                      <SelectItem value="name">Name (A→Z)</SelectItem>
-                      <SelectItem value="overdue">Overdue Days</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Enhanced Supplier Cards */}
-            <div className="space-y-4">
-              {filteredSuppliers.map(supplier => (
-                <Card key={supplier.id} className="bg-slate-800/50 backdrop-blur-sm border-slate-700 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.01]">
-                  <CardContent className="p-6">
-                    <div className="flex flex-col lg:flex-row lg:items-center gap-4">
-                      {/* Supplier Info */}
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-3">
-                          <h3 className="text-xl font-bold text-white">{supplier.name}</h3>
-                          <div className="flex items-center gap-2">
-                            {supplier.status === 'overdue' && (
-                              <span className="px-3 py-1 bg-red-900/50 text-red-300 text-xs font-medium rounded-full flex items-center gap-1">
-                                <Bell className="w-3 h-3" />
-                                {supplier.daysOverdue} days overdue
-                              </span>
-                            )}
-                            <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-                              supplier.riskLevel === 'low' ? 'bg-green-900/50 text-green-300' :
-                              supplier.riskLevel === 'medium' ? 'bg-yellow-900/50 text-yellow-300' :
-                              'bg-red-900/50 text-red-300'
-                            }`}>
-                              {supplier.riskLevel} risk
-                            </span>
-                          </div>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-                          <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-slate-300">
-                              <Phone className="w-4 h-4 text-red-400" />
-                              <span className="text-sm">{supplier.phone}</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-slate-300">
-                              <Mail className="w-4 h-4 text-red-400" />
-                              <span className="text-sm">{supplier.email}</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-slate-300">
-                              <Calendar className="w-4 h-4 text-red-400" />
-                              <span className="text-sm">Last: {supplier.lastTransaction}</span>
-                            </div>
-                          </div>
-                          
-                          <div className="space-y-2">
-                            <div className="text-slate-300 text-sm">
-                              <span className="text-slate-400">Category:</span> {supplier.category}
-                            </div>
-                            <div className="text-slate-300 text-sm">
-                              <span className="text-slate-400">Payment Terms:</span> {supplier.paymentTerms}
-                            </div>
-                            <div className="text-slate-300 text-sm">
-                              <span className="text-slate-400">Transactions:</span> {supplier.totalTransactions}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Credit Utilization Bar */}
-                        <div className="mb-3">
-                          <div className="flex justify-between text-sm mb-2">
-                            <span className="text-slate-400">Credit Utilization</span>
-                            <span className="text-white">{supplier.utilizationPercent}%</span>
-                          </div>
-                          <div className="w-full bg-slate-700 rounded-full h-2">
-                            <div 
-                              className="bg-gradient-to-r from-red-500 to-red-600 h-2 rounded-full transition-all duration-500"
-                              style={{ width: `${supplier.utilizationPercent}%` }}
-                            />
-                          </div>
-                          <div className="flex justify-between text-xs text-slate-400 mt-1">
-                            <span>Used: ₹{supplier.outstandingAmount.toLocaleString()}</span>
-                            <span>Limit: ₹{supplier.creditLimit.toLocaleString()}</span>
-                          </div>
-                        </div>
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex-1">
+                    <h3 className="text-base font-semibold text-white mb-2">{supplier.name}</h3>
+                    
+                    <div className="flex items-center gap-4 mb-2">
+                      <div className="flex items-center gap-1 text-slate-400">
+                        <Phone className="w-3 h-3" />
+                        <span className="text-xs">{supplier.phone}</span>
                       </div>
-
-                      {/* Amount Display */}
-                      <div className="text-center lg:text-right">
-                        <p className="text-3xl font-bold text-red-400 mb-2">
-                          ₹{supplier.outstandingAmount.toLocaleString()}
-                        </p>
-                        <p className="text-slate-400 text-sm mb-3">Outstanding</p>
-                        <div className="flex gap-2">
-                          <Button size="sm" variant="outline" className="border-red-500 text-red-400 hover:bg-red-500 hover:text-white">
-                            Pay Now
-                          </Button>
-                          <Button size="sm" variant="outline" className="border-slate-500 text-slate-400 hover:bg-slate-500 hover:text-white">
-                            Details
-                          </Button>
-                        </div>
+                      <div className="flex items-center gap-1 text-slate-400">
+                        <Mail className="w-3 h-3" />
+                        <span className="text-xs">{supplier.email}</span>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
 
-          <TabsContent value="analytics" className="mt-6">
-            <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 shadow-xl">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <BarChart3 className="w-5 h-5 text-blue-400" />
-                  Analytics Dashboard
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12">
-                  <p className="text-slate-400 text-lg">Advanced analytics and charts will be displayed here</p>
-                  <p className="text-slate-500 text-sm mt-2">Coming soon with interactive dashboards</p>
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-xs text-slate-400">Limit: ₹{supplier.creditLimit.toLocaleString()}</span>
+                      <span className="text-xs text-slate-400">{supplier.lastTransaction}</span>
+                    </div>
+
+                    {/* Progress Bar matching screenshot */}
+                    <div className="w-full bg-slate-700 rounded-full h-2 mb-1">
+                      <div 
+                        className="bg-red-500 h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${supplier.utilizationPercent}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="text-right ml-4">
+                    <p className="text-lg font-bold text-red-400">₹{supplier.outstandingAmount.toLocaleString()}</p>
+                    <p className="text-xs text-slate-400">Outstanding</p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
-
-          <TabsContent value="reports" className="mt-6">
-            <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 shadow-xl">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <Download className="w-5 h-5 text-green-400" />
-                  Reports & Export
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12">
-                  <p className="text-slate-400 text-lg">Report generation and export options will be available here</p>
-                  <p className="text-slate-500 text-sm mt-2">PDF, Excel, and custom report formats</p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+          ))}
+        </div>
       </div>
     </div>
   );
