@@ -551,7 +551,7 @@ It's completely free to try!`;
     else if (name.startsWith('community')) handleNavigate('/community-ratings');
     else if (name.startsWith('staff')) handleNavigate('/staff');
     else if (name.startsWith('rent')) handleNavigate('/rent-management');
-    else if (name.startsWith('offers')) handleNavigate('/list/offers');
+    else if (name.startsWith('offers')) handleNavigate('/offers-discounts');
     else if (name.startsWith('stock')) handleNavigate('/stock-management');
     else if (name.startsWith('profit')) handleNavigate('/profit-loss');
     else if (name.startsWith('balance')) handleNavigate('/balance-sheet');
