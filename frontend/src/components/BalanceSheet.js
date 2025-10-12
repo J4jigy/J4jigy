@@ -148,7 +148,7 @@ export default function BalanceSheet() {
   return (
     <div className="min-h-screen bg-slate-900 text-white pb-20">
       {/* Header */}
-      <div className="bg-slate-800/50 backdrop-blur-sm px-4 py-3 sticky top-0 z-10">
+      <div className="bg-slate-800/50 backdrop-blur-sm px-4 py-3 sticky top-0 z-10 shadow-none border-0">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="sm" onClick={() => navigate('/')} className="text-white hover:bg-white/10">
