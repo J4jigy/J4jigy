@@ -143,274 +143,73 @@ export default function ReceivablesYouWillReceive() {
           </Card>
         </div>
 
-        {/* Enhanced Tab Navigation */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-          <TabsList className="grid w-full grid-cols-4 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl">
-            <TabsTrigger value="overview" className="rounded-lg">Overview</TabsTrigger>
-            <TabsTrigger value="customers" className="rounded-lg">Customers</TabsTrigger>
-            <TabsTrigger value="analytics" className="rounded-lg">Analytics</TabsTrigger>
-            <TabsTrigger value="reports" className="rounded-lg">Reports</TabsTrigger>
-          </TabsList>
+        {/* Search and Filter Bar matching screenshot */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <div className="relative">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+            <Input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search customers..."
+              className="bg-slate-800 border-slate-600 text-white pl-10 rounded-lg"
+            />
+          </div>
+          
+          <Select value={filterBy} onValueChange={setFilterBy}>
+            <SelectTrigger className="bg-slate-800 border-slate-600 text-white rounded-lg">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent className="bg-slate-700 border-slate-600">
+              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="active">Active</SelectItem>
+              <SelectItem value="overdue">Overdue</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
-          <TabsContent value="overview" className="mt-6">
-            {/* Customer Insights and Category Breakdown */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-              <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 shadow-xl">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <PieChart className="w-5 h-5 text-green-400" />
-                    Customer Categories
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {Object.entries(categoryBreakdown).map(([category, data]) => (
-                      <div key={category} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
-                        <div>
-                          <p className="text-white font-medium">{category}</p>
-                          <p className="text-slate-400 text-sm">{data.count} customers</p>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-green-400 font-bold">₹{data.amount.toLocaleString()}</p>
-                          <p className="text-slate-400 text-xs">{((data.amount / totalReceivable) * 100).toFixed(1)}%</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 shadow-xl">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <Star className="w-5 h-5 text-yellow-400" />
-                    Loyalty Program
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {Object.entries(loyaltyBreakdown).map(([tier, data]) => (
-                      <div key={tier} className="p-3 bg-gradient-to-r from-slate-700/30 to-slate-600/30 rounded-lg">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className={`px-3 py-1 text-xs font-bold rounded-full ${
-                            tier === 'platinum' ? 'bg-purple-900/50 text-purple-300' :
-                            tier === 'gold' ? 'bg-yellow-900/50 text-yellow-300' :
-                            tier === 'silver' ? 'bg-gray-700/50 text-gray-300' :
-                            'bg-orange-900/50 text-orange-300'
-                          }`}>
-                            {tier.toUpperCase()}
-                          </span>
-                          <span className="text-white font-medium">{data.count} customers</span>
-                        </div>
-                        <p className="text-green-400 font-bold">₹{data.revenue.toLocaleString()} monthly</p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Revenue Insights */}
-            <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 shadow-xl">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <BarChart3 className="w-5 h-5 text-blue-400" />
-                  Revenue Insights
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                  <div className="p-4 bg-gradient-to-r from-green-900/30 to-green-800/30 rounded-lg">
-                    <p className="text-green-300 text-sm">Monthly Revenue</p>
-                    <p className="text-2xl font-bold text-white">₹{(avgMonthlyRevenue).toLocaleString()}</p>
-                  </div>
-                  <div className="p-4 bg-gradient-to-r from-blue-900/30 to-blue-800/30 rounded-lg">
-                    <p className="text-blue-300 text-sm">Total Transactions</p>
-                    <p className="text-2xl font-bold text-white">{totalTransactions}</p>
-                  </div>
-                  <div className="p-4 bg-gradient-to-r from-purple-900/30 to-purple-800/30 rounded-lg">
-                    <p className="text-purple-300 text-sm">Collection Rate</p>
-                    <p className="text-2xl font-bold text-white">95%</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="customers" className="mt-6">
-            {/* Enhanced Search and Filters */}
-            <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 shadow-xl mb-6">
+        {/* Customer Cards matching screenshot design */}
+        <div className="space-y-3">
+          {filteredCustomers.map(customer => (
+            <Card key={customer.id} className="bg-slate-800 border-slate-700">
               <CardContent className="p-4">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                  <div className="relative">
-                    <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
-                    <Input
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Search customers, phone, email..."
-                      className="bg-slate-700/50 border-slate-600 text-white pl-10 rounded-lg"
-                    />
-                  </div>
-                  
-                  <Select value={filterBy} onValueChange={setFilterBy}>
-                    <SelectTrigger className="bg-slate-700/50 border-slate-600 text-white rounded-lg">
-                      <Filter className="w-4 h-4 mr-2" />
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
-                      <SelectItem value="all">All Customers</SelectItem>
-                      <SelectItem value="active">Active</SelectItem>
-                      <SelectItem value="overdue">Overdue</SelectItem>
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={sortBy} onValueChange={setSortBy}>
-                    <SelectTrigger className="bg-slate-700/50 border-slate-600 text-white rounded-lg">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
-                      <SelectItem value="amount-high">Amount (High→Low)</SelectItem>
-                      <SelectItem value="amount-low">Amount (Low→High)</SelectItem>
-                      <SelectItem value="name">Name (A→Z)</SelectItem>
-                      <SelectItem value="overdue">Overdue Days</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Enhanced Customer Cards */}
-            <div className="space-y-4">
-              {filteredCustomers.map(customer => (
-                <Card key={customer.id} className="bg-slate-800/50 backdrop-blur-sm border-slate-700 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.01]">
-                  <CardContent className="p-6">
-                    <div className="flex flex-col lg:flex-row lg:items-center gap-4">
-                      {/* Customer Info */}
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-3">
-                          <h3 className="text-xl font-bold text-white">{customer.name}</h3>
-                          <div className="flex items-center gap-2">
-                            {customer.status === 'overdue' && (
-                              <span className="px-3 py-1 bg-red-900/50 text-red-300 text-xs font-medium rounded-full">
-                                {customer.daysOverdue} days overdue
-                              </span>
-                            )}
-                            <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-                              customer.loyaltyTier === 'platinum' ? 'bg-purple-900/50 text-purple-300' :
-                              customer.loyaltyTier === 'gold' ? 'bg-yellow-900/50 text-yellow-300' :
-                              customer.loyaltyTier === 'silver' ? 'bg-gray-700/50 text-gray-300' :
-                              'bg-orange-900/50 text-orange-300'
-                            }`}>
-                              <Star className="w-3 h-3 inline mr-1" />
-                              {customer.loyaltyTier}
-                            </span>
-                          </div>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-                          <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-slate-300">
-                              <Phone className="w-4 h-4 text-green-400" />
-                              <span className="text-sm">{customer.phone}</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-slate-300">
-                              <Mail className="w-4 h-4 text-green-400" />
-                              <span className="text-sm">{customer.email}</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-slate-300">
-                              <Calendar className="w-4 h-4 text-green-400" />
-                              <span className="text-sm">Customer since: {customer.customerSince}</span>
-                            </div>
-                          </div>
-                          
-                          <div className="space-y-2">
-                            <div className="text-slate-300 text-sm">
-                              <span className="text-slate-400">Category:</span> {customer.category}
-                            </div>
-                            <div className="text-slate-300 text-sm">
-                              <span className="text-slate-400">Payment History:</span> {customer.paymentHistory}
-                            </div>
-                            <div className="text-slate-300 text-sm">
-                              <span className="text-slate-400">Transactions:</span> {customer.totalTransactions}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Credit Utilization Bar */}
-                        <div className="mb-3">
-                          <div className="flex justify-between text-sm mb-2">
-                            <span className="text-slate-400">Credit Utilization</span>
-                            <span className="text-white">{customer.utilizationPercent}%</span>
-                          </div>
-                          <div className="w-full bg-slate-700 rounded-full h-2">
-                            <div 
-                              className="bg-gradient-to-r from-green-500 to-green-600 h-2 rounded-full transition-all duration-500"
-                              style={{ width: `${customer.utilizationPercent}%` }}
-                            />
-                          </div>
-                          <div className="flex justify-between text-xs text-slate-400 mt-1">
-                            <span>Outstanding: ₹{customer.outstandingAmount.toLocaleString()}</span>
-                            <span>Limit: ₹{customer.creditLimit.toLocaleString()}</span>
-                          </div>
-                        </div>
+                <div className="flex justify-between items-start mb-3">
+                  <div className="flex-1">
+                    <h3 className="text-base font-semibold text-white mb-2">{customer.name}</h3>
+                    
+                    <div className="flex items-center gap-4 mb-2">
+                      <div className="flex items-center gap-1 text-slate-400">
+                        <Phone className="w-3 h-3" />
+                        <span className="text-xs">{customer.phone}</span>
                       </div>
-
-                      {/* Amount Display */}
-                      <div className="text-center lg:text-right">
-                        <p className="text-3xl font-bold text-green-400 mb-2">
-                          ₹{customer.outstandingAmount.toLocaleString()}
-                        </p>
-                        <p className="text-slate-400 text-sm mb-3">Outstanding</p>
-                        <div className="flex gap-2">
-                          <Button size="sm" variant="outline" className="border-green-500 text-green-400 hover:bg-green-500 hover:text-white">
-                            Follow Up
-                          </Button>
-                          <Button size="sm" variant="outline" className="border-slate-500 text-slate-400 hover:bg-slate-500 hover:text-white">
-                            Details
-                          </Button>
-                        </div>
+                      <div className="flex items-center gap-1 text-slate-400">
+                        <Mail className="w-3 h-3" />
+                        <span className="text-xs">{customer.email}</span>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
 
-          <TabsContent value="analytics" className="mt-6">
-            <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 shadow-xl">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <BarChart3 className="w-5 h-5 text-blue-400" />
-                  Customer Analytics Dashboard
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12">
-                  <p className="text-slate-400 text-lg">Advanced customer analytics and insights will be displayed here</p>
-                  <p className="text-slate-500 text-sm mt-2">Interactive charts, trends, and performance metrics</p>
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-xs text-slate-400">Limit: ₹{customer.creditLimit.toLocaleString()}</span>
+                      <span className="text-xs text-slate-400">{customer.lastTransaction}</span>
+                    </div>
+
+                    {/* Progress Bar matching screenshot */}
+                    <div className="w-full bg-slate-700 rounded-full h-2 mb-1">
+                      <div 
+                        className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                        style={{ width: `${customer.utilizationPercent}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="text-right ml-4">
+                    <p className="text-lg font-bold text-green-400">₹{customer.outstandingAmount.toLocaleString()}</p>
+                    <p className="text-xs text-slate-400">Outstanding</p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
-
-          <TabsContent value="reports" className="mt-6">
-            <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 shadow-xl">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <Download className="w-5 h-5 text-green-400" />
-                  Customer Reports & Export
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12">
-                  <p className="text-slate-400 text-lg">Customer report generation and export options will be available here</p>
-                  <p className="text-slate-500 text-sm mt-2">Detailed customer statements, aging reports, and custom exports</p>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+          ))}
+        </div>
       </div>
     </div>
   );
