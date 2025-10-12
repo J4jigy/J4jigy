@@ -146,6 +146,53 @@ export default function OffersDiscounts() {
 
       {/* Main Content */}
       <div className="px-4 py-4">
+        {/* Summary Cards */}
+        <div className="grid grid-cols-2 gap-3 mb-4">
+          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 border-0">
+            <CardContent className="p-4 text-center">
+              <p className="text-purple-100 text-sm mb-1">Active Coupons</p>
+              <p className="text-2xl font-bold text-white">{activeCoupons}</p>
+              <p className="text-purple-200 text-xs mt-1">
+                <Gift className="w-3 h-3 inline mr-1" />
+                available
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-green-500 to-green-600 border-0">
+            <CardContent className="p-4 text-center">
+              <p className="text-green-100 text-sm mb-1">Total Usage</p>
+              <p className="text-2xl font-bold text-white">{totalUsage}</p>
+              <p className="text-green-200 text-xs mt-1">
+                <TrendingUp className="w-3 h-3 inline mr-1" />
+                times used
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 border-0">
+            <CardContent className="p-4 text-center">
+              <p className="text-blue-100 text-sm mb-1">Total Savings</p>
+              <p className="text-2xl font-bold text-white">₹{Math.round(totalSavings).toLocaleString()}</p>
+              <p className="text-blue-200 text-xs mt-1">
+                <Tag className="w-3 h-3 inline mr-1" />
+                saved
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-orange-500 to-orange-600 border-0">
+            <CardContent className="p-4 text-center">
+              <p className="text-orange-100 text-sm mb-1">Expiring Soon</p>
+              <p className="text-2xl font-bold text-white">{expiringCoupons}</p>
+              <p className="text-orange-200 text-xs mt-1">
+                <Calendar className="w-3 h-3 inline mr-1" />
+                in 30 days
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Search and Filter Bar */}
         <div className="grid grid-cols-2 gap-3 mb-4">
           <div className="relative">
@@ -153,7 +200,7 @@ export default function OffersDiscounts() {
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search offers..."
+              placeholder="Search coupons..."
               className="bg-slate-800 border-slate-600 text-white pl-10 rounded-lg"
             />
           </div>
@@ -165,48 +212,65 @@ export default function OffersDiscounts() {
             <SelectContent>
               <SelectItem value="all">All</SelectItem>
               <SelectItem value="active">Active</SelectItem>
+              <SelectItem value="expired">Expired</SelectItem>
               <SelectItem value="expiring">Expiring Soon</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
-        {/* Offer Cards */}
+        {/* Coupon Cards */}
         <div className="space-y-3">
-          {filteredOffers.map(offer => (
-            <Card key={offer.id} className="bg-slate-800 border-slate-700">
+          {filteredCoupons.map(coupon => (
+            <Card key={coupon.id} className="bg-slate-800 border-slate-700">
               <CardContent className="p-4">
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex-1">
-                    <h3 className="text-base font-semibold text-white mb-2">{offer.companyName}</h3>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="text-base font-semibold text-white">{coupon.title}</h3>
+                      <span className={`text-xs px-2 py-0.5 rounded-full ${
+                        coupon.status === 'active' 
+                          ? 'bg-green-500/20 text-green-400' 
+                          : 'bg-red-500/20 text-red-400'
+                      }`}>
+                        {coupon.status}
+                      </span>
+                    </div>
                     
-                    <div className="flex items-center gap-4 mb-2">
-                      <div className="flex items-center gap-1 text-slate-400">
-                        <Phone className="w-3 h-3" />
-                        <span className="text-xs">{offer.phone}</span>
+                    <p className="text-sm text-slate-300 mb-2">{coupon.description}</p>
+                    
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded font-mono">
+                        {coupon.code}
+                      </span>
+                      <span className="text-xs text-slate-400">
+                        {coupon.discountType === 'Percentage' 
+                          ? `${coupon.discountValue}% OFF` 
+                          : `₹${coupon.discountValue} OFF`}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-4 text-xs text-slate-400 mb-2">
+                      <span>Min: ₹{coupon.minPurchase.toLocaleString()}</span>
+                      <span>Max: ₹{coupon.maxDiscount.toLocaleString()}</span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-xs text-slate-400">
+                      <span>Valid: {coupon.validFrom} to {coupon.validUntil}</span>
+                    </div>
+
+                    {/* Usage Progress Bar */}
+                    <div className="mt-2">
+                      <div className="flex justify-between text-xs text-slate-400 mb-1">
+                        <span>Usage: {coupon.usedCount}/{coupon.usageLimit}</span>
+                        <span>{Math.round((coupon.usedCount / coupon.usageLimit) * 100)}%</span>
                       </div>
-                      <div className="flex items-center gap-1 text-slate-400">
-                        <Mail className="w-3 h-3" />
-                        <span className="text-xs">{offer.email}</span>
+                      <div className="w-full bg-slate-700 rounded-full h-2">
+                        <div 
+                          className="bg-purple-500 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${(coupon.usedCount / coupon.usageLimit) * 100}%` }}
+                        />
                       </div>
                     </div>
-
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-xs text-slate-400">Limit: ₹{offer.limit.toLocaleString()}</span>
-                      <span className="text-xs text-slate-400">{offer.expiry}</span>
-                    </div>
-
-                    {/* Progress Bar */}
-                    <div className="w-full bg-slate-700 rounded-full h-2 mb-1">
-                      <div 
-                        className="bg-green-500 h-2 rounded-full transition-all duration-300"
-                        style={{ width: `${offer.utilizationPercent}%` }}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="text-right ml-4">
-                    <p className="text-lg font-bold text-green-400">₹{offer.outstanding.toLocaleString()}</p>
-                    <p className="text-xs text-slate-400">Outstanding</p>
                   </div>
                 </div>
               </CardContent>
@@ -214,9 +278,9 @@ export default function OffersDiscounts() {
           ))}
         </div>
 
-        {filteredOffers.length === 0 && (
+        {filteredCoupons.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-slate-400">No offers found matching your search.</p>
+            <p className="text-slate-400">No coupons found matching your search.</p>
           </div>
         )}
       </div>
