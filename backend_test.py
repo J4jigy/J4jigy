@@ -268,16 +268,92 @@ def test_dashboard_summary():
     
     return False
 
+def test_payables_receivables_list_endpoints():
+    """Test list endpoints specifically for payables/receivables pages"""
+    print("\n🔍 Testing Payables/Receivables List Endpoints...")
+    
+    if not auth_token:
+        results.add_fail("Payables/Receivables Lists", "No auth token available")
+        return False
+    
+    headers = {"Authorization": f"Bearer {auth_token}"}
+    
+    # Test customers endpoint (for receivables page)
+    print("  Testing /api/lists/customers (for receivables page)...")
+    response = make_request("GET", "/lists/customers", headers=headers)
+    if not response:
+        results.add_fail("Customers List Endpoint", "Request failed")
+        return False
+    
+    if response.status_code == 200:
+        try:
+            data = response.json()
+            required_fields = ["items", "total", "page", "page_size", "total_pages"]
+            if all(field in data for field in required_fields):
+                results.add_pass("Customers List Endpoint - Structure")
+                print(f"ℹ️  Found {data['total']} customers, page {data['page']}/{data['total_pages']}")
+                
+                # Test pagination support
+                if "page" in data and "page_size" in data:
+                    results.add_pass("Customers List - Pagination Support")
+                
+                # Test search parameter support
+                search_response = make_request("GET", "/lists/customers?search=test", headers=headers)
+                if search_response and search_response.status_code == 200:
+                    results.add_pass("Customers List - Search Support")
+                
+            else:
+                results.add_fail("Customers List Endpoint", f"Missing required fields: {data}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Customers List Endpoint", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Customers List Endpoint", f"HTTP {response.status_code}: {response.text}")
+        return False
+    
+    # Test suppliers endpoint (for payables page)
+    print("  Testing /api/lists/suppliers (for payables page)...")
+    response = make_request("GET", "/lists/suppliers", headers=headers)
+    if not response:
+        results.add_fail("Suppliers List Endpoint", "Request failed")
+        return False
+    
+    if response.status_code == 200:
+        try:
+            data = response.json()
+            required_fields = ["items", "total", "page", "page_size", "total_pages"]
+            if all(field in data for field in required_fields):
+                results.add_pass("Suppliers List Endpoint - Structure")
+                print(f"ℹ️  Found {data['total']} suppliers, page {data['page']}/{data['total_pages']}")
+                
+                # Test filtering support
+                filter_response = make_request("GET", "/lists/suppliers?sort=name_desc", headers=headers)
+                if filter_response and filter_response.status_code == 200:
+                    results.add_pass("Suppliers List - Filtering Support")
+                
+            else:
+                results.add_fail("Suppliers List Endpoint", f"Missing required fields: {data}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Suppliers List Endpoint", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Suppliers List Endpoint", f"HTTP {response.status_code}: {response.text}")
+        return False
+    
+    return True
+
 def test_list_endpoints():
     """Test various list endpoints"""
-    print("\n🔍 Testing List Endpoints...")
+    print("\n🔍 Testing General List Endpoints...")
     
     if not auth_token:
         results.add_fail("List Endpoints", "No auth token available")
         return False
     
     headers = {"Authorization": f"Bearer {auth_token}"}
-    list_names = ["customers", "suppliers", "staff", "purchases", "bills", "expenses", "invoices", "ratings"]
+    list_names = ["staff", "purchases", "bills", "expenses", "invoices", "ratings"]
     
     passed_lists = 0
     failed_lists = []
