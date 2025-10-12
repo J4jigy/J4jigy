@@ -76,37 +76,32 @@ export default function ReceivablesYouWillReceive() {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-green-950 text-white">
-      {/* Modern Header with Gradient */}
-      <div className="bg-gradient-to-r from-green-600 to-green-700 shadow-2xl">
-        <div className="px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={() => navigate('/')} 
-                className="text-white hover:bg-white/20 backdrop-blur-sm p-2 rounded-xl"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </Button>
-              <div>
-                <h1 className="text-2xl font-bold text-white">Customers (Debtors)</h1>
-                <p className="text-green-100 text-sm flex items-center gap-2">
-                  <Users className="w-4 h-4" />
-                  {activeBusiness?.name || 'FinApp Admin'} • Customer Management
-                </p>
-              </div>
+    <div className="min-h-screen bg-slate-900 text-white">
+      {/* Clean Header matching screenshot */}
+      <div className="bg-slate-800 px-4 py-3 border-b border-slate-700">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => navigate('/')} 
+              className="text-white hover:bg-white/10 p-2"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+            <div>
+              <h1 className="text-lg font-semibold text-white">Customers (Debtors)</h1>
+              <p className="text-slate-400 text-sm">{activeBusiness?.name || 'Main Business'}</p>
             </div>
-            <div className="flex items-center gap-3">
-              <Button variant="ghost" size="sm" className="text-white hover:bg-white/20 backdrop-blur-sm rounded-xl">
-                <Download className="w-4 h-4" />
-              </Button>
-              <Button size="sm" className="bg-white text-green-600 hover:bg-green-50 font-semibold rounded-xl shadow-lg">
-                <Plus className="w-4 h-4 mr-2" />
-                Add Customer
-              </Button>
-            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" className="text-slate-400 hover:bg-slate-700">
+              <Download className="w-4 h-4" />
+            </Button>
+            <Button size="sm" className="bg-green-600 hover:bg-green-700 text-white px-4">
+              <Plus className="w-4 h-4 mr-1" />
+              Add
+            </Button>
           </div>
         </div>
       </div>
