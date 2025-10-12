@@ -218,6 +218,7 @@ function App() {
             <Route path="/bills-invoices" element={token ? <BillsInvoices /> : <Navigate to="/login" />} />
             <Route path="/receivables-you-will-receive" element={token ? <ReceivablesYouWillReceive /> : <Navigate to="/login" />} />
             <Route path="/payables-you-will-give" element={token ? <PayablesYouWillGive /> : <Navigate to="/login" />} />
+            <Route path="/offers-discounts" element={token ? <OffersDiscounts /> : <Navigate to="/login" />} />
           </Routes>
         </Router>
       </RoleProvider>
