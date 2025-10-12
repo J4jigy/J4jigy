@@ -90,7 +90,7 @@ export default function PayablesYouWillGive() {
               <ArrowLeft className="w-5 h-5" />
             </Button>
             <div>
-              <h1 className="text-lg font-semibold text-white">Suppliers (Creditors)</h1>
+              <h1 className="text-lg font-semibold text-white">Total Payables</h1>
               <p className="text-slate-400 text-sm">{activeBusiness?.name || 'Main Business'}</p>
             </div>
           </div>
