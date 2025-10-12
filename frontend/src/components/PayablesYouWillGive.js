@@ -15,7 +15,7 @@ export default function PayablesYouWillGive() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterBy, setFilterBy] = useState('all');
 
-  // Enhanced suppliers data with comprehensive details
+  // Suppliers data matching screenshot design
   const allSuppliers = [
     { 
       id: 1, 
@@ -25,14 +25,7 @@ export default function PayablesYouWillGive() {
       outstandingAmount: 150000, 
       creditLimit: 300000, 
       lastTransaction: '2025-01-10',
-      status: 'overdue',
-      daysOverdue: 5,
-      utilizationPercent: 50,
-      category: 'Fuel Supply',
-      paymentTerms: '30 days',
-      totalTransactions: 45,
-      avgMonthlySpend: 180000,
-      riskLevel: 'medium'
+      utilizationPercent: 50
     },
     { 
       id: 2, 
@@ -42,14 +35,7 @@ export default function PayablesYouWillGive() {
       outstandingAmount: 200000, 
       creditLimit: 400000, 
       lastTransaction: '2025-01-09',
-      status: 'active',
-      daysOverdue: 0,
-      utilizationPercent: 50,
-      category: 'Fuel Supply',
-      paymentTerms: '45 days',
-      totalTransactions: 62,
-      avgMonthlySpend: 250000,
-      riskLevel: 'low'
+      utilizationPercent: 50
     },
     { 
       id: 3, 
@@ -59,14 +45,7 @@ export default function PayablesYouWillGive() {
       outstandingAmount: 85000, 
       creditLimit: 150000, 
       lastTransaction: '2025-01-08',
-      status: 'active',
-      daysOverdue: 0,
-      utilizationPercent: 57,
-      category: 'Equipment',
-      paymentTerms: '60 days',
-      totalTransactions: 28,
-      avgMonthlySpend: 95000,
-      riskLevel: 'low'
+      utilizationPercent: 57
     },
     { 
       id: 4, 
@@ -76,14 +55,7 @@ export default function PayablesYouWillGive() {
       outstandingAmount: 12000, 
       creditLimit: 50000, 
       lastTransaction: '2025-01-07',
-      status: 'overdue',
-      daysOverdue: 10,
-      utilizationPercent: 24,
-      category: 'Utilities',
-      paymentTerms: '15 days',
-      totalTransactions: 12,
-      avgMonthlySpend: 15000,
-      riskLevel: 'high'
+      utilizationPercent: 24
     },
   ];
 
