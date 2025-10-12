@@ -225,8 +225,8 @@ def test_admin_login():
     return False
 
 def test_dashboard_summary():
-    """Test dashboard summary endpoint (requires authentication)"""
-    print("\n🔍 Testing Dashboard Summary...")
+    """Test dashboard summary endpoint for payables/receivables data"""
+    print("\n🔍 Testing Dashboard Summary for Payables/Receivables...")
     
     if not auth_token:
         results.add_fail("Dashboard Summary", "No auth token available")
@@ -244,7 +244,18 @@ def test_dashboard_summary():
             data = response.json()
             required_fields = ["you_will_give", "you_will_receive", "net_position"]
             if all(field in data for field in required_fields):
-                results.add_pass("Dashboard Summary")
+                results.add_pass("Dashboard Summary - Payables/Receivables Data")
+                print(f"ℹ️  Payables (you_will_give): ₹{data['you_will_give']}")
+                print(f"ℹ️  Receivables (you_will_receive): ₹{data['you_will_receive']}")
+                print(f"ℹ️  Net Position: ₹{data['net_position']}")
+                
+                # Verify calculations are accurate
+                expected_net = data['you_will_receive'] - data['you_will_give']
+                if abs(data['net_position'] - expected_net) < 0.01:  # Allow for floating point precision
+                    results.add_pass("Dashboard Summary - Calculation Accuracy")
+                else:
+                    results.add_fail("Dashboard Summary - Calculations", f"Net position calculation incorrect: expected {expected_net}, got {data['net_position']}")
+                
                 return True
             else:
                 results.add_fail("Dashboard Summary", f"Missing required fields: {data}")
