@@ -380,8 +380,8 @@ def test_list_endpoints():
         return False
 
 def test_transaction_apis():
-    """Test transaction API endpoints"""
-    print("\n🔍 Testing Transaction APIs...")
+    """Test transaction API endpoints for payables/receivables functionality"""
+    print("\n🔍 Testing Transaction APIs for Payables/Receivables...")
     
     if not auth_token:
         results.add_fail("Transaction APIs", "No auth token available")
@@ -389,7 +389,8 @@ def test_transaction_apis():
     
     headers = {"Authorization": f"Bearer {auth_token}"}
     
-    # Test GET /api/transactions
+    # Test GET /api/transactions with filtering
+    print("  Testing transaction listing with filtering...")
     response = make_request("GET", "/transactions", headers=headers)
     if not response:
         results.add_fail("Transaction APIs - GET", "Request failed")
@@ -398,8 +399,23 @@ def test_transaction_apis():
     if response.status_code == 200:
         try:
             data = response.json()
-            if "transactions" in data and "total" in data:
-                results.add_pass("Transaction APIs - GET transactions")
+            if "transactions" in data and "total" in data and "page" in data:
+                results.add_pass("Transaction APIs - GET transactions with pagination")
+                print(f"ℹ️  Found {data['total']} total transactions")
+                
+                # Test filtering by transaction type
+                cash_in_response = make_request("GET", "/transactions?transaction_type=cash_in", headers=headers)
+                if cash_in_response and cash_in_response.status_code == 200:
+                    cash_in_data = cash_in_response.json()
+                    results.add_pass("Transaction APIs - Cash-in filtering")
+                    print(f"ℹ️  Found {cash_in_data['total']} cash-in transactions (receivables)")
+                
+                cash_out_response = make_request("GET", "/transactions?transaction_type=cash_out", headers=headers)
+                if cash_out_response and cash_out_response.status_code == 200:
+                    cash_out_data = cash_out_response.json()
+                    results.add_pass("Transaction APIs - Cash-out filtering")
+                    print(f"ℹ️  Found {cash_out_data['total']} cash-out transactions (payables)")
+                
             else:
                 results.add_fail("Transaction APIs - GET", f"Invalid response format: {data}")
                 return False
@@ -410,65 +426,84 @@ def test_transaction_apis():
         results.add_fail("Transaction APIs - GET", f"HTTP {response.status_code}: {response.text}")
         return False
     
-    # Test POST /api/transactions (create transaction)
-    transaction_data = {
-        "description": "Test business expense",
-        "amount": 150.75,
-        "transaction_type": "cash_out",
-        "debit_account": "Operating Expenses",
-        "credit_account": "Cash"
+    # Test creating receivable transaction (cash-in)
+    print("  Testing receivable transaction creation...")
+    receivable_data = {
+        "description": "Customer payment for services",
+        "amount": 1500.00,
+        "debit_account": "Cash",
+        "credit_account": "Accounts Receivable"
     }
     
-    response = make_request("POST", "/transactions", transaction_data, headers=headers)
+    response = make_request("POST", "/transactions/cash-in", receivable_data, headers=headers)
     if not response:
-        results.add_fail("Transaction APIs - POST", "Request failed")
+        results.add_fail("Receivable Transaction Creation", "Request failed")
         return False
     
     if response.status_code == 200:
         try:
             data = response.json()
-            if "id" in data and "amount" in data and data["amount"] == 150.75:
-                results.add_pass("Transaction APIs - POST create transaction")
+            if "id" in data and "amount" in data and data["amount"] == 1500.00:
+                results.add_pass("Receivable Transaction Creation")
+                print(f"ℹ️  Created receivable transaction: ₹{data['amount']}")
             else:
-                results.add_fail("Transaction APIs - POST", f"Invalid response format: {data}")
+                results.add_fail("Receivable Transaction Creation", f"Invalid response format: {data}")
                 return False
         except json.JSONDecodeError:
-            results.add_fail("Transaction APIs - POST", "Invalid JSON response")
+            results.add_fail("Receivable Transaction Creation", "Invalid JSON response")
             return False
     else:
-        results.add_fail("Transaction APIs - POST", f"HTTP {response.status_code}: {response.text}")
+        results.add_fail("Receivable Transaction Creation", f"HTTP {response.status_code}: {response.text}")
         return False
     
-    # Test POST /api/transactions/cash-in
-    cash_in_data = {
-        "description": "Client payment received",
-        "amount": 2500.00,
-        "debit_account": "Cash",
-        "credit_account": "Sales Revenue"
-    }
-    
-    response = make_request("POST", "/transactions/cash-in", cash_in_data, headers=headers)
-    if response and response.status_code == 200:
-        results.add_pass("Transaction APIs - POST cash-in")
-    else:
-        results.add_fail("Transaction APIs - Cash In", f"HTTP {response.status_code if response else 'No response'}: {response.text if response else 'Request failed'}")
-        return False
-    
-    # Test POST /api/transactions/cash-out
-    cash_out_data = {
-        "description": "Office supplies purchase",
-        "amount": 85.50,
-        "debit_account": "Operating Expenses", 
+    # Test creating payable transaction (cash-out)
+    print("  Testing payable transaction creation...")
+    payable_data = {
+        "description": "Supplier payment for inventory",
+        "amount": 850.00,
+        "debit_account": "Accounts Payable", 
         "credit_account": "Cash"
     }
     
-    response = make_request("POST", "/transactions/cash-out", cash_out_data, headers=headers)
-    if response and response.status_code == 200:
-        results.add_pass("Transaction APIs - POST cash-out")
-        return True
-    else:
-        results.add_fail("Transaction APIs - Cash Out", f"HTTP {response.status_code if response else 'No response'}: {response.text if response else 'Request failed'}")
+    response = make_request("POST", "/transactions/cash-out", payable_data, headers=headers)
+    if not response:
+        results.add_fail("Payable Transaction Creation", "Request failed")
         return False
+    
+    if response.status_code == 200:
+        try:
+            data = response.json()
+            if "id" in data and "amount" in data and data["amount"] == 850.00:
+                results.add_pass("Payable Transaction Creation")
+                print(f"ℹ️  Created payable transaction: ₹{data['amount']}")
+            else:
+                results.add_fail("Payable Transaction Creation", f"Invalid response format: {data}")
+                return False
+        except json.JSONDecodeError:
+            results.add_fail("Payable Transaction Creation", "Invalid JSON response")
+            return False
+    else:
+        results.add_fail("Payable Transaction Creation", f"HTTP {response.status_code}: {response.text}")
+        return False
+    
+    # Test data persistence by re-fetching dashboard summary
+    print("  Testing data persistence...")
+    time.sleep(1)  # Brief pause to ensure data is persisted
+    response = make_request("GET", "/dashboard/summary", headers=headers)
+    if response and response.status_code == 200:
+        try:
+            updated_data = response.json()
+            if updated_data["you_will_receive"] > 0 or updated_data["you_will_give"] > 0:
+                results.add_pass("Transaction Data Persistence")
+                print(f"ℹ️  Updated totals - Receivables: ₹{updated_data['you_will_receive']}, Payables: ₹{updated_data['you_will_give']}")
+            else:
+                results.add_fail("Transaction Data Persistence", "Dashboard summary not updated after transactions")
+        except json.JSONDecodeError:
+            results.add_fail("Transaction Data Persistence", "Invalid JSON response from dashboard")
+    else:
+        results.add_fail("Transaction Data Persistence", "Failed to verify data persistence")
+    
+    return True
 
 def test_admin_apis():
     """Test admin API endpoints"""
