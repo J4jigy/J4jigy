@@ -172,7 +172,7 @@ export default function ReceivablesYouWillReceive() {
           {filteredCustomers.map(customer => (
             <Card key={customer.id} className="bg-slate-800 border-slate-700">
               <CardContent className="p-4">
-                <div className="flex justify-between items-start mb-3">
+                <div className="flex justify-between items-start">
                   <div className="flex-1">
                     <h3 className="text-base font-semibold text-white mb-2">{customer.name}</h3>
                     
@@ -193,7 +193,7 @@ export default function ReceivablesYouWillReceive() {
                     </div>
 
                     {/* Progress Bar matching screenshot */}
-                    <div className="w-full bg-slate-700 rounded-full h-2 mb-1">
+                    <div className="w-full bg-slate-700 rounded-full h-2">
                       <div 
                         className="bg-green-500 h-2 rounded-full transition-all duration-300"
                         style={{ width: `${customer.utilizationPercent}%` }}
@@ -201,9 +201,9 @@ export default function ReceivablesYouWillReceive() {
                     </div>
                   </div>
 
-                  <div className="text-right ml-4">
-                    <p className="text-lg font-bold text-green-400">₹{customer.outstandingAmount.toLocaleString()}</p>
-                    <p className="text-xs text-slate-400">Outstanding</p>
+                  <div className="text-right ml-4 flex-shrink-0">
+                    <p className="text-xl font-bold text-green-400">₹{customer.outstandingAmount.toLocaleString()}</p>
+                    <p className="text-xs text-slate-400 mt-1">Outstanding</p>
                   </div>
                 </div>
               </CardContent>
