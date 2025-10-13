@@ -188,6 +188,7 @@ function App() {
     <BusinessProvider>
       <RoleProvider>
         <Router>
+          <BackButtonHandler />
           <Routes>
             <Route 
               path="/" 
