@@ -183,32 +183,6 @@ function App() {
     localStorage.removeItem('user');
   };
 
-  // Handle mobile back button navigation
-  useEffect(() => {
-    const handlePopState = (event) => {
-      // Get current path
-      const currentPath = window.location.pathname;
-      
-      // If we're on any page other than dashboard or login, navigate to dashboard
-      if (currentPath !== '/' && currentPath !== '/login' && token) {
-        event.preventDefault();
-        window.location.href = '/';
-      }
-    };
-
-    // Listen for browser back button
-    window.addEventListener('popstate', handlePopState);
-    
-    // Add a history state on mount to ensure back button works
-    if (window.location.pathname !== '/' && window.location.pathname !== '/login') {
-      window.history.pushState(null, '', window.location.href);
-    }
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, [token]);
-
   return (
     <BusinessProvider>
       <RoleProvider>
