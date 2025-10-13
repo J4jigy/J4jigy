@@ -504,14 +504,14 @@ It's completely free to try!`;
     { name: 'Bills &', subtitle: 'Invoices', icon: FileBarChart, iconColor: 'text-yellow-400', permissions: ['reports_view'] },
     { name: 'Profit', subtitle: 'Loss', icon: PieChart, iconColor: 'text-emerald-400', permissions: ['reports_view', 'analytics_view'] },
     { name: 'Balance', subtitle: 'Sheet', icon: BarChart3, iconColor: 'text-indigo-400', permissions: ['reports_view', 'analytics_view'] },
-    { name: 'Calendar', subtitle: '', icon: Calendar, iconColor: 'text-pink-400', permissions: [] },
-    { name: 'Calculator', subtitle: '', icon: Calculator, iconColor: 'text-cyan-400', permissions: [] },
   ];
 
   const personalTiles = [
     { name: 'Offers &', subtitle: 'Discounts', icon: Gift, iconColor: 'text-red-400', permissions: [] }, // Available to all
     { name: 'Scan', subtitle: 'Documents', icon: ScanLine, iconColor: 'text-cyan-400', permissions: [] }, // Available to all
     { name: 'To Do List', subtitle: '', icon: CheckSquare, iconColor: 'text-green-400', permissions: [] }, // Available to all
+    { name: 'Calendar', subtitle: '', icon: Calendar, iconColor: 'text-pink-400', permissions: [] }, // Available to all
+    { name: 'Calculator', subtitle: '', icon: Calculator, iconColor: 'text-cyan-400', permissions: [] }, // Available to all
   ];
 
   const getTilesForTab = (tab) => {
