@@ -492,7 +492,6 @@ It's completely free to try!`;
     { name: 'Company', subtitle: 'Purchase', icon: ShoppingCart, iconColor: 'text-orange-400', permissions: ['expenses_manage'] },
     { name: 'Stock', subtitle: 'Management', icon: Package, iconColor: 'text-orange-400', permissions: ['inventory_manage', 'inventory_view'] },
     { name: 'Staff', subtitle: '', icon: Users, iconColor: 'text-purple-400', permissions: ['staff_manage'] },
-    { name: 'Community', subtitle: 'Ratings', icon: Star, iconColor: 'text-yellow-400', permissions: [] },
   ];
 
   const financeTiles = [
