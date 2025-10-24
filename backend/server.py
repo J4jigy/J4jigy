@@ -438,6 +438,38 @@ from fastapi import Header
 async def api_options_catch_all(path: str):
     return Response(status_code=204)
 
+@api_router.options("/auth/send-otp")
+async def options_send_otp(
+    origin: Optional[str] = Header(default=None),
+    access_control_request_headers: Optional[str] = Header(default=None),
+    access_control_request_method: Optional[str] = Header(default=None),
+):
+    from fastapi.responses import Response
+    resp = Response(status_code=204)
+    if origin:
+        resp.headers["Access-Control-Allow-Origin"] = origin
+        resp.headers["Vary"] = "Origin"
+    resp.headers["Access-Control-Allow-Methods"] = access_control_request_method or "POST, OPTIONS"
+    resp.headers["Access-Control-Allow-Headers"] = access_control_request_headers or "Authorization, Content-Type, *"
+    resp.headers["Access-Control-Allow-Credentials"] = "true"
+    return resp
+
+@api_router.options("/auth/verify-otp")
+async def options_verify_otp(
+    origin: Optional[str] = Header(default=None),
+    access_control_request_headers: Optional[str] = Header(default=None),
+    access_control_request_method: Optional[str] = Header(default=None),
+):
+    from fastapi.responses import Response
+    resp = Response(status_code=204)
+    if origin:
+        resp.headers["Access-Control-Allow-Origin"] = origin
+        resp.headers["Vary"] = "Origin"
+    resp.headers["Access-Control-Allow-Methods"] = access_control_request_method or "POST, OPTIONS"
+    resp.headers["Access-Control-Allow-Headers"] = access_control_request_headers or "Authorization, Content-Type, *"
+    resp.headers["Access-Control-Allow-Credentials"] = "true"
+    return resp
+
 @api_router.options("/auth/login")
 async def options_login(
     origin: Optional[str] = Header(default=None),
