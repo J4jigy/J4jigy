@@ -132,7 +132,9 @@ const LoginPage = ({ onLogin }) => {
         <CardContent className="p-6">
           <div className="text-center mb-6">
             <h1 className="text-2xl font-bold text-white mb-2">Sign In</h1>
-            <p className="text-slate-400">Access your financial dashboard</p>
+            <p className="text-slate-400">
+              {step === 'mobile' ? 'Enter your mobile number to receive OTP' : 'Enter the OTP sent to your mobile'}
+            </p>
           </div>
 
           {error && (
@@ -141,42 +143,85 @@ const LoginPage = ({ onLogin }) => {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <Label htmlFor="username" className="text-slate-200">Username</Label>
-              <Input
-                id="username"
-                type="text"
-                value={formData.username}
-                onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
-                required
-                className="bg-slate-700 border-slate-600 text-white"
-              />
-            </div>
+          {step === 'mobile' ? (
+            <form onSubmit={handleSendOTP} className="space-y-4">
+              <div>
+                <Label htmlFor="mobile" className="text-slate-200">Mobile Number</Label>
+                <Input
+                  id="mobile"
+                  type="tel"
+                  value={mobileNumber}
+                  onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                  placeholder="Enter 10-digit mobile number"
+                  required
+                  maxLength={10}
+                  className="bg-slate-700 border-slate-600 text-white"
+                />
+                <p className="text-xs text-slate-400 mt-1">We'll send you a 6-digit OTP</p>
+              </div>
 
-            <div>
-              <Label htmlFor="password" className="text-slate-200">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={formData.password}
-                onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
-                required
-                className="bg-slate-700 border-slate-600 text-white"
-              />
-            </div>
+              <Button 
+                type="submit" 
+                disabled={loading || mobileNumber.length !== 10}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                {loading ? 'Sending OTP...' : 'Send OTP'}
+              </Button>
+            </form>
+          ) : (
+            <form onSubmit={handleVerifyOTP} className="space-y-4">
+              <div>
+                <Label htmlFor="otp" className="text-slate-200">Enter OTP</Label>
+                <Input
+                  id="otp"
+                  type="text"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                  placeholder="Enter 6-digit OTP"
+                  required
+                  maxLength={6}
+                  className="bg-slate-700 border-slate-600 text-white text-center text-2xl tracking-widest"
+                  autoFocus
+                />
+                <p className="text-xs text-slate-400 mt-1">OTP sent to +91-{mobileNumber}</p>
+              </div>
 
-            <Button 
-              type="submit" 
-              disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-            >
-              {loading ? 'Processing...' : 'Sign In'}
-            </Button>
-          </form>
+              <Button 
+                type="submit" 
+                disabled={loading || otp.length !== 6}
+                className="w-full bg-green-600 hover:bg-green-700 text-white"
+              >
+                {loading ? 'Verifying...' : 'Verify & Login'}
+              </Button>
+
+              <div className="flex justify-between items-center">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => {
+                    setStep('mobile');
+                    setOtp('');
+                    setError('');
+                  }}
+                  className="text-slate-400 hover:text-white"
+                >
+                  Change Number
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={handleResendOTP}
+                  disabled={loading}
+                  className="text-blue-400 hover:text-blue-300"
+                >
+                  Resend OTP
+                </Button>
+              </div>
+            </form>
+          )}
 
           <div className="mt-4 text-center text-slate-400 text-sm">
-            Login with invite code and OTP from mobile number
+            Secure login with mobile OTP verification
           </div>
         </CardContent>
       </Card>
