@@ -1287,7 +1287,7 @@ It's completely free to try!`;
                 <Button
                   onClick={() => {
                     updateBusiness(businessToEdit.id, businessToEdit);
-                    setShowProfileDialog(false);
+                    setShowBusinessProfileDialog(false);
                     setBusinessToEdit(null);
                   }}
                   className="flex-1 bg-green-600 hover:bg-green-700"
@@ -1297,7 +1297,7 @@ It's completely free to try!`;
                 </Button>
                 <Button
                   onClick={() => {
-                    setShowProfileDialog(false);
+                    setShowBusinessProfileDialog(false);
                     setBusinessToEdit(null);
                   }}
                   variant="outline"
