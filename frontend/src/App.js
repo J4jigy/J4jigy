@@ -151,7 +151,7 @@ const LoginPage = ({ onLogin }) => {
                 <Label htmlFor="mobile" className="text-slate-200">Mobile Number</Label>
                 <div className="flex gap-2 mt-1">
                   <Select value={countryCode} onValueChange={setCountryCode}>
-                    <SelectTrigger className="w-32 bg-slate-700 border-slate-600 text-white">
+                    <SelectTrigger className="w-24 bg-slate-700 border-slate-600 text-white text-sm">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -172,10 +172,10 @@ const LoginPage = ({ onLogin }) => {
                     type="tel"
                     value={mobileNumber}
                     onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                    placeholder="Enter 10-digit mobile number"
+                    placeholder="Enter mobile number"
                     required
                     maxLength={10}
-                    className="flex-1 bg-slate-700 border-slate-600 text-white"
+                    className="flex-1 bg-slate-700 border-slate-600 text-white text-lg"
                   />
                 </div>
                 <p className="text-xs text-slate-400 mt-1">We'll send you a 6-digit OTP</p>
