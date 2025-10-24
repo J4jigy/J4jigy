@@ -669,19 +669,24 @@ async def verify_otp(payload: VerifyOTPRequest, request: Request):
         raise HTTPException(status_code=400, detail="OTP not found or expired")
     
     stored_data = otp_storage[mobile]
+    print(f"Stored OTP: '{stored_data['otp']}', Received OTP: '{otp}'")
+    print(f"Expiry: {stored_data['expires_at']}, Now: {datetime.now(timezone.utc)}")
     
     # Check if OTP is expired
     if datetime.now(timezone.utc) > stored_data['expires_at']:
+        print("OTP has expired")
         del otp_storage[mobile]
         raise HTTPException(status_code=400, detail="OTP expired")
     
     # Check attempts
     if stored_data['attempts'] >= 3:
+        print("Too many attempts")
         del otp_storage[mobile]
         raise HTTPException(status_code=400, detail="Too many failed attempts")
     
     # Verify OTP
     if stored_data['otp'] != otp:
+        print(f"OTP mismatch: stored='{stored_data['otp']}' vs received='{otp}'")
         stored_data['attempts'] += 1
         raise HTTPException(status_code=400, detail="Invalid OTP")
     
