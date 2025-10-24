@@ -46,7 +46,8 @@ export default function Dashboard({ user, onLogout }) {
     deleteBusiness,
     exportBusiness,
     importBusiness,
-    getDataSize
+    getDataSize,
+    calculateProfileStrength
   } = useBusiness();
   
   // Use RoleContext for permission-based UI
