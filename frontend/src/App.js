@@ -43,11 +43,9 @@ const API = process.env.REACT_APP_BACKEND_URL || '/api';
 
 // Login Component
 const LoginPage = ({ onLogin }) => {
-  const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-    email: '',
     businessName: ''
   });
   const [loading, setLoading] = useState(false);
