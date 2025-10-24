@@ -1147,8 +1147,8 @@ It's completely free to try!`;
       </Dialog>
 
       {/* Business Profile Dialog */}
-      <Dialog open={showProfileDialog} onOpenChange={(open) => {
-        setShowProfileDialog(open);
+      <Dialog open={showBusinessProfileDialog} onOpenChange={(open) => {
+        setShowBusinessProfileDialog(open);
         if (!open) {
           setBusinessToEdit(null);
         }
