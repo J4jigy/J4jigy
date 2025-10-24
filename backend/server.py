@@ -575,6 +575,111 @@ async def auth_login(request: Request):
         user=user
     )
 
+# In-memory OTP storage (in production, use Redis or database)
+otp_storage = {}
+
+class SendOTPRequest(BaseModel):
+    mobile: str
+
+class VerifyOTPRequest(BaseModel):
+    mobile: str
+    otp: str
+
+@api_router.post("/auth/send-otp")
+@limiter.limit("5/minute")
+async def send_otp(payload: SendOTPRequest, request: Request):
+    """Send OTP to mobile number"""
+    mobile = payload.mobile.strip()
+    
+    # Validate mobile number format (10 digits)
+    if not re.match(r'^\d{10}$', mobile):
+        raise HTTPException(status_code=400, detail="Invalid mobile number format")
+    
+    # Check if user exists with this mobile number
+    user_doc = await db.users.find_one({"phone": mobile})
+    if not user_doc:
+        # For now, allow OTP for any mobile (can be changed to require registration)
+        # Create a temporary user entry or just send OTP
+        pass
+    
+    # Generate 6-digit OTP
+    otp = str(secrets.randbelow(900000) + 100000)
+    
+    # Store OTP with expiry (5 minutes)
+    otp_storage[mobile] = {
+        'otp': otp,
+        'expires_at': datetime.now(timezone.utc) + timedelta(minutes=5),
+        'attempts': 0
+    }
+    
+    # In production, send SMS via Twilio, AWS SNS, or other SMS provider
+    # For development, just log it
+    print(f"OTP for {mobile}: {otp}")
+    
+    await log_audit_event(AuditAction.LOGIN, "auth:send-otp", None, {"mobile": mobile}, request, True)
+    
+    return {"message": "OTP sent successfully", "mobile": mobile}
+
+@api_router.post("/auth/verify-otp", response_model=TokenResponse)
+@limiter.limit("10/minute")
+async def verify_otp(payload: VerifyOTPRequest, request: Request):
+    """Verify OTP and login"""
+    mobile = payload.mobile.strip()
+    otp = payload.otp.strip()
+    
+    # Check if OTP exists
+    if mobile not in otp_storage:
+        raise HTTPException(status_code=400, detail="OTP not found or expired")
+    
+    stored_data = otp_storage[mobile]
+    
+    # Check if OTP is expired
+    if datetime.now(timezone.utc) > stored_data['expires_at']:
+        del otp_storage[mobile]
+        raise HTTPException(status_code=400, detail="OTP expired")
+    
+    # Check attempts
+    if stored_data['attempts'] >= 3:
+        del otp_storage[mobile]
+        raise HTTPException(status_code=400, detail="Too many failed attempts")
+    
+    # Verify OTP
+    if stored_data['otp'] != otp:
+        stored_data['attempts'] += 1
+        raise HTTPException(status_code=400, detail="Invalid OTP")
+    
+    # OTP verified successfully, remove from storage
+    del otp_storage[mobile]
+    
+    # Find or create user
+    user_doc = await db.users.find_one({"phone": mobile})
+    
+    if not user_doc:
+        # Create new user with mobile number
+        user_id = str(uuid.uuid4())
+        user_doc = {
+            "id": user_id,
+            "username": f"user_{mobile}",
+            "phone": mobile,
+            "email": f"{mobile}@temp.com",
+            "role": "owner",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
+        await db.users.insert_one(user_doc)
+    
+    user = User(**{k: v for k, v in user_doc.items() if k != "password"})
+    tokens = generate_tokens(user.id)
+    
+    await log_audit_event(AuditAction.LOGIN, "auth:verify-otp", user.id, {"mobile": mobile}, request, True)
+    
+    return TokenResponse(
+        access_token=tokens["access_token"],
+        refresh_token=tokens["refresh_token"],
+        expires_in=tokens["expires_in"],
+        user=user
+    )
+
 class RegisterRequest(BaseModel):
     username: str
     email: EmailStr
