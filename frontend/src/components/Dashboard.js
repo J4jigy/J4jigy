@@ -42,6 +42,7 @@ export default function Dashboard({ user, onLogout }) {
     activeBusiness,
     switchBusiness,
     addBusiness,
+    updateBusiness,
     deleteBusiness,
     exportBusiness,
     importBusiness,
