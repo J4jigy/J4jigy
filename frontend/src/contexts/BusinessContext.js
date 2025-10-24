@@ -186,7 +186,16 @@ export const BusinessProvider = ({ children }) => {
       createdAt: new Date().toISOString()
     };
     
-    setBusinesses(prev => [...prev, newBusiness]);
+    const updatedBusinesses = [...businesses, newBusiness];
+    setBusinesses(updatedBusinesses);
+    
+    // Save to localStorage immediately
+    try {
+      localStorage.setItem('app_businesses', JSON.stringify(updatedBusinesses));
+    } catch (error) {
+      console.error('Error saving new business:', error);
+    }
+    
     return newBusiness;
   };
 
