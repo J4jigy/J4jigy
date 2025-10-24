@@ -966,7 +966,7 @@ async def verify_otp(payload: VerifyOTPRequest, request: Request):
     except Exception as e:
         print(f"Error verifying OTP: {e}")
         await log_audit_event(
-            AuditAction.LOGIN_ATTEMPT,
+            AuditAction.LOGIN,
             "otp:verify_error",
             None,
             {"mobile": payload.mobile, "error": str(e)},
