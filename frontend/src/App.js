@@ -105,54 +105,93 @@ const LoginPage = ({ onLogin }) => {
     <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
       <Card className="w-full max-w-md bg-slate-800 border-slate-700">
         <CardContent className="p-6">
-          <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold text-white mb-2">Sign In</h1>
-            <p className="text-slate-400">Access your financial dashboard</p>
-          </div>
+          {!showBusinessSetup ? (
+            <>
+              <div className="text-center mb-6">
+                <h1 className="text-2xl font-bold text-white mb-2">Sign In</h1>
+                <p className="text-slate-400">Access your financial dashboard</p>
+              </div>
 
-          {error && (
-            <div className="bg-red-900/50 border border-red-700 text-red-100 px-4 py-2 rounded-md mb-4">
-              {error}
-            </div>
+              {error && (
+                <div className="bg-red-900/50 border border-red-700 text-red-100 px-4 py-2 rounded-md mb-4">
+                  {error}
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div>
+                  <Label htmlFor="username" className="text-slate-200">Username</Label>
+                  <Input
+                    id="username"
+                    type="text"
+                    value={formData.username}
+                    onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
+                    required
+                    className="bg-slate-700 border-slate-600 text-white"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="password" className="text-slate-200">Password</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
+                    required
+                    className="bg-slate-700 border-slate-600 text-white"
+                  />
+                </div>
+
+                <Button 
+                  type="submit" 
+                  disabled={loading}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  {loading ? 'Processing...' : 'Sign In'}
+                </Button>
+              </form>
+
+              <div className="mt-4 text-center text-slate-400 text-sm">
+                Need an account? Register here
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="text-center mb-6">
+                <h1 className="text-2xl font-bold text-white mb-2">Setup Your Business</h1>
+                <p className="text-slate-400">Let's get started with your business details</p>
+              </div>
+
+              {error && (
+                <div className="bg-red-900/50 border border-red-700 text-red-100 px-4 py-2 rounded-md mb-4">
+                  {error}
+                </div>
+              )}
+
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="businessName" className="text-slate-200">Business Name *</Label>
+                  <Input
+                    id="businessName"
+                    type="text"
+                    value={formData.businessName}
+                    onChange={(e) => setFormData(prev => ({ ...prev, businessName: e.target.value }))}
+                    placeholder="Enter your business name"
+                    className="bg-slate-700 border-slate-600 text-white mt-1"
+                  />
+                  <p className="text-xs text-slate-400 mt-1">This will appear on your dashboard</p>
+                </div>
+
+                <Button 
+                  onClick={handleBusinessSetup}
+                  className="w-full bg-green-600 hover:bg-green-700 text-white"
+                >
+                  Continue to Dashboard
+                </Button>
+              </div>
+            </>
           )}
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <Label htmlFor="username" className="text-slate-200">Username</Label>
-              <Input
-                id="username"
-                type="text"
-                value={formData.username}
-                onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
-                required
-                className="bg-slate-700 border-slate-600 text-white"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="password" className="text-slate-200">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                value={formData.password}
-                onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
-                required
-                className="bg-slate-700 border-slate-600 text-white"
-              />
-            </div>
-
-            <Button 
-              type="submit" 
-              disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-            >
-              {loading ? 'Processing...' : 'Sign In'}
-            </Button>
-          </form>
-
-          <div className="mt-4 text-center text-slate-400 text-sm">
-            Need an account? Register here
-          </div>
         </CardContent>
       </Card>
     </div>
