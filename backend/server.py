@@ -714,6 +714,266 @@ async def auth_register(payload: RegisterRequest, request: Request):
         user=user
     )
 
+# ===================== OTP Authentication Endpoints =====================
+
+@api_router.options("/auth/send-otp")
+async def options_send_otp(
+    origin: Optional[str] = Header(default=None),
+    access_control_request_headers: Optional[str] = Header(default=None),
+    access_control_request_method: Optional[str] = Header(default=None),
+):
+    resp = Response(status_code=204)
+    if origin:
+        resp.headers["Access-Control-Allow-Origin"] = origin
+        resp.headers["Vary"] = "Origin"
+    resp.headers["Access-Control-Allow-Methods"] = access_control_request_method or "POST, OPTIONS"
+    resp.headers["Access-Control-Allow-Headers"] = access_control_request_headers or "Authorization, Content-Type, *"
+    resp.headers["Access-Control-Allow-Credentials"] = "true"
+    return resp
+
+@api_router.post("/auth/send-otp")
+@limiter.limit("5/hour")
+async def send_otp(payload: SendOTPRequest, request: Request):
+    """
+    Send OTP to mobile number with following constraints:
+    - 6-digit OTP valid for 3 minutes
+    - Maximum 5 OTP requests per day per mobile number
+    - OTP is mocked (logged to console) instead of sent via SMS
+    """
+    try:
+        # Check daily limit (5 per day)
+        can_send = await check_daily_otp_limit(payload.mobile)
+        if not can_send:
+            await log_audit_event(
+                AuditAction.LOGIN_ATTEMPT,
+                "otp:send_failed",
+                None,
+                {"mobile": payload.mobile, "reason": "daily_limit_exceeded"},
+                request,
+                False
+            )
+            raise HTTPException(
+                status_code=429,
+                detail="Daily OTP limit exceeded. Maximum 5 OTP requests per day. Please try again tomorrow."
+            )
+        
+        # Generate OTP
+        otp_code = generate_otp()
+        
+        # Calculate expiry (3 minutes from now)
+        expires_at = datetime.now(timezone.utc) + timedelta(minutes=3)
+        
+        # Create OTP record
+        otp_record = OTPRecord(
+            mobile=payload.mobile,
+            otp_code=otp_code,
+            expires_at=expires_at,
+            attempts=0,
+            verified=False
+        )
+        
+        # Store in database
+        await db.otp_records.insert_one(otp_record.dict())
+        
+        # Mock send SMS (logs to console instead of sending via AWS SNS)
+        mock_send_sms(payload.mobile, otp_code)
+        
+        # Log audit event
+        await log_audit_event(
+            AuditAction.LOGIN_ATTEMPT,
+            "otp:sent",
+            None,
+            {"mobile": payload.mobile},
+            request,
+            True
+        )
+        
+        return {
+            "success": True,
+            "message": "OTP sent successfully",
+            "expires_in": 180,  # 3 minutes in seconds
+            "mobile": payload.mobile
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error sending OTP: {e}")
+        await log_audit_event(
+            AuditAction.LOGIN_ATTEMPT,
+            "otp:send_error",
+            None,
+            {"mobile": payload.mobile, "error": str(e)},
+            request,
+            False
+        )
+        raise HTTPException(status_code=500, detail="Failed to send OTP. Please try again.")
+
+@api_router.options("/auth/verify-otp")
+async def options_verify_otp(
+    origin: Optional[str] = Header(default=None),
+    access_control_request_headers: Optional[str] = Header(default=None),
+    access_control_request_method: Optional[str] = Header(default=None),
+):
+    resp = Response(status_code=204)
+    if origin:
+        resp.headers["Access-Control-Allow-Origin"] = origin
+        resp.headers["Vary"] = "Origin"
+    resp.headers["Access-Control-Allow-Methods"] = access_control_request_method or "POST, OPTIONS"
+    resp.headers["Access-Control-Allow-Headers"] = access_control_request_headers or "Authorization, Content-Type, *"
+    resp.headers["Access-Control-Allow-Credentials"] = "true"
+    return resp
+
+@api_router.post("/auth/verify-otp", response_model=TokenResponse)
+@limiter.limit("10/minute")
+async def verify_otp(payload: VerifyOTPRequest, request: Request):
+    """
+    Verify OTP and return JWT tokens
+    - OTP must be verified within 3 minutes
+    - Maximum 5 verification attempts per OTP
+    - Creates new user if mobile number not registered
+    """
+    try:
+        # Find the most recent OTP record for this mobile number
+        otp_record = await db.otp_records.find_one(
+            {"mobile": payload.mobile, "verified": False},
+            sort=[("created_at", -1)]
+        )
+        
+        if not otp_record:
+            await log_audit_event(
+                AuditAction.LOGIN_ATTEMPT,
+                "otp:verify_failed",
+                None,
+                {"mobile": payload.mobile, "reason": "no_otp_found"},
+                request,
+                False
+            )
+            raise HTTPException(status_code=400, detail="No OTP found. Please request a new OTP.")
+        
+        # Check if OTP has expired (3 minutes)
+        if datetime.now(timezone.utc) > otp_record['expires_at']:
+            await log_audit_event(
+                AuditAction.LOGIN_ATTEMPT,
+                "otp:verify_failed",
+                None,
+                {"mobile": payload.mobile, "reason": "expired"},
+                request,
+                False
+            )
+            raise HTTPException(status_code=400, detail="OTP has expired. Please request a new OTP.")
+        
+        # Check attempt count (max 5 attempts)
+        if otp_record['attempts'] >= 5:
+            await log_audit_event(
+                AuditAction.LOGIN_ATTEMPT,
+                "otp:verify_failed",
+                None,
+                {"mobile": payload.mobile, "reason": "max_attempts_exceeded"},
+                request,
+                False
+            )
+            raise HTTPException(
+                status_code=429,
+                detail="Maximum verification attempts exceeded. Please request a new OTP."
+            )
+        
+        # Verify OTP code
+        if otp_record['otp_code'] != payload.otp:
+            # Increment attempt count
+            await db.otp_records.update_one(
+                {"id": otp_record['id']},
+                {"$inc": {"attempts": 1}}
+            )
+            
+            remaining_attempts = 5 - (otp_record['attempts'] + 1)
+            await log_audit_event(
+                AuditAction.LOGIN_ATTEMPT,
+                "otp:verify_failed",
+                None,
+                {"mobile": payload.mobile, "reason": "invalid_otp", "remaining_attempts": remaining_attempts},
+                request,
+                False
+            )
+            raise HTTPException(
+                status_code=400,
+                detail=f"Invalid OTP. {remaining_attempts} attempts remaining."
+            )
+        
+        # OTP is valid! Mark as verified
+        await db.otp_records.update_one(
+            {"id": otp_record['id']},
+            {"$set": {"verified": True}}
+        )
+        
+        # Find or create user
+        user_doc = await db.users.find_one({"mobile": payload.mobile})
+        
+        if not user_doc:
+            # Create new user with mobile number
+            user = User(
+                username=f"user_{payload.mobile[-6:]}",  # username from last 6 digits
+                email=f"{payload.mobile}@mobile.user",  # placeholder email
+                business_name=f"Business {payload.mobile[-4:]}",  # default business name
+                mobile=payload.mobile,
+                role=UserRole.USER,
+                is_active=True
+            )
+            user_doc = user.dict()
+            user_doc['password'] = hash_password(secrets.token_urlsafe(16))  # random password
+            
+            await db.users.insert_one(user_doc)
+            
+            # Create default accounts
+            await create_default_accounts(user.id)
+            
+            await log_audit_event(
+                AuditAction.CREATE,
+                "user:created_via_otp",
+                user.id,
+                {"mobile": payload.mobile},
+                request,
+                True
+            )
+        else:
+            user = User(**user_doc)
+        
+        # Generate tokens
+        tokens = generate_tokens(user.id)
+        
+        # Log successful login
+        await log_audit_event(
+            AuditAction.LOGIN,
+            "otp:verified",
+            user.id,
+            {"mobile": payload.mobile},
+            request,
+            True
+        )
+        
+        print(f"\n✅ OTP Login Successful for {payload.mobile}")
+        
+        return TokenResponse(
+            access_token=tokens["access_token"],
+            refresh_token=tokens["refresh_token"],
+            expires_in=tokens["expires_in"],
+            user=user
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error verifying OTP: {e}")
+        await log_audit_event(
+            AuditAction.LOGIN_ATTEMPT,
+            "otp:verify_error",
+            None,
+            {"mobile": payload.mobile, "error": str(e)},
+            request,
+            False
+        )
+        raise HTTPException(status_code=500, detail="Failed to verify OTP. Please try again.")
+
 class DashboardSummary(BaseModel):
     you_will_give: float = 0.0
     you_will_receive: float = 0.0
