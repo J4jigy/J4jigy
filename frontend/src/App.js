@@ -72,7 +72,7 @@ const LoginPage = ({ onLogin }) => {
       setStep('otp');
       setError('');
     } catch (error) {
-      const detail = error.response?.data?.detail;
+      const detail = error.response?.data?.detail || error.response?.data?.error;
       const message = detail || 'Failed to send OTP. Please try again.';
       setError(message);
     } finally {
