@@ -602,7 +602,9 @@ It's completely free to try!`;
               </DialogHeader>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  {businesses.map((business) => (
+                  {businesses.map((business) => {
+                    const profileStrength = calculateProfileStrength(business);
+                    return (
                     <div key={business.id} className="flex items-center justify-between gap-2">
                       <Button
                         onClick={() => handleBusinessSwitch(business)}
@@ -614,10 +616,28 @@ It's completely free to try!`;
                         }`}
                       >
                         <Building className="w-4 h-4 mr-2" />
-                        <div className="text-left">
+                        <div className="text-left flex-1">
                           <div className="font-medium">{business.name}</div>
-                          <div className="text-xs opacity-70">{business.type}</div>
+                          <div className="text-xs opacity-70 flex items-center gap-2">
+                            <span>{business.type}</span>
+                            <span className={`font-semibold ${profileStrength.color}`}>• {profileStrength.level}</span>
+                          </div>
                         </div>
+                      </Button>
+                      <Button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setBusinessToEdit(business);
+                          setShowBusinessDialog(false);
+                          setShowProfileDialog(true);
+                        }}
+                        variant="ghost"
+                        size="sm" 
+                        className="text-purple-400 hover:bg-purple-900/20 hover:text-purple-300 shrink-0"
+                        title="Business Profile"
+                      >
+                        <UserCircle className="w-4 h-4" />
                       </Button>
                       <Button
                         onClick={(e) => {
@@ -630,6 +650,7 @@ It's completely free to try!`;
                         variant="ghost"
                         size="sm" 
                         className="text-blue-400 hover:bg-blue-900/20 hover:text-blue-300 shrink-0"
+                        title="Edit Business"
                       >
                         <Edit2 className="w-4 h-4" />
                       </Button>
@@ -643,12 +664,14 @@ It's completely free to try!`;
                           variant="ghost"
                           size="sm" 
                           className="text-red-400 hover:bg-red-900/20 hover:text-red-300 shrink-0"
+                          title="Delete Business"
                         >
                           <Minus className="w-4 h-4" />
                         </Button>
                       )}
                     </div>
-                  ))}
+                  );
+                })}
                 </div>
                 {hasPermission('business_create') && (
                   <Button
