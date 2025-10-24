@@ -938,7 +938,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Enhanced Receivables page design with comprehensive sub-sections"
+    - "OTP Send Endpoint (/api/auth/send-otp)"
+    - "OTP Verify Endpoint (/api/auth/verify-otp)"
+    - "Mobile OTP Login UI with Country Code Selector"
+    - "OTP Auto-login Persistence"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
