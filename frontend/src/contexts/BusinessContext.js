@@ -311,7 +311,8 @@ export const BusinessProvider = ({ children }) => {
     importBusiness,
     
     // Utilities
-    getDataSize: () => BusinessDataManager.getBusinessDataSize(activeBusiness.id)
+    getDataSize: () => BusinessDataManager.getBusinessDataSize(activeBusiness.id),
+    calculateProfileStrength
   };
 
   return (
