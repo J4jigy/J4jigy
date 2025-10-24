@@ -589,10 +589,31 @@ It's completely free to try!`;
             }
           }}>
             <DialogTrigger asChild>
-              <Button variant="ghost" className="text-white hover:bg-slate-700 flex items-center gap-2">
-                <Building className="w-4 h-4 text-orange-400" />
-                <span className="font-medium">{activeBusiness.name}</span>
-                <ChevronDown className="w-4 h-4" />
+              <Button variant="ghost" className="text-white hover:bg-slate-700 flex flex-col items-center gap-1 py-2 px-3">
+                <div className="flex items-center gap-2">
+                  <Building className="w-4 h-4 text-orange-400" />
+                  <span className="font-medium">{activeBusiness.name}</span>
+                  <ChevronDown className="w-4 h-4" />
+                </div>
+                {(() => {
+                  const profileStrength = calculateProfileStrength(activeBusiness);
+                  return (
+                    <div className="flex items-center gap-2 w-full">
+                      <div className="flex-1 bg-slate-700 rounded-full h-1.5 min-w-[120px]">
+                        <div 
+                          className={`h-1.5 rounded-full transition-all ${
+                            profileStrength.level === 'Low' ? 'bg-red-500' : 
+                            profileStrength.level === 'Medium' ? 'bg-yellow-500' : 'bg-green-500'
+                          }`}
+                          style={{ width: `${profileStrength.percentage}%` }}
+                        />
+                      </div>
+                      <span className={`text-xs font-semibold ${profileStrength.color}`}>
+                        {profileStrength.level}
+                      </span>
+                    </div>
+                  );
+                })()}
               </Button>
             </DialogTrigger>
             <DialogContent className="bg-slate-800 border-slate-700">
