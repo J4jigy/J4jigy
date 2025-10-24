@@ -704,11 +704,8 @@ async def verify_otp(payload: VerifyOTPRequest, request: Request):
     
     print(f"OTP matched successfully!")
     
-    # Remove used OTP
+    # Remove used OTP from list
     otp_storage[mobile].remove(matched_otp)
-    
-    # OTP verified successfully, remove from storage
-    del otp_storage[mobile]
     
     # Find or create user
     user_doc = await db.users.find_one({"phone": mobile})
