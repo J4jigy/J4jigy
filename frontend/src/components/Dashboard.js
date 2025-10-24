@@ -794,20 +794,46 @@ It's completely free to try!`;
             </DialogTrigger>
           <DialogContent className="bg-slate-800 border-slate-700">
             <DialogHeader>
-              <DialogTitle className="text-white">Profile</DialogTitle>
+              <DialogTitle className="text-white">User Profile</DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
-              <div>
-                <p className="text-slate-200">Username: {user?.username}</p>
-                <p className="text-slate-200">Business: {user?.business_name}</p>
-                <p className="text-slate-200">Email: {user?.email}</p>
-                {(user?.is_admin || user?.role === 'admin' || user?.role === 'super_admin') && (
-                  <Badge className="mt-2 bg-purple-600 text-white">Admin</Badge>
-                )}
+              {/* User Information */}
+              <div className="bg-slate-700 p-4 rounded-lg space-y-3">
+                <div className="flex items-center gap-3">
+                  <UserCircle className="w-12 h-12 text-blue-400" />
+                  <div>
+                    <h3 className="text-white font-semibold text-lg">{user?.username || 'User'}</h3>
+                    <p className="text-slate-400 text-sm">{userRole ? standardRoles[userRole]?.label : 'Member'}</p>
+                  </div>
+                </div>
+                
+                <div className="border-t border-slate-600 pt-3 space-y-2">
+                  {user?.email && (
+                    <div className="flex justify-between">
+                      <span className="text-slate-400 text-sm">Email</span>
+                      <span className="text-slate-200 text-sm">{user.email}</span>
+                    </div>
+                  )}
+                  {user?.phone && (
+                    <div className="flex justify-between">
+                      <span className="text-slate-400 text-sm">Phone</span>
+                      <span className="text-slate-200 text-sm">{user.phone}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between">
+                    <span className="text-slate-400 text-sm">Active Business</span>
+                    <span className="text-slate-200 text-sm">{activeBusiness?.name}</span>
+                  </div>
+                </div>
               </div>
+
+              {/* Admin Panel */}
               {(user?.is_admin || user?.role === 'admin' || user?.role === 'super_admin') && (
                 <div className="border-t border-slate-600 pt-4">
-                  <h4 className="text-white font-semibold mb-3">Admin Panel</h4>
+                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                    <Shield className="w-4 h-4 text-purple-400" />
+                    Admin Panel
+                  </h4>
                   <div className="space-y-2">
                     <Button onClick={() => handleNavigate('/admin')} className="w-full bg-purple-600 hover:bg-purple-700">
                       <Shield className="w-4 h-4 mr-2" />
@@ -824,9 +850,14 @@ It's completely free to try!`;
                   </div>
                 </div>
               )}
-              <Button onClick={onLogout} variant="destructive" className="w-full">
-                Logout
-              </Button>
+
+              {/* Logout Button */}
+              <div className="border-t border-slate-600 pt-4">
+                <Button onClick={onLogout} variant="destructive" className="w-full">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Logout
+                </Button>
+              </div>
             </div>
           </DialogContent>
         </Dialog>
