@@ -1067,6 +1067,172 @@ It's completely free to try!`;
         </DialogContent>
       </Dialog>
 
+      {/* Business Profile Dialog */}
+      <Dialog open={showProfileDialog} onOpenChange={(open) => {
+        setShowProfileDialog(open);
+        if (!open) {
+          setBusinessToEdit(null);
+        }
+      }}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-white">Business Profile</DialogTitle>
+          </DialogHeader>
+          {businessToEdit && (() => {
+            const profileStrength = calculateProfileStrength(businessToEdit);
+            return (
+            <div className="space-y-4">
+              {/* Profile Strength Indicator */}
+              <div className="bg-slate-700 p-4 rounded-lg">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-slate-200 font-medium">Profile Strength</span>
+                  <span className={`font-bold ${profileStrength.color}`}>{profileStrength.level}</span>
+                </div>
+                <div className="w-full bg-slate-600 rounded-full h-2">
+                  <div 
+                    className={`h-2 rounded-full transition-all ${
+                      profileStrength.level === 'Low' ? 'bg-red-500' : 
+                      profileStrength.level === 'Medium' ? 'bg-yellow-500' : 'bg-green-500'
+                    }`}
+                    style={{ width: `${profileStrength.percentage}%` }}
+                  />
+                </div>
+                <p className="text-xs text-slate-400 mt-1">{Math.round(profileStrength.percentage)}% complete</p>
+              </div>
+
+              {/* Basic Information */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-slate-200">Business Name *</Label>
+                  <Input
+                    value={businessToEdit.name || ''}
+                    onChange={(e) => setBusinessToEdit({ ...businessToEdit, name: e.target.value })}
+                    className="bg-slate-700 border-slate-600 text-white mt-1"
+                    placeholder="Enter business name"
+                  />
+                </div>
+                <div>
+                  <Label className="text-slate-200">Business Type *</Label>
+                  <Select 
+                    value={businessToEdit.type || 'Retail'} 
+                    onValueChange={(value) => setBusinessToEdit({ ...businessToEdit, type: value })}
+                  >
+                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Retail">Retail</SelectItem>
+                      <SelectItem value="E-commerce">E-commerce</SelectItem>
+                      <SelectItem value="Services">Services</SelectItem>
+                      <SelectItem value="Manufacturing">Manufacturing</SelectItem>
+                      <SelectItem value="Restaurant">Restaurant</SelectItem>
+                      <SelectItem value="Consulting">Consulting</SelectItem>
+                      <SelectItem value="Healthcare">Healthcare</SelectItem>
+                      <SelectItem value="Technology">Technology</SelectItem>
+                      <SelectItem value="Other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Contact Information */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-slate-200">Phone Number</Label>
+                  <Input
+                    value={businessToEdit.phone || ''}
+                    onChange={(e) => setBusinessToEdit({ ...businessToEdit, phone: e.target.value })}
+                    className="bg-slate-700 border-slate-600 text-white mt-1"
+                    placeholder="Enter phone number"
+                    type="tel"
+                  />
+                </div>
+                <div>
+                  <Label className="text-slate-200">Email Address</Label>
+                  <Input
+                    value={businessToEdit.email || ''}
+                    onChange={(e) => setBusinessToEdit({ ...businessToEdit, email: e.target.value })}
+                    className="bg-slate-700 border-slate-600 text-white mt-1"
+                    placeholder="Enter email"
+                    type="email"
+                  />
+                </div>
+              </div>
+
+              {/* Tax Information */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label className="text-slate-200">GST Number</Label>
+                  <Input
+                    value={businessToEdit.gst || ''}
+                    onChange={(e) => setBusinessToEdit({ ...businessToEdit, gst: e.target.value })}
+                    className="bg-slate-700 border-slate-600 text-white mt-1"
+                    placeholder="Enter GST number"
+                  />
+                </div>
+                <div>
+                  <Label className="text-slate-200">PAN Number</Label>
+                  <Input
+                    value={businessToEdit.pan || ''}
+                    onChange={(e) => setBusinessToEdit({ ...businessToEdit, pan: e.target.value })}
+                    className="bg-slate-700 border-slate-600 text-white mt-1"
+                    placeholder="Enter PAN number"
+                  />
+                </div>
+              </div>
+
+              {/* Additional Details */}
+              <div>
+                <Label className="text-slate-200">Website</Label>
+                <Input
+                  value={businessToEdit.website || ''}
+                  onChange={(e) => setBusinessToEdit({ ...businessToEdit, website: e.target.value })}
+                  className="bg-slate-700 border-slate-600 text-white mt-1"
+                  placeholder="https://example.com"
+                  type="url"
+                />
+              </div>
+
+              <div>
+                <Label className="text-slate-200">Business Address</Label>
+                <textarea
+                  value={businessToEdit.address || ''}
+                  onChange={(e) => setBusinessToEdit({ ...businessToEdit, address: e.target.value })}
+                  className="w-full bg-slate-700 border border-slate-600 text-white mt-1 p-2 rounded-md resize-none"
+                  placeholder="Enter complete business address"
+                  rows={3}
+                />
+              </div>
+
+              <div className="flex gap-2">
+                <Button
+                  onClick={() => {
+                    updateBusiness(businessToEdit.id, businessToEdit);
+                    setShowProfileDialog(false);
+                    setBusinessToEdit(null);
+                  }}
+                  className="flex-1 bg-green-600 hover:bg-green-700"
+                  disabled={!businessToEdit.name?.trim()}
+                >
+                  Save Profile
+                </Button>
+                <Button
+                  onClick={() => {
+                    setShowProfileDialog(false);
+                    setBusinessToEdit(null);
+                  }}
+                  variant="outline"
+                  className="flex-1 border-slate-600 text-slate-200"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+            );
+          })()}
+        </DialogContent>
+      </Dialog>
+
       {/* Delete Business Confirmation Dialog */}
       <Dialog open={showDeleteConfirmDialog} onOpenChange={setShowDeleteConfirmDialog}>
         <DialogContent className="bg-slate-800 border-slate-700">
