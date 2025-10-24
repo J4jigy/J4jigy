@@ -855,7 +855,7 @@ async def verify_otp(payload: VerifyOTPRequest, request: Request):
         # Check if OTP has expired (3 minutes)
         if datetime.now(timezone.utc) > otp_record['expires_at']:
             await log_audit_event(
-                AuditAction.LOGIN_ATTEMPT,
+                AuditAction.LOGIN,
                 "otp:verify_failed",
                 None,
                 {"mobile": payload.mobile, "reason": "expired"},
