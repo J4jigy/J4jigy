@@ -220,6 +220,14 @@ class VerifyOTPRequest(BaseModel):
     mobile: str
     otp: str
     
+    @validator('mobile')
+    def validate_mobile(cls, v):
+        # Remove any non-digit characters (same as SendOTPRequest)
+        cleaned = re.sub(r'\D', '', v)
+        if len(cleaned) < 10:
+            raise ValueError('Mobile number must be at least 10 digits')
+        return cleaned
+    
     @validator('otp')
     def validate_otp(cls, v):
         if len(v) != 6 or not v.isdigit():
