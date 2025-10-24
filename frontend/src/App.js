@@ -45,10 +45,13 @@ const API = process.env.REACT_APP_BACKEND_URL || '/api';
 const LoginPage = ({ onLogin }) => {
   const [formData, setFormData] = useState({
     username: '',
-    password: ''
+    password: '',
+    businessName: ''
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showBusinessSetup, setShowBusinessSetup] = useState(false);
+  const [pendingLoginData, setPendingLoginData] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,14 +67,38 @@ const LoginPage = ({ onLogin }) => {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       });
 
-      onLogin(response.data.access_token, response.data.user);
+      // Check if this is first time login (no business name set)
+      const userBusinessKey = `user_${formData.username}_business_created`;
+      const hasBusinessSetup = localStorage.getItem(userBusinessKey);
+      const existingBusinessName = localStorage.getItem('user_business_name');
+      
+      if (!hasBusinessSetup && !existingBusinessName) {
+        // First time login - show business setup
+        setPendingLoginData({
+          token: response.data.access_token,
+          user: response.data.user
+        });
+        setShowBusinessSetup(true);
+        setLoading(false);
+      } else {
+        // Already has business - login directly
+        onLogin(response.data.access_token, response.data.user);
+      }
     } catch (error) {
       const detail = error.response?.data?.detail;
       const message = detail || 'Login failed';
       setError(message);
-    } finally {
       setLoading(false);
     }
+  };
+
+  const handleBusinessSetup = () => {
+    if (!formData.businessName.trim()) {
+      setError('Please enter your business name');
+      return;
+    }
+    
+    onLogin(pendingLoginData.token, pendingLoginData.user, formData.businessName);
   };
 
   return (
