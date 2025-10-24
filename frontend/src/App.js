@@ -169,11 +169,18 @@ function App() {
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
-  const handleLogin = (newToken, newUser) => {
+  const handleLogin = (newToken, newUser, businessName = null) => {
     setToken(newToken);
     setUser(newUser);
     localStorage.setItem('token', newToken);
     localStorage.setItem('user', JSON.stringify(newUser));
+    
+    // If business name is provided, create a new business and clear defaults
+    if (businessName && businessName.trim()) {
+      const userBusinessKey = `user_${newUser.username}_business_created`;
+      localStorage.setItem(userBusinessKey, 'true');
+      localStorage.setItem('user_business_name', businessName.trim());
+    }
   };
 
   const handleLogout = () => {
