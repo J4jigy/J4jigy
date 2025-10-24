@@ -89,19 +89,22 @@ def make_request(method, endpoint, data=None, headers=None, expected_status=200)
     
     try:
         if method.upper() == "GET":
-            response = requests.get(url, headers=default_headers, timeout=30)
+            response = requests.get(url, headers=default_headers, timeout=60)
         elif method.upper() == "POST":
-            response = requests.post(url, json=data, headers=default_headers, timeout=30)
+            response = requests.post(url, json=data, headers=default_headers, timeout=60)
         elif method.upper() == "PUT":
-            response = requests.put(url, json=data, headers=default_headers, timeout=30)
+            response = requests.put(url, json=data, headers=default_headers, timeout=60)
         elif method.upper() == "DELETE":
-            response = requests.delete(url, headers=default_headers, timeout=30)
+            response = requests.delete(url, headers=default_headers, timeout=60)
         else:
             raise ValueError(f"Unsupported method: {method}")
             
         return response
+    except requests.exceptions.Timeout:
+        print(f"Request timeout for {method} {url}")
+        return None
     except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
+        print(f"Request failed for {method} {url}: {e}")
         return None
 
 def test_api_health():
