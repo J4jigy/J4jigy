@@ -697,7 +697,7 @@ It's completely free to try!`;
                           e.stopPropagation();
                           setBusinessToEdit(business);
                           setShowBusinessDialog(false);
-                          setShowProfileDialog(true);
+                          setShowBusinessProfileDialog(true);
                         }}
                         className="cursor-pointer hover:opacity-80 transition-opacity px-2"
                         title="Click to complete business profile"
