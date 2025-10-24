@@ -148,16 +148,35 @@ const LoginPage = ({ onLogin }) => {
             <form onSubmit={handleSendOTP} className="space-y-4">
               <div>
                 <Label htmlFor="mobile" className="text-slate-200">Mobile Number</Label>
-                <Input
-                  id="mobile"
-                  type="tel"
-                  value={mobileNumber}
-                  onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                  placeholder="Enter 10-digit mobile number"
-                  required
-                  maxLength={10}
-                  className="bg-slate-700 border-slate-600 text-white"
-                />
+                <div className="flex gap-2 mt-1">
+                  <Select value={countryCode} onValueChange={setCountryCode}>
+                    <SelectTrigger className="w-32 bg-slate-700 border-slate-600 text-white">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="+91">🇮🇳 +91</SelectItem>
+                      <SelectItem value="+1">🇺🇸 +1</SelectItem>
+                      <SelectItem value="+44">🇬🇧 +44</SelectItem>
+                      <SelectItem value="+86">🇨🇳 +86</SelectItem>
+                      <SelectItem value="+81">🇯🇵 +81</SelectItem>
+                      <SelectItem value="+82">🇰🇷 +82</SelectItem>
+                      <SelectItem value="+65">🇸🇬 +65</SelectItem>
+                      <SelectItem value="+971">🇦🇪 +971</SelectItem>
+                      <SelectItem value="+966">🇸🇦 +966</SelectItem>
+                      <SelectItem value="+61">🇦🇺 +61</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Input
+                    id="mobile"
+                    type="tel"
+                    value={mobileNumber}
+                    onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                    placeholder="Enter 10-digit mobile number"
+                    required
+                    maxLength={10}
+                    className="flex-1 bg-slate-700 border-slate-600 text-white"
+                  />
+                </div>
                 <p className="text-xs text-slate-400 mt-1">We'll send you a 6-digit OTP</p>
               </div>
 
