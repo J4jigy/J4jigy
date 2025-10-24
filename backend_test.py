@@ -1149,8 +1149,9 @@ def test_otp_verify_endpoint():
     print("  Checking backend logs for OTP code...")
     try:
         import subprocess
+        # Check both stdout and stderr logs
         log_result = subprocess.run(
-            ["tail", "-n", "20", "/var/log/supervisor/backend.err.log"],
+            ["tail", "-n", "30", "/var/log/supervisor/backend.out.log"],
             capture_output=True, text=True, timeout=10
         )
         
