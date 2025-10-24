@@ -638,12 +638,19 @@ async def send_otp(payload: SendOTPRequest, request: Request):
     # Generate 6-digit OTP
     otp = str(secrets.randbelow(900000) + 100000)
     
-    # Store OTP with expiry (5 minutes)
-    otp_storage[mobile] = {
+    # Store OTP in list (keep last 5 OTPs for 5 minutes each)
+    if mobile not in otp_storage:
+        otp_storage[mobile] = []
+    
+    # Add new OTP to list
+    otp_storage[mobile].append({
         'otp': otp,
         'expires_at': datetime.now(timezone.utc) + timedelta(minutes=5),
         'attempts': 0
-    }
+    })
+    
+    # Keep only last 5 OTPs
+    otp_storage[mobile] = otp_storage[mobile][-5:]
     
     # In production, send SMS via Twilio, AWS SNS, or other SMS provider
     # For development, just log it
