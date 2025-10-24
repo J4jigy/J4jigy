@@ -706,6 +706,9 @@ async def verify_otp(payload: VerifyOTPRequest, request: Request):
     # Ensure business_name exists
     if "business_name" not in user_data:
         user_data["business_name"] = "My Business"
+    # Convert owner role to admin for compatibility
+    if user_data.get("role") == "owner":
+        user_data["role"] = "admin"
     user = User(**user_data)
     tokens = generate_tokens(user.id)
     
