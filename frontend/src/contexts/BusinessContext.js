@@ -111,6 +111,17 @@ export class BusinessDataManager {
 
 // Business Provider Component
 export const BusinessProvider = ({ children }) => {
+  // Calculate profile strength based on filled fields
+  const calculateProfileStrength = (business) => {
+    const fields = ['name', 'type', 'gst', 'phone', 'email', 'address', 'website', 'pan'];
+    const filledFields = fields.filter(field => business[field] && business[field].toString().trim() !== '');
+    const percentage = (filledFields.length / fields.length) * 100;
+    
+    if (percentage <= 30) return { level: 'Low', color: 'text-red-400', percentage };
+    if (percentage <= 70) return { level: 'Medium', color: 'text-yellow-400', percentage };
+    return { level: 'Strong', color: 'text-green-400', percentage };
+  };
+
   // Load businesses from localStorage or use defaults
   const loadBusinesses = () => {
     try {
@@ -120,16 +131,6 @@ export const BusinessProvider = ({ children }) => {
       }
     } catch (error) {
       console.error('Error loading businesses:', error);
-    }
-    
-    // Check if user has a custom business name from signup/login
-    const userBusinessName = localStorage.getItem('user_business_name');
-    
-    // If user has set a custom business name, use it
-    if (userBusinessName) {
-      return [
-        { id: 1, name: userBusinessName, type: 'Retail', createdAt: new Date().toISOString() }
-      ];
     }
     
     // Default business (fallback)
