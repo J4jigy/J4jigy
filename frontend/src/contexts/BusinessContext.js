@@ -182,6 +182,19 @@ export const BusinessProvider = ({ children }) => {
     return newBusiness;
   };
 
+  // Update/Edit business
+  const updateBusiness = (businessId, updates) => {
+    const updatedBusinesses = businesses.map(b => 
+      b.id === businessId ? { ...b, ...updates } : b
+    );
+    setBusinesses(updatedBusinesses);
+    
+    // Update active business if it's the one being edited
+    if (activeBusiness.id === businessId) {
+      setActiveBusiness({ ...activeBusiness, ...updates });
+    }
+  };
+
   // Delete business
   const deleteBusiness = (businessId) => {
     if (businesses.length <= 1) {
