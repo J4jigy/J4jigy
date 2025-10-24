@@ -867,7 +867,7 @@ async def verify_otp(payload: VerifyOTPRequest, request: Request):
         # Check attempt count (max 5 attempts)
         if otp_record['attempts'] >= 5:
             await log_audit_event(
-                AuditAction.LOGIN_ATTEMPT,
+                AuditAction.LOGIN,
                 "otp:verify_failed",
                 None,
                 {"mobile": payload.mobile, "reason": "max_attempts_exceeded"},
