@@ -44,10 +44,10 @@ const API = process.env.REACT_APP_BACKEND_URL || '/api';
 
 // Login Component
 const LoginPage = ({ onLogin }) => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: ''
-  });
+  const [step, setStep] = useState('mobile'); // 'mobile' or 'otp'
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [countryCode, setCountryCode] = useState('+91');
+  const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
