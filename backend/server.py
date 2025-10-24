@@ -362,6 +362,35 @@ def verify_2fa_token(secret: str, token: str) -> bool:
     totp = pyotp.TOTP(secret)
     return totp.verify(token, valid_window=1)
 
+# OTP Helper Functions
+def generate_otp() -> str:
+    """Generate a secure 6-digit OTP"""
+    return str(secrets.randbelow(1000000)).zfill(6)
+
+def mock_send_sms(mobile: str, otp: str) -> bool:
+    """Mock SMS sending - logs OTP to console instead of sending via AWS SNS"""
+    print(f"\n{'='*60}")
+    print(f"📱 MOCK SMS ALERT")
+    print(f"{'='*60}")
+    print(f"To: {mobile}")
+    print(f"Message: Your verification code is: {otp}")
+    print(f"Valid for: 3 minutes")
+    print(f"{'='*60}\n")
+    return True
+
+async def check_daily_otp_limit(mobile: str) -> bool:
+    """Check if mobile number has exceeded daily OTP limit (5 per day)"""
+    try:
+        today_start = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
+        count = await db.otp_records.count_documents({
+            "mobile": mobile,
+            "created_at": {"$gte": today_start}
+        })
+        return count < 5
+    except Exception as e:
+        print(f"Error checking OTP limit: {e}")
+        return True  # Allow if check fails
+
 def encrypt_sensitive_data(data: str) -> str:
     return cipher_suite.encrypt(data.encode()).decode()
 
