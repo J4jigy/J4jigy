@@ -116,8 +116,8 @@ const LoginPage = ({ onLogin }) => {
     setError('');
     
     try {
-      await axios.post(`${API}/api/auth/send-otp`, {
-        mobile: mobileNumber
+      await axios.post(`${API}/auth/send-otp`, {
+        mobile: `${countryCode}${mobileNumber}`
       });
       setError('');
       alert('OTP resent successfully!');
