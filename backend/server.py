@@ -671,32 +671,41 @@ async def verify_otp(payload: VerifyOTPRequest, request: Request):
     print(f"Verifying OTP - Mobile: '{mobile}', OTP: '{otp}'")
     print(f"OTP Storage keys: {list(otp_storage.keys())}")
     
-    # Check if OTP exists
-    if mobile not in otp_storage:
+    # Check if mobile has any OTPs
+    if mobile not in otp_storage or not otp_storage[mobile]:
         print(f"Mobile '{mobile}' not found in storage")
         raise HTTPException(status_code=400, detail="OTP not found or expired")
     
-    stored_data = otp_storage[mobile]
-    print(f"Stored OTP: '{stored_data['otp']}', Received OTP: '{otp}'")
-    print(f"Expiry: {stored_data['expires_at']}, Now: {datetime.now(timezone.utc)}")
+    # Check against all stored OTPs for this mobile
+    otp_list = otp_storage[mobile]
+    print(f"Stored OTPs: {[o['otp'] for o in otp_list]}, Received OTP: '{otp}'")
     
-    # Check if OTP is expired
-    if datetime.now(timezone.utc) > stored_data['expires_at']:
+    matched_otp = None
+    for stored_otp_data in otp_list:
+        if stored_otp_data['otp'] == otp:
+            matched_otp = stored_otp_data
+            break
+    
+    if not matched_otp:
+        print(f"OTP not found in any stored OTPs")
+        raise HTTPException(status_code=400, detail="Invalid OTP")
+    
+    # Check if matched OTP is expired
+    if datetime.now(timezone.utc) > matched_otp['expires_at']:
         print("OTP has expired")
-        del otp_storage[mobile]
+        otp_storage[mobile].remove(matched_otp)
         raise HTTPException(status_code=400, detail="OTP expired")
     
     # Check attempts
-    if stored_data['attempts'] >= 3:
+    if matched_otp['attempts'] >= 3:
         print("Too many attempts")
-        del otp_storage[mobile]
+        otp_storage[mobile].remove(matched_otp)
         raise HTTPException(status_code=400, detail="Too many failed attempts")
     
-    # Verify OTP
-    if stored_data['otp'] != otp:
-        print(f"OTP mismatch: stored='{stored_data['otp']}' vs received='{otp}'")
-        stored_data['attempts'] += 1
-        raise HTTPException(status_code=400, detail="Invalid OTP")
+    print(f"OTP matched successfully!")
+    
+    # Remove used OTP
+    otp_storage[mobile].remove(matched_otp)
     
     # OTP verified successfully, remove from storage
     del otp_storage[mobile]
