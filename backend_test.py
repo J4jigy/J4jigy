@@ -1516,6 +1516,6 @@ def run_all_tests():
     return success
 
 if __name__ == "__main__":
-    # Run focused tests for payables/receivables as requested in review
-    success = run_payables_receivables_tests()
+    # Run comprehensive OTP authentication tests as requested in review
+    success = run_otp_authentication_tests()
     sys.exit(0 if success else 1)
