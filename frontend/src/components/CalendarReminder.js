@@ -206,7 +206,7 @@ export default function CalendarReminder() {
             </Button>
             <div>
               <h1 className="text-lg font-semibold text-white">Calendar & Reminders</h1>
-              <p className="text-slate-400 text-sm">{activeBusiness?.name || 'Main Business'}</p>
+              <p className="text-slate-400 text-sm">{activeBusiness?.name}</p>
             </div>
           </div>
           <Button 
