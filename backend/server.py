@@ -746,7 +746,7 @@ async def send_otp(payload: SendOTPRequest, request: Request):
         can_send = await check_daily_otp_limit(payload.mobile)
         if not can_send:
             await log_audit_event(
-                AuditAction.LOGIN_ATTEMPT,
+                AuditAction.LOGIN,
                 "otp:send_failed",
                 None,
                 {"mobile": payload.mobile, "reason": "daily_limit_exceeded"},
