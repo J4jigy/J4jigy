@@ -601,11 +601,11 @@ It's completely free to try!`;
               <div className="space-y-4">
                 <div className="space-y-2">
                   {businesses.map((business) => (
-                    <div key={business.id} className="flex items-center justify-between">
+                    <div key={business.id} className="flex items-center justify-between gap-2">
                       <Button
                         onClick={() => handleBusinessSwitch(business)}
                         variant={activeBusiness.id === business.id ? "default" : "ghost"}
-                        className={`flex-1 justify-start mr-2 ${
+                        className={`flex-1 justify-start ${
                           activeBusiness.id === business.id 
                             ? 'bg-blue-600 hover:bg-blue-700' 
                             : 'text-slate-200 hover:bg-slate-700'
@@ -616,6 +616,20 @@ It's completely free to try!`;
                           <div className="font-medium">{business.name}</div>
                           <div className="text-xs opacity-70">{business.type}</div>
                         </div>
+                      </Button>
+                      <Button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setBusinessToEdit(business);
+                          setShowBusinessDialog(false);
+                          setShowEditBusinessDialog(true);
+                        }}
+                        variant="ghost"
+                        size="sm" 
+                        className="text-blue-400 hover:bg-blue-900/20 hover:text-blue-300 shrink-0"
+                      >
+                        <Edit2 className="w-4 h-4" />
                       </Button>
                       {businesses.length > 1 && (
                         <Button
