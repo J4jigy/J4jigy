@@ -56,7 +56,6 @@ export default function Dashboard({ user, onLogout }) {
   const [showBusinessDialog, setShowBusinessDialog] = useState(false);
   const [showAddBusinessDialog, setShowAddBusinessDialog] = useState(false);
   const [showEditBusinessDialog, setShowEditBusinessDialog] = useState(false);
-  const [showProfileDialog, setShowProfileDialog] = useState(false);
   const [businessToEdit, setBusinessToEdit] = useState(null);
   const [showImportDialog, setShowImportDialog] = useState(false);
   const [showExportDialog, setShowExportDialog] = useState(false);
