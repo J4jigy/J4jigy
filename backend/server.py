@@ -608,7 +608,8 @@ async def auth_login(request: Request):
     )
 
 # In-memory OTP storage (in production, use Redis or database)
-otp_storage = {}
+# Store multiple OTPs per mobile to handle concurrent requests
+otp_storage = {}  # Format: {mobile: [{'otp': '123456', 'expires_at': datetime, 'attempts': 0}, ...]}
 
 class SendOTPRequest(BaseModel):
     mobile: str
