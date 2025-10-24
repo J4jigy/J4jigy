@@ -203,6 +203,38 @@ class TokenResponse(BaseModel):
     expires_in: int
     user: User
 
+# OTP Models
+class SendOTPRequest(BaseModel):
+    mobile: str
+    
+    @validator('mobile')
+    def validate_mobile(cls, v):
+        # Remove any non-digit characters
+        cleaned = re.sub(r'\D', '', v)
+        if len(cleaned) < 10:
+            raise ValueError('Mobile number must be at least 10 digits')
+        return cleaned
+
+class VerifyOTPRequest(BaseModel):
+    mobile: str
+    otp: str
+    
+    @validator('otp')
+    def validate_otp(cls, v):
+        if len(v) != 6 or not v.isdigit():
+            raise ValueError('OTP must be exactly 6 digits')
+        return v
+
+class OTPRecord(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    mobile: str
+    otp_code: str
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    expires_at: datetime
+    attempts: int = 0
+    verified: bool = False
+    user_id: Optional[str] = None
+
 # Audit Log Model
 class AuditLog(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
