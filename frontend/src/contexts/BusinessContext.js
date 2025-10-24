@@ -122,11 +122,19 @@ export const BusinessProvider = ({ children }) => {
       console.error('Error loading businesses:', error);
     }
     
-    // Default businesses
+    // Check if user has a custom business name from signup/login
+    const userBusinessName = localStorage.getItem('user_business_name');
+    
+    // If user has set a custom business name, use it
+    if (userBusinessName) {
+      return [
+        { id: 1, name: userBusinessName, type: 'Retail', createdAt: new Date().toISOString() }
+      ];
+    }
+    
+    // Default business (fallback)
     return [
-      { id: 1, name: 'Main Business', type: 'Retail', createdAt: new Date().toISOString() },
-      { id: 2, name: 'Online Store', type: 'E-commerce', createdAt: new Date().toISOString() },
-      { id: 3, name: 'Consulting Firm', type: 'Services', createdAt: new Date().toISOString() }
+      { id: 1, name: 'My Business', type: 'Retail', createdAt: new Date().toISOString() }
     ];
   };
 
