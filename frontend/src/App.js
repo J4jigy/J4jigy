@@ -234,17 +234,22 @@ function App() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    // Check for existing user session and auto-login
     const storedToken = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
+    const rememberMe = localStorage.getItem('rememberMe');
     
-    if (storedToken) {
-      setToken(storedToken);
-      if (storedUser) {
-        try {
-          setUser(JSON.parse(storedUser));
-        } catch (e) {
-          console.error('Error parsing user:', e);
-        }
+    if (storedToken && storedUser && rememberMe === 'true') {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setToken(storedToken);
+        setUser(parsedUser);
+        // User will automatically see the dashboard without login
+      } catch (error) {
+        console.error('Error loading user session:', error);
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('rememberMe');
       }
     }
 
