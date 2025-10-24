@@ -861,7 +861,13 @@ async def verify_otp(payload: VerifyOTPRequest, request: Request):
             raise HTTPException(status_code=400, detail="No OTP found. Please request a new OTP.")
         
         # Check if OTP has expired (3 minutes)
-        if datetime.now(timezone.utc) > otp_record['expires_at']:
+        expires_at = otp_record['expires_at']
+        if isinstance(expires_at, str):
+            expires_at = datetime.fromisoformat(expires_at.replace('Z', '+00:00'))
+        elif expires_at.tzinfo is None:
+            expires_at = expires_at.replace(tzinfo=timezone.utc)
+        
+        if datetime.now(timezone.utc) > expires_at:
             await log_audit_event(
                 AuditAction.LOGIN,
                 "otp:verify_failed",
