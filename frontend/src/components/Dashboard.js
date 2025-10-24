@@ -672,21 +672,50 @@ It's completely free to try!`;
                       >
                         <Edit2 className="w-4 h-4" />
                       </Button>
-                      {businesses.length > 1 && (
-                        <Button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            confirmDeleteBusiness(business.id, business.name);
-                          }}
-                          variant="ghost"
-                          size="sm" 
-                          className="text-red-400 hover:bg-red-900/20 hover:text-red-300 shrink-0"
-                          title="Delete Business"
-                        >
-                          <Minus className="w-4 h-4" />
-                        </Button>
-                      )}
+                        {businesses.length > 1 && (
+                          <Button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              confirmDeleteBusiness(business.id, business.name);
+                            }}
+                            variant="ghost"
+                            size="sm" 
+                            className="text-red-400 hover:bg-red-900/20 hover:text-red-300 shrink-0"
+                            title="Delete Business"
+                          >
+                            <Minus className="w-4 h-4" />
+                          </Button>
+                        )}
+                      </div>
+                      
+                      {/* Profile Strength Measurement Scale - Clickable */}
+                      <div 
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setBusinessToEdit(business);
+                          setShowBusinessDialog(false);
+                          setShowProfileDialog(true);
+                        }}
+                        className="cursor-pointer hover:opacity-80 transition-opacity px-2"
+                        title="Click to complete business profile"
+                      >
+                        <div className="flex items-center gap-2">
+                          <div className="flex-1 bg-slate-700 rounded-full h-2">
+                            <div 
+                              className={`h-2 rounded-full transition-all ${
+                                profileStrength.level === 'Low' ? 'bg-red-500' : 
+                                profileStrength.level === 'Medium' ? 'bg-yellow-500' : 'bg-green-500'
+                              }`}
+                              style={{ width: `${profileStrength.percentage}%` }}
+                            />
+                          </div>
+                          <span className={`text-xs font-semibold ${profileStrength.color} min-w-[60px]`}>
+                            {profileStrength.level} {Math.round(profileStrength.percentage)}%
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
