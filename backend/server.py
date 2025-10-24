@@ -843,7 +843,7 @@ async def verify_otp(payload: VerifyOTPRequest, request: Request):
         
         if not otp_record:
             await log_audit_event(
-                AuditAction.LOGIN_ATTEMPT,
+                AuditAction.LOGIN,
                 "otp:verify_failed",
                 None,
                 {"mobile": payload.mobile, "reason": "no_otp_found"},
