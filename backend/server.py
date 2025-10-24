@@ -152,6 +152,7 @@ class User(BaseModel):
     username: str
     email: EmailStr
     business_name: str
+    mobile: Optional[str] = None
     role: UserRole = UserRole.USER
     is_active: bool = True
     is_verified: bool = False
