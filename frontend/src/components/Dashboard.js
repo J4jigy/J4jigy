@@ -33,6 +33,7 @@ export default function Dashboard({ user, onLogout }) {
   });
   const [summary, setSummary] = useState({ you_will_give: 0, you_will_receive: 0, net_position: 0 });
   const [showProfileDialog, setShowProfileDialog] = useState(false);
+  const [showBusinessProfileDialog, setShowBusinessProfileDialog] = useState(false);
   const [showInviteCodesDialog, setShowInviteCodesDialog] = useState(false);
   const [inviteCodes, setInviteCodes] = useState([]);
   
