@@ -203,7 +203,7 @@ const LoginPage = ({ onLogin }) => {
                   className="bg-slate-700 border-slate-600 text-white text-center text-2xl tracking-widest"
                   autoFocus
                 />
-                <p className="text-xs text-slate-400 mt-1">OTP sent to +91-{mobileNumber}</p>
+                <p className="text-xs text-slate-400 mt-1">OTP sent to {countryCode} {mobileNumber}</p>
               </div>
 
               <Button 
