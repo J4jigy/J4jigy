@@ -741,7 +741,7 @@ async def options_send_otp(
     return resp
 
 @api_router.post("/auth/send-otp")
-@limiter.limit("5/hour")
+@limiter.limit("20/hour")
 async def send_otp(payload: SendOTPRequest, request: Request):
     """
     Send OTP to mobile number with following constraints:
