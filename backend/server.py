@@ -781,7 +781,7 @@ async def send_otp(payload: SendOTPRequest, request: Request):
         
         # Log audit event
         await log_audit_event(
-            AuditAction.LOGIN_ATTEMPT,
+            AuditAction.LOGIN,
             "otp:sent",
             None,
             {"mobile": payload.mobile},
