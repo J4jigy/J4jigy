@@ -150,8 +150,10 @@ const LoginPage = ({ onLogin }) => {
           {!showBusinessSetup ? (
             <>
               <div className="text-center mb-6">
-                <h1 className="text-2xl font-bold text-white mb-2">Sign In</h1>
-                <p className="text-slate-400">Access your financial dashboard</p>
+                <h1 className="text-2xl font-bold text-white mb-2">{isSignup ? 'Sign Up' : 'Sign In'}</h1>
+                <p className="text-slate-400">
+                  {isSignup ? 'Create your account and start managing your business' : 'Access your financial dashboard'}
+                </p>
               </div>
 
               {error && (
@@ -160,7 +162,7 @@ const LoginPage = ({ onLogin }) => {
                 </div>
               )}
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={isSignup ? handleSignup : handleSubmit} className="space-y-4">
                 <div>
                   <Label htmlFor="username" className="text-slate-200">Username</Label>
                   <Input
@@ -172,6 +174,20 @@ const LoginPage = ({ onLogin }) => {
                     className="bg-slate-700 border-slate-600 text-white"
                   />
                 </div>
+
+                {isSignup && (
+                  <div>
+                    <Label htmlFor="email" className="text-slate-200">Email</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                      required
+                      className="bg-slate-700 border-slate-600 text-white"
+                    />
+                  </div>
+                )}
 
                 <div>
                   <Label htmlFor="password" className="text-slate-200">Password</Label>
@@ -185,12 +201,28 @@ const LoginPage = ({ onLogin }) => {
                   />
                 </div>
 
+                {isSignup && (
+                  <div>
+                    <Label htmlFor="businessName" className="text-slate-200">Business Name</Label>
+                    <Input
+                      id="businessName"
+                      type="text"
+                      value={formData.businessName}
+                      onChange={(e) => setFormData(prev => ({ ...prev, businessName: e.target.value }))}
+                      required
+                      placeholder="Enter your business name"
+                      className="bg-slate-700 border-slate-600 text-white"
+                    />
+                    <p className="text-xs text-slate-400 mt-1">This will appear on your dashboard</p>
+                  </div>
+                )}
+
                 <Button 
                   type="submit" 
                   disabled={loading}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                  className={`w-full ${isSignup ? 'bg-green-600 hover:bg-green-700' : 'bg-blue-600 hover:bg-blue-700'} text-white`}
                 >
-                  {loading ? 'Processing...' : 'Sign In'}
+                  {loading ? 'Processing...' : (isSignup ? 'Create Account' : 'Sign In')}
                 </Button>
               </form>
 
