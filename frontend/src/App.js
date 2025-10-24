@@ -94,8 +94,8 @@ const LoginPage = ({ onLogin }) => {
 
     try {
       // Verify OTP and login
-      const response = await axios.post(`${API}/api/auth/verify-otp`, {
-        mobile: mobileNumber,
+      const response = await axios.post(`${API}/auth/verify-otp`, {
+        mobile: `${countryCode}${mobileNumber}`,
         otp: otp
       });
 
