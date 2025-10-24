@@ -625,25 +625,23 @@ It's completely free to try!`;
                   {businesses.map((business) => {
                     const profileStrength = calculateProfileStrength(business);
                     return (
-                    <div key={business.id} className="flex items-center justify-between gap-2">
-                      <Button
-                        onClick={() => handleBusinessSwitch(business)}
-                        variant={activeBusiness.id === business.id ? "default" : "ghost"}
-                        className={`flex-1 justify-start ${
-                          activeBusiness.id === business.id 
-                            ? 'bg-blue-600 hover:bg-blue-700' 
-                            : 'text-slate-200 hover:bg-slate-700'
-                        }`}
-                      >
-                        <Building className="w-4 h-4 mr-2" />
-                        <div className="text-left flex-1">
-                          <div className="font-medium">{business.name}</div>
-                          <div className="text-xs opacity-70 flex items-center gap-2">
-                            <span>{business.type}</span>
-                            <span className={`font-semibold ${profileStrength.color}`}>• {profileStrength.level}</span>
+                    <div key={business.id} className="space-y-2">
+                      <div className="flex items-center justify-between gap-2">
+                        <Button
+                          onClick={() => handleBusinessSwitch(business)}
+                          variant={activeBusiness.id === business.id ? "default" : "ghost"}
+                          className={`flex-1 justify-start ${
+                            activeBusiness.id === business.id 
+                              ? 'bg-blue-600 hover:bg-blue-700' 
+                              : 'text-slate-200 hover:bg-slate-700'
+                          }`}
+                        >
+                          <Building className="w-4 h-4 mr-2" />
+                          <div className="text-left flex-1">
+                            <div className="font-medium">{business.name}</div>
+                            <div className="text-xs opacity-70">{business.type}</div>
                           </div>
-                        </div>
-                      </Button>
+                        </Button>
                       <Button
                         onClick={(e) => {
                           e.preventDefault();
