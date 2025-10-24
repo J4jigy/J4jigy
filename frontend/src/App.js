@@ -44,6 +44,7 @@ const API = process.env.REACT_APP_BACKEND_URL || '/api';
 // Login Component
 const LoginPage = ({ onLogin }) => {
   const [step, setStep] = useState('mobile'); // 'mobile' or 'otp'
+  const [countryCode, setCountryCode] = useState('+91'); // Default India
   const [mobileNumber, setMobileNumber] = useState('');
   const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
