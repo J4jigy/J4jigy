@@ -101,46 +101,6 @@ const LoginPage = ({ onLogin }) => {
     onLogin(pendingLoginData.token, pendingLoginData.user, formData.businessName);
   };
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-
-    if (!formData.businessName.trim()) {
-      setError('Please enter your business name');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      // Register user
-      const signupResponse = await axios.post(`${API}/api/auth/register`, {
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-        role: 'owner'
-      });
-
-      // After successful registration, login automatically
-      const form = new URLSearchParams();
-      form.append('username', formData.username);
-      form.append('password', formData.password);
-      
-      const loginResponse = await axios.post(`${API}/api/auth/login`, form, {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-      });
-
-      // Login with business name
-      onLogin(loginResponse.data.access_token, loginResponse.data.user, formData.businessName);
-    } catch (error) {
-      const detail = error.response?.data?.detail;
-      const message = detail || 'Registration failed';
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
       <Card className="w-full max-w-md bg-slate-800 border-slate-700">
