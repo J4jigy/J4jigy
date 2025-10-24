@@ -649,7 +649,7 @@ It's completely free to try!`;
                           e.stopPropagation();
                           setBusinessToEdit(business);
                           setShowBusinessDialog(false);
-                          setShowProfileDialog(true);
+                          setShowBusinessProfileDialog(true);
                         }}
                         variant="ghost"
                         size="sm" 
