@@ -122,7 +122,9 @@ const LoginPage = ({ onLogin }) => {
       setError('');
       alert('OTP resent successfully!');
     } catch (error) {
-      setError('Failed to resend OTP. Please try again.');
+      const detail = error.response?.data?.detail || error.response?.data?.error;
+      const message = detail || 'Failed to resend OTP. Please try again.';
+      setError(message);
     } finally {
       setLoading(false);
     }
