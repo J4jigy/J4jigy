@@ -889,7 +889,7 @@ async def verify_otp(payload: VerifyOTPRequest, request: Request):
             
             remaining_attempts = 5 - (otp_record['attempts'] + 1)
             await log_audit_event(
-                AuditAction.LOGIN_ATTEMPT,
+                AuditAction.LOGIN,
                 "otp:verify_failed",
                 None,
                 {"mobile": payload.mobile, "reason": "invalid_otp", "remaining_attempts": remaining_attempts},
