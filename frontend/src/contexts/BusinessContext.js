@@ -281,6 +281,7 @@ export const BusinessProvider = ({ children }) => {
     // Business management
     switchBusiness,
     addBusiness,
+    updateBusiness,
     deleteBusiness,
     
     // Data management
