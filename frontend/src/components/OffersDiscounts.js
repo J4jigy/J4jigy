@@ -129,7 +129,7 @@ export default function OffersDiscounts() {
             </Button>
             <div>
               <h1 className="text-lg font-semibold text-white">Offers & Discounts</h1>
-              <p className="text-slate-400 text-sm">{activeBusiness?.name || 'Main Business'}</p>
+              <p className="text-slate-400 text-sm">{activeBusiness?.name}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
