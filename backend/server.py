@@ -659,8 +659,13 @@ async def verify_otp(payload: VerifyOTPRequest, request: Request):
     mobile = payload.mobile.strip()
     otp = payload.otp.strip()
     
+    # Debug logging
+    print(f"Verifying OTP - Mobile: '{mobile}', OTP: '{otp}'")
+    print(f"OTP Storage keys: {list(otp_storage.keys())}")
+    
     # Check if OTP exists
     if mobile not in otp_storage:
+        print(f"Mobile '{mobile}' not found in storage")
         raise HTTPException(status_code=400, detail="OTP not found or expired")
     
     stored_data = otp_storage[mobile]
