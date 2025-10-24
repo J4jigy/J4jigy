@@ -195,7 +195,11 @@ const LoginPage = ({ onLogin }) => {
               </form>
 
               <div className="mt-4 text-center text-slate-400 text-sm">
-                Need an account? Register here
+                {isSignup ? (
+                  <>Already have an account? <button onClick={() => setIsSignup(false)} className="text-blue-400 hover:text-blue-300">Sign in here</button></>
+                ) : (
+                  <>Need an account? <button onClick={() => setIsSignup(true)} className="text-blue-400 hover:text-blue-300">Register here</button></>
+                )}
               </div>
             </>
           ) : (
