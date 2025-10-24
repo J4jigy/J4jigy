@@ -1271,7 +1271,7 @@ def test_otp_expiry():
     try:
         import subprocess
         log_result = subprocess.run(
-            ["tail", "-n", "10", "/var/log/supervisor/backend.err.log"],
+            ["tail", "-n", "20", "/var/log/supervisor/backend.out.log"],
             capture_output=True, text=True, timeout=10
         )
         
