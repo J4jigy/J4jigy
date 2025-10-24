@@ -162,17 +162,44 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Add pagination to Cash page subsections and reorganize Dashboard tiles between Business and Finance tabs"
+user_problem_statement: "Reinstall mobile OTP authentication system with mock SMS sending (OTP logged to console). Requirements: 6-digit OTP, 3-minute expiry, 5 retry limit per day, country code selector with India +91 default, auto-login persistence."
 
 backend:
+  - task: "OTP Send Endpoint (/api/auth/send-otp)"
+    implemented: true
+    working: "NA"
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented /api/auth/send-otp endpoint with 6-digit OTP generation, 3-minute expiry, 5 per day limit check, mock SMS sending (logs OTP to console), MongoDB storage in otp_records collection, rate limiting (5/hour), audit logging. Endpoint validates mobile number, generates secure OTP using secrets module, stores in DB with expiry timestamp, and returns success response."
+
+  - task: "OTP Verify Endpoint (/api/auth/verify-otp)"
+    implemented: true
+    working: "NA"
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented /api/auth/verify-otp endpoint with OTP verification within 3 minutes, max 5 verification attempts per OTP, auto user creation if mobile not registered, JWT token generation on success, rate limiting (10/minute), audit logging. Endpoint checks OTP validity, expiry, attempt count, creates new user with mobile number if not exists, and returns JWT tokens for authentication."
+
   - task: "Backend services running"
     implemented: true
     working: true
     file: "server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
+        - working: true
+          agent: "main"
+          comment: "Backend restarted successfully after OTP implementation. All endpoints should be accessible."
         - working: true
           agent: "main"
           comment: "Backend services restarted successfully after compile fix"
