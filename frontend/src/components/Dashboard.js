@@ -967,6 +967,81 @@ It's completely free to try!`;
         </DialogContent>
       </Dialog>
 
+      {/* Edit Business Dialog */}
+      <Dialog open={showEditBusinessDialog} onOpenChange={(open) => {
+        setShowEditBusinessDialog(open);
+        if (!open) {
+          setBusinessToEdit(null);
+        }
+      }}>
+        <DialogContent className="bg-slate-800 border-slate-700">
+          <DialogHeader>
+            <DialogTitle className="text-white">Edit Business</DialogTitle>
+          </DialogHeader>
+          {businessToEdit && (
+            <div className="space-y-4">
+              <div>
+                <Label className="text-slate-200">Business Name</Label>
+                <Input
+                  value={businessToEdit.name}
+                  onChange={(e) => setBusinessToEdit({ ...businessToEdit, name: e.target.value })}
+                  className="bg-slate-700 border-slate-600 text-white mt-1"
+                  placeholder="Enter business name"
+                />
+              </div>
+              <div>
+                <Label className="text-slate-200">Business Type</Label>
+                <Select 
+                  value={businessToEdit.type} 
+                  onValueChange={(value) => setBusinessToEdit({ ...businessToEdit, type: value })}
+                >
+                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white mt-1">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Retail">Retail</SelectItem>
+                    <SelectItem value="E-commerce">E-commerce</SelectItem>
+                    <SelectItem value="Services">Services</SelectItem>
+                    <SelectItem value="Manufacturing">Manufacturing</SelectItem>
+                    <SelectItem value="Restaurant">Restaurant</SelectItem>
+                    <SelectItem value="Consulting">Consulting</SelectItem>
+                    <SelectItem value="Healthcare">Healthcare</SelectItem>
+                    <SelectItem value="Technology">Technology</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  onClick={() => {
+                    updateBusiness(businessToEdit.id, {
+                      name: businessToEdit.name,
+                      type: businessToEdit.type
+                    });
+                    setShowEditBusinessDialog(false);
+                    setBusinessToEdit(null);
+                  }}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700"
+                  disabled={!businessToEdit.name.trim()}
+                >
+                  Save Changes
+                </Button>
+                <Button
+                  onClick={() => {
+                    setShowEditBusinessDialog(false);
+                    setBusinessToEdit(null);
+                  }}
+                  variant="outline"
+                  className="flex-1 border-slate-600 text-slate-200"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
       {/* Delete Business Confirmation Dialog */}
       <Dialog open={showDeleteConfirmDialog} onOpenChange={setShowDeleteConfirmDialog}>
         <DialogContent className="bg-slate-800 border-slate-700">
