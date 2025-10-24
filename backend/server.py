@@ -694,13 +694,19 @@ async def verify_otp(payload: VerifyOTPRequest, request: Request):
             "username": f"user_{mobile}",
             "phone": mobile,
             "email": f"{mobile}@temp.com",
-            "role": "owner",
+            "business_name": "My Business",
+            "role": "admin",
             "is_active": True,
             "created_at": datetime.now(timezone.utc).isoformat()
         }
         await db.users.insert_one(user_doc)
     
-    user = User(**{k: v for k, v in user_doc.items() if k != "password"})
+    # Prepare user data for User model
+    user_data = {k: v for k, v in user_doc.items() if k != "password" and k != "_id"}
+    # Ensure business_name exists
+    if "business_name" not in user_data:
+        user_data["business_name"] = "My Business"
+    user = User(**user_data)
     tokens = generate_tokens(user.id)
     
     await log_audit_event(AuditAction.LOGIN, "auth:verify-otp", user.id, {"mobile": mobile}, request, True)
