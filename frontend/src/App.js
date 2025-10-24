@@ -65,8 +65,8 @@ const LoginPage = ({ onLogin }) => {
 
     try {
       // Send OTP request to backend
-      await axios.post(`${API}/api/auth/send-otp`, {
-        mobile: mobileNumber
+      await axios.post(`${API}/auth/send-otp`, {
+        mobile: `${countryCode}${mobileNumber}`
       });
 
       setStep('otp');
