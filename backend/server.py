@@ -280,6 +280,14 @@ class InviteCode(BaseModel):
     usage_limit: int = 1
     usage_count: int = 0
 
+class UserSession(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    user_id: str
+    session_token: str
+    expires_at: datetime
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    last_used: Optional[datetime] = None
+
 class Account(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str
