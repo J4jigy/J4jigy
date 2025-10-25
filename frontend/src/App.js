@@ -44,17 +44,23 @@ const API = process.env.REACT_APP_BACKEND_URL ? `${process.env.REACT_APP_BACKEND
 
 // Login Component
 const LoginPage = ({ onLogin }) => {
-  const [step, setStep] = useState('mobile'); // 'mobile' or 'otp'
+  const [name, setName] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [countryCode, setCountryCode] = useState('+91');
-  const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSendOTP = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+
+    // Validate name
+    if (name.trim().length < 2) {
+      setError('Please enter your name (at least 2 characters)');
+      setLoading(false);
+      return;
+    }
 
     // Validate mobile number
     if (mobileNumber.length !== 10 || !/^\d+$/.test(mobileNumber)) {
@@ -64,66 +70,18 @@ const LoginPage = ({ onLogin }) => {
     }
 
     try {
-      // Send OTP request to backend
-      await axios.post(`${API}/auth/send-otp`, {
+      // Login request to backend
+      const response = await axios.post(`${API}/auth/mobile-login`, {
+        name: name.trim(),
         mobile: `${countryCode}${mobileNumber}`
-      });
-
-      setStep('otp');
-      setError('');
-    } catch (error) {
-      const detail = error.response?.data?.detail || error.response?.data?.error;
-      const message = detail || 'Failed to send OTP. Please try again.';
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleVerifyOTP = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-
-    // Validate OTP
-    if (otp.length !== 6 || !/^\d+$/.test(otp)) {
-      setError('Please enter a valid 6-digit OTP');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      // Verify OTP and login
-      const response = await axios.post(`${API}/auth/verify-otp`, {
-        mobile: `${countryCode}${mobileNumber}`,
-        otp: otp
       });
 
       // Login successfully - set remember me flag
       localStorage.setItem('rememberMe', 'true');
       onLogin(response.data.access_token, response.data.user);
     } catch (error) {
-      const detail = error.response?.data?.detail;
-      const message = detail || 'Invalid OTP. Please try again.';
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleResendOTP = async () => {
-    setLoading(true);
-    setError('');
-    
-    try {
-      await axios.post(`${API}/auth/send-otp`, {
-        mobile: `${countryCode}${mobileNumber}`
-      });
-      setError('');
-      alert('OTP resent successfully!');
-    } catch (error) {
       const detail = error.response?.data?.detail || error.response?.data?.error;
-      const message = detail || 'Failed to resend OTP. Please try again.';
+      const message = detail || 'Login failed. Please try again.';
       setError(message);
     } finally {
       setLoading(false);
