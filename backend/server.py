@@ -723,7 +723,123 @@ async def auth_register(payload: RegisterRequest, request: Request):
         user=user
     )
 
-# ===================== OTP Authentication Endpoints =====================
+# ===================== Simple Mobile Login Endpoint =====================
+
+class MobileLoginRequest(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    mobile: str
+    
+    @validator('mobile')
+    def validate_mobile(cls, v):
+        # Remove any non-digit characters
+        cleaned = re.sub(r'\D', '', v)
+        if len(cleaned) < 10:
+            raise ValueError('Mobile number must be at least 10 digits')
+        return cleaned
+
+@api_router.options("/auth/mobile-login")
+async def options_mobile_login(
+    origin: Optional[str] = Header(default=None),
+    access_control_request_headers: Optional[str] = Header(default=None),
+    access_control_request_method: Optional[str] = Header(default=None),
+):
+    resp = Response(status_code=204)
+    if origin:
+        resp.headers["Access-Control-Allow-Origin"] = origin
+        resp.headers["Vary"] = "Origin"
+    resp.headers["Access-Control-Allow-Methods"] = access_control_request_method or "POST, OPTIONS"
+    resp.headers["Access-Control-Allow-Headers"] = access_control_request_headers or "Authorization, Content-Type, *"
+    resp.headers["Access-Control-Allow-Credentials"] = "true"
+    return resp
+
+@api_router.post("/auth/mobile-login", response_model=TokenResponse)
+@limiter.limit("10/minute")
+async def mobile_login(payload: MobileLoginRequest, request: Request):
+    """
+    Simple login with name and mobile number only.
+    - Creates new user if mobile doesn't exist
+    - Logs in existing user if mobile exists
+    - Returns JWT tokens for authentication
+    """
+    try:
+        # Find user by mobile number
+        user_doc = await db.users.find_one({"mobile": payload.mobile})
+        
+        if not user_doc:
+            # Create new user with name and mobile number
+            user = User(
+                username=f"user_{payload.mobile[-6:]}",  # username from last 6 digits
+                email=f"{payload.mobile}@mobile.user",  # placeholder email
+                business_name=f"{payload.name}'s Business",  # business name from user's name
+                mobile=payload.mobile,
+                role=UserRole.USER,
+                is_active=True
+            )
+            user_doc = user.dict()
+            user_doc['password'] = hash_password(secrets.token_urlsafe(16))  # random password
+            user_doc['display_name'] = payload.name  # Store the user's actual name
+            
+            await db.users.insert_one(user_doc)
+            
+            # Create default accounts
+            await create_default_accounts(user.id)
+            
+            await log_audit_event(
+                AuditAction.CREATE,
+                "user:created_via_mobile",
+                user.id,
+                {"name": payload.name, "mobile": payload.mobile},
+                request,
+                True
+            )
+        else:
+            # Update user's display name if provided
+            if payload.name and payload.name != user_doc.get('display_name'):
+                await db.users.update_one(
+                    {"mobile": payload.mobile},
+                    {"$set": {"display_name": payload.name}}
+                )
+                user_doc['display_name'] = payload.name
+            
+            user = User(**user_doc)
+        
+        # Generate tokens
+        tokens = generate_tokens(user.id)
+        
+        # Log successful login
+        await log_audit_event(
+            AuditAction.LOGIN,
+            "mobile:login",
+            user.id,
+            {"name": payload.name, "mobile": payload.mobile},
+            request,
+            True
+        )
+        
+        print(f"\n✅ Mobile Login Successful: {payload.name} ({payload.mobile})")
+        
+        return TokenResponse(
+            access_token=tokens["access_token"],
+            refresh_token=tokens["refresh_token"],
+            expires_in=tokens["expires_in"],
+            user=user
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error in mobile login: {e}")
+        await log_audit_event(
+            AuditAction.LOGIN,
+            "mobile:login_error",
+            None,
+            {"name": payload.name, "mobile": payload.mobile, "error": str(e)},
+            request,
+            False
+        )
+        raise HTTPException(status_code=500, detail="Login failed. Please try again.")
+
+# ===================== OTP Authentication Endpoints (DEPRECATED) =====================
 
 @api_router.options("/auth/send-otp")
 async def options_send_otp(
