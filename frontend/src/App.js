@@ -55,6 +55,11 @@ const LoginPage = ({ onLogin }) => {
   // Handle Google OAuth callback
   useEffect(() => {
     const handleGoogleCallback = async () => {
+      // Log all URL information for debugging
+      console.log('Full URL:', window.location.href);
+      console.log('Hash:', window.location.hash);
+      console.log('Search params:', window.location.search);
+      
       // Check for session_id in URL fragment
       const hash = window.location.hash;
       if (hash.includes('session_id=')) {
@@ -62,9 +67,11 @@ const LoginPage = ({ onLogin }) => {
         const sessionId = hash.split('session_id=')[1].split('&')[0];
         
         console.log('Processing Google OAuth callback with session_id:', sessionId);
+        console.log('API URL:', API);
         
         try {
           // Exchange session_id for user data
+          console.log('Making request to:', `${API}/auth/session`);
           const response = await axios.post(`${API}/auth/session`, {}, {
             headers: {
               'X-Session-ID': sessionId
@@ -72,7 +79,7 @@ const LoginPage = ({ onLogin }) => {
             withCredentials: true
           });
           
-          console.log('Google OAuth successful, user:', response.data.user);
+          console.log('Google OAuth successful, response:', response.data);
           
           // Clear URL fragment
           window.history.replaceState(null, '', window.location.pathname);
@@ -86,11 +93,14 @@ const LoginPage = ({ onLogin }) => {
           
         } catch (error) {
           console.error('Google auth error:', error);
-          setError('Google login failed. Please try again.');
+          console.error('Error details:', error.response?.data);
+          setError(`Google login failed: ${error.response?.data?.detail || error.message}`);
           setProcessingGoogle(false);
           // Clear URL fragment even on error
           window.history.replaceState(null, '', window.location.pathname);
         }
+      } else {
+        console.log('No session_id in URL hash');
       }
     };
     
