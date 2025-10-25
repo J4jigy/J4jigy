@@ -52,6 +52,49 @@ const LoginPage = ({ onLogin }) => {
   const [error, setError] = useState('');
   const [processingGoogle, setProcessingGoogle] = useState(false);
 
+  // Handle Google OAuth callback
+  useEffect(() => {
+    const handleGoogleCallback = async () => {
+      // Check for session_id in URL fragment
+      const hash = window.location.hash;
+      if (hash.includes('session_id=')) {
+        setProcessingGoogle(true);
+        const sessionId = hash.split('session_id=')[1].split('&')[0];
+        
+        try {
+          // Exchange session_id for user data
+          const response = await axios.post(`${API}/auth/session`, {}, {
+            headers: {
+              'X-Session-ID': sessionId
+            },
+            withCredentials: true
+          });
+          
+          // Clear URL fragment
+          window.history.replaceState(null, '', window.location.pathname);
+          
+          // Login successfully
+          localStorage.setItem('rememberMe', 'true');
+          localStorage.setItem('authMethod', 'google');
+          onLogin(response.data.user.id, response.data.user);
+        } catch (error) {
+          console.error('Google auth error:', error);
+          setError('Google login failed. Please try again.');
+          setProcessingGoogle(false);
+          window.history.replaceState(null, '', window.location.pathname);
+        }
+      }
+    };
+    
+    handleGoogleCallback();
+  }, [onLogin]);
+
+  const handleGoogleLogin = () => {
+    // Redirect to Emergent Auth with dashboard as redirect URL
+    const redirectUrl = `${FRONTEND_URL}/`;
+    window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
