@@ -41,7 +41,7 @@ import { BusinessProvider } from './contexts/BusinessContext';
 import { RoleProvider } from './contexts/RoleContext';
 
 const API = process.env.REACT_APP_BACKEND_URL ? `${process.env.REACT_APP_BACKEND_URL}/api` : '/api';
-const FRONTEND_URL = process.env.REACT_APP_BACKEND_URL?.replace('/api', '') || window.location.origin;
+const FRONTEND_URL = process.env.REACT_APP_BACKEND_URL || window.location.origin;
 
 // Login Component
 const LoginPage = ({ onLogin }) => {
