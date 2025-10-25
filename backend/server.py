@@ -1006,6 +1006,9 @@ async def create_session(request: Request, response: Response):
         
         await db.user_sessions.insert_one(session.dict())
         
+        # Also generate JWT tokens for frontend compatibility
+        jwt_tokens = generate_tokens(user.id)
+        
         # Set httpOnly cookie
         response.set_cookie(
             key="session_token",
@@ -1030,6 +1033,9 @@ async def create_session(request: Request, response: Response):
         
         return {
             "success": True,
+            "access_token": jwt_tokens["access_token"],
+            "refresh_token": jwt_tokens["refresh_token"],
+            "expires_in": jwt_tokens["expires_in"],
             "user": user.dict()
         }
         
