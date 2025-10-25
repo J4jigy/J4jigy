@@ -477,6 +477,58 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     except jwt.PyJWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
 
+async def get_user_from_session(request: Request) -> Optional[User]:
+    """Get user from session_token cookie or Authorization header"""
+    # Try to get session token from cookie first
+    session_token = request.cookies.get("session_token")
+    
+    # Fallback to Authorization header
+    if not session_token:
+        auth_header = request.headers.get("authorization")
+        if auth_header and auth_header.startswith("Bearer "):
+            session_token = auth_header.split(" ")[1]
+    
+    if not session_token:
+        return None
+    
+    # Check if it's a session token or JWT
+    # Session tokens from Google OAuth are stored in user_sessions
+    session = await db.user_sessions.find_one({
+        "session_token": session_token,
+        "expires_at": {"$gt": datetime.now(timezone.utc)}
+    })
+    
+    if session:
+        # Valid session token - get user
+        user_doc = await db.users.find_one({"id": session["user_id"]})
+        if user_doc:
+            # Update last used
+            await db.user_sessions.update_one(
+                {"session_token": session_token},
+                {"$set": {"last_used": datetime.now(timezone.utc)}}
+            )
+            return User(**user_doc)
+    else:
+        # Try as JWT token
+        try:
+            payload = jwt.decode(session_token, SECRET_KEY, algorithms=[ALGORITHM])
+            user_id = payload.get("user_id")
+            if user_id:
+                user_doc = await db.users.find_one({"id": user_id})
+                if user_doc:
+                    return User(**user_doc)
+        except:
+            pass
+    
+    return None
+
+async def require_auth(request: Request) -> User:
+    """Require authentication - raises 401 if not authenticated"""
+    user = await get_user_from_session(request)
+    if not user:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    return user
+
 def require_role(required_roles: List[UserRole]):
     def role_checker(current_user: User = Depends(get_current_user)):
         if current_user.role not in required_roles:
