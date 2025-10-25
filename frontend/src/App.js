@@ -81,8 +81,8 @@ const LoginPage = ({ onLogin }) => {
           localStorage.setItem('rememberMe', 'true');
           localStorage.setItem('authMethod', 'google');
           
-          // The onLogin will trigger and show dashboard
-          onLogin(response.data.user.id, response.data.user);
+          // Use the access_token from response
+          onLogin(response.data.access_token, response.data.user);
           
         } catch (error) {
           console.error('Google auth error:', error);
