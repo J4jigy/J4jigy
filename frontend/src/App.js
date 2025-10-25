@@ -61,6 +61,8 @@ const LoginPage = ({ onLogin }) => {
         setProcessingGoogle(true);
         const sessionId = hash.split('session_id=')[1].split('&')[0];
         
+        console.log('Processing Google OAuth callback with session_id:', sessionId);
+        
         try {
           // Exchange session_id for user data
           const response = await axios.post(`${API}/auth/session`, {}, {
@@ -70,17 +72,23 @@ const LoginPage = ({ onLogin }) => {
             withCredentials: true
           });
           
+          console.log('Google OAuth successful, user:', response.data.user);
+          
           // Clear URL fragment
           window.history.replaceState(null, '', window.location.pathname);
           
-          // Login successfully
+          // Login successfully - store auth data and redirect to dashboard
           localStorage.setItem('rememberMe', 'true');
           localStorage.setItem('authMethod', 'google');
+          
+          // The onLogin will trigger and show dashboard
           onLogin(response.data.user.id, response.data.user);
+          
         } catch (error) {
           console.error('Google auth error:', error);
           setError('Google login failed. Please try again.');
           setProcessingGoogle(false);
+          // Clear URL fragment even on error
           window.history.replaceState(null, '', window.location.pathname);
         }
       }
@@ -92,6 +100,7 @@ const LoginPage = ({ onLogin }) => {
   const handleGoogleLogin = () => {
     // Redirect to Emergent Auth with dashboard as redirect URL
     const redirectUrl = `${FRONTEND_URL}/`;
+    console.log('Redirecting to Google OAuth, redirect URL:', redirectUrl);
     window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
   };
 
