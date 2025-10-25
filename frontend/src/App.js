@@ -41,6 +41,7 @@ import { BusinessProvider } from './contexts/BusinessContext';
 import { RoleProvider } from './contexts/RoleContext';
 
 const API = process.env.REACT_APP_BACKEND_URL ? `${process.env.REACT_APP_BACKEND_URL}/api` : '/api';
+const FRONTEND_URL = process.env.REACT_APP_BACKEND_URL?.replace('/api', '') || window.location.origin;
 
 // Login Component
 const LoginPage = ({ onLogin }) => {
@@ -49,6 +50,7 @@ const LoginPage = ({ onLogin }) => {
   const [countryCode, setCountryCode] = useState('+91');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [processingGoogle, setProcessingGoogle] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
