@@ -41,7 +41,6 @@ import { BusinessProvider } from './contexts/BusinessContext';
 import { RoleProvider } from './contexts/RoleContext';
 
 const API = process.env.REACT_APP_BACKEND_URL ? `${process.env.REACT_APP_BACKEND_URL}/api` : '/api';
-const FRONTEND_URL = process.env.REACT_APP_BACKEND_URL || window.location.origin;
 
 // Login Component
 const LoginPage = ({ onLogin }) => {
@@ -50,69 +49,6 @@ const LoginPage = ({ onLogin }) => {
   const [countryCode, setCountryCode] = useState('+91');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [processingGoogle, setProcessingGoogle] = useState(false);
-
-  // Handle Google OAuth callback
-  useEffect(() => {
-    const handleGoogleCallback = async () => {
-      // Log all URL information for debugging
-      console.log('Full URL:', window.location.href);
-      console.log('Hash:', window.location.hash);
-      console.log('Search params:', window.location.search);
-      
-      // Check for session_id in URL fragment
-      const hash = window.location.hash;
-      if (hash.includes('session_id=')) {
-        setProcessingGoogle(true);
-        const sessionId = hash.split('session_id=')[1].split('&')[0];
-        
-        console.log('Processing Google OAuth callback with session_id:', sessionId);
-        console.log('API URL:', API);
-        
-        try {
-          // Exchange session_id for user data
-          console.log('Making request to:', `${API}/auth/session`);
-          const response = await axios.post(`${API}/auth/session`, {}, {
-            headers: {
-              'X-Session-ID': sessionId
-            },
-            withCredentials: true
-          });
-          
-          console.log('Google OAuth successful, response:', response.data);
-          
-          // Clear URL fragment
-          window.history.replaceState(null, '', window.location.pathname);
-          
-          // Login successfully - store auth data and redirect to dashboard
-          localStorage.setItem('rememberMe', 'true');
-          localStorage.setItem('authMethod', 'google');
-          
-          // Use the access_token from response
-          onLogin(response.data.access_token, response.data.user);
-          
-        } catch (error) {
-          console.error('Google auth error:', error);
-          console.error('Error details:', error.response?.data);
-          setError(`Google login failed: ${error.response?.data?.detail || error.message}`);
-          setProcessingGoogle(false);
-          // Clear URL fragment even on error
-          window.history.replaceState(null, '', window.location.pathname);
-        }
-      } else {
-        console.log('No session_id in URL hash');
-      }
-    };
-    
-    handleGoogleCallback();
-  }, [onLogin]);
-
-  const handleGoogleLogin = () => {
-    // Redirect to Emergent Auth with dashboard as redirect URL
-    const redirectUrl = `${FRONTEND_URL}/`;
-    console.log('Redirecting to Google OAuth, redirect URL:', redirectUrl);
-    window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
-  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
