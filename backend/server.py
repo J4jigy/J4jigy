@@ -899,6 +899,181 @@ async def mobile_login(payload: MobileLoginRequest, request: Request):
         )
         raise HTTPException(status_code=500, detail="Login failed. Please try again.")
 
+# ===================== Google OAuth Endpoints =====================
+
+@api_router.options("/auth/session")
+async def options_session(
+    origin: Optional[str] = Header(default=None),
+    access_control_request_headers: Optional[str] = Header(default=None),
+    access_control_request_method: Optional[str] = Header(default=None),
+):
+    resp = Response(status_code=204)
+    if origin:
+        resp.headers["Access-Control-Allow-Origin"] = origin
+        resp.headers["Vary"] = "Origin"
+    resp.headers["Access-Control-Allow-Methods"] = access_control_request_method or "POST, OPTIONS"
+    resp.headers["Access-Control-Allow-Headers"] = access_control_request_headers or "Authorization, Content-Type, X-Session-ID, *"
+    resp.headers["Access-Control-Allow-Credentials"] = "true"
+    return resp
+
+@api_router.post("/auth/session")
+async def create_session(request: Request, response: Response):
+    """
+    Handle Google OAuth callback - exchange session_id for user data and create session
+    """
+    try:
+        # Get session_id from header
+        session_id = request.headers.get("X-Session-ID")
+        if not session_id:
+            raise HTTPException(status_code=400, detail="Session ID required")
+        
+        # Call Emergent Auth API to get user data
+        import httpx
+        async with httpx.AsyncClient() as client:
+            auth_response = await client.get(
+                "https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data",
+                headers={"X-Session-ID": session_id},
+                timeout=30.0
+            )
+            
+            if auth_response.status_code != 200:
+                raise HTTPException(status_code=400, detail="Invalid session ID")
+            
+            google_data = auth_response.json()
+        
+        # Extract user data
+        email = google_data.get("email")
+        name = google_data.get("name", "User")
+        picture = google_data.get("picture")
+        google_session_token = google_data.get("session_token")
+        
+        if not email or not google_session_token:
+            raise HTTPException(status_code=400, detail="Invalid auth data")
+        
+        # Find or create user
+        user_doc = await db.users.find_one({"email": email})
+        
+        if not user_doc:
+            # Create new user
+            user = User(
+                username=email.split('@')[0],
+                email=email,
+                business_name=f"{name}'s Business",
+                role=UserRole.USER,
+                is_active=True,
+                is_verified=True
+            )
+            user_doc = user.dict()
+            user_doc['password'] = hash_password(secrets.token_urlsafe(16))
+            user_doc['display_name'] = name
+            user_doc['picture'] = picture
+            
+            await db.users.insert_one(user_doc)
+            await create_default_accounts(user.id)
+            
+            await log_audit_event(
+                AuditAction.CREATE,
+                "user:created_via_google",
+                user.id,
+                {"email": email, "name": name},
+                request,
+                True
+            )
+        else:
+            # Update display name and picture if changed
+            updates = {}
+            if name and name != user_doc.get('display_name'):
+                updates['display_name'] = name
+            if picture and picture != user_doc.get('picture'):
+                updates['picture'] = picture
+            
+            if updates:
+                await db.users.update_one(
+                    {"email": email},
+                    {"$set": updates}
+                )
+                user_doc.update(updates)
+            
+            user = User(**user_doc)
+        
+        # Create session in database
+        expires_at = datetime.now(timezone.utc) + timedelta(days=7)
+        session = UserSession(
+            user_id=user.id,
+            session_token=google_session_token,
+            expires_at=expires_at
+        )
+        
+        await db.user_sessions.insert_one(session.dict())
+        
+        # Set httpOnly cookie
+        response.set_cookie(
+            key="session_token",
+            value=google_session_token,
+            httponly=True,
+            secure=True,
+            samesite="none",
+            max_age=7 * 24 * 60 * 60,  # 7 days
+            path="/"
+        )
+        
+        await log_audit_event(
+            AuditAction.LOGIN,
+            "google:login",
+            user.id,
+            {"email": email},
+            request,
+            True
+        )
+        
+        print(f"\n✅ Google Login Successful: {name} ({email})")
+        
+        return {
+            "success": True,
+            "user": user.dict()
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error in Google OAuth: {e}")
+        await log_audit_event(
+            AuditAction.LOGIN,
+            "google:login_error",
+            None,
+            {"error": str(e)},
+            request,
+            False
+        )
+        raise HTTPException(status_code=500, detail="Authentication failed")
+
+@api_router.get("/auth/me")
+async def get_me(request: Request):
+    """Get current authenticated user"""
+    user = await get_user_from_session(request)
+    if not user:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    return user
+
+@api_router.post("/auth/logout")
+async def logout(request: Request, response: Response):
+    """Logout user and clear session"""
+    session_token = request.cookies.get("session_token")
+    
+    if session_token:
+        # Delete session from database
+        await db.user_sessions.delete_one({"session_token": session_token})
+    
+    # Clear cookie
+    response.delete_cookie(
+        key="session_token",
+        path="/",
+        samesite="none",
+        secure=True
+    )
+    
+    return {"success": True, "message": "Logged out successfully"}
+
 # ===================== OTP Authentication Endpoints (DEPRECATED) =====================
 
 @api_router.options("/auth/send-otp")
