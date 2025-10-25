@@ -88,23 +88,6 @@ const LoginPage = ({ onLogin }) => {
     }
   };
 
-  // Show loading screen while processing Google OAuth
-  if (processingGoogle) {
-    return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
-        <Card className="w-full max-w-md bg-slate-800 border-slate-700">
-          <CardContent className="p-6">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-              <h2 className="text-xl font-bold text-white mb-2">Signing you in...</h2>
-              <p className="text-slate-400">Please wait while we complete your Google login</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
       <Card className="w-full max-w-md bg-slate-800 border-slate-700">
