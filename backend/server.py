@@ -1107,7 +1107,7 @@ async def send_otp(payload: SendOTPRequest, request: Request):
     - OTP is mocked (logged to console) instead of sent via SMS
     """
     try:
-        # Check daily limit (5 per day)
+        # Check daily limit (20 per day)
         can_send = await check_daily_otp_limit(payload.mobile)
         if not can_send:
             await log_audit_event(
@@ -1120,7 +1120,7 @@ async def send_otp(payload: SendOTPRequest, request: Request):
             )
             raise HTTPException(
                 status_code=429,
-                detail="Daily OTP limit exceeded. Maximum 5 OTP requests per day. Please try again tomorrow."
+                detail="Daily OTP limit exceeded. Maximum 20 OTP requests per day. Please try again tomorrow."
             )
         
         # Generate OTP
