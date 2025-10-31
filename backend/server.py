@@ -1103,7 +1103,7 @@ async def send_otp(payload: SendOTPRequest, request: Request):
     """
     Send OTP to mobile number with following constraints:
     - 6-digit OTP valid for 3 minutes
-    - Maximum 5 OTP requests per day per mobile number
+    - Maximum 20 OTP requests per day per mobile number
     - OTP is mocked (logged to console) instead of sent via SMS
     """
     try:
