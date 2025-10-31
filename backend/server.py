@@ -396,14 +396,14 @@ def mock_send_sms(mobile: str, otp: str) -> bool:
     return True
 
 async def check_daily_otp_limit(mobile: str) -> bool:
-    """Check if mobile number has exceeded daily OTP limit (5 per day)"""
+    """Check if mobile number has exceeded daily OTP limit (20 per day)"""
     try:
         today_start = datetime.now(timezone.utc).replace(hour=0, minute=0, second=0, microsecond=0)
         count = await db.otp_records.count_documents({
             "mobile": mobile,
             "created_at": {"$gte": today_start}
         })
-        return count < 5
+        return count < 20
     except Exception as e:
         print(f"Error checking OTP limit: {e}")
         return True  # Allow if check fails
