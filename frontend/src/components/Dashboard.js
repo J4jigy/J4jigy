@@ -908,10 +908,12 @@ It's completely free to try!`;
               <div className="grid grid-cols-3 gap-3 px-4">
                 {getTilesForTab(tab).map((tile, idx) => {
                   const IconComponent = tile.icon;
+                  // Increase size specifically for Customers and Suppliers icons
+                  const iconSize = (tile.name === 'Customers' || tile.name === 'Suppliers') ? 'w-14 h-14' : 'w-12 h-12';
                   return (
                     <Card key={idx} onClick={() => handleTileClick(tile)} className="bg-slate-700/80 border border-slate-600 hover:bg-slate-600 transition-all duration-200 cursor-pointer shadow-xl aspect-square flex items-center justify-center">
                       <CardContent className="p-3 flex flex-col items-center justify-center text-center w-full h-full">
-                        <IconComponent className={`w-12 h-12 mb-2 ${tile.iconColor}`} />
+                        <IconComponent className={`${iconSize} mb-2 ${tile.iconColor}`} />
                         <div className="text-center">
                           <p className="text-white text-[12px] font-semibold leading-tight mb-0 break-words">{tile.name}</p>
                           {tile.subtitle && (
