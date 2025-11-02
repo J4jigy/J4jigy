@@ -82,7 +82,7 @@ export default function Bank() {
       </div>
 
       {/* Content */}
-      <div className="px-4 py-4 mt-4">
+      <div className="px-4 py-4">
         {/* Large Balance Card */}
         <Card className="bg-gradient-to-br from-emerald-600 to-emerald-700 border-0 mb-4">
           <CardContent className="p-4">
