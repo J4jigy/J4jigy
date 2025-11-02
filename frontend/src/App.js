@@ -100,10 +100,10 @@ const LoginPage = ({ onLogin }) => {
         <CardContent className="p-6">
           <div className="text-center mb-6">
             <h1 className="text-2xl font-bold text-white mb-2">
-              {isSignUp ? 'Sign Up' : 'Sign In'}
+              Welcome Back
             </h1>
             <p className="text-slate-400">
-              {isSignUp ? 'Create a new account' : 'Enter your credentials to continue'}
+              Enter your name and mobile number to continue
             </p>
           </div>
 
@@ -113,22 +113,20 @@ const LoginPage = ({ onLogin }) => {
             </div>
           )}
 
-          <form onSubmit={isSignUp ? handleSignUp : handleLogin} className="space-y-4">
-            {isSignUp && (
-              <div>
-                <Label htmlFor="name" className="text-slate-200">Name</Label>
-                <Input
-                  id="name"
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Enter your name"
-                  required
-                  className="mt-1 bg-slate-700 border-slate-600 text-white"
-                  autoFocus
-                />
-              </div>
-            )}
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <Label htmlFor="name" className="text-slate-200">Name</Label>
+              <Input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your name"
+                required
+                className="mt-1 bg-slate-700 border-slate-600 text-white"
+                autoFocus
+              />
+            </div>
 
             <div>
               <Label htmlFor="mobile" className="text-slate-200">Mobile Number</Label>
@@ -159,75 +157,34 @@ const LoginPage = ({ onLogin }) => {
                   required
                   maxLength={10}
                   className="flex-1 bg-slate-700 border-slate-600 text-white text-lg"
-                  autoFocus={!isSignUp}
                 />
               </div>
             </div>
 
-            <div>
-              <Label htmlFor="password" className="text-slate-200">Password</Label>
-              <div className="relative mt-1">
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter password"
-                  required
-                  className="bg-slate-700 border-slate-600 text-white pr-10"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-white"
-                >
-                  {showPassword ? '👁️' : '👁️‍🗨️'}
-                </button>
-              </div>
-              <p className="text-xs text-slate-400 mt-1">Min 8 characters with letters, numbers & symbols</p>
+            <div className="flex items-center gap-2">
+              <input
+                id="rememberMe"
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="w-4 h-4 bg-slate-700 border-slate-600 rounded"
+              />
+              <Label htmlFor="rememberMe" className="text-slate-300 cursor-pointer">
+                Remember me
+              </Label>
             </div>
-
-            {!isSignUp && (
-              <div className="flex items-center gap-2">
-                <input
-                  id="rememberMe"
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 bg-slate-700 border-slate-600 rounded"
-                />
-                <Label htmlFor="rememberMe" className="text-slate-300 cursor-pointer">
-                  Remember me
-                </Label>
-              </div>
-            )}
 
             <Button 
               type="submit" 
-              disabled={loading || mobileNumber.length !== 10 || password.length < 8 || (isSignUp && name.trim().length < 2)}
+              disabled={loading || mobileNumber.length !== 10 || name.trim().length < 2}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white"
             >
-              {loading ? (isSignUp ? 'Creating Account...' : 'Signing In...') : (isSignUp ? 'Create Account' : 'Sign In')}
+              {loading ? 'Signing In...' : 'Sign In'}
             </Button>
           </form>
 
-          <div className="mt-4 text-center">
-            <button
-              type="button"
-              onClick={() => {
-                setIsSignUp(!isSignUp);
-                setError('');
-                setName('');
-                setPassword('');
-              }}
-              className="text-blue-400 hover:text-blue-300 text-sm"
-            >
-              {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
-            </button>
-          </div>
-
           <div className="mt-4 text-center text-slate-400 text-sm">
-            Secure {isSignUp ? 'registration' : 'login'} with mobile number and password
+            Secure login with mobile number only
           </div>
         </CardContent>
       </Card>
