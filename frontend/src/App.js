@@ -290,6 +290,7 @@ function App() {
             <Route path="/offers-discounts" element={token ? <OffersDiscounts /> : <Navigate to="/login" />} />
             <Route path="/calendar" element={token ? <CalendarReminder /> : <Navigate to="/login" />} />
             <Route path="/calculator" element={token ? <Calculator /> : <Navigate to="/login" />} />
+            <Route path="/scan-documents" element={token ? <ScanDocuments /> : <Navigate to="/login" />} />
           </Routes>
         </Router>
       </RoleProvider>
