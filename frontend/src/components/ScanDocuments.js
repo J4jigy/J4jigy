@@ -346,7 +346,7 @@ const ScanDocuments = () => {
       {/* Floating Camera Button */}
       <div className="fixed bottom-6 right-6 z-50">
         <Button
-          onClick={() => setShowCameraDialog(true)}
+          onClick={() => fileInputRef.current?.click()}
           className="w-16 h-16 rounded-full bg-cyan-500 hover:bg-cyan-600 shadow-lg flex items-center justify-center"
         >
           <Camera className="w-8 h-8 text-white" />
