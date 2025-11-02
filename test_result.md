@@ -1501,3 +1501,5 @@ metadata:
   version: "1.0"
   test_sequence: 0
   run_ui: true
+    - agent: "main"
+      message: "ENHANCED: Added BOTH camera and upload options to Document Scanning. CAMERA OPTION: Floating camera button opens live camera dialog with video preview and capture button, after capture goes to Edit Dialog, 'Capture Again' button in Edit Dialog reopens camera. UPLOAD OPTION: Upload button opens file picker, after selection goes to Edit Dialog, 'Retry' button reopens file picker. WORKFLOW: Camera → Live Preview → Capture → Edit with Filters → Save/Capture Again. Upload → File Picker → Edit with Filters → Save/Retry. Both workflows support full filter suite (brightness, contrast, grayscale, auto-enhance, B&W, shadow removal). Source tracking ensures correct button behavior in Edit Dialog. Ready for testing."
