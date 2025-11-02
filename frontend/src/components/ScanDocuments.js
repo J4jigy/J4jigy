@@ -140,24 +140,39 @@ const ScanDocuments = () => {
   const processUploadedFile = async (file) => {
     setIsScanning(true);
     
-    // Simulate processing
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    const newDocument = {
-      id: Date.now(),
-      name: file.name,
-      type: file.type.includes('pdf') ? 'PDF Document' : 'Image Document',
-      date: new Date().toISOString().split('T')[0],
-      size: `${Math.round(file.size / 1024)} KB`,
-      thumbnail: file.type.includes('pdf') ? '📄' : '🖼️',
-      extractedText: file.type.includes('pdf') 
-        ? 'PDF Document processed\nInvoice #INV-2024-002\nAmount: $890.00\nVendor: Office Supplies Inc'
-        : 'Image processed\nReceipt scanned\nTotal: $67.89\nStore: Local Market',
-      confidence: '91%'
-    };
-    
-    setScannedDocuments(prev => [newDocument, ...prev]);
-    setIsScanning(false);
+    try {
+      // Create object URL safely
+      let imageUrl = null;
+      try {
+        imageUrl = URL.createObjectURL(file);
+      } catch (error) {
+        console.error('Error creating URL:', error);
+      }
+      
+      // Simulate processing
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      const newDocument = {
+        id: Date.now(),
+        name: file.name,
+        type: file.type.includes('pdf') ? 'PDF Document' : 'Image Document',
+        date: new Date().toISOString().split('T')[0],
+        size: `${Math.round(file.size / 1024)} KB`,
+        thumbnail: file.type.includes('pdf') ? '📄' : '🖼️',
+        extractedText: file.type.includes('pdf') 
+          ? 'PDF Document processed\nInvoice #INV-2024-002\nAmount: $890.00\nVendor: Office Supplies Inc'
+          : 'Image processed\nReceipt scanned\nTotal: $67.89\nStore: Local Market',
+        confidence: '91%',
+        imageUrl: imageUrl
+      };
+      
+      setScannedDocuments(prev => [newDocument, ...prev]);
+      setIsScanning(false);
+    } catch (error) {
+      console.error('Error processing file:', error);
+      alert('Failed to process file. Please try again.');
+      setIsScanning(false);
+    }
   };
 
   // Delete document
