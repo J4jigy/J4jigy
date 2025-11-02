@@ -44,14 +44,12 @@ const API = process.env.REACT_APP_BACKEND_URL ? `${process.env.REACT_APP_BACKEND
 
 // Login Component
 const LoginPage = ({ onLogin }) => {
-  const [step, setStep] = useState('mobile'); // 'mobile' or 'otp'
   const [mobileNumber, setMobileNumber] = useState('');
   const [countryCode, setCountryCode] = useState('+91');
-  const [otp, setOtp] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSendOTP = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -64,39 +62,10 @@ const LoginPage = ({ onLogin }) => {
     }
 
     try {
-      // Send OTP request to backend
-      await axios.post(`${API}/auth/send-otp`, {
+      // Login request to backend
+      const response = await axios.post(`${API}/auth/mobile-login`, {
+        name: 'User',
         mobile: `${countryCode}${mobileNumber}`
-      });
-
-      setStep('otp');
-      setError('');
-    } catch (error) {
-      const detail = error.response?.data?.detail || error.response?.data?.error;
-      const message = detail || 'Failed to send OTP. Please try again.';
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleVerifyOTP = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-
-    // Validate OTP
-    if (otp.length !== 6 || !/^\d+$/.test(otp)) {
-      setError('Please enter a valid 6-digit OTP');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      // Verify OTP and login
-      const response = await axios.post(`${API}/auth/verify-otp`, {
-        mobile: `${countryCode}${mobileNumber}`,
-        otp: otp
       });
 
       // Login successfully - set remember me flag
@@ -104,26 +73,7 @@ const LoginPage = ({ onLogin }) => {
       onLogin(response.data.access_token, response.data.user);
     } catch (error) {
       const detail = error.response?.data?.detail || error.response?.data?.error;
-      const message = detail || 'Invalid OTP. Please try again.';
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleResendOTP = async () => {
-    setLoading(true);
-    setError('');
-    
-    try {
-      await axios.post(`${API}/auth/send-otp`, {
-        mobile: `${countryCode}${mobileNumber}`
-      });
-      setError('');
-      alert('OTP resent successfully!');
-    } catch (error) {
-      const detail = error.response?.data?.detail || error.response?.data?.error;
-      const message = detail || 'Failed to resend OTP. Please try again.';
+      const message = detail || 'Login failed. Please try again.';
       setError(message);
     } finally {
       setLoading(false);
@@ -137,7 +87,7 @@ const LoginPage = ({ onLogin }) => {
           <div className="text-center mb-6">
             <h1 className="text-2xl font-bold text-white mb-2">Sign In</h1>
             <p className="text-slate-400">
-              {step === 'mobile' ? 'Enter your mobile number to receive OTP' : 'Enter the OTP sent to your mobile'}
+              Enter your mobile number to continue
             </p>
           </div>
 
@@ -147,105 +97,53 @@ const LoginPage = ({ onLogin }) => {
             </div>
           )}
 
-          {step === 'mobile' ? (
-            <form onSubmit={handleSendOTP} className="space-y-4">
-              <div>
-                <Label htmlFor="mobile" className="text-slate-200">Mobile Number</Label>
-                <div className="flex gap-2 mt-1">
-                  <Select value={countryCode} onValueChange={setCountryCode}>
-                    <SelectTrigger className="w-24 bg-slate-700 border-slate-600 text-white text-sm">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="+91">🇮🇳 +91</SelectItem>
-                      <SelectItem value="+1">🇺🇸 +1</SelectItem>
-                      <SelectItem value="+44">🇬🇧 +44</SelectItem>
-                      <SelectItem value="+86">🇨🇳 +86</SelectItem>
-                      <SelectItem value="+81">🇯🇵 +81</SelectItem>
-                      <SelectItem value="+82">🇰🇷 +82</SelectItem>
-                      <SelectItem value="+65">🇸🇬 +65</SelectItem>
-                      <SelectItem value="+971">🇦🇪 +971</SelectItem>
-                      <SelectItem value="+966">🇸🇦 +966</SelectItem>
-                      <SelectItem value="+61">🇦🇺 +61</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Input
-                    id="mobile"
-                    type="tel"
-                    value={mobileNumber}
-                    onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                    placeholder="Enter mobile number"
-                    required
-                    maxLength={10}
-                    className="flex-1 bg-slate-700 border-slate-600 text-white text-lg"
-                    autoFocus
-                  />
-                </div>
-                <p className="text-xs text-slate-400 mt-1">We'll send you a 6-digit OTP</p>
-              </div>
-
-              <Button 
-                type="submit" 
-                disabled={loading || mobileNumber.length !== 10}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                {loading ? 'Sending OTP...' : 'Send OTP'}
-              </Button>
-            </form>
-          ) : (
-            <form onSubmit={handleVerifyOTP} className="space-y-4">
-              <div>
-                <Label htmlFor="otp" className="text-slate-200">Enter OTP</Label>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <Label htmlFor="mobile" className="text-slate-200">Mobile Number</Label>
+              <div className="flex gap-2 mt-1">
+                <Select value={countryCode} onValueChange={setCountryCode}>
+                  <SelectTrigger className="w-24 bg-slate-700 border-slate-600 text-white text-sm">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="+91">🇮🇳 +91</SelectItem>
+                    <SelectItem value="+1">🇺🇸 +1</SelectItem>
+                    <SelectItem value="+44">🇬🇧 +44</SelectItem>
+                    <SelectItem value="+86">🇨🇳 +86</SelectItem>
+                    <SelectItem value="+81">🇯🇵 +81</SelectItem>
+                    <SelectItem value="+82">🇰🇷 +82</SelectItem>
+                    <SelectItem value="+65">🇸🇬 +65</SelectItem>
+                    <SelectItem value="+971">🇦🇪 +971</SelectItem>
+                    <SelectItem value="+966">🇸🇦 +966</SelectItem>
+                    <SelectItem value="+61">🇦🇺 +61</SelectItem>
+                  </SelectContent>
+                </Select>
                 <Input
-                  id="otp"
-                  type="text"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                  placeholder="Enter 6-digit OTP"
+                  id="mobile"
+                  type="tel"
+                  value={mobileNumber}
+                  onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                  placeholder="Enter mobile number"
                   required
-                  maxLength={6}
-                  className="bg-slate-700 border-slate-600 text-white text-center text-2xl tracking-widest"
+                  maxLength={10}
+                  className="flex-1 bg-slate-700 border-slate-600 text-white text-lg"
                   autoFocus
                 />
-                <p className="text-xs text-slate-400 mt-1">OTP sent to {countryCode} {mobileNumber}</p>
               </div>
+              <p className="text-xs text-slate-400 mt-1">We'll remember you for future logins</p>
+            </div>
 
-              <Button 
-                type="submit" 
-                disabled={loading || otp.length !== 6}
-                className="w-full bg-green-600 hover:bg-green-700 text-white"
-              >
-                {loading ? 'Verifying...' : 'Verify & Login'}
-              </Button>
-
-              <div className="flex justify-between items-center">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  onClick={() => {
-                    setStep('mobile');
-                    setOtp('');
-                    setError('');
-                  }}
-                  className="text-slate-400 hover:text-white"
-                >
-                  Change Number
-                </Button>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  onClick={handleResendOTP}
-                  disabled={loading}
-                  className="text-blue-400 hover:text-blue-300"
-                >
-                  Resend OTP
-                </Button>
-              </div>
-            </form>
-          )}
+            <Button 
+              type="submit" 
+              disabled={loading || mobileNumber.length !== 10}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              {loading ? 'Signing In...' : 'Sign In'}
+            </Button>
+          </form>
 
           <div className="mt-4 text-center text-slate-400 text-sm">
-            Secure login with mobile OTP verification
+            Secure login with mobile number
           </div>
         </CardContent>
       </Card>
