@@ -1455,15 +1455,6 @@ It's completely free to try!`;
                 <div className="flex items-center gap-2 w-full">
                   <MessageCircle className="w-5 h-5" />
                   <span>Contacts</span>
-                  <div className="flex-1"></div>
-                  <Button 
-                    onClick={openCommunityChat}
-                    variant="ghost" 
-                    size="sm"
-                    className="text-xs text-slate-300 hover:text-white"
-                  >
-                    Community
-                  </Button>
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
