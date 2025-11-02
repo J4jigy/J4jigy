@@ -44,17 +44,14 @@ const API = process.env.REACT_APP_BACKEND_URL ? `${process.env.REACT_APP_BACKEND
 
 // Login Component
 const LoginPage = ({ onLogin }) => {
-  const [isSignUp, setIsSignUp] = useState(false);
   const [name, setName] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
-  const [password, setPassword] = useState('');
   const [countryCode, setCountryCode] = useState('+91');
   const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
 
-  const handleSignUp = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -73,77 +70,11 @@ const LoginPage = ({ onLogin }) => {
       return;
     }
 
-    // Validate password
-    if (password.length < 8) {
-      setError('Password must be at least 8 characters');
-      setLoading(false);
-      return;
-    }
-
-    const hasLetter = /[a-zA-Z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    
-    if (!hasLetter || !hasNumber || !hasSymbol) {
-      setError('Password must contain letters, numbers, and symbols');
-      setLoading(false);
-      return;
-    }
-
     try {
-      // Register new user
-      const response = await axios.post(`${API}/auth/simple-register`, {
+      // Mobile login request to backend (creates user if doesn't exist)
+      const response = await axios.post(`${API}/auth/mobile-login`, {
         name: name.trim(),
-        mobile: `${countryCode}${mobileNumber}`,
-        password: password
-      });
-
-      // Auto-login after registration
-      localStorage.setItem('rememberMe', 'true');
-      onLogin(response.data.access_token, response.data.user);
-    } catch (error) {
-      const detail = error.response?.data?.detail || error.response?.data?.error;
-      const message = detail || 'Registration failed. Please try again.';
-      setError(message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-
-    // Validate mobile number
-    if (mobileNumber.length !== 10 || !/^\d+$/.test(mobileNumber)) {
-      setError('Please enter a valid 10-digit mobile number');
-      setLoading(false);
-      return;
-    }
-
-    // Validate password
-    if (password.length < 8) {
-      setError('Password must be at least 8 characters');
-      setLoading(false);
-      return;
-    }
-
-    const hasLetter = /[a-zA-Z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    
-    if (!hasLetter || !hasNumber || !hasSymbol) {
-      setError('Password must contain letters, numbers, and symbols');
-      setLoading(false);
-      return;
-    }
-
-    try {
-      // Login request to backend
-      const response = await axios.post(`${API}/auth/login`, {
-        username: `${countryCode}${mobileNumber}`,
-        password: password
+        mobile: `${countryCode}${mobileNumber}`
       });
 
       // Store remember me preference
@@ -156,7 +87,7 @@ const LoginPage = ({ onLogin }) => {
       onLogin(response.data.access_token, response.data.user);
     } catch (error) {
       const detail = error.response?.data?.detail || error.response?.data?.error;
-      const message = detail || 'Login failed. Please check your credentials.';
+      const message = detail || 'Login failed. Please try again.';
       setError(message);
     } finally {
       setLoading(false);
