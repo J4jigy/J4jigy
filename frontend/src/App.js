@@ -28,6 +28,7 @@ import StockManagement from './components/StockManagement';
 import CompanyPurchase from './components/CompanyPurchase';
 import BillsRecharge from './components/BillsRecharge';
 import Rent from './components/Rent';
+import TransportationExpense from './components/TransportationExpense';
 import OtherExpenses from './components/OtherExpenses';
 import BillsInvoices from './components/BillsInvoices';
 import Bank from './components/Bank';
