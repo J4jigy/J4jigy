@@ -83,51 +83,108 @@ export default function Bank() {
 
       {/* Content */}
       <div className="px-4 py-4">
-        {/* Summary Cards */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-0">
-            <CardContent className="p-3">
-              <p className="text-xs text-blue-100">Total Balance</p>
-              <p className="text-lg font-bold text-white">₹{totalBalance.toLocaleString()}</p>
-              <div className="flex items-center gap-1 mt-1">
-                <Landmark className="w-3 h-3 text-white" />
-                <span className="text-xs text-white">{sampleAccounts.length} accounts</span>
+        {/* Large Balance Card */}
+        <Card className="bg-gradient-to-br from-emerald-600 to-emerald-700 border-0 mb-4">
+          <CardContent className="p-4">
+            <p className="text-sm text-emerald-100 mb-2">Current Bank Balance</p>
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="text-3xl font-bold text-white mb-3">₹{totalBalance.toLocaleString()}</p>
+                <div className="flex items-center gap-4 text-sm">
+                  <div className="flex items-center gap-1">
+                    <ArrowDownRight className="w-4 h-4 text-white" />
+                    <span className="text-white">In: ₹{totalCredit.toLocaleString()}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <ArrowUpRight className="w-4 h-4 text-white" />
+                    <span className="text-white">Out: ₹{totalDebit.toLocaleString()}</span>
+                  </div>
+                </div>
               </div>
-            </CardContent>
-          </Card>
+              <div className="p-3 bg-white/20 rounded-full">
+                <Landmark className="w-8 h-8 text-white" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
-          <Card className="bg-gradient-to-br from-green-600 to-green-700 border-0">
-            <CardContent className="p-3">
-              <p className="text-xs text-green-100">Total Credit</p>
-              <p className="text-lg font-bold text-white">₹{totalCredit.toLocaleString()}</p>
-              <div className="flex items-center gap-1 mt-1">
-                <TrendingUp className="w-3 h-3 text-white" />
-                <span className="text-xs text-white">Inflow</span>
+        {/* Summary Cards Grid */}
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-0">
+            <CardContent className="p-4">
+              <p className="text-sm text-blue-100 mb-1">Today In</p>
+              <p className="text-2xl font-bold text-white mb-2">₹0</p>
+              <div className="flex items-center gap-1">
+                <ArrowDownRight className="w-3 h-3 text-white" />
+                <span className="text-xs text-white">Money received</span>
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-red-600 to-red-700 border-0">
-            <CardContent className="p-3">
-              <p className="text-xs text-red-100">Total Debit</p>
-              <p className="text-lg font-bold text-white">₹{totalDebit.toLocaleString()}</p>
-              <div className="flex items-center gap-1 mt-1">
-                <TrendingDown className="w-3 h-3 text-white" />
-                <span className="text-xs text-white">Outflow</span>
+            <CardContent className="p-4">
+              <p className="text-sm text-red-100 mb-1">Today Out</p>
+              <p className="text-2xl font-bold text-white mb-2">₹0</p>
+              <div className="flex items-center gap-1">
+                <ArrowUpRight className="w-3 h-3 text-white" />
+                <span className="text-xs text-white">Money paid</span>
               </div>
             </CardContent>
           </Card>
 
-          <Card className={`bg-gradient-to-br ${netFlow >= 0 ? 'from-purple-600 to-purple-700' : 'from-orange-600 to-red-600'} border-0`}>
-            <CardContent className="p-3">
-              <p className="text-xs text-purple-100">Net Flow</p>
-              <p className="text-lg font-bold text-white">{netFlow >= 0 ? '+' : ''}₹{netFlow.toLocaleString()}</p>
-              <div className="flex items-center gap-1 mt-1">
-                <span className="text-xs text-white">This period</span>
-              </div>
+          <Card className="bg-gradient-to-br from-purple-600 to-purple-700 border-0">
+            <CardContent className="p-4">
+              <p className="text-sm text-purple-100 mb-1">Transactions</p>
+              <p className="text-2xl font-bold text-white mb-2">{sampleTransactions.length}</p>
+              <span className="text-xs text-white">Total entries</span>
+            </CardContent>
+          </Card>
+
+          <Card className={`bg-gradient-to-br ${netFlow >= 0 ? 'from-orange-500 to-orange-600' : 'from-red-600 to-red-700'} border-0`}>
+            <CardContent className="p-4">
+              <p className="text-sm text-orange-100 mb-1">Net Flow</p>
+              <p className="text-2xl font-bold text-white mb-2">{netFlow >= 0 ? '+' : ''}₹{netFlow.toLocaleString()}</p>
+              <span className="text-xs text-white">Today</span>
             </CardContent>
           </Card>
         </div>
+
+        {/* Categories Section */}
+        <Card className="bg-slate-800 border-slate-700 mb-6">
+          <CardContent className="p-4">
+            <h3 className="text-sm font-bold text-white mb-3">Categories</h3>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-slate-300">Deposits</span>
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-green-400">+₹{totalCredit.toLocaleString()}</span>
+                  <span className="text-sm text-red-400">-₹0</span>
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-slate-300">Withdrawals</span>
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-green-400">+₹0</span>
+                  <span className="text-sm text-red-400">-₹{totalDebit.toLocaleString()}</span>
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-slate-300">Transfers</span>
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-green-400">+₹0</span>
+                  <span className="text-sm text-red-400">-₹0</span>
+                </div>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-slate-300">Interest</span>
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-green-400">+₹0</span>
+                  <span className="text-sm text-red-400">-₹0</span>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Bank Accounts */}
         <h2 className="text-sm font-bold text-white mb-3">Bank Accounts</h2>
