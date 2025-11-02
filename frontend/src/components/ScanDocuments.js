@@ -52,47 +52,52 @@ const ScanDocuments = () => {
 
   // Capture photo
   const capturePhoto = () => {
-    if (videoRef.current && canvasRef.current) {
-      const video = videoRef.current;
-      const canvas = canvasRef.current;
-      const context = canvas.getContext('2d');
+    if (!videoRef.current || !canvasRef.current) {
+      alert('Camera not ready. Please try again.');
+      return;
+    }
+
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    
+    // Wait for video to be ready
+    if (video.readyState !== video.HAVE_ENOUGH_DATA) {
+      alert('Camera is loading. Please wait a moment and try again.');
+      return;
+    }
+    
+    const context = canvas.getContext('2d');
+    
+    // Set canvas dimensions from video
+    canvas.width = video.videoWidth || 640;
+    canvas.height = video.videoHeight || 480;
+    
+    // Draw the current video frame
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+    // Convert to data URL (more reliable than blob)
+    try {
+      const imageDataUrl = canvas.toDataURL('image/jpeg', 0.92);
       
-      // Set canvas dimensions
-      canvas.width = video.videoWidth || 640;
-      canvas.height = video.videoHeight || 480;
-      
-      // Check if video is ready
-      if (canvas.width === 0 || canvas.height === 0) {
-        alert('Camera not ready. Please wait a moment and try again.');
-        return;
-      }
-      
-      // Draw image on canvas
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      
-      // Convert canvas to blob
-      try {
-        canvas.toBlob((blob) => {
-          if (!blob) {
-            alert('Failed to capture image. Please try again.');
-            return;
-          }
-          
-          try {
-            const imageUrl = URL.createObjectURL(blob);
-            setCapturedImage({ blob, url: imageUrl });
-            setShowCapturePreview(true);
-            stopCamera();
-            setShowCameraDialog(false);
-          } catch (error) {
-            console.error('Error creating object URL:', error);
-            alert('Failed to process image. Please try again.');
-          }
-        }, 'image/jpeg', 0.95);
-      } catch (error) {
-        console.error('Error capturing photo:', error);
-        alert('Failed to capture photo. Please try again.');
-      }
+      // Convert data URL to blob for file operations
+      fetch(imageDataUrl)
+        .then(res => res.blob())
+        .then(blob => {
+          setCapturedImage({ 
+            blob, 
+            url: imageDataUrl  // Use data URL instead of object URL
+          });
+          setShowCapturePreview(true);
+          stopCamera();
+          setShowCameraDialog(false);
+        })
+        .catch(error => {
+          console.error('Error converting image:', error);
+          alert('Failed to capture image. Please try again.');
+        });
+    } catch (error) {
+      console.error('Error capturing photo:', error);
+      alert('Failed to capture photo. Please try again.');
     }
   };
 
