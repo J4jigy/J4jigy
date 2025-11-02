@@ -53,7 +53,7 @@ export default function SuppliersCreditors() {
               <ArrowLeft className="w-4 h-4" />
             </Button>
             <div>
-              <h1 className="text-lg font-bold">Suppliers (Creditors)</h1>
+              <h1 className="text-lg font-bold">Suppliers / Creditors (लेनदार)</h1>
               <p className="text-xs text-slate-400">{activeBusiness.name}</p>
             </div>
           </div>
