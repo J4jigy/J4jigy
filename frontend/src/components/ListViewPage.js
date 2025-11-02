@@ -13,8 +13,8 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 const titleByKey = {
-  customers: 'Customers / Debtors',
-  suppliers: 'Suppliers / Creditors',
+  customers: 'Customers / Debtors (देनदार)',
+  suppliers: 'Suppliers / Creditors (लेनदार)',
   ratings: 'Community Ratings',
   staff: 'Staff',
   purchases: 'Company Purchase',
