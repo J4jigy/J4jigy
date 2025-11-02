@@ -111,9 +111,9 @@ export default function Bank() {
         {/* Summary Cards Grid */}
         <div className="grid grid-cols-2 gap-3 mb-6">
           <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-0">
-            <CardContent className="p-4">
-              <p className="text-sm text-blue-100 mb-1">Today In</p>
-              <p className="text-2xl font-bold text-white mb-2">₹0</p>
+            <CardContent className="p-3">
+              <p className="text-xs text-blue-100 mb-1">Today In</p>
+              <p className="text-xl font-bold text-white mb-1">₹0</p>
               <div className="flex items-center gap-1">
                 <ArrowDownRight className="w-3 h-3 text-white" />
                 <span className="text-xs text-white">Money received</span>
@@ -122,9 +122,9 @@ export default function Bank() {
           </Card>
 
           <Card className="bg-gradient-to-br from-red-600 to-red-700 border-0">
-            <CardContent className="p-4">
-              <p className="text-sm text-red-100 mb-1">Today Out</p>
-              <p className="text-2xl font-bold text-white mb-2">₹0</p>
+            <CardContent className="p-3">
+              <p className="text-xs text-red-100 mb-1">Today Out</p>
+              <p className="text-xl font-bold text-white mb-1">₹0</p>
               <div className="flex items-center gap-1">
                 <ArrowUpRight className="w-3 h-3 text-white" />
                 <span className="text-xs text-white">Money paid</span>
@@ -133,17 +133,17 @@ export default function Bank() {
           </Card>
 
           <Card className="bg-gradient-to-br from-purple-600 to-purple-700 border-0">
-            <CardContent className="p-4">
-              <p className="text-sm text-purple-100 mb-1">Transactions</p>
-              <p className="text-2xl font-bold text-white mb-2">{sampleTransactions.length}</p>
+            <CardContent className="p-3">
+              <p className="text-xs text-purple-100 mb-1">Transactions</p>
+              <p className="text-xl font-bold text-white mb-1">{sampleTransactions.length}</p>
               <span className="text-xs text-white">Total entries</span>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-orange-500 to-orange-600 border-0">
-            <CardContent className="p-4">
-              <p className="text-sm text-orange-100 mb-1">Net Flow</p>
-              <p className="text-2xl font-bold text-white mb-2">{netFlow >= 0 ? '+' : ''}₹{netFlow.toLocaleString()}</p>
+            <CardContent className="p-3">
+              <p className="text-xs text-orange-100 mb-1">Net Flow</p>
+              <p className="text-xl font-bold text-white mb-1">{netFlow >= 0 ? '+' : ''}₹{netFlow.toLocaleString()}</p>
               <span className="text-xs text-white">Today</span>
             </CardContent>
           </Card>
