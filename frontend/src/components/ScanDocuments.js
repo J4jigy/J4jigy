@@ -8,28 +8,7 @@ import { ArrowLeft, Camera, Upload, FileText, Image, Trash2, Eye, Download, Scan
 
 const ScanDocuments = () => {
   const navigate = useNavigate();
-  const [scannedDocuments, setScannedDocuments] = useState([
-    {
-      id: 1,
-      name: 'Invoice_001.pdf',
-      type: 'Invoice',
-      date: '2024-01-15',
-      size: '245 KB',
-      thumbnail: '📄',
-      extractedText: 'Invoice #INV-2024-001\nDate: January 15, 2024\nAmount: $1,250.00\nVendor: TechSupply Corp',
-      confidence: '94%'
-    },
-    {
-      id: 2,
-      name: 'Receipt_Store.jpg',
-      type: 'Receipt',
-      date: '2024-01-14',
-      size: '156 KB',
-      thumbnail: '🧾',
-      extractedText: 'Receipt #RCP-456\nStore: QuickMart\nDate: Jan 14, 2024\nTotal: $45.67',
-      confidence: '89%'
-    }
-  ]);
+  const [scannedDocuments, setScannedDocuments] = useState([]);
   
   const [showCameraDialog, setShowCameraDialog] = useState(false);
   const [showPreviewDialog, setShowPreviewDialog] = useState(false);
