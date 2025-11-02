@@ -37,6 +37,7 @@ import ReceivablesYouWillReceive from './components/ReceivablesYouWillReceive';
 import OffersDiscounts from './components/OffersDiscounts';
 import CalendarReminder from './components/CalendarReminder';
 import Calculator from './components/Calculator';
+import ScanDocuments from './components/ScanDocuments';
 import { BusinessProvider } from './contexts/BusinessContext';
 import { RoleProvider } from './contexts/RoleContext';
 
