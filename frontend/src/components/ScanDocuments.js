@@ -57,18 +57,42 @@ const ScanDocuments = () => {
       const canvas = canvasRef.current;
       const context = canvas.getContext('2d');
       
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+      // Set canvas dimensions
+      canvas.width = video.videoWidth || 640;
+      canvas.height = video.videoHeight || 480;
       
+      // Check if video is ready
+      if (canvas.width === 0 || canvas.height === 0) {
+        alert('Camera not ready. Please wait a moment and try again.');
+        return;
+      }
+      
+      // Draw image on canvas
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
       
-      canvas.toBlob((blob) => {
-        const imageUrl = URL.createObjectURL(blob);
-        setCapturedImage({ blob, url: imageUrl });
-        setShowCapturePreview(true);
-        stopCamera();
-        setShowCameraDialog(false);
-      }, 'image/jpeg', 0.8);
+      // Convert canvas to blob
+      try {
+        canvas.toBlob((blob) => {
+          if (!blob) {
+            alert('Failed to capture image. Please try again.');
+            return;
+          }
+          
+          try {
+            const imageUrl = URL.createObjectURL(blob);
+            setCapturedImage({ blob, url: imageUrl });
+            setShowCapturePreview(true);
+            stopCamera();
+            setShowCameraDialog(false);
+          } catch (error) {
+            console.error('Error creating object URL:', error);
+            alert('Failed to process image. Please try again.');
+          }
+        }, 'image/jpeg', 0.95);
+      } catch (error) {
+        console.error('Error capturing photo:', error);
+        alert('Failed to capture photo. Please try again.');
+      }
     }
   };
 
