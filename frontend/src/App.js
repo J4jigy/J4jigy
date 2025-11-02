@@ -65,8 +65,19 @@ const LoginPage = ({ onLogin }) => {
     }
 
     // Validate password
-    if (password.length < 4) {
-      setError('Password must be at least 4 characters');
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters');
+      setLoading(false);
+      return;
+    }
+
+    // Validate password contains alphanumeric and symbols
+    const hasLetter = /[a-zA-Z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    
+    if (!hasLetter || !hasNumber || !hasSymbol) {
+      setError('Password must contain letters, numbers, and symbols');
       setLoading(false);
       return;
     }
