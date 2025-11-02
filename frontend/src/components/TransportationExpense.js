@@ -13,7 +13,7 @@ const TransportationExpense = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('date-desc');
-  const [showAddDialog, setShowAddDialog] = useState(false');
+  const [showAddDialog, setShowAddDialog] = useState(false);
   const [expenses, setExpenses] = useState([
     {
       id: 1,
