@@ -561,7 +561,7 @@ It's completely free to try!`;
     else if (name.startsWith('other')) handleNavigate('/other-expenses');
     else if (name.startsWith('bills &')) handleNavigate('/bills-invoices');
     else if (name.startsWith('to do list')) handleNavigate('/todo');
-    else if (name.startsWith('scan documents') || tile.name === 'Scan') setShowScanModal(true);
+    else if (name.startsWith('scan documents') || tile.name === 'Scan') handleNavigate('/scan-documents');
     else if (name.startsWith('calendar')) handleNavigate('/calendar');
     else if (name.startsWith('calculator')) handleNavigate('/calculator');
   };
