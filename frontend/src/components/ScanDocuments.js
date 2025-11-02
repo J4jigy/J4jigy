@@ -146,33 +146,48 @@ const ScanDocuments = () => {
     setIsScanning(true);
     
     try {
-      // Create object URL safely
-      let imageUrl = null;
-      try {
-        imageUrl = URL.createObjectURL(file);
-      } catch (error) {
-        console.error('Error creating URL:', error);
-      }
+      // Read file as data URL
+      const reader = new FileReader();
       
-      // Simulate processing
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      const newDocument = {
-        id: Date.now(),
-        name: file.name,
-        type: file.type.includes('pdf') ? 'PDF Document' : 'Image Document',
-        date: new Date().toISOString().split('T')[0],
-        size: `${Math.round(file.size / 1024)} KB`,
-        thumbnail: file.type.includes('pdf') ? '📄' : '🖼️',
-        extractedText: file.type.includes('pdf') 
-          ? 'PDF Document processed\nInvoice #INV-2024-002\nAmount: $890.00\nVendor: Office Supplies Inc'
-          : 'Image processed\nReceipt scanned\nTotal: $67.89\nStore: Local Market',
-        confidence: '91%',
-        imageUrl: imageUrl
+      reader.onload = async (e) => {
+        try {
+          const imageUrl = e.target.result;
+          
+          // Simulate processing
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          
+          const newDocument = {
+            id: Date.now(),
+            name: file.name,
+            type: file.type.includes('pdf') ? 'PDF Document' : 'Image Document',
+            date: new Date().toISOString().split('T')[0],
+            size: `${Math.round(file.size / 1024)} KB`,
+            thumbnail: file.type.includes('pdf') ? '📄' : '🖼️',
+            extractedText: file.type.includes('pdf') 
+              ? 'PDF Document uploaded!\nText extraction from PDF in progress...'
+              : 'Image uploaded successfully!\nProcessing OCR...\nAmount: $234.56\nDate: ' + new Date().toLocaleDateString(),
+            confidence: '88%',
+            imageUrl: imageUrl
+          };
+          
+          setScannedDocuments(prev => [newDocument, ...prev]);
+          setIsScanning(false);
+        } catch (error) {
+          console.error('Error processing file data:', error);
+          alert('Failed to process file. Please try again.');
+          setIsScanning(false);
+        }
       };
       
-      setScannedDocuments(prev => [newDocument, ...prev]);
-      setIsScanning(false);
+      reader.onerror = () => {
+        console.error('Error reading file');
+        alert('Failed to read file. Please try again.');
+        setIsScanning(false);
+      };
+      
+      // Read as data URL
+      reader.readAsDataURL(file);
+      
     } catch (error) {
       console.error('Error processing file:', error);
       alert('Failed to process file. Please try again.');
