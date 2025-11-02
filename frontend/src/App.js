@@ -196,7 +196,7 @@ const LoginPage = ({ onLogin }) => {
 
             <Button 
               type="submit" 
-              disabled={loading || mobileNumber.length !== 10 || password.length < 4}
+              disabled={loading || mobileNumber.length !== 10 || password.length < 8}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white"
             >
               {loading ? 'Signing In...' : 'Sign In'}
