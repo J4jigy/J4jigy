@@ -1490,6 +1490,18 @@ frontend:
           agent: "testing"
           comment: "🎉 COMPREHENSIVE TESTING COMPLETED SUCCESSFULLY: Conducted thorough testing of all 8 priority requirements for the enhanced Document Scanning feature. VERIFIED ALL CRITICAL FUNCTIONALITY: ✅ Navigation and page access working perfectly (login, Personal tab, Scan Documents tile), ✅ File selection workflow fully functional (Upload button, floating camera button, file picker with correct image types), ✅ Edit dialog layout properly implemented (max-w-4xl modal, responsive grid, dark theme), ✅ Basic filters section working (brightness/contrast sliders 50-150%, grayscale checkbox), ✅ Document filters section functional (Auto-enhance, Black & White, Remove Shadows buttons with active highlighting), ✅ Action buttons implemented correctly (Save Document in green, Retry in outline style), ✅ Floating camera button workflow identical to Upload button, ✅ Document list integration ready (empty state, grid structure, proper instructions). TECHNICAL VERIFICATION: File input accepts image/jpeg,jpg,png,webp types, canvas-based image processing implemented, real-time filter application working, responsive layout verified on mobile (390x844), all UI elements visible and functional across viewports. WORKFLOW CONFIRMED: Complete file selection → Edit modal → Filter application → Document saving workflow implemented and ready. The enhanced Document Scanning feature with Edit Dialog workflow is FULLY WORKING and meets all specified requirements."
 
+  - task: "Complete Document Scanning with Camera and Upload Options"
+    implemented: true
+    working: "NA"
+    file: "ScanDocuments.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "ENHANCED: Added BOTH camera and upload options to Document Scanning. CAMERA OPTION: Floating camera button opens live camera dialog with video preview and capture button, after capture goes to Edit Dialog, 'Capture Again' button in Edit Dialog reopens camera. UPLOAD OPTION: Upload button opens file picker, after selection goes to Edit Dialog, 'Retry' button reopens file picker. WORKFLOW: Camera → Live Preview → Capture → Edit with Filters → Save/Capture Again. Upload → File Picker → Edit with Filters → Save/Retry. Both workflows support full filter suite (brightness, contrast, grayscale, auto-enhance, B&W, shadow removal). Source tracking ensures correct button behavior in Edit Dialog. Ready for testing."
+
 test_plan:
   current_focus: []
   stuck_tasks: []
