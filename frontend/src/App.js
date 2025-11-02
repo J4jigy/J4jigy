@@ -284,6 +284,7 @@ function App() {
             <Route path="/company-purchase" element={token ? <CompanyPurchase /> : <Navigate to="/login" />} />
             <Route path="/bills-recharge" element={token ? <BillsRecharge /> : <Navigate to="/login" />} />
             <Route path="/rent-management" element={token ? <Rent /> : <Navigate to="/login" />} />
+            <Route path="/transport-expense" element={token ? <TransportationExpense /> : <Navigate to="/login" />} />
             <Route path="/other-expenses" element={token ? <OtherExpenses /> : <Navigate to="/login" />} />
             <Route path="/bills-invoices" element={token ? <BillsInvoices /> : <Navigate to="/login" />} />
             <Route path="/receivables-you-will-receive" element={token ? <ReceivablesYouWillReceive /> : <Navigate to="/login" />} />
