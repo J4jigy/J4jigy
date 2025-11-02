@@ -911,7 +911,7 @@ It's completely free to try!`;
                   return (
                     <Card key={idx} onClick={() => handleTileClick(tile)} className="bg-slate-700/80 border border-slate-600 hover:bg-slate-600 transition-all duration-200 cursor-pointer shadow-xl aspect-square flex items-center justify-center">
                       <CardContent className="p-3 flex flex-col items-center justify-center text-center w-full h-full">
-                        <IconComponent className={`w-8 h-8 mb-2 ${tile.iconColor}`} />
+                        <IconComponent className={`w-10 h-10 mb-2 ${tile.iconColor}`} />
                         <div className="text-center">
                           <p className="text-white text-[12px] font-semibold leading-tight mb-0 break-words">{tile.name}</p>
                           {tile.subtitle && (
