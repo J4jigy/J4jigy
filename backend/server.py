@@ -899,6 +899,117 @@ async def mobile_login(payload: MobileLoginRequest, request: Request):
         )
         raise HTTPException(status_code=500, detail="Login failed. Please try again.")
 
+# ===================== Simple Registration Endpoint =====================
+
+class SimpleRegisterRequest(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    mobile: str
+    password: str
+    
+    @validator('mobile')
+    def validate_mobile(cls, v):
+        cleaned = re.sub(r'\D', '', v)
+        if len(cleaned) < 10:
+            raise ValueError('Mobile number must be at least 10 digits')
+        return cleaned
+    
+    @validator('password')
+    def validate_password(cls, v):
+        if len(v) < 8:
+            raise ValueError('Password must be at least 8 characters')
+        if not re.search(r'[a-zA-Z]', v):
+            raise ValueError('Password must contain letters')
+        if not re.search(r'[0-9]', v):
+            raise ValueError('Password must contain numbers')
+        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', v):
+            raise ValueError('Password must contain symbols')
+        return v
+
+@api_router.options("/auth/simple-register")
+async def options_simple_register(
+    origin: Optional[str] = Header(default=None),
+    access_control_request_headers: Optional[str] = Header(default=None),
+    access_control_request_method: Optional[str] = Header(default=None),
+):
+    resp = Response(status_code=204)
+    if origin:
+        resp.headers["Access-Control-Allow-Origin"] = origin
+        resp.headers["Vary"] = "Origin"
+    resp.headers["Access-Control-Allow-Methods"] = access_control_request_method or "POST, OPTIONS"
+    resp.headers["Access-Control-Allow-Headers"] = access_control_request_headers or "Authorization, Content-Type, *"
+    resp.headers["Access-Control-Allow-Credentials"] = "true"
+    return resp
+
+@api_router.post("/auth/simple-register", response_model=TokenResponse)
+@limiter.limit("5/hour")
+async def simple_register(payload: SimpleRegisterRequest, request: Request):
+    """
+    Simple registration with name, mobile, and password only
+    """
+    try:
+        # Check if user already exists
+        existing_user = await db.users.find_one({"mobile": payload.mobile})
+        if existing_user:
+            raise HTTPException(status_code=400, detail="Mobile number already registered")
+        
+        # Create new user
+        user = User(
+            username=payload.mobile,
+            email=f"{payload.mobile}@mobile.user",
+            business_name=f"{payload.name}'s Business",
+            mobile=payload.mobile,
+            role=UserRole.USER,
+            is_active=True,
+            is_verified=True
+        )
+        
+        user_doc = user.dict()
+        user_doc['password'] = hash_password(payload.password)
+        user_doc['display_name'] = payload.name
+        
+        await db.users.insert_one(user_doc)
+        
+        # Create default accounts
+        await create_default_accounts(user.id)
+        
+        # Generate tokens
+        tokens = generate_tokens(user.id)
+        
+        # Log audit event
+        await log_audit_event(
+            AuditAction.CREATE,
+            "user:registered",
+            user.id,
+            {"name": payload.name, "mobile": payload.mobile},
+            request,
+            True
+        )
+        
+        print(f"\n✅ New User Registered: {payload.name} ({payload.mobile})")
+        
+        return TokenResponse(
+            access_token=tokens["access_token"],
+            refresh_token=tokens["refresh_token"],
+            expires_in=tokens["expires_in"],
+            user=user
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error in registration: {e}")
+        await log_audit_event(
+            AuditAction.CREATE,
+            "user:registration_error",
+            None,
+            {"name": payload.name, "mobile": payload.mobile, "error": str(e)},
+            request,
+            False
+        )
+        raise HTTPException(status_code=500, detail="Registration failed. Please try again.")
+
+# ===================== Simple Mobile Login Endpoint =====================
+
 # ===================== Google OAuth Endpoints =====================
 
 @api_router.options("/auth/session")
