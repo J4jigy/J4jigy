@@ -44,6 +44,8 @@ const API = process.env.REACT_APP_BACKEND_URL ? `${process.env.REACT_APP_BACKEND
 
 // Login Component
 const LoginPage = ({ onLogin }) => {
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [name, setName] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [password, setPassword] = useState('');
   const [countryCode, setCountryCode] = useState('+91');
@@ -51,6 +53,62 @@ const LoginPage = ({ onLogin }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    // Validate name
+    if (name.trim().length < 2) {
+      setError('Name must be at least 2 characters');
+      setLoading(false);
+      return;
+    }
+
+    // Validate mobile number
+    if (mobileNumber.length !== 10 || !/^\d+$/.test(mobileNumber)) {
+      setError('Please enter a valid 10-digit mobile number');
+      setLoading(false);
+      return;
+    }
+
+    // Validate password
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters');
+      setLoading(false);
+      return;
+    }
+
+    const hasLetter = /[a-zA-Z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    
+    if (!hasLetter || !hasNumber || !hasSymbol) {
+      setError('Password must contain letters, numbers, and symbols');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      // Register new user
+      const response = await axios.post(`${API}/auth/simple-register`, {
+        name: name.trim(),
+        mobile: `${countryCode}${mobileNumber}`,
+        password: password
+      });
+
+      // Auto-login after registration
+      localStorage.setItem('rememberMe', 'true');
+      onLogin(response.data.access_token, response.data.user);
+    } catch (error) {
+      const detail = error.response?.data?.detail || error.response?.data?.error;
+      const message = detail || 'Registration failed. Please try again.';
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -71,7 +129,6 @@ const LoginPage = ({ onLogin }) => {
       return;
     }
 
-    // Validate password contains alphanumeric and symbols
     const hasLetter = /[a-zA-Z]/.test(password);
     const hasNumber = /[0-9]/.test(password);
     const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
@@ -111,9 +168,11 @@ const LoginPage = ({ onLogin }) => {
       <Card className="w-full max-w-md bg-slate-800 border-slate-700">
         <CardContent className="p-6">
           <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold text-white mb-2">Sign In</h1>
+            <h1 className="text-2xl font-bold text-white mb-2">
+              {isSignUp ? 'Sign Up' : 'Sign In'}
+            </h1>
             <p className="text-slate-400">
-              Enter your credentials to continue
+              {isSignUp ? 'Create a new account' : 'Enter your credentials to continue'}
             </p>
           </div>
 
@@ -123,7 +182,23 @@ const LoginPage = ({ onLogin }) => {
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={isSignUp ? handleSignUp : handleLogin} className="space-y-4">
+            {isSignUp && (
+              <div>
+                <Label htmlFor="name" className="text-slate-200">Name</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Enter your name"
+                  required
+                  className="mt-1 bg-slate-700 border-slate-600 text-white"
+                  autoFocus
+                />
+              </div>
+            )}
+
             <div>
               <Label htmlFor="mobile" className="text-slate-200">Mobile Number</Label>
               <div className="flex gap-2 mt-1">
@@ -153,7 +228,7 @@ const LoginPage = ({ onLogin }) => {
                   required
                   maxLength={10}
                   className="flex-1 bg-slate-700 border-slate-600 text-white text-lg"
-                  autoFocus
+                  autoFocus={!isSignUp}
                 />
               </div>
             </div>
@@ -181,30 +256,47 @@ const LoginPage = ({ onLogin }) => {
               <p className="text-xs text-slate-400 mt-1">Min 8 characters with letters, numbers & symbols</p>
             </div>
 
-            <div className="flex items-center gap-2">
-              <input
-                id="rememberMe"
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="w-4 h-4 bg-slate-700 border-slate-600 rounded"
-              />
-              <Label htmlFor="rememberMe" className="text-slate-300 cursor-pointer">
-                Remember me
-              </Label>
-            </div>
+            {!isSignUp && (
+              <div className="flex items-center gap-2">
+                <input
+                  id="rememberMe"
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="w-4 h-4 bg-slate-700 border-slate-600 rounded"
+                />
+                <Label htmlFor="rememberMe" className="text-slate-300 cursor-pointer">
+                  Remember me
+                </Label>
+              </div>
+            )}
 
             <Button 
               type="submit" 
-              disabled={loading || mobileNumber.length !== 10 || password.length < 8}
+              disabled={loading || mobileNumber.length !== 10 || password.length < 8 || (isSignUp && name.trim().length < 2)}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white"
             >
-              {loading ? 'Signing In...' : 'Sign In'}
+              {loading ? (isSignUp ? 'Creating Account...' : 'Signing In...') : (isSignUp ? 'Create Account' : 'Sign In')}
             </Button>
           </form>
 
+          <div className="mt-4 text-center">
+            <button
+              type="button"
+              onClick={() => {
+                setIsSignUp(!isSignUp);
+                setError('');
+                setName('');
+                setPassword('');
+              }}
+              className="text-blue-400 hover:text-blue-300 text-sm"
+            >
+              {isSignUp ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
+            </button>
+          </div>
+
           <div className="mt-4 text-center text-slate-400 text-sm">
-            Secure login with mobile number and password
+            Secure {isSignUp ? 'registration' : 'login'} with mobile number and password
           </div>
         </CardContent>
       </Card>
