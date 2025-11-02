@@ -430,11 +430,6 @@ It's completely free to try!`;
     setShowPeerList(true);
   };
 
-  const openCommunityChat = () => {
-    setSelectedPeer(null);
-    setShowPeerList(false);
-  };
-
   // Navigation with chat hiding and tab state saving
   const handleNavigate = (path) => {
     // Save current active tab to localStorage before navigating
