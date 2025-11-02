@@ -28,8 +28,8 @@ const titleByKey = {
   stock: 'Stock Management',
   profit: 'Profit & Loss',
   balance: 'Balance Sheet',
-  payables: 'Suppliers (Creditors)',
-  receivables: 'Customers (Debtors)',
+  payables: 'Suppliers / Creditors (लेनदार)',
+  receivables: 'Customers / Debtors (देनदार)',
   'fuel-station': 'Fuel Station Management',
 };
 
