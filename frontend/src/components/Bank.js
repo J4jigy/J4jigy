@@ -140,7 +140,7 @@ export default function Bank() {
             </CardContent>
           </Card>
 
-          <Card className={`bg-gradient-to-br ${netFlow >= 0 ? 'from-orange-500 to-orange-600' : 'from-red-600 to-red-700'} border-0`}>
+          <Card className="bg-gradient-to-br from-orange-500 to-orange-600 border-0">
             <CardContent className="p-4">
               <p className="text-sm text-orange-100 mb-1">Net Flow</p>
               <p className="text-2xl font-bold text-white mb-2">{netFlow >= 0 ? '+' : ''}₹{netFlow.toLocaleString()}</p>
