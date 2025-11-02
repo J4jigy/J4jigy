@@ -81,7 +81,7 @@ export default function CustomersDebtors() {
               <ArrowLeft className="w-4 h-4" />
             </Button>
             <div>
-              <h1 className="text-lg font-bold">Customers (Debtors)</h1>
+              <h1 className="text-lg font-bold">Customers / Debtors (देनदार)</h1>
               <p className="text-xs text-slate-400">{activeBusiness.name}</p>
             </div>
           </div>
