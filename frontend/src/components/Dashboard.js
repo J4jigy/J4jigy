@@ -905,17 +905,17 @@ It's completely free to try!`;
 
           {['business', 'finance', 'personal'].map((tab) => (
             <TabsContent key={tab} value={tab} className="mt-0">
-              <div className="grid grid-cols-2 gap-4 px-4">
+              <div className="grid grid-cols-3 gap-4 px-4">
                 {getTilesForTab(tab).map((tile, idx) => {
                   const IconComponent = tile.icon;
                   return (
                     <Card key={idx} onClick={() => handleTileClick(tile)} className="bg-slate-700/80 border border-slate-600 hover:bg-slate-600 transition-all duration-200 cursor-pointer shadow-xl aspect-square flex items-center justify-center">
-                      <CardContent className="p-5 flex flex-col items-center justify-center text-center w-full h-full">
-                        <IconComponent className={`w-12 h-12 mb-3 ${tile.iconColor}`} />
+                      <CardContent className="p-4 flex flex-col items-center justify-center text-center w-full h-full">
+                        <IconComponent className={`w-10 h-10 mb-2 ${tile.iconColor}`} />
                         <div className="text-center">
                           <p className="text-white text-sm font-semibold leading-tight mb-0 break-words">{tile.name}</p>
                           {tile.subtitle && (
-                            <p className="text-slate-200 text-sm font-medium leading-tight break-words">{tile.subtitle}</p>
+                            <p className="text-slate-200 text-xs font-medium leading-tight break-words">{tile.subtitle}</p>
                           )}
                         </div>
                       </CardContent>
