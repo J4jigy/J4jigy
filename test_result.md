@@ -166,7 +166,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Reinstall mobile OTP authentication system with mock SMS sending (OTP logged to console). Requirements: 6-digit OTP, 3-minute expiry, 5 retry limit per day, country code selector with India +91 default, auto-login persistence."
+user_problem_statement: "Test the COMPLETE Document Scanning system with PDF editing and Recently Deleted functionality. Test all 12 priority requirements including Basic Capture & Retry, Single/Multi-Page PDF Creation, View PDF, Edit Existing PDF (Delete/Add Pages), Recently Deleted functionality, PDF Replacement, and Bottom Strip Behavior."
 
 backend:
   - task: "OTP Send Endpoint (/api/auth/send-otp)"
