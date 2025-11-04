@@ -1855,9 +1855,20 @@ class SendMessageRequest(BaseModel):
 
 # Send Message (P2P or Group)
 @api_router.post("/chat/send")
-async def send_message(message: ChatMessage, credentials: HTTPAuthorizationCredentials = Depends(security)):
+async def send_message(request: SendMessageRequest, credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
-        verify_token(credentials.credentials)
+        payload = verify_token(credentials.credentials)
+        sender_id = payload.get("user_id")
+        
+        # Create ChatMessage object with sender_id from token
+        message = ChatMessage(
+            sender_id=sender_id,
+            receiver_id=request.receiver_id,
+            group_id=request.group_id,
+            message_type=request.message_type,
+            content=request.content,
+            metadata=request.metadata
+        )
         
         message_dict = message.dict()
         await db.messages.insert_one(message_dict)
