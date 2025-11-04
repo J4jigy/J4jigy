@@ -195,9 +195,22 @@ agent_communication:
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the REDESIGNED Edit Dialog matching user's screenshot requirements with photo carousel and horizontal filters. Test all 10 priority requirements including Full Screen Dialog, Top Navigation Bar, Main Image Preview, Horizontal Filters Section, Photos Preview Carousel, Save to Folder Button, Filter Interaction, Photo Carousel Behavior, Responsive Touch, and Complete Workflow."
+user_problem_statement: "Enhance peer-to-peer chat functionality with media sharing (image, audio, document, contact, location), group chat creation with multiple admins, custom group settings (name, icon, description), and backend storage for chat data in MongoDB."
 
 backend:
+  - task: "Enhanced Chat Backend APIs"
+    implemented: true
+    working: "NA"
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Implemented comprehensive chat APIs including: 1) POST /api/chat/send for P2P and group messages, 2) GET /api/chat/messages/{peer_id} for P2P messages, 3) GET /api/chat/group/{group_id}/messages for group messages, 4) POST /api/chat/upload for file uploads (images, audio, documents), 5) GET /api/chat/file/{file_id} for file retrieval, 6) POST /api/chat/group/create for group creation, 7) GET /api/chat/groups for user groups, 8) POST /api/chat/group/{group_id}/add-member for adding members, 9) POST /api/chat/group/{group_id}/remove-member for removing members, 10) POST /api/chat/group/{group_id}/make-admin for promoting members to admin, 11) PUT /api/chat/group/{group_id}/settings for updating group settings. Fixed backend to accept request body for member management actions. Added verify_token helper function. Files stored in MongoDB as base64 for simplified storage (Option A as per user request)."
+
+frontend:
   - task: "OTP Send Endpoint (/api/auth/send-otp)"
     implemented: true
     working: true
