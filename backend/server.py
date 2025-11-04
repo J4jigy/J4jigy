@@ -2072,7 +2072,7 @@ async def remove_group_member(group_id: str, data: MemberAction, credentials: HT
         raise HTTPException(status_code=500, detail="Failed to remove member")
 
 # Make Admin
-@api_router.post("/api/chat/group/{group_id}/make-admin")
+@api_router.post("/chat/group/{group_id}/make-admin")
 async def make_admin(group_id: str, data: MemberAction, credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         user_data = verify_token(credentials.credentials)
