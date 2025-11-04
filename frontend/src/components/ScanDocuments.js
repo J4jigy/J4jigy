@@ -563,16 +563,8 @@ const ScanDocuments = () => {
       {/* Full Screen Camera View */}
       {showCameraView && (
         <div className="fixed inset-0 bg-black z-[100] flex flex-col">
-          <div className="flex items-center justify-between p-4 bg-black/70 backdrop-blur-sm z-10">
+          <div className="flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm z-10">
             <h2 className="text-white text-lg font-medium">Camera</h2>
-            <Button
-              onClick={closeCameraView}
-              variant="ghost"
-              size="sm"
-              className="text-red-500 hover:text-red-400 hover:bg-red-900/20 h-10 w-10 p-0 rounded-full"
-            >
-              <X className="w-6 h-6" />
-            </Button>
           </div>
 
           <div className="flex-1 relative overflow-hidden">
