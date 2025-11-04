@@ -589,12 +589,13 @@ const ScanDocuments = () => {
           </div>
 
           <div className="p-8 bg-gradient-to-t from-black via-black/90 to-transparent flex justify-center items-center z-10">
-            <Button
+            <button
               onClick={capturePhoto}
-              className="w-24 h-24 rounded-full bg-white hover:bg-gray-100 active:scale-95 flex items-center justify-center shadow-2xl border-4 border-white/30 transition-transform"
+              className="w-24 h-24 rounded-full bg-white hover:bg-gray-100 active:bg-gray-200 flex items-center justify-center shadow-2xl border-8 border-slate-900 transition-all touch-manipulation cursor-pointer"
+              style={{ touchAction: 'manipulation' }}
             >
-              <div className="w-20 h-20 rounded-full bg-transparent border-4 border-slate-900"></div>
-            </Button>
+              <div className="w-16 h-16 rounded-full bg-slate-900"></div>
+            </button>
           </div>
         </div>
       )}
