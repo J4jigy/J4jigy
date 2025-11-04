@@ -394,10 +394,165 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
   
   // Go back to list
   const goBack = () => {
-    setView('list');
-    setSelectedPeer(null);
-    setSelectedGroup(null);
-    setMessages([]);
+    if (view === 'group-settings') {
+      setView('group-chat');
+    } else {
+      setView('list');
+      setSelectedPeer(null);
+      setSelectedGroup(null);
+      setMessages([]);
+    }
+  };
+  
+  // Open group settings
+  const openGroupSettings = () => {
+    setEditGroupName(selectedGroup.name);
+    setEditGroupDescription(selectedGroup.description);
+    setEditGroupIcon(selectedGroup.icon);
+    setView('group-settings');
+  };
+  
+  // Update group settings
+  const updateGroupSettings = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${BACKEND_URL}/api/chat/group/${selectedGroup.group_id}/settings`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          name: editGroupName,
+          description: editGroupDescription,
+          icon: editGroupIcon
+        })
+      });
+      
+      if (response.ok) {
+        // Update local state
+        setSelectedGroup({
+          ...selectedGroup,
+          name: editGroupName,
+          description: editGroupDescription,
+          icon: editGroupIcon
+        });
+        fetchGroups(); // Refresh groups list
+        alert('Group settings updated successfully');
+      }
+    } catch (error) {
+      console.error('Error updating group settings:', error);
+      alert('Failed to update group settings');
+    }
+  };
+  
+  // Add member to group
+  const addMemberToGroup = async (memberId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${BACKEND_URL}/api/chat/group/${selectedGroup.group_id}/add-member`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ member_id: memberId })
+      });
+      
+      if (response.ok) {
+        // Update local state
+        setSelectedGroup({
+          ...selectedGroup,
+          members: [...selectedGroup.members, memberId]
+        });
+        fetchGroups();
+        alert('Member added successfully');
+      }
+    } catch (error) {
+      console.error('Error adding member:', error);
+      alert('Failed to add member');
+    }
+  };
+  
+  // Remove member from group
+  const removeMemberFromGroup = async (memberId) => {
+    if (!window.confirm('Are you sure you want to remove this member?')) return;
+    
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${BACKEND_URL}/api/chat/group/${selectedGroup.group_id}/remove-member`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ member_id: memberId })
+      });
+      
+      if (response.ok) {
+        // Update local state
+        setSelectedGroup({
+          ...selectedGroup,
+          members: selectedGroup.members.filter(id => id !== memberId)
+        });
+        fetchGroups();
+        alert('Member removed successfully');
+      }
+    } catch (error) {
+      console.error('Error removing member:', error);
+      alert('Failed to remove member');
+    }
+  };
+  
+  // Make member admin
+  const makeAdmin = async (memberId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${BACKEND_URL}/api/chat/group/${selectedGroup.group_id}/make-admin`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ member_id: memberId })
+      });
+      
+      if (response.ok) {
+        // Update local state
+        setSelectedGroup({
+          ...selectedGroup,
+          admins: [...selectedGroup.admins, memberId]
+        });
+        fetchGroups();
+        alert('Member is now an admin');
+      }
+    } catch (error) {
+      console.error('Error making admin:', error);
+      alert('Failed to make admin');
+    }
+  };
+  
+  // Get available contacts for adding to group
+  const getAvailableContacts = () => {
+    return contacts.filter(contact => !selectedGroup.members.includes(contact.id));
+  };
+  
+  // Preview file
+  const previewFileHandler = async (fileId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${BACKEND_URL}/api/chat/file/${fileId}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setPreviewFile(data);
+        setShowFilePreview(true);
+      }
+    } catch (error) {
+      console.error('Error fetching file:', error);
+    }
   };
   
   return (
