@@ -49,6 +49,26 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
     }
   }, [open]);
   
+  // Auto-refresh messages every 3 seconds when in chat view
+  useEffect(() => {
+    if ((view === 'chat' || view === 'group-chat') && (selectedPeer || selectedGroup)) {
+      const interval = setInterval(() => {
+        if (selectedPeer) {
+          fetchMessages(selectedPeer.id);
+        } else if (selectedGroup) {
+          fetchGroupMessages(selectedGroup.group_id);
+        }
+      }, 3000);
+      
+      return () => clearInterval(interval);
+    }
+  }, [view, selectedPeer, selectedGroup]);
+  
+  // Auto-scroll to bottom when new messages arrive
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+  
   const fetchContacts = async () => {
     try {
       const token = localStorage.getItem('token');
