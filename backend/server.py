@@ -2036,7 +2036,7 @@ async def add_group_member(group_id: str, data: MemberAction, credentials: HTTPA
 
 # Remove Member from Group
 @api_router.post("/api/chat/group/{group_id}/remove-member")
-async def remove_group_member(group_id: str, member_id: str, credentials: HTTPAuthorizationCredentials = Depends(security)):
+async def remove_group_member(group_id: str, data: MemberAction, credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         user_data = verify_token(credentials.credentials)
         user_id = user_data["user_id"]
@@ -2051,7 +2051,7 @@ async def remove_group_member(group_id: str, member_id: str, credentials: HTTPAu
         
         await db.groups.update_one(
             {"group_id": group_id},
-            {"$pull": {"members": member_id}}
+            {"$pull": {"members": data.member_id}}
         )
         
         return {"success": True, "message": "Member removed successfully"}
