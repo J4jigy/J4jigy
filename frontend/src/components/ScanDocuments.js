@@ -552,24 +552,25 @@ const ScanDocuments = () => {
 
       {/* Full Screen Camera View */}
       {showCameraView && (
-        <div className="fixed inset-0 bg-black z-50 flex flex-col">
-          <div className="flex items-center justify-between p-4 bg-black/50">
+        <div className="fixed inset-0 bg-black z-[100] flex flex-col">
+          <div className="flex items-center justify-between p-4 bg-black/70 backdrop-blur-sm z-10">
             <h2 className="text-white text-lg font-medium">Camera</h2>
             <Button
               onClick={closeCameraView}
               variant="ghost"
               size="sm"
-              className="text-white hover:bg-white/20"
+              className="text-white hover:bg-white/20 h-10 w-10 p-0 rounded-full"
             >
               <X className="w-6 h-6" />
             </Button>
           </div>
 
-          <div className="flex-1 relative">
+          <div className="flex-1 relative overflow-hidden">
             <video
               ref={videoRef}
               autoPlay
               playsInline
+              muted
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 border-2 border-cyan-400 border-dashed pointer-events-none m-8">
@@ -578,14 +579,21 @@ const ScanDocuments = () => {
               <div className="absolute bottom-0 left-0 w-8 h-8 border-l-4 border-b-4 border-cyan-400"></div>
               <div className="absolute bottom-0 right-0 w-8 h-8 border-r-4 border-b-4 border-cyan-400"></div>
             </div>
+            
+            {/* Instruction Text */}
+            <div className="absolute bottom-32 left-0 right-0 text-center z-10">
+              <p className="text-white text-sm bg-black/50 backdrop-blur-sm py-2 px-4 rounded-full inline-block">
+                Position document within frame
+              </p>
+            </div>
           </div>
 
-          <div className="p-6 bg-black/50 flex justify-center">
+          <div className="p-8 bg-gradient-to-t from-black via-black/90 to-transparent flex justify-center items-center z-10">
             <Button
               onClick={capturePhoto}
-              className="w-20 h-20 rounded-full bg-white hover:bg-gray-200 flex items-center justify-center shadow-lg"
+              className="w-24 h-24 rounded-full bg-white hover:bg-gray-100 active:scale-95 flex items-center justify-center shadow-2xl border-4 border-white/30 transition-transform"
             >
-              <div className="w-16 h-16 rounded-full border-4 border-slate-900"></div>
+              <div className="w-20 h-20 rounded-full bg-transparent border-4 border-slate-900"></div>
             </Button>
           </div>
         </div>
