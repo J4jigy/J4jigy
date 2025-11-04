@@ -583,6 +583,16 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
                 <Plus className="w-5 h-5" />
               </Button>
             )}
+            {view === 'group-chat' && selectedGroup && selectedGroup.admins.includes(userId) && (
+              <Button 
+                onClick={openGroupSettings} 
+                variant="ghost" 
+                size="sm"
+                className="text-cyan-400"
+              >
+                <Settings className="w-5 h-5" />
+              </Button>
+            )}
           </DialogTitle>
         </DialogHeader>
         
