@@ -1846,6 +1846,13 @@ class FileUpload(BaseModel):
     file_data: str  # base64 encoded
     message_type: str  # image, audio, document
 
+class SendMessageRequest(BaseModel):
+    receiver_id: Optional[str] = None  # For P2P messages
+    group_id: Optional[str] = None     # For group messages
+    message_type: str                  # text, image, audio, document, contact, location
+    content: str                       # message text or file URL
+    metadata: Optional[Dict[str, Any]] = {}
+
 # Send Message (P2P or Group)
 @api_router.post("/chat/send")
 async def send_message(message: ChatMessage, credentials: HTTPAuthorizationCredentials = Depends(security)):
