@@ -840,7 +840,238 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
               </Button>
             </div>
           )}
+          
+          {view === 'group-settings' && selectedGroup && (
+            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              {/* Group Info */}
+              <div className="bg-slate-700 rounded-lg p-4 space-y-3">
+                <div>
+                  <label className="text-sm text-slate-300 mb-1 block">Group Icon</label>
+                  <Input
+                    value={editGroupIcon}
+                    onChange={(e) => setEditGroupIcon(e.target.value)}
+                    placeholder="👥"
+                    className="bg-slate-800 border-slate-600 text-white"
+                  />
+                </div>
+                
+                <div>
+                  <label className="text-sm text-slate-300 mb-1 block">Group Name</label>
+                  <Input
+                    value={editGroupName}
+                    onChange={(e) => setEditGroupName(e.target.value)}
+                    placeholder="Enter group name"
+                    className="bg-slate-800 border-slate-600 text-white"
+                  />
+                </div>
+                
+                <div>
+                  <label className="text-sm text-slate-300 mb-1 block">Description</label>
+                  <Input
+                    value={editGroupDescription}
+                    onChange={(e) => setEditGroupDescription(e.target.value)}
+                    placeholder="Group description"
+                    className="bg-slate-800 border-slate-600 text-white"
+                  />
+                </div>
+                
+                <Button
+                  onClick={updateGroupSettings}
+                  className="w-full bg-blue-600 hover:bg-blue-700"
+                >
+                  Update Settings
+                </Button>
+              </div>
+              
+              {/* Members Management */}
+              <div className="bg-slate-700 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-white font-medium">Members ({selectedGroup.members.length})</h3>
+                  <Button
+                    onClick={() => {
+                      setAvailableContacts(getAvailableContacts());
+                      setShowAddMemberDialog(true);
+                    }}
+                    size="sm"
+                    className="bg-cyan-600 hover:bg-cyan-700"
+                  >
+                    <Plus className="w-4 h-4 mr-1" />
+                    Add
+                  </Button>
+                </div>
+                
+                <div className="space-y-2 max-h-60 overflow-y-auto">
+                  {selectedGroup.members.map((memberId) => {
+                    const contact = contacts.find(c => c.id === memberId);
+                    const isAdmin = selectedGroup.admins.includes(memberId);
+                    const isCreator = selectedGroup.created_by === memberId;
+                    const canManage = selectedGroup.admins.includes(userId) && !isCreator && memberId !== userId;
+                    
+                    return (
+                      <div
+                        key={memberId}
+                        className="flex items-center gap-3 p-2 bg-slate-800 rounded-lg"
+                      >
+                        <span className="text-xl">{contact?.avatar || '👤'}</span>
+                        <div className="flex-1">
+                          <div className="text-sm text-white">{contact?.name || 'Unknown'}</div>
+                          <div className="text-xs text-slate-400">
+                            {isCreator ? '👑 Creator' : isAdmin ? '⭐ Admin' : 'Member'}
+                          </div>
+                        </div>
+                        {canManage && (
+                          <div className="flex gap-1">
+                            {!isAdmin && (
+                              <Button
+                                onClick={() => makeAdmin(memberId)}
+                                size="sm"
+                                variant="outline"
+                                className="text-xs border-cyan-600 text-cyan-400"
+                              >
+                                Make Admin
+                              </Button>
+                            )}
+                            <Button
+                              onClick={() => removeMemberFromGroup(memberId)}
+                              size="sm"
+                              variant="outline"
+                              className="text-xs border-red-600 text-red-400"
+                            >
+                              <X className="w-3 h-3" />
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              
+              {/* Admins List */}
+              <div className="bg-slate-700 rounded-lg p-4">
+                <h3 className="text-white font-medium mb-3">Admins ({selectedGroup.admins.length})</h3>
+                <div className="space-y-2">
+                  {selectedGroup.admins.map((adminId) => {
+                    const contact = contacts.find(c => c.id === adminId);
+                    const isCreator = selectedGroup.created_by === adminId;
+                    
+                    return (
+                      <div
+                        key={adminId}
+                        className="flex items-center gap-3 p-2 bg-slate-800 rounded-lg"
+                      >
+                        <span className="text-xl">{contact?.avatar || '👤'}</span>
+                        <div className="flex-1">
+                          <div className="text-sm text-white">{contact?.name || 'Unknown'}</div>
+                          <div className="text-xs text-slate-400">
+                            {isCreator ? '👑 Creator' : '⭐ Admin'}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
+        
+        {/* Add Member Dialog */}
+        {showAddMemberDialog && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="bg-slate-800 rounded-lg p-6 max-w-md w-full mx-4">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-white font-medium">Add Members</h3>
+                <Button
+                  onClick={() => setShowAddMemberDialog(false)}
+                  variant="ghost"
+                  size="sm"
+                  className="p-1"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+              
+              <div className="space-y-2 max-h-80 overflow-y-auto">
+                {availableContacts.length === 0 ? (
+                  <div className="text-center text-slate-400 text-sm py-4">
+                    No contacts available to add
+                  </div>
+                ) : (
+                  availableContacts.map((contact) => (
+                    <div
+                      key={contact.id}
+                      onClick={() => {
+                        addMemberToGroup(contact.id);
+                        setShowAddMemberDialog(false);
+                      }}
+                      className="flex items-center gap-3 p-3 bg-slate-700 hover:bg-slate-600 rounded-lg cursor-pointer"
+                    >
+                      <span className="text-xl">{contact.avatar || '👤'}</span>
+                      <span className="text-sm text-white">{contact.name}</span>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* File Preview Dialog */}
+        {showFilePreview && previewFile && (
+          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+            <div className="bg-slate-800 rounded-lg p-6 max-w-2xl w-full mx-4">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-white font-medium">{previewFile.file_name}</h3>
+                <Button
+                  onClick={() => {
+                    setShowFilePreview(false);
+                    setPreviewFile(null);
+                  }}
+                  variant="ghost"
+                  size="sm"
+                  className="p-1"
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+              </div>
+              
+              <div className="bg-slate-900 rounded-lg p-4 text-center">
+                {previewFile.file_type.startsWith('image/') && (
+                  <img 
+                    src={`data:${previewFile.file_type};base64,${previewFile.file_data}`} 
+                    alt={previewFile.file_name}
+                    className="max-w-full max-h-96 mx-auto"
+                  />
+                )}
+                {previewFile.file_type.startsWith('audio/') && (
+                  <audio controls className="w-full">
+                    <source src={`data:${previewFile.file_type};base64,${previewFile.file_data}`} />
+                  </audio>
+                )}
+                {!previewFile.file_type.startsWith('image/') && !previewFile.file_type.startsWith('audio/') && (
+                  <div className="text-slate-400 text-sm">
+                    <FileText className="w-16 h-16 mx-auto mb-2" />
+                    <p>File type: {previewFile.file_type}</p>
+                    <p>Size: {(previewFile.size / 1024).toFixed(2)} KB</p>
+                  </div>
+                )}
+              </div>
+              
+              <Button
+                onClick={() => {
+                  const link = document.createElement('a');
+                  link.href = `data:${previewFile.file_type};base64,${previewFile.file_data}`;
+                  link.download = previewFile.file_name;
+                  link.click();
+                }}
+                className="w-full mt-4 bg-blue-600 hover:bg-blue-700"
+              >
+                Download
+              </Button>
+            </div>
+          </div>
+        )}
         
         {/* Hidden File Inputs */}
         <input
