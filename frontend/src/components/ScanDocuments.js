@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Badge } from './ui/badge';
 import { Input } from './ui/input';
-import { ArrowLeft, Camera, Upload, FileText, Trash2, Eye, Download, ScanLine, Save, Plus, X, Edit, RotateCcw, Edit3, Check } from 'lucide-react';
+import { ArrowLeft, Camera, Upload, FileText, Trash2, Eye, Download, ScanLine, Save, Plus, X, Edit, RotateCcw, Edit3, Check, Share2 } from 'lucide-react';
 import jsPDF from 'jspdf';
 
 const ScanDocuments = () => {
