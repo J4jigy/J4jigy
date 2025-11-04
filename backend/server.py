@@ -1908,7 +1908,7 @@ async def get_group_messages(group_id: str, credentials: HTTPAuthorizationCreden
         raise HTTPException(status_code=500, detail="Failed to fetch group messages")
 
 # Upload File
-@api_router.post("/api/chat/upload")
+@api_router.post("/chat/upload")
 async def upload_file(upload: FileUpload, credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         user_data = verify_token(credentials.credentials)
