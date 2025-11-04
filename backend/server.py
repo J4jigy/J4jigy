@@ -1805,6 +1805,329 @@ async def delete_contact(
         print(f"Error deleting contact: {e}")
         raise HTTPException(status_code=500, detail="Failed to delete contact")
 
+
+# ==================== CHAT & GROUPS APIs ====================
+
+# Pydantic Models for Chat
+class ChatMessage(BaseModel):
+    message_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    sender_id: str
+    receiver_id: Optional[str] = None  # None for group messages
+    group_id: Optional[str] = None
+    message_type: str  # text, image, audio, document, contact, location
+    content: str  # message text or file URL
+    metadata: Optional[Dict[str, Any]] = {}  # for storing file info, contact details, location coords
+    timestamp: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    read: bool = False
+
+class Group(BaseModel):
+    group_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    description: Optional[str] = ""
+    icon: Optional[str] = "👥"
+    created_by: str
+    admins: List[str] = []
+    members: List[str] = []
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+    
+class FileUpload(BaseModel):
+    file_name: str
+    file_type: str
+    file_data: str  # base64 encoded
+    message_type: str  # image, audio, document
+
+# Send Message (P2P or Group)
+@api_router.post("/api/chat/send")
+async def send_message(message: ChatMessage, credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        verify_token(credentials.credentials)
+        
+        message_dict = message.dict()
+        await db.messages.insert_one(message_dict)
+        
+        return {
+            "success": True,
+            "message_id": message.message_id,
+            "timestamp": message.timestamp
+        }
+    except Exception as e:
+        print(f"Error sending message: {e}")
+        raise HTTPException(status_code=500, detail="Failed to send message")
+
+# Get Messages (P2P)
+@api_router.get("/api/chat/messages/{peer_id}")
+async def get_messages(peer_id: str, credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        user_data = verify_token(credentials.credentials)
+        user_id = user_data["user_id"]
+        
+        messages = await db.messages.find({
+            "$or": [
+                {"sender_id": user_id, "receiver_id": peer_id},
+                {"sender_id": peer_id, "receiver_id": user_id}
+            ]
+        }).sort("timestamp", 1).to_list(length=None)
+        
+        # Convert ObjectId to string
+        for msg in messages:
+            if '_id' in msg:
+                del msg['_id']
+        
+        return {"messages": messages}
+    except Exception as e:
+        print(f"Error fetching messages: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch messages")
+
+# Get Group Messages
+@api_router.get("/api/chat/group/{group_id}/messages")
+async def get_group_messages(group_id: str, credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        verify_token(credentials.credentials)
+        
+        messages = await db.messages.find({
+            "group_id": group_id
+        }).sort("timestamp", 1).to_list(length=None)
+        
+        for msg in messages:
+            if '_id' in msg:
+                del msg['_id']
+        
+        return {"messages": messages}
+    except Exception as e:
+        print(f"Error fetching group messages: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch group messages")
+
+# Upload File
+@api_router.post("/api/chat/upload")
+async def upload_file(upload: FileUpload, credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        user_data = verify_token(credentials.credentials)
+        user_id = user_data["user_id"]
+        
+        # Decode base64 file data
+        import base64
+        file_bytes = base64.b64decode(upload.file_data)
+        
+        # Generate unique file name
+        file_ext = upload.file_name.split('.')[-1]
+        unique_filename = f"{user_id}_{uuid.uuid4()}.{file_ext}"
+        
+        # Store file info in database (in production, upload to cloud storage)
+        file_doc = {
+            "file_id": str(uuid.uuid4()),
+            "user_id": user_id,
+            "original_name": upload.file_name,
+            "stored_name": unique_filename,
+            "file_type": upload.file_type,
+            "message_type": upload.message_type,
+            "file_data": upload.file_data,  # Store in DB for now (simplified version)
+            "size": len(file_bytes),
+            "uploaded_at": datetime.now(timezone.utc).isoformat()
+        }
+        
+        await db.files.insert_one(file_doc)
+        
+        return {
+            "success": True,
+            "file_id": file_doc["file_id"],
+            "file_url": f"/api/chat/file/{file_doc['file_id']}"
+        }
+    except Exception as e:
+        print(f"Error uploading file: {e}")
+        raise HTTPException(status_code=500, detail="Failed to upload file")
+
+# Get File
+@api_router.get("/api/chat/file/{file_id}")
+async def get_file(file_id: str):
+    try:
+        file_doc = await db.files.find_one({"file_id": file_id})
+        
+        if not file_doc:
+            raise HTTPException(status_code=404, detail="File not found")
+        
+        return {
+            "file_id": file_doc["file_id"],
+            "file_name": file_doc["original_name"],
+            "file_type": file_doc["file_type"],
+            "file_data": file_doc["file_data"],
+            "size": file_doc["size"]
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error fetching file: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch file")
+
+# Create Group
+@api_router.post("/api/chat/group/create")
+async def create_group(group: Group, credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        user_data = verify_token(credentials.credentials)
+        user_id = user_data["user_id"]
+        
+        group.created_by = user_id
+        group.admins = [user_id]
+        
+        if user_id not in group.members:
+            group.members.append(user_id)
+        
+        group_dict = group.dict()
+        await db.groups.insert_one(group_dict)
+        
+        return {
+            "success": True,
+            "group_id": group.group_id,
+            "message": "Group created successfully"
+        }
+    except Exception as e:
+        print(f"Error creating group: {e}")
+        raise HTTPException(status_code=500, detail="Failed to create group")
+
+# Get User Groups
+@api_router.get("/api/chat/groups")
+async def get_groups(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        user_data = verify_token(credentials.credentials)
+        user_id = user_data["user_id"]
+        
+        groups = await db.groups.find({
+            "members": user_id
+        }).to_list(length=None)
+        
+        for group in groups:
+            if '_id' in group:
+                del group['_id']
+        
+        return {"groups": groups}
+    except Exception as e:
+        print(f"Error fetching groups: {e}")
+        raise HTTPException(status_code=500, detail="Failed to fetch groups")
+
+# Add Member to Group
+@api_router.post("/api/chat/group/{group_id}/add-member")
+async def add_group_member(group_id: str, member_id: str, credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        user_data = verify_token(credentials.credentials)
+        user_id = user_data["user_id"]
+        
+        group = await db.groups.find_one({"group_id": group_id})
+        
+        if not group:
+            raise HTTPException(status_code=404, detail="Group not found")
+        
+        if user_id not in group["admins"]:
+            raise HTTPException(status_code=403, detail="Only admins can add members")
+        
+        if member_id not in group["members"]:
+            await db.groups.update_one(
+                {"group_id": group_id},
+                {"$push": {"members": member_id}}
+            )
+        
+        return {"success": True, "message": "Member added successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error adding member: {e}")
+        raise HTTPException(status_code=500, detail="Failed to add member")
+
+# Remove Member from Group
+@api_router.post("/api/chat/group/{group_id}/remove-member")
+async def remove_group_member(group_id: str, member_id: str, credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        user_data = verify_token(credentials.credentials)
+        user_id = user_data["user_id"]
+        
+        group = await db.groups.find_one({"group_id": group_id})
+        
+        if not group:
+            raise HTTPException(status_code=404, detail="Group not found")
+        
+        if user_id not in group["admins"]:
+            raise HTTPException(status_code=403, detail="Only admins can remove members")
+        
+        await db.groups.update_one(
+            {"group_id": group_id},
+            {"$pull": {"members": member_id}}
+        )
+        
+        return {"success": True, "message": "Member removed successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error removing member: {e}")
+        raise HTTPException(status_code=500, detail="Failed to remove member")
+
+# Make Admin
+@api_router.post("/api/chat/group/{group_id}/make-admin")
+async def make_admin(group_id: str, member_id: str, credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        user_data = verify_token(credentials.credentials)
+        user_id = user_data["user_id"]
+        
+        group = await db.groups.find_one({"group_id": group_id})
+        
+        if not group:
+            raise HTTPException(status_code=404, detail="Group not found")
+        
+        if user_id not in group["admins"]:
+            raise HTTPException(status_code=403, detail="Only admins can make other members admin")
+        
+        if member_id not in group["admins"]:
+            await db.groups.update_one(
+                {"group_id": group_id},
+                {"$push": {"admins": member_id}}
+            )
+        
+        return {"success": True, "message": "Member is now an admin"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error making admin: {e}")
+        raise HTTPException(status_code=500, detail="Failed to make admin")
+
+# Update Group Settings
+@api_router.put("/api/chat/group/{group_id}/settings")
+async def update_group_settings(
+    group_id: str, 
+    name: Optional[str] = None,
+    description: Optional[str] = None,
+    icon: Optional[str] = None,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    try:
+        user_data = verify_token(credentials.credentials)
+        user_id = user_data["user_id"]
+        
+        group = await db.groups.find_one({"group_id": group_id})
+        
+        if not group:
+            raise HTTPException(status_code=404, detail="Group not found")
+        
+        if user_id not in group["admins"]:
+            raise HTTPException(status_code=403, detail="Only admins can update group settings")
+        
+        update_data = {}
+        if name:
+            update_data["name"] = name
+        if description is not None:
+            update_data["description"] = description
+        if icon:
+            update_data["icon"] = icon
+        
+        if update_data:
+            await db.groups.update_one(
+                {"group_id": group_id},
+                {"$set": update_data}
+            )
+        
+        return {"success": True, "message": "Group settings updated"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error updating group settings: {e}")
+        raise HTTPException(status_code=500, detail="Failed to update group settings")
+
 # Health/Ping endpoint
 @api_router.get("/ping")
 async def ping():
