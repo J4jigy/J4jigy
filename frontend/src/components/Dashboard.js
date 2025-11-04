@@ -12,6 +12,7 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Home, UserCircle, ShieldCheck, Users, Truck, Star, ShoppingCart, Zap, Building, Coins, Receipt, Package, PieChart, BarChart3, Gift, MessageCircle, Send, Plus, Minus, Shield, Settings, ChevronDown, CheckSquare, Share2, Copy, ArrowLeft, ScanLine, FileBarChart, Landmark, Fuel, Download, Upload, TrendingUp, ClipboardList, ArrowDownRight, ArrowUpRight, Calendar, Calculator, Edit2 } from 'lucide-react';
+import EnhancedChat from './EnhancedChat';
 
 // Build API base (same-origin on preview)
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
