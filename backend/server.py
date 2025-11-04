@@ -2046,6 +2046,11 @@ async def get_groups(credentials: HTTPAuthorizationCredentials = Depends(securit
 class MemberAction(BaseModel):
     member_id: str
 
+class UpdateGroupSettingsRequest(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    icon: Optional[str] = None
+
 # Add Member to Group
 @api_router.post("/chat/group/{group_id}/add-member")
 async def add_group_member(group_id: str, data: MemberAction, credentials: HTTPAuthorizationCredentials = Depends(security)):
