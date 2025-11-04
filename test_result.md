@@ -72,11 +72,12 @@
 metadata:
   created_by: "main_agent"
   version: "1.0"
-  test_sequence: 1
+  test_sequence: 2
 
 test_plan:
   current_focus:
-    - "REDESIGNED Edit Dialog with Photo Carousel and Horizontal Filters"
+    - "Enhanced Chat Backend APIs"
+    - "Enhanced Chat UI with Media Sharing and Group Management"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
