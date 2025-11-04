@@ -2045,7 +2045,7 @@ async def add_group_member(group_id: str, data: MemberAction, credentials: HTTPA
         raise HTTPException(status_code=500, detail="Failed to add member")
 
 # Remove Member from Group
-@api_router.post("/api/chat/group/{group_id}/remove-member")
+@api_router.post("/chat/group/{group_id}/remove-member")
 async def remove_group_member(group_id: str, data: MemberAction, credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         user_data = verify_token(credentials.credentials)
