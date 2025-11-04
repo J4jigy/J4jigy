@@ -621,14 +621,24 @@ const ScanDocuments = () => {
                       </div>
                     </div>
                   </div>
-                  <Button
-                    onClick={() => deleteDocument(document.id)}
-                    variant="ghost"
-                    size="sm"
-                    className="text-red-400 hover:text-red-300 hover:bg-red-900/20 h-6 w-6 p-0"
-                  >
-                    <Trash2 className="w-3 h-3" />
-                  </Button>
+                  <div className="flex items-center gap-1">
+                    <Button
+                      onClick={() => openPdfEditor(document)}
+                      variant="ghost"
+                      size="sm"
+                      className="text-blue-400 hover:text-blue-300 hover:bg-blue-900/20 h-6 w-6 p-0"
+                    >
+                      <Edit className="w-3 h-3" />
+                    </Button>
+                    <Button
+                      onClick={() => deleteDocument(document.id)}
+                      variant="ghost"
+                      size="sm"
+                      className="text-red-400 hover:text-red-300 hover:bg-red-900/20 h-6 w-6 p-0"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </Button>
+                  </div>
                 </div>
               </CardHeader>
               <CardContent className="pt-0">
