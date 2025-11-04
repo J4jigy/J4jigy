@@ -2154,12 +2154,12 @@ async def update_group_settings(
             raise HTTPException(status_code=403, detail="Only admins can update group settings")
         
         update_data = {}
-        if name:
-            update_data["name"] = name
-        if description is not None:
-            update_data["description"] = description
-        if icon:
-            update_data["icon"] = icon
+        if request.name:
+            update_data["name"] = request.name
+        if request.description is not None:
+            update_data["description"] = request.description
+        if request.icon:
+            update_data["icon"] = request.icon
         
         if update_data:
             await db.groups.update_one(
