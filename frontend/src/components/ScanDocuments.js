@@ -569,7 +569,7 @@ const ScanDocuments = () => {
               onClick={closeCameraView}
               variant="ghost"
               size="sm"
-              className="text-white hover:bg-white/20 h-10 w-10 p-0 rounded-full"
+              className="text-red-500 hover:text-red-400 hover:bg-red-900/20 h-10 w-10 p-0 rounded-full"
             >
               <X className="w-6 h-6" />
             </Button>
