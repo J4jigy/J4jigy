@@ -2003,9 +2003,12 @@ async def get_groups(credentials: HTTPAuthorizationCredentials = Depends(securit
         print(f"Error fetching groups: {e}")
         raise HTTPException(status_code=500, detail="Failed to fetch groups")
 
+class MemberAction(BaseModel):
+    member_id: str
+
 # Add Member to Group
 @api_router.post("/api/chat/group/{group_id}/add-member")
-async def add_group_member(group_id: str, member_id: str, credentials: HTTPAuthorizationCredentials = Depends(security)):
+async def add_group_member(group_id: str, data: MemberAction, credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         user_data = verify_token(credentials.credentials)
         user_id = user_data["user_id"]
@@ -2018,10 +2021,10 @@ async def add_group_member(group_id: str, member_id: str, credentials: HTTPAutho
         if user_id not in group["admins"]:
             raise HTTPException(status_code=403, detail="Only admins can add members")
         
-        if member_id not in group["members"]:
+        if data.member_id not in group["members"]:
             await db.groups.update_one(
                 {"group_id": group_id},
-                {"$push": {"members": member_id}}
+                {"$push": {"members": data.member_id}}
             )
         
         return {"success": True, "message": "Member added successfully"}
