@@ -1853,6 +1853,11 @@ class SendMessageRequest(BaseModel):
     content: str                       # message text or file URL
     metadata: Optional[Dict[str, Any]] = {}
 
+class CreateGroupRequest(BaseModel):
+    name: str
+    description: Optional[str] = ""
+    icon: Optional[str] = "👥"
+
 # Send Message (P2P or Group)
 @api_router.post("/chat/send")
 async def send_message(request: SendMessageRequest, credentials: HTTPAuthorizationCredentials = Depends(security)):
