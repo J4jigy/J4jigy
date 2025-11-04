@@ -1844,7 +1844,7 @@ class FileUpload(BaseModel):
     file_name: str
     file_type: str
     file_data: str  # base64 encoded
-    message_type: str  # image, audio, document
+    metadata: Optional[Dict[str, Any]] = {}
 
 class SendMessageRequest(BaseModel):
     receiver_id: Optional[str] = None  # For P2P messages
