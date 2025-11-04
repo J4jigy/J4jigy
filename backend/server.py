@@ -2063,7 +2063,7 @@ async def remove_group_member(group_id: str, data: MemberAction, credentials: HT
 
 # Make Admin
 @api_router.post("/api/chat/group/{group_id}/make-admin")
-async def make_admin(group_id: str, member_id: str, credentials: HTTPAuthorizationCredentials = Depends(security)):
+async def make_admin(group_id: str, data: MemberAction, credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         user_data = verify_token(credentials.credentials)
         user_id = user_data["user_id"]
@@ -2076,10 +2076,10 @@ async def make_admin(group_id: str, member_id: str, credentials: HTTPAuthorizati
         if user_id not in group["admins"]:
             raise HTTPException(status_code=403, detail="Only admins can make other members admin")
         
-        if member_id not in group["admins"]:
+        if data.member_id not in group["admins"]:
             await db.groups.update_one(
                 {"group_id": group_id},
-                {"$push": {"admins": member_id}}
+                {"$push": {"admins": data.member_id}}
             )
         
         return {"success": True, "message": "Member is now an admin"}
