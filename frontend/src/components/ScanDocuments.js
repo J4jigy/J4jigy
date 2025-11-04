@@ -804,43 +804,23 @@ const ScanDocuments = () => {
       <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
         <DialogContent className="bg-slate-900 border-slate-700 max-w-full max-h-full h-screen w-screen m-0 p-0 rounded-none flex flex-col">
           {/* Top Navigation Bar */}
-          <div className="flex items-center justify-between px-4 py-3 bg-slate-800 border-b border-slate-700 flex-shrink-0">
+          <div className="flex items-center justify-end px-4 py-3 bg-slate-800 border-b border-slate-700 flex-shrink-0 gap-2">
             <Button
-              onClick={handleCancelSession}
-              variant="ghost"
+              onClick={handleRetry}
               size="sm"
-              className="text-white hover:bg-slate-700"
+              className="bg-slate-700 hover:bg-slate-600 text-white"
             >
-              <X className="w-5 h-5 mr-1" />
-              Cancel
+              <RotateCcw className="w-4 h-4 mr-1" />
+              Retry
             </Button>
-            
-            <div className="flex items-center gap-2">
-              <Button
-                onClick={handleRetry}
-                size="sm"
-                className="bg-slate-700 hover:bg-slate-600 text-white"
-              >
-                <RotateCcw className="w-4 h-4 mr-1" />
-                Retry
-              </Button>
-              <Button
-                onClick={handleAddPageToCollection}
-                size="sm"
-                className="bg-blue-600 hover:bg-blue-700 text-white"
-              >
-                <Plus className="w-4 h-4 mr-1" />
-                Add
-              </Button>
-              <Button
-                onClick={handleAddAnotherPage}
-                size="sm"
-                className="bg-green-600 hover:bg-green-700 text-white"
-              >
-                <Plus className="w-4 h-4 mr-1" />
-                Add New
-              </Button>
-            </div>
+            <Button
+              onClick={handleAddAnotherPage}
+              size="sm"
+              className="bg-green-600 hover:bg-green-700 text-white"
+            >
+              <Plus className="w-4 h-4 mr-1" />
+              Add New
+            </Button>
           </div>
 
           {/* Main Image Preview - Constrained Height */}
