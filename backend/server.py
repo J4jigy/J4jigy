@@ -1969,7 +1969,7 @@ async def get_file(file_id: str):
         raise HTTPException(status_code=500, detail="Failed to fetch file")
 
 # Create Group
-@api_router.post("/api/chat/group/create")
+@api_router.post("/chat/group/create")
 async def create_group(group: Group, credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         user_data = verify_token(credentials.credentials)
