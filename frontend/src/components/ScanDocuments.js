@@ -1150,6 +1150,26 @@ const ScanDocuments = () => {
                   Edit PDF
                 </Button>
                 <Button
+                  onClick={() => {
+                    // Share functionality - can be expanded to share within app chat
+                    if (navigator.share && selectedDocument.pdfBlob) {
+                      const file = new File([selectedDocument.pdfBlob], selectedDocument.name, { type: 'application/pdf' });
+                      navigator.share({
+                        title: selectedDocument.name,
+                        text: `Check out this document: ${selectedDocument.name}`,
+                        files: [file]
+                      }).catch(err => console.log('Share failed:', err));
+                    } else {
+                      // Fallback: Copy download link or show share options
+                      alert('Share feature: This will allow sharing within app chat in future updates');
+                    }
+                  }}
+                  className="flex-1 bg-purple-600 hover:bg-purple-700"
+                >
+                  <Share2 className="w-4 h-4 mr-2" />
+                  Share
+                </Button>
+                <Button
                   onClick={() => downloadDocument(selectedDocument)}
                   className="flex-1 bg-blue-600 hover:bg-blue-700"
                 >
