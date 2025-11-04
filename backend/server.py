@@ -2138,9 +2138,7 @@ async def make_admin(group_id: str, data: MemberAction, credentials: HTTPAuthori
 @api_router.put("/chat/group/{group_id}/settings")
 async def update_group_settings(
     group_id: str, 
-    name: Optional[str] = None,
-    description: Optional[str] = None,
-    icon: Optional[str] = None,
+    request: UpdateGroupSettingsRequest,
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ):
     try:
