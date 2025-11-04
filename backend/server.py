@@ -2017,7 +2017,7 @@ class MemberAction(BaseModel):
     member_id: str
 
 # Add Member to Group
-@api_router.post("/api/chat/group/{group_id}/add-member")
+@api_router.post("/chat/group/{group_id}/add-member")
 async def add_group_member(group_id: str, data: MemberAction, credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         user_data = verify_token(credentials.credentials)
