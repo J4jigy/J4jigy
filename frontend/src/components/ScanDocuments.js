@@ -805,15 +805,13 @@ const ScanDocuments = () => {
         <DialogContent className="bg-slate-900 border-slate-700 max-w-full max-h-full h-screen w-screen m-0 p-0 rounded-none flex flex-col">
           {/* Top Navigation Bar */}
           <div className="flex items-center justify-between px-4 py-3 bg-slate-800 border-b border-slate-700 flex-shrink-0">
-            {/* Left - Cancel Button (Red) */}
+            {/* Left - Cancel Button (Red Square Icon) */}
             <Button
               onClick={handleCancelSession}
-              variant="ghost"
               size="sm"
-              className="text-red-500 hover:text-red-400 hover:bg-red-900/20"
+              className="bg-red-600 hover:bg-red-700 text-white w-9 h-9 p-0 rounded"
             >
-              <X className="w-5 h-5 mr-1" />
-              Cancel
+              <X className="w-5 h-5" />
             </Button>
             
             {/* Right - Action Buttons */}
