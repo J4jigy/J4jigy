@@ -1104,16 +1104,16 @@ const ScanDocuments = () => {
 
       {/* Document Preview Dialog */}
       <Dialog open={showPreviewDialog} onOpenChange={setShowPreviewDialog}>
-        <DialogContent className="bg-slate-800 border-slate-700 max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-[95vw] max-h-[95vh] w-full h-full m-2 flex flex-col overflow-hidden">
+          <DialogHeader className="flex-shrink-0 pb-3 border-b border-slate-700">
             <DialogTitle className="text-white flex items-center gap-2">
               <FileText className="w-5 h-5" />
               {selectedDocument?.name}
             </DialogTitle>
           </DialogHeader>
           {selectedDocument && (
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="flex flex-col flex-1 gap-4 overflow-hidden">
+              <div className="grid grid-cols-2 gap-4 text-sm flex-shrink-0">
                 <div>
                   <span className="text-slate-400">Type:</span>
                   <span className="text-white ml-2">{selectedDocument.type}</span>
@@ -1134,55 +1134,57 @@ const ScanDocuments = () => {
                 </div>
               </div>
               
-              <div>
+              <div className="flex-1 overflow-auto min-h-0">
                 <h4 className="text-white font-medium mb-2">Document Details:</h4>
                 <div className="bg-slate-700 p-4 rounded-lg text-sm text-slate-200 whitespace-pre-line">
                   {selectedDocument.extractedText}
                 </div>
               </div>
               
-              <div className="flex gap-2">
-                <Button
-                  onClick={() => openPdfEditor(selectedDocument)}
-                  className="flex-1 bg-cyan-600 hover:bg-cyan-700"
-                >
-                  <Edit className="w-4 h-4 mr-2" />
-                  Edit PDF
-                </Button>
-                <Button
-                  onClick={() => {
-                    // Share functionality - can be expanded to share within app chat
-                    if (navigator.share && selectedDocument.pdfBlob) {
-                      const file = new File([selectedDocument.pdfBlob], selectedDocument.name, { type: 'application/pdf' });
-                      navigator.share({
-                        title: selectedDocument.name,
-                        text: `Check out this document: ${selectedDocument.name}`,
-                        files: [file]
-                      }).catch(err => console.log('Share failed:', err));
-                    } else {
-                      // Fallback: Copy download link or show share options
-                      alert('Share feature: This will allow sharing within app chat in future updates');
-                    }
-                  }}
-                  className="flex-1 bg-purple-600 hover:bg-purple-700"
-                >
-                  <Share2 className="w-4 h-4 mr-2" />
-                  Share
-                </Button>
-                <Button
-                  onClick={() => downloadDocument(selectedDocument)}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700"
-                >
-                  <Download className="w-4 h-4 mr-2" />
-                  Download
-                </Button>
-                <Button
-                  onClick={() => setShowPreviewDialog(false)}
-                  variant="outline"
-                  className="border-slate-600 text-slate-200"
-                >
-                  Close
-                </Button>
+              <div className="flex flex-col gap-2 flex-shrink-0">
+                <div className="flex gap-2">
+                  <Button
+                    onClick={() => openPdfEditor(selectedDocument)}
+                    className="flex-1 bg-cyan-600 hover:bg-cyan-700"
+                  >
+                    <Edit className="w-4 h-4 mr-2" />
+                    Edit PDF
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      if (navigator.share && selectedDocument.pdfBlob) {
+                        const file = new File([selectedDocument.pdfBlob], selectedDocument.name, { type: 'application/pdf' });
+                        navigator.share({
+                          title: selectedDocument.name,
+                          text: `Check out this document: ${selectedDocument.name}`,
+                          files: [file]
+                        }).catch(err => console.log('Share failed:', err));
+                      } else {
+                        alert('Share feature: This will allow sharing within app chat in future updates');
+                      }
+                    }}
+                    className="flex-1 bg-purple-600 hover:bg-purple-700"
+                  >
+                    <Share2 className="w-4 h-4 mr-2" />
+                    Share
+                  </Button>
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    onClick={() => downloadDocument(selectedDocument)}
+                    className="flex-1 bg-blue-600 hover:bg-blue-700"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Download
+                  </Button>
+                  <Button
+                    onClick={() => setShowPreviewDialog(false)}
+                    variant="outline"
+                    className="flex-1 border-slate-600 text-slate-200"
+                  >
+                    Close
+                  </Button>
+                </div>
               </div>
             </div>
           )}
