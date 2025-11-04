@@ -967,10 +967,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "OTP Send Endpoint (/api/auth/send-otp)"
-    - "OTP Verify Endpoint (/api/auth/verify-otp)"
-    - "Mobile OTP Login UI with Country Code Selector"
-    - "OTP Auto-login Persistence"
+    - "Reorganized Edit Dialog Layout in Document Scanning"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
