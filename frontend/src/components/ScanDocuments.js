@@ -115,13 +115,18 @@ const ScanDocuments = () => {
 
   // Capture photo from camera
   const capturePhoto = () => {
+    console.log('Capture photo button clicked');
+    
     if (!videoRef.current || !captureCanvasRef.current) {
+      console.error('Video ref or canvas ref not available');
       alert('Camera not ready. Please try again.');
       return;
     }
 
     const video = videoRef.current;
     const canvas = captureCanvasRef.current;
+    
+    console.log('Video readyState:', video.readyState, 'Expected:', video.HAVE_ENOUGH_DATA);
     
     if (video.readyState !== video.HAVE_ENOUGH_DATA) {
       alert('Camera is loading. Please wait a moment and try again.');
@@ -131,10 +136,14 @@ const ScanDocuments = () => {
     const context = canvas.getContext('2d');
     canvas.width = video.videoWidth || 640;
     canvas.height = video.videoHeight || 480;
+    
+    console.log('Canvas dimensions:', canvas.width, 'x', canvas.height);
+    
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     
     try {
       const imageDataUrl = canvas.toDataURL('image/jpeg', 0.92);
+      console.log('Image captured successfully, data URL length:', imageDataUrl.length);
       
       const capturedFile = {
         name: `Camera_${new Date().toISOString().split('T')[0]}_${Date.now()}.jpg`,
@@ -146,6 +155,7 @@ const ScanDocuments = () => {
       
       const img = new Image();
       img.onload = () => {
+        console.log('Image loaded for editing');
         setOriginalImage(img);
         setEditedImage(imageDataUrl);
         resetFilters();
