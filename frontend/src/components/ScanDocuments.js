@@ -802,152 +802,184 @@ const ScanDocuments = () => {
 
       {/* Edit Document Dialog */}
       <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
-        <DialogContent className="bg-slate-800 border-slate-700 max-w-5xl max-h-[95vh] overflow-hidden flex flex-col">
-          <DialogHeader className="border-b border-slate-700 pb-3">
-            <div className="flex items-center justify-between">
-              <DialogTitle className="text-white flex items-center gap-2">
-                <ScanLine className="w-5 h-5 text-cyan-400" />
-                Edit Document
-              </DialogTitle>
-              
-              {/* Action Buttons - Next to Navigation */}
-              <div className="flex items-center gap-2">
-                <Button
-                  onClick={handleRetry}
-                  variant="outline"
-                  size="sm"
-                  className="border-yellow-600 text-yellow-400 hover:bg-yellow-900/20"
-                  disabled={isProcessing}
-                >
-                  <RotateCcw className="w-4 h-4 mr-1" />
-                  Retry
-                </Button>
-                <Button
-                  onClick={handleAddPageToCollection}
-                  size="sm"
-                  className="bg-blue-600 hover:bg-blue-700"
-                  disabled={isProcessing}
-                >
-                  <Plus className="w-4 h-4 mr-1" />
-                  Add
-                </Button>
-                <Button
-                  onClick={handleAddAnotherPage}
-                  size="sm"
-                  className="bg-purple-600 hover:bg-purple-700"
-                  disabled={isProcessing}
-                >
-                  <Plus className="w-4 h-4 mr-1" />
-                  Add & More
-                </Button>
-                <Button
-                  onClick={handleCancelSession}
-                  variant="outline"
-                  size="sm"
-                  className="border-slate-600 text-slate-200"
-                  disabled={isProcessing}
-                >
-                  <X className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-          </DialogHeader>
-          
-          {/* Image Preview - Full Width */}
-          <div className="flex-1 overflow-auto p-4">
-            <div className="bg-slate-900 rounded-lg p-4 h-full flex items-center justify-center">
-              {editedImage && (
-                <img
-                  src={editedImage}
-                  alt="Document preview"
-                  className="max-w-full max-h-full object-contain rounded-lg border border-slate-600"
-                />
-              )}
+        <DialogContent className="bg-slate-900 border-slate-700 max-w-full max-h-full h-screen w-screen m-0 p-0 rounded-none">
+          {/* Top Navigation Bar */}
+          <div className="flex items-center justify-between p-4 bg-slate-800 border-b border-slate-700">
+            <Button
+              onClick={handleCancelSession}
+              variant="ghost"
+              size="sm"
+              className="text-white hover:bg-slate-700"
+            >
+              <X className="w-5 h-5 mr-1" />
+              Cancel
+            </Button>
+            
+            <div className="flex items-center gap-2">
+              <Button
+                onClick={handleRetry}
+                size="sm"
+                className="bg-slate-700 hover:bg-slate-600 text-white"
+              >
+                <RotateCcw className="w-4 h-4 mr-1" />
+                Retry
+              </Button>
+              <Button
+                onClick={handleAddPageToCollection}
+                size="sm"
+                className="bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                <Plus className="w-4 h-4 mr-1" />
+                Add
+              </Button>
+              <Button
+                onClick={handleAddAnotherPage}
+                size="sm"
+                className="bg-green-600 hover:bg-green-700 text-white"
+              >
+                <Plus className="w-4 h-4 mr-1" />
+                Add New
+              </Button>
             </div>
           </div>
 
-          {/* Filters Bar - Bottom */}
-          <div className="border-t border-slate-700 bg-slate-900 p-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Basic Filters */}
-              <div className="space-y-3">
-                <h3 className="text-white font-medium text-sm mb-2">Basic Filters</h3>
-                
-                <div>
-                  <label className="text-xs text-slate-300 mb-1 block">
-                    Brightness: {brightness}%
-                  </label>
-                  <input
-                    type="range"
-                    min="50"
-                    max="150"
-                    value={brightness}
-                    onChange={(e) => setBrightness(Number(e.target.value))}
-                    className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer"
-                  />
-                </div>
+          {/* Main Image Preview - Full Screen */}
+          <div className="flex-1 bg-black flex items-center justify-center overflow-hidden">
+            {editedImage && (
+              <img
+                src={editedImage}
+                alt="Document preview"
+                className="max-w-full max-h-full object-contain"
+              />
+            )}
+          </div>
 
-                <div>
-                  <label className="text-xs text-slate-300 mb-1 block">
-                    Contrast: {contrast}%
-                  </label>
-                  <input
-                    type="range"
-                    min="50"
-                    max="150"
-                    value={contrast}
-                    onChange={(e) => setContrast(Number(e.target.value))}
-                    className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer"
-                  />
-                </div>
-
-                <div>
-                  <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={grayscale}
-                      onChange={(e) => setGrayscale(e.target.checked)}
-                      className="w-4 h-4 rounded border-slate-600 bg-slate-700"
-                    />
-                    Grayscale
-                  </label>
-                </div>
+          {/* Filters Section - Horizontal Scroll */}
+          <div className="bg-slate-800 border-t border-slate-700 p-3">
+            <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+              {/* Brightness */}
+              <div className="flex-shrink-0 bg-slate-700 rounded-lg p-3 min-w-[140px]">
+                <div className="text-white text-xs font-medium mb-2">Brightness</div>
+                <input
+                  type="range"
+                  min="50"
+                  max="150"
+                  value={brightness}
+                  onChange={(e) => setBrightness(Number(e.target.value))}
+                  className="w-full h-1 bg-slate-600 rounded-lg appearance-none cursor-pointer"
+                />
+                <div className="text-slate-400 text-xs mt-1 text-center">{brightness}%</div>
               </div>
 
-              {/* Document Filters */}
-              <div className="space-y-2">
-                <h3 className="text-white font-medium text-sm mb-2">Document Filters</h3>
-                
-                <div className="flex flex-wrap gap-2">
-                  <Button
-                    onClick={() => setAutoEnhance(!autoEnhance)}
-                    variant={autoEnhance ? "default" : "outline"}
-                    size="sm"
-                    className={`${autoEnhance ? 'bg-cyan-600 hover:bg-cyan-700' : 'border-slate-600'}`}
-                  >
-                    {autoEnhance ? '✓ ' : ''}Auto-enhance
-                  </Button>
+              {/* Contrast */}
+              <div className="flex-shrink-0 bg-slate-700 rounded-lg p-3 min-w-[140px]">
+                <div className="text-white text-xs font-medium mb-2">Contrast</div>
+                <input
+                  type="range"
+                  min="50"
+                  max="150"
+                  value={contrast}
+                  onChange={(e) => setContrast(Number(e.target.value))}
+                  className="w-full h-1 bg-slate-600 rounded-lg appearance-none cursor-pointer"
+                />
+                <div className="text-slate-400 text-xs mt-1 text-center">{contrast}%</div>
+              </div>
 
-                  <Button
-                    onClick={() => setBlackWhite(!blackWhite)}
-                    variant={blackWhite ? "default" : "outline"}
-                    size="sm"
-                    className={`${blackWhite ? 'bg-cyan-600 hover:bg-cyan-700' : 'border-slate-600'}`}
-                  >
-                    {blackWhite ? '✓ ' : ''}Black & White
-                  </Button>
+              {/* Grayscale */}
+              <button
+                onClick={() => setGrayscale(!grayscale)}
+                className={`flex-shrink-0 rounded-lg p-3 min-w-[100px] flex flex-col items-center justify-center ${
+                  grayscale ? 'bg-cyan-600' : 'bg-slate-700'
+                }`}
+              >
+                <div className="text-white text-xs font-medium">Grayscale</div>
+                {grayscale && <div className="text-white text-lg mt-1">✓</div>}
+              </button>
 
-                  <Button
-                    onClick={() => setRemoveShadows(!removeShadows)}
-                    variant={removeShadows ? "default" : "outline"}
-                    size="sm"
-                    className={`${removeShadows ? 'bg-cyan-600 hover:bg-cyan-700' : 'border-slate-600'}`}
-                  >
-                    {removeShadows ? '✓ ' : ''}Remove Shadows
-                  </Button>
-                </div>
+              {/* Auto Enhance */}
+              <button
+                onClick={() => setAutoEnhance(!autoEnhance)}
+                className={`flex-shrink-0 rounded-lg p-3 min-w-[100px] flex flex-col items-center justify-center ${
+                  autoEnhance ? 'bg-cyan-600' : 'bg-slate-700'
+                }`}
+              >
+                <div className="text-white text-xs font-medium">Auto-enhance</div>
+                {autoEnhance && <div className="text-white text-lg mt-1">✓</div>}
+              </button>
+
+              {/* Black & White */}
+              <button
+                onClick={() => setBlackWhite(!blackWhite)}
+                className={`flex-shrink-0 rounded-lg p-3 min-w-[100px] flex flex-col items-center justify-center ${
+                  blackWhite ? 'bg-cyan-600' : 'bg-slate-700'
+                }`}
+              >
+                <div className="text-white text-xs font-medium">Black & White</div>
+                {blackWhite && <div className="text-white text-lg mt-1">✓</div>}
+              </button>
+
+              {/* Remove Shadows */}
+              <button
+                onClick={() => setRemoveShadows(!removeShadows)}
+                className={`flex-shrink-0 rounded-lg p-3 min-w-[100px] flex flex-col items-center justify-center ${
+                  removeShadows ? 'bg-cyan-600' : 'bg-slate-700'
+                }`}
+              >
+                <div className="text-white text-xs font-medium">Remove Shadows</div>
+                {removeShadows && <div className="text-white text-lg mt-1">✓</div>}
+              </button>
+            </div>
+          </div>
+
+          {/* Photos Preview Carousel - Bottom */}
+          {collectedPages.length > 0 && (
+            <div className="bg-slate-800 border-t border-slate-700 p-3">
+              <div className="flex items-center gap-2 mb-2">
+                <FileText className="w-4 h-4 text-cyan-400" />
+                <span className="text-white text-sm font-medium">Photos ({collectedPages.length + 1})</span>
+              </div>
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                {collectedPages.map((page, index) => (
+                  <div key={page.id} className="relative flex-shrink-0">
+                    <img
+                      src={page.thumbnail}
+                      alt={`Photo ${index + 1}`}
+                      className="w-16 h-20 object-cover rounded border-2 border-slate-600"
+                    />
+                    <div className="absolute top-1 left-1 bg-black/70 text-white text-xs px-1 rounded">
+                      {index + 1}
+                    </div>
+                  </div>
+                ))}
+                {/* Current editing image */}
+                {editedImage && (
+                  <div className="relative flex-shrink-0">
+                    <img
+                      src={editedImage}
+                      alt="Current"
+                      className="w-16 h-20 object-cover rounded border-2 border-cyan-400"
+                    />
+                    <div className="absolute top-1 left-1 bg-cyan-600 text-white text-xs px-1 rounded">
+                      {collectedPages.length + 1}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
+          )}
+
+          {/* Save to Folder Button */}
+          <div className="bg-slate-800 border-t border-slate-700 p-4">
+            <Button
+              onClick={() => {
+                handleAddPageToCollection();
+                // Show bottom strip with save option
+              }}
+              className="w-full bg-green-600 hover:bg-green-700 text-white py-3"
+            >
+              <Save className="w-5 h-5 mr-2" />
+              Save to Folder
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
