@@ -25,9 +25,21 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
   const [groupIcon, setGroupIcon] = useState('👥');
   const [selectedMembers, setSelectedMembers] = useState([]);
   
+  // Group settings states
+  const [editGroupName, setEditGroupName] = useState('');
+  const [editGroupDescription, setEditGroupDescription] = useState('');
+  const [editGroupIcon, setEditGroupIcon] = useState('');
+  const [showAddMemberDialog, setShowAddMemberDialog] = useState(false);
+  const [availableContacts, setAvailableContacts] = useState([]);
+  
+  // File preview state
+  const [previewFile, setPreviewFile] = useState(null);
+  const [showFilePreview, setShowFilePreview] = useState(false);
+  
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
   const audioInputRef = useRef(null);
+  const messagesEndRef = useRef(null);
   
   // Fetch contacts
   useEffect(() => {
