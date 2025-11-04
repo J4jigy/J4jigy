@@ -1993,16 +1993,20 @@ async def get_file(file_id: str):
 
 # Create Group
 @api_router.post("/chat/group/create")
-async def create_group(group: Group, credentials: HTTPAuthorizationCredentials = Depends(security)):
+async def create_group(request: CreateGroupRequest, credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         user_data = verify_token(credentials.credentials)
         user_id = user_data["user_id"]
         
-        group.created_by = user_id
-        group.admins = [user_id]
-        
-        if user_id not in group.members:
-            group.members.append(user_id)
+        # Create Group object
+        group = Group(
+            name=request.name,
+            description=request.description,
+            icon=request.icon,
+            created_by=user_id,
+            admins=[user_id],
+            members=[user_id]
+        )
         
         group_dict = group.dict()
         await db.groups.insert_one(group_dict)
@@ -2010,6 +2014,9 @@ async def create_group(group: Group, credentials: HTTPAuthorizationCredentials =
         return {
             "success": True,
             "group_id": group.group_id,
+            "name": group.name,
+            "members": group.members,
+            "admins": group.admins,
             "message": "Group created successfully"
         }
     except Exception as e:
