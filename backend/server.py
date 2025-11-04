@@ -1994,7 +1994,7 @@ async def create_group(group: Group, credentials: HTTPAuthorizationCredentials =
         raise HTTPException(status_code=500, detail="Failed to create group")
 
 # Get User Groups
-@api_router.get("/api/chat/groups")
+@api_router.get("/chat/groups")
 async def get_groups(credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         user_data = verify_token(credentials.credentials)
