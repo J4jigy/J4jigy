@@ -1983,7 +1983,8 @@ async def get_file(file_id: str):
             "file_name": file_doc["original_name"],
             "file_type": file_doc["file_type"],
             "file_data": file_doc["file_data"],
-            "size": file_doc["size"]
+            "size": file_doc["size"],
+            "metadata": file_doc.get("metadata", {})
         }
     except HTTPException:
         raise
