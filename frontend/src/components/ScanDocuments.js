@@ -804,23 +804,37 @@ const ScanDocuments = () => {
       <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
         <DialogContent className="bg-slate-900 border-slate-700 max-w-full max-h-full h-screen w-screen m-0 p-0 rounded-none flex flex-col">
           {/* Top Navigation Bar */}
-          <div className="flex items-center justify-end px-4 py-3 bg-slate-800 border-b border-slate-700 flex-shrink-0 gap-2">
+          <div className="flex items-center justify-between px-4 py-3 bg-slate-800 border-b border-slate-700 flex-shrink-0">
+            {/* Left - Cancel Button (Red) */}
             <Button
-              onClick={handleRetry}
+              onClick={handleCancelSession}
+              variant="ghost"
               size="sm"
-              className="bg-slate-700 hover:bg-slate-600 text-white"
+              className="text-red-500 hover:text-red-400 hover:bg-red-900/20"
             >
-              <RotateCcw className="w-4 h-4 mr-1" />
-              Retry
+              <X className="w-5 h-5 mr-1" />
+              Cancel
             </Button>
-            <Button
-              onClick={handleAddAnotherPage}
-              size="sm"
-              className="bg-green-600 hover:bg-green-700 text-white"
-            >
-              <Plus className="w-4 h-4 mr-1" />
-              Add New
-            </Button>
+            
+            {/* Right - Action Buttons */}
+            <div className="flex items-center gap-2">
+              <Button
+                onClick={handleRetry}
+                size="sm"
+                className="bg-slate-700 hover:bg-slate-600 text-white"
+              >
+                <RotateCcw className="w-4 h-4 mr-1" />
+                Retry
+              </Button>
+              <Button
+                onClick={handleAddAnotherPage}
+                size="sm"
+                className="bg-green-600 hover:bg-green-700 text-white"
+              >
+                <Plus className="w-4 h-4 mr-1" />
+                Add New
+              </Button>
+            </div>
           </div>
 
           {/* Main Image Preview - Constrained Height */}
