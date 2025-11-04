@@ -1847,7 +1847,7 @@ class FileUpload(BaseModel):
     message_type: str  # image, audio, document
 
 # Send Message (P2P or Group)
-@api_router.post("/api/chat/send")
+@api_router.post("/chat/send")
 async def send_message(message: ChatMessage, credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         verify_token(credentials.credentials)
