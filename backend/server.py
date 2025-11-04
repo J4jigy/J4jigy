@@ -1865,7 +1865,7 @@ async def send_message(message: ChatMessage, credentials: HTTPAuthorizationCrede
         raise HTTPException(status_code=500, detail="Failed to send message")
 
 # Get Messages (P2P)
-@api_router.get("/api/chat/messages/{peer_id}")
+@api_router.get("/chat/messages/{peer_id}")
 async def get_messages(peer_id: str, credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         user_data = verify_token(credentials.credentials)
