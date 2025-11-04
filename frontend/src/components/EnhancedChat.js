@@ -632,6 +632,11 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
             <>
               {/* Messages */}
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                {messages.length === 0 && (
+                  <div className="text-center text-slate-400 text-sm mt-8">
+                    No messages yet. Start the conversation!
+                  </div>
+                )}
                 {messages.map((msg) => (
                   <div key={msg.message_id} className={`flex ${msg.sender_id === userId ? 'justify-end' : 'justify-start'}`}>
                     <div className={`max-w-[75%] rounded-lg p-3 ${
@@ -641,23 +646,62 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
                     }`}>
                       {msg.message_type === 'text' && <div className="text-sm">{msg.content}</div>}
                       {msg.message_type === 'image' && (
-                        <div className="text-xs text-slate-300">📷 Image</div>
+                        <div 
+                          className="cursor-pointer"
+                          onClick={() => msg.metadata?.file_id && previewFileHandler(msg.metadata.file_id)}
+                        >
+                          <ImageIcon className="w-8 h-8 mb-1" />
+                          <div className="text-xs">📷 {msg.metadata?.file_name || 'Image'}</div>
+                        </div>
                       )}
                       {msg.message_type === 'audio' && (
-                        <div className="text-xs text-slate-300">🎵 Audio</div>
+                        <div 
+                          className="cursor-pointer"
+                          onClick={() => msg.metadata?.file_id && previewFileHandler(msg.metadata.file_id)}
+                        >
+                          <Mic className="w-8 h-8 mb-1" />
+                          <div className="text-xs">🎵 {msg.metadata?.file_name || 'Audio'}</div>
+                        </div>
                       )}
                       {msg.message_type === 'document' && (
-                        <div className="text-xs text-slate-300">📄 {msg.metadata?.file_name || 'Document'}</div>
+                        <div 
+                          className="cursor-pointer"
+                          onClick={() => msg.metadata?.file_id && previewFileHandler(msg.metadata.file_id)}
+                        >
+                          <FileText className="w-8 h-8 mb-1" />
+                          <div className="text-xs">📄 {msg.metadata?.file_name || 'Document'}</div>
+                        </div>
                       )}
                       {msg.message_type === 'contact' && (
-                        <div className="text-xs text-slate-300">👤 {msg.content}</div>
+                        <div>
+                          <Phone className="w-6 h-6 mb-1" />
+                          <div className="text-xs">👤 Contact</div>
+                          <div className="text-sm mt-1">{msg.content}</div>
+                        </div>
                       )}
                       {msg.message_type === 'location' && (
-                        <div className="text-xs text-slate-300">📍 Location</div>
+                        <div 
+                          className="cursor-pointer"
+                          onClick={() => {
+                            const lat = msg.metadata?.latitude;
+                            const lng = msg.metadata?.longitude;
+                            if (lat && lng) {
+                              window.open(`https://www.google.com/maps?q=${lat},${lng}`, '_blank');
+                            }
+                          }}
+                        >
+                          <MapPin className="w-6 h-6 mb-1" />
+                          <div className="text-xs">📍 Location</div>
+                          <div className="text-xs mt-1 underline">View on map</div>
+                        </div>
                       )}
+                      <div className="text-xs opacity-70 mt-1">
+                        {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </div>
                     </div>
                   </div>
                 ))}
+                <div ref={messagesEndRef} />
               </div>
               
               {/* Input Area */}
