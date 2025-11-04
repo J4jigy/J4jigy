@@ -1947,7 +1947,7 @@ async def upload_file(upload: FileUpload, credentials: HTTPAuthorizationCredenti
         raise HTTPException(status_code=500, detail="Failed to upload file")
 
 # Get File
-@api_router.get("/api/chat/file/{file_id}")
+@api_router.get("/chat/file/{file_id}")
 async def get_file(file_id: str):
     try:
         file_doc = await db.files.find_one({"file_id": file_id})
