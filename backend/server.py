@@ -2100,7 +2100,7 @@ async def make_admin(group_id: str, data: MemberAction, credentials: HTTPAuthori
         raise HTTPException(status_code=500, detail="Failed to make admin")
 
 # Update Group Settings
-@api_router.put("/api/chat/group/{group_id}/settings")
+@api_router.put("/chat/group/{group_id}/settings")
 async def update_group_settings(
     group_id: str, 
     name: Optional[str] = None,
