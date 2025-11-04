@@ -170,7 +170,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the COMPLETE Document Scanning system with PDF editing and Recently Deleted functionality. Test all 12 priority requirements including Basic Capture & Retry, Single/Multi-Page PDF Creation, View PDF, Edit Existing PDF (Delete/Add Pages), Recently Deleted functionality, PDF Replacement, and Bottom Strip Behavior."
+user_problem_statement: "Test the REORGANIZED Edit Dialog in Document Scanning with filters at bottom and action buttons at top. Test all 10 priority requirements including Edit Dialog Header, Image Preview Center, Filters Bar Bottom, Basic Filters Section, Document Filters Section, Action Button Functionality, Filter Real-Time Preview, Responsive Behavior, Dialog Size and Overflow, and Visual Hierarchy."
 
 backend:
   - task: "OTP Send Endpoint (/api/auth/send-otp)"
