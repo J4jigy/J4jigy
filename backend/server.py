@@ -1952,9 +1952,9 @@ async def upload_file(upload: FileUpload, credentials: HTTPAuthorizationCredenti
             "original_name": upload.file_name,
             "stored_name": unique_filename,
             "file_type": upload.file_type,
-            "message_type": upload.message_type,
             "file_data": upload.file_data,  # Store in DB for now (simplified version)
             "size": len(file_bytes),
+            "metadata": upload.metadata,
             "uploaded_at": datetime.now(timezone.utc).isoformat()
         }
         
