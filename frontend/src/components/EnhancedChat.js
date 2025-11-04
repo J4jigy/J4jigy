@@ -566,6 +566,7 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
                 <ArrowLeft className="w-4 h-4" />
               </Button>
             )}
+            {view === 'list' && <div className="w-6"></div>}
             <span className="flex-1 text-center">
               {view === 'list' && 'Chats'}
               {view === 'chat' && selectedPeer?.name}
@@ -573,26 +574,36 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
               {view === 'create-group' && 'New Group'}
               {view === 'group-settings' && 'Group Settings'}
             </span>
-            {view === 'list' && (
+            <div className="flex items-center gap-2">
+              {view === 'list' && (
+                <Button 
+                  onClick={() => setView('create-group')} 
+                  variant="ghost" 
+                  size="sm"
+                  className="text-cyan-400 p-1 h-8 w-8"
+                >
+                  <Plus className="w-5 h-5" />
+                </Button>
+              )}
+              {view === 'group-chat' && selectedGroup && selectedGroup.admins.includes(userId) && (
+                <Button 
+                  onClick={openGroupSettings} 
+                  variant="ghost" 
+                  size="sm"
+                  className="text-cyan-400 p-1 h-8 w-8"
+                >
+                  <Settings className="w-5 h-5" />
+                </Button>
+              )}
               <Button 
-                onClick={() => setView('create-group')} 
+                onClick={() => onOpenChange(false)} 
                 variant="ghost" 
                 size="sm"
-                className="text-cyan-400"
+                className="text-slate-400 hover:text-white border border-slate-600 hover:border-slate-500 p-1 h-8 w-8"
               >
-                <Plus className="w-5 h-5" />
+                <X className="w-5 h-5" />
               </Button>
-            )}
-            {view === 'group-chat' && selectedGroup && selectedGroup.admins.includes(userId) && (
-              <Button 
-                onClick={openGroupSettings} 
-                variant="ghost" 
-                size="sm"
-                className="text-cyan-400"
-              >
-                <Settings className="w-5 h-5" />
-              </Button>
-            )}
+            </div>
           </DialogTitle>
         </DialogHeader>
         
