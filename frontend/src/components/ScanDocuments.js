@@ -668,22 +668,24 @@ const ScanDocuments = () => {
         )}
       </div>
 
-      {/* Floating Action Buttons */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
-        <Button
-          onClick={() => fileInputRef.current?.click()}
-          className="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 shadow-lg flex items-center justify-center"
-        >
-          <Upload className="w-8 h-8 text-white" />
-        </Button>
-        
-        <Button
-          onClick={openCamera}
-          className="w-16 h-16 rounded-full bg-cyan-500 hover:bg-cyan-600 shadow-lg flex items-center justify-center"
-        >
-          <Camera className="w-8 h-8 text-white" />
-        </Button>
-      </div>
+      {/* Floating Action Buttons - Hide when camera is open */}
+      {!showCameraView && (
+        <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+          <Button
+            onClick={() => fileInputRef.current?.click()}
+            className="w-16 h-16 rounded-full bg-blue-500 hover:bg-blue-600 shadow-lg flex items-center justify-center"
+          >
+            <Upload className="w-8 h-8 text-white" />
+          </Button>
+          
+          <Button
+            onClick={openCamera}
+            className="w-16 h-16 rounded-full bg-cyan-500 hover:bg-cyan-600 shadow-lg flex items-center justify-center"
+          >
+            <Camera className="w-8 h-8 text-white" />
+          </Button>
+        </div>
+      )}
 
       {/* Bottom Page Strip - Always visible when pages collected */}
       {collectedPages.length > 0 && !showPdfEditorDialog && (
