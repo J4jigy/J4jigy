@@ -1889,7 +1889,7 @@ async def get_messages(peer_id: str, credentials: HTTPAuthorizationCredentials =
         raise HTTPException(status_code=500, detail="Failed to fetch messages")
 
 # Get Group Messages
-@api_router.get("/api/chat/group/{group_id}/messages")
+@api_router.get("/chat/group/{group_id}/messages")
 async def get_group_messages(group_id: str, credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         verify_token(credentials.credentials)
