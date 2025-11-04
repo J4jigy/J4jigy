@@ -170,7 +170,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the REORGANIZED Edit Dialog in Document Scanning with filters at bottom and action buttons at top. Test all 10 priority requirements including Edit Dialog Header, Image Preview Center, Filters Bar Bottom, Basic Filters Section, Document Filters Section, Action Button Functionality, Filter Real-Time Preview, Responsive Behavior, Dialog Size and Overflow, and Visual Hierarchy."
+user_problem_statement: "Test the REDESIGNED Edit Dialog matching user's screenshot requirements with photo carousel and horizontal filters. Test all 10 priority requirements including Full Screen Dialog, Top Navigation Bar, Main Image Preview, Horizontal Filters Section, Photos Preview Carousel, Save to Folder Button, Filter Interaction, Photo Carousel Behavior, Responsive Touch, and Complete Workflow."
 
 backend:
   - task: "OTP Send Endpoint (/api/auth/send-otp)"
