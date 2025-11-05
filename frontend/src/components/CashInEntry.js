@@ -1294,7 +1294,7 @@ const CashInEntry = ({ onBack }) => {
               className="w-full bg-green-600 hover:bg-green-700 h-8 text-sm"
               disabled={!newProductName.trim() || !newProductSellingPrice.trim()}
             >
-              Save Product & Add to Order
+              Save Product & Add to Cart
             </Button>
           </div>
         </DialogContent>
