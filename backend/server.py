@@ -2028,9 +2028,13 @@ async def create_group(request: CreateGroupRequest, credentials: HTTPAuthorizati
             "admins": group.admins,
             "message": "Group created successfully"
         }
+    except HTTPException:
+        raise
     except Exception as e:
-        print(f"Error creating group: {e}")
-        raise HTTPException(status_code=500, detail="Failed to create group")
+        print(f"❌ Error creating group: {type(e).__name__}: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Failed to create group: {str(e)}")
 
 # Get User Groups
 @api_router.get("/chat/groups")
