@@ -185,22 +185,25 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
             <>
               {/* Camera Scanner - Centered */}
               <div className="flex-1 flex items-center justify-center">
-                <div className="relative bg-black rounded-lg overflow-hidden border-2 border-blue-500 w-full max-w-md">
+                <div className="relative bg-black rounded-lg overflow-hidden border-2 border-blue-500 w-full max-w-full mx-4">
                   <div 
-                    ref={scannerRef} 
-                    className="w-full aspect-video flex items-center justify-center"
+                    ref={scannerRef}
+                    id="barcode-scanner-container"
+                    className="w-full aspect-video flex items-center justify-center relative"
                   >
                     {!isScanning && !error && (
-                      <div className="text-white text-center p-8">
-                        <Camera className="w-16 h-16 mx-auto mb-4 animate-pulse text-blue-400" />
-                        <p className="text-lg">Initializing camera...</p>
+                      <div className="absolute inset-0 flex items-center justify-center text-white text-center p-8 z-10">
+                        <div>
+                          <Camera className="w-16 h-16 mx-auto mb-4 animate-pulse text-blue-400" />
+                          <p className="text-lg">Initializing camera...</p>
+                        </div>
                       </div>
                     )}
                   </div>
                   
                   {/* Scanning Indicator */}
                   {isScanning && (
-                    <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-2 shadow-lg">
+                    <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-2 shadow-lg z-20">
                       <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
                       SCANNING
                     </div>
