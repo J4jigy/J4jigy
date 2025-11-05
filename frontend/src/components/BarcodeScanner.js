@@ -163,6 +163,7 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
     setManualInput('');
     setShowManualInput(false);
     setError('');
+    setLastScanned('');
     onClose();
   };
 
