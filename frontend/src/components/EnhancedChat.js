@@ -379,7 +379,7 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
         fetchGroups();
       } else if (response.status === 401) {
         // Token expired or invalid
-        alert('Your session has expired. Please logout and login again to continue.');
+        alert('⚠️ Your session has expired!\n\nPlease follow these steps:\n1. Click your profile icon (top-right)\n2. Click "Logout"\n3. Login again with your mobile number\n\nThis will refresh your session.');
         onOpenChange(false); // Close the chat dialog
       } else {
         const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
