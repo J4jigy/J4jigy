@@ -88,7 +88,7 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
             halfSample: true,
           },
           numOfWorkers: 2,
-          frequency: 60,
+          frequency: 90,
           decoder: {
             readers: ['code_128_reader', 'ean_reader'],
             multiple: false
