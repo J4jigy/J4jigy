@@ -40,6 +40,12 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
   const imageInputRef = useRef(null);
   const audioInputRef = useRef(null);
   const messagesEndRef = useRef(null);
+  const cameraInputRef = useRef(null);
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+  
+  const [showCamera, setShowCamera] = useState(false);
+  const [cameraStream, setCameraStream] = useState(null);
   
   // Fetch contacts
   useEffect(() => {
