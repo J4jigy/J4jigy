@@ -433,6 +433,9 @@ const ScanDocuments = () => {
 
   // Delete page from collection
   const handleDeletePage = (pageId) => {
+    if (!window.confirm('Delete this page from the document?')) {
+      return;
+    }
     setCollectedPages(prev => prev.filter(p => p.id !== pageId));
   };
 
