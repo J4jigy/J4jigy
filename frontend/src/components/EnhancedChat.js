@@ -262,6 +262,69 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
     setShowAttachMenu(false);
   };
   
+  // Open camera for instant photo
+  const openInstantCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: 'environment' } // Use back camera on mobile
+      });
+      setCameraStream(stream);
+      setShowCamera(true);
+      
+      // Wait for video element to be ready
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+      }, 100);
+    } catch (error) {
+      console.error('Error accessing camera:', error);
+      alert('Unable to access camera. Please check permissions.');
+    }
+  };
+  
+  // Close camera
+  const closeInstantCamera = () => {
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      setCameraStream(null);
+    }
+    setShowCamera(false);
+  };
+  
+  // Capture photo from camera
+  const captureInstantPhoto = async () => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    
+    if (!video || !canvas) {
+      alert('Camera not ready');
+      return;
+    }
+    
+    // Set canvas size to video size
+    canvas.width = video.videoWidth || 640;
+    canvas.height = video.videoHeight || 480;
+    
+    // Draw video frame to canvas
+    const context = canvas.getContext('2d');
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+    // Convert to blob
+    canvas.toBlob(async (blob) => {
+      if (blob) {
+        // Create file from blob
+        const file = new File([blob], `photo_${Date.now()}.jpg`, { type: 'image/jpeg' });
+        
+        // Close camera
+        closeInstantCamera();
+        
+        // Upload the photo
+        await uploadFile(file, 'image');
+      }
+    }, 'image/jpeg', 0.92);
+  };
+  
   // Share contact
   const shareContact = async () => {
     try {
