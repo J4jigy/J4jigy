@@ -257,10 +257,48 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
   };
   
   // Share contact
-  const shareContact = () => {
-    const contact = prompt('Enter contact details (Name: Number)');
-    if (contact) {
-      sendContactMessage(contact);
+  const shareContact = async () => {
+    try {
+      // Check if Contact Picker API is supported
+      if ('contacts' in navigator && 'ContactsManager' in window) {
+        // Request contact with name and tel (phone number)
+        const props = ['name', 'tel'];
+        const opts = { multiple: false };
+        
+        // This will open the native contact picker
+        const contacts = await navigator.contacts.select(props, opts);
+        
+        if (contacts && contacts.length > 0) {
+          const contact = contacts[0];
+          const name = contact.name || 'Unknown';
+          const phone = contact.tel && contact.tel.length > 0 ? contact.tel[0] : 'No number';
+          const contactInfo = `${name}: ${phone}`;
+          
+          sendContactMessage(contactInfo);
+        }
+      } else {
+        // Fallback for browsers that don't support Contact Picker API
+        alert('⚠️ Contact Picker not supported on this browser.\n\nPlease use Chrome/Edge on Android or Safari on iOS for native contact selection.\n\nFalling back to manual entry...');
+        
+        const contact = prompt('Enter contact details (Name: Number)');
+        if (contact) {
+          sendContactMessage(contact);
+        }
+      }
+    } catch (error) {
+      // User cancelled or error occurred
+      if (error.name === 'AbortError') {
+        console.log('Contact selection cancelled');
+      } else {
+        console.error('Error accessing contacts:', error);
+        alert('Unable to access contacts. Please check permissions or enter manually.');
+        
+        // Fallback to manual entry
+        const contact = prompt('Enter contact details (Name: Number)');
+        if (contact) {
+          sendContactMessage(contact);
+        }
+      }
     }
     setShowAttachMenu(false);
   };
