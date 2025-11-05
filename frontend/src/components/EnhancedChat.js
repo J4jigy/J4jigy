@@ -1003,6 +1003,13 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
                   >
                     <Paperclip className="w-5 h-5" />
                   </Button>
+                  <Button
+                    onClick={openInstantCamera}
+                    size="sm"
+                    className="bg-slate-700 hover:bg-slate-600 border-2 border-purple-500 text-purple-400"
+                  >
+                    <Camera className="w-5 h-5" />
+                  </Button>
                   <Input
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)}
