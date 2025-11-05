@@ -63,6 +63,9 @@ const ToDoList = () => {
   };
 
   const deleteTodo = (id) => {
+    if (!window.confirm('Are you sure you want to delete this task?')) {
+      return;
+    }
     setTodos(prev => prev.filter(todo => todo.id !== id));
   };
 
