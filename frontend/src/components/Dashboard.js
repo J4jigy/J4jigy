@@ -1279,9 +1279,9 @@ It's completely free to try!`;
                   setShowDeleteConfirmDialog(false);
                   setBusinessToDelete(null);
                 }}
-                variant="outline"
-                className="flex-1 border-slate-600 text-slate-200"
+                className="flex-1 bg-red-600/20 hover:bg-red-600/40 border-2 border-red-500 text-red-400 hover:text-red-300 rounded-md flex items-center justify-center gap-2"
               >
+                <X className="w-4 h-4" />
                 Cancel
               </Button>
             </div>
