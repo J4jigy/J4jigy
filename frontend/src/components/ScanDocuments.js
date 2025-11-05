@@ -500,6 +500,86 @@ const ScanDocuments = () => {
     setRecentlyDeleted(prev => prev.filter(d => d.id !== id));
   };
 
+  // Open merge dialog
+  const openMergeDialog = () => {
+    setSelectedPdfsForMerge([]);
+    setMergedPdfName('');
+    setShowMergeDialog(true);
+  };
+
+  // Toggle PDF selection for merge
+  const togglePdfSelection = (docId) => {
+    setSelectedPdfsForMerge(prev => {
+      if (prev.includes(docId)) {
+        return prev.filter(id => id !== docId);
+      } else {
+        return [...prev, docId];
+      }
+    });
+  };
+
+  // Merge selected PDFs
+  const mergePdfs = async () => {
+    if (selectedPdfsForMerge.length < 2) {
+      alert('Please select at least 2 PDFs to merge');
+      return;
+    }
+
+    if (!mergedPdfName.trim()) {
+      alert('Please enter a name for the merged PDF');
+      return;
+    }
+
+    setIsProcessing(true);
+
+    try {
+      // Create a new PDF document
+      const mergedPdf = await PDFDocument.create();
+
+      // Sort selected PDFs by their order in the list
+      const sortedDocs = selectedPdfsForMerge
+        .map(id => scannedDocuments.find(doc => doc.id === id))
+        .filter(doc => doc);
+
+      // Load and merge each PDF
+      for (const doc of sortedDocs) {
+        // Convert data URL to array buffer
+        const pdfBytes = await fetch(doc.url).then(res => res.arrayBuffer());
+        const pdf = await PDFDocument.load(pdfBytes);
+        
+        // Copy all pages from this PDF
+        const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+        copiedPages.forEach(page => mergedPdf.addPage(page));
+      }
+
+      // Save the merged PDF
+      const mergedPdfBytes = await mergedPdf.save();
+      const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+
+      // Create new document entry
+      const newDocument = {
+        id: Date.now(),
+        name: mergedPdfName.trim(),
+        url: url,
+        date: new Date().toLocaleDateString(),
+        pages: mergedPdf.getPageCount(),
+        type: 'Merged PDF'
+      };
+
+      setScannedDocuments(prev => [newDocument, ...prev]);
+      setShowMergeDialog(false);
+      setSelectedPdfsForMerge([]);
+      setMergedPdfName('');
+      alert('PDFs merged successfully!');
+    } catch (error) {
+      console.error('Error merging PDFs:', error);
+      alert('Failed to merge PDFs: ' + error.message);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   // View document details
   const viewDocument = (document) => {
     setSelectedDocument(document);
