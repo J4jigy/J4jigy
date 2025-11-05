@@ -144,11 +144,11 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
     // Don't stop scanning - allow continuous scanning
     onScan(barcode);
     
-    // Very short reset (100ms) for rapid back-to-back scanning
+    // Ultra-fast reset (17ms) for maximum speed back-to-back scanning
     setTimeout(() => {
       setLastScanned('');
       console.log('✅ Ready for next scan');
-    }, 100);
+    }, 17);
   };
 
   const handleManualSubmit = () => {
