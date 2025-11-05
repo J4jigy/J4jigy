@@ -5,6 +5,22 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Camera, X, Keyboard, Scan } from 'lucide-react';
 
+// Add styles for Quagga canvas centering
+const quaggaStyles = `
+  #barcode-scanner-container video,
+  #barcode-scanner-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+  #barcode-scanner-container {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+`;
+
 const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => {
   const scannerRef = useRef(null);
   const [isScanning, setIsScanning] = useState(false);
