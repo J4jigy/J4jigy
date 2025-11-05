@@ -82,8 +82,12 @@ const CashOutEntry = ({ onBack }) => {
   const [newExpenseCategory, setNewExpenseCategory] = useState('General');
   const [newExpenseDescription, setNewExpenseDescription] = useState('');
   const [newExpenseReference, setNewExpenseReference] = useState('');
+  const [newExpenseBarcode, setNewExpenseBarcode] = useState('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteAction, setDeleteAction] = useState(null);
+  
+  // Barcode scanning states
+  const [scannedBarcode, setScannedBarcode] = useState('');
   
   // Search states
   const [expenseSearchQuery, setExpenseSearchQuery] = useState('');
