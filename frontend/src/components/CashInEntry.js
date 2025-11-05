@@ -1513,11 +1513,60 @@ const CashInEntry = ({ onBack }) => {
 
               {/* Terms & Conditions Footer */}
               <div className="border border-slate-600 p-2 bg-slate-800/50">
-                <div className="text-xs text-slate-400">
-                  <div className="font-semibold text-white mb-1">Terms & Conditions:</div>
-                  <div>• Goods once sold will not be taken back</div>
-                  <div>• Subject to jurisdiction</div>
+                {/* Header with Edit Button */}
+                <div className="flex justify-between items-center mb-2">
+                  <div className="font-semibold text-white text-xs">Terms & Conditions:</div>
+                  {!isEditingTerms ? (
+                    <Button
+                      onClick={() => {
+                        setTempTermsText(termsText);
+                        setIsEditingTerms(true);
+                      }}
+                      size="sm"
+                      variant="ghost"
+                      className="h-6 px-2 text-cyan-400 hover:text-cyan-300 hover:bg-cyan-900/20"
+                    >
+                      <Edit2 className="w-3 h-3" />
+                    </Button>
+                  ) : (
+                    <div className="flex gap-1">
+                      <Button
+                        onClick={saveTerms}
+                        size="sm"
+                        className="h-6 px-2 bg-green-600 hover:bg-green-700 text-white"
+                      >
+                        <Save className="w-3 h-3 mr-1" />
+                        Save
+                      </Button>
+                      <Button
+                        onClick={cancelTermsEdit}
+                        size="sm"
+                        variant="ghost"
+                        className="h-6 px-2 text-red-400 hover:text-red-300 hover:bg-red-900/20"
+                      >
+                        <X className="w-3 h-3" />
+                      </Button>
+                    </div>
+                  )}
                 </div>
+                
+                {/* Terms Content */}
+                <div className="text-xs text-slate-400">
+                  {isEditingTerms ? (
+                    <textarea
+                      value={tempTermsText}
+                      onChange={(e) => setTempTermsText(e.target.value)}
+                      className="w-full bg-slate-700 border border-slate-600 text-white text-xs p-2 rounded min-h-[80px] focus:outline-none focus:border-cyan-500"
+                      placeholder="Enter terms and conditions..."
+                    />
+                  ) : (
+                    <div className="whitespace-pre-line">
+                      {termsText}
+                    </div>
+                  )}
+                </div>
+                
+                {/* Signatory Section */}
                 <div className="text-right mt-3">
                   <div className="text-xs text-slate-300">For <span className="font-semibold text-white">{activeBusiness?.name || 'BUSINESS NAME'}</span></div>
                   <div className="mt-8 text-xs text-slate-400">Authorized Signatory</div>
