@@ -651,9 +651,8 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
               )}
               <Button 
                 onClick={() => onOpenChange(false)} 
-                variant="ghost" 
                 size="sm"
-                className="text-slate-400 hover:text-white border border-slate-600 hover:border-slate-500 p-1 h-8 w-8"
+                className="bg-red-600/20 hover:bg-red-600/40 border-2 border-red-500 text-red-400 hover:text-red-300 p-1 h-8 w-8 rounded-md"
               >
                 <X className="w-5 h-5" />
               </Button>
