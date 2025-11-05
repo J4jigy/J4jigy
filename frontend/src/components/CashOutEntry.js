@@ -1006,13 +1006,13 @@ const CashOutEntry = ({ onBack }) => {
               .map((expense) => {
                 const expenseName = typeof expense === 'object' ? expense.name : expense;
                 return (
-              <div key={expense} className="flex items-center justify-between bg-slate-700 p-2 rounded">
-                <span className="text-white text-sm">{expense}</span>
+              <div key={expenseName} className="flex items-center justify-between bg-slate-700 p-2 rounded">
+                <span className="text-white text-sm">{expenseName}</span>
                 <div className="flex items-center gap-1">
-                  <Button onClick={() => decQty(expense)} className="bg-slate-600 w-7 h-7" size="sm">−</Button>
-                  <span className="text-white text-sm min-w-[20px] text-center">{selectedItems[expense] || 0}</span>
-                  <Button onClick={() => incQty(expense)} className="bg-red-600 hover:bg-red-700 w-7 h-7" size="sm">+</Button>
-                  <Button onClick={() => confirmDeleteExpense(expense)} className="bg-sky-500 hover:bg-sky-600 w-7 h-7" size="sm">✕</Button>
+                  <Button onClick={() => decQty(expenseName)} className="bg-slate-600 w-7 h-7" size="sm">−</Button>
+                  <span className="text-white text-sm min-w-[20px] text-center">{selectedItems[expenseName] || 0}</span>
+                  <Button onClick={() => incQty(expenseName)} className="bg-red-600 hover:bg-red-700 w-7 h-7" size="sm">+</Button>
+                  <Button onClick={() => confirmDeleteExpense(expenseName)} className="bg-sky-500 hover:bg-sky-600 w-7 h-7" size="sm">✕</Button>
                 </div>
               </div>
             ))}
