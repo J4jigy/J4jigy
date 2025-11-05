@@ -366,15 +366,23 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
       });
       
       if (response.ok) {
+        const result = await response.json();
+        console.log('Group created successfully:', result);
+        alert('Group created successfully!');
         setGroupName('');
         setGroupDescription('');
         setGroupIcon('👥');
         setSelectedMembers([]);
         setView('list');
         fetchGroups();
+      } else {
+        const error = await response.text();
+        console.error('Error creating group:', error);
+        alert('Failed to create group: ' + error);
       }
     } catch (error) {
       console.error('Error creating group:', error);
+      alert('Failed to create group: ' + error.message);
     }
   };
   
