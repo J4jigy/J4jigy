@@ -159,37 +159,29 @@ const CashInEntry = ({ onBack }) => {
     setIsEditingTerms(false);
   };
   
-  // Handle barcode scan
-  const handleBarcodeScan = () => {
-    if (!scannedBarcode.trim()) {
-      alert('Please enter a barcode');
-      return;
-    }
+  // Handle barcode scan from camera
+  const handleBarcodeScan = (barcode) => {
+    console.log('Barcode scanned:', barcode);
     
     // Get all products from localStorage
     const allProducts = getData('all_products', []);
     
     // Find product with matching barcode
     const foundProduct = allProducts.find(product => 
-      product.barcode && product.barcode.toLowerCase() === scannedBarcode.toLowerCase()
+      product.barcode && product.barcode.toLowerCase() === barcode.toLowerCase()
     );
     
     if (foundProduct) {
-      // Product found - add to active slot
-      if (activeSlot !== null) {
-        incQty(foundProduct.name);
-        setShowBarcodeModal(false);
-        setScannedBarcode('');
-        alert(`Product "${foundProduct.name}" added to slot!`);
-      } else {
-        alert('Please select a slot first');
-      }
+      // Product found - add to cart
+      incQty(foundProduct.name);
+      setShowBarcodeModal(false);
+      alert(`✅ Product "${foundProduct.name}" added to cart!`);
     } else {
       // Product not found - open add product modal with barcode pre-filled
-      setNewProductBarcode(scannedBarcode);
+      console.log('Product not found, opening Add Product modal');
+      setNewProductBarcode(barcode);
       setShowBarcodeModal(false);
       setShowAddProductModal(true);
-      setScannedBarcode('');
     }
   };
   
