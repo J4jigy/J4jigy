@@ -60,66 +60,61 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
       setIsScanning(true);
       setError('');
 
-      // Add style tag for centering
-      const styleTag = document.createElement('style');
-      styleTag.id = 'quagga-center-styles';
-      styleTag.innerHTML = quaggaStyles;
-      document.head.appendChild(styleTag);
+      // Add style tag for centering (check if already exists)
+      if (!document.getElementById('quagga-center-styles')) {
+        const styleTag = document.createElement('style');
+        styleTag.id = 'quagga-center-styles';
+        styleTag.innerHTML = quaggaStyles;
+        document.head.appendChild(styleTag);
+      }
 
-      Quagga.init(
-        {
-          inputStream: {
-            type: 'LiveStream',
-            target: scannerRef.current,
-            constraints: {
-              width: 640,
-              height: 480,
-              facingMode: 'environment',
-            },
-            area: {
-              top: '25%',
-              right: '15%',
-              left: '15%',
-              bottom: '25%'
-            }
+      // Optimized config for fast initialization
+      const config = {
+        inputStream: {
+          type: 'LiveStream',
+          target: scannerRef.current,
+          constraints: {
+            width: 640,
+            height: 480,
+            facingMode: 'environment',
           },
-          locator: {
-            patchSize: 'small',
-            halfSample: true,
+          area: {
+            top: '25%',
+            right: '15%',
+            left: '15%',
+            bottom: '25%'
           },
-          numOfWorkers: 2,
-          frequency: 90,
-          decoder: {
-            readers: ['code_128_reader', 'ean_reader'],
-            multiple: false
-          },
-          locate: false,
+          singleChannel: false
         },
-        (err) => {
-          if (err) {
-            console.error('❌ Quagga initialization error:', err);
-            console.error('Error details:', err.name, err.message);
-            setError(`Camera error: ${err.message || 'Unable to access camera'}. Please allow camera permissions.`);
-            setIsScanning(false);
-            // Don't auto-switch to manual input, let user decide
-            return;
-          }
-          console.log('✅ Quagga initialized successfully - Camera ready!');
-          Quagga.start();
+        locator: {
+          patchSize: 'small',
+          halfSample: true,
+        },
+        numOfWorkers: 2,
+        frequency: 90,
+        decoder: {
+          readers: ['code_128_reader', 'ean_reader'],
+          multiple: false
+        },
+        locate: false,
+      };
+
+      Quagga.init(config, (err) => {
+        if (err) {
+          console.error('❌ Quagga initialization error:', err);
+          setError(`Camera error: ${err.message || 'Unable to access camera'}. Please allow camera permissions.`);
+          setIsScanning(false);
+          return;
         }
-      );
+        console.log('✅ Camera ready!');
+        Quagga.start();
+      });
 
       Quagga.onDetected((result) => {
         const code = result.codeResult.code;
+        if (!code || code === lastScanned) return;
         
-        if (!code) return;
-        
-        // Skip if same as last scanned (within cooldown period)
-        if (code === lastScanned) return;
-        
-        console.log('⚡ INSTANT SCAN:', code);
-        
-        // INSTANT DETECTION - Accept immediately on first read
+        console.log('⚡ SCAN:', code);
         setLastScanned(code);
         handleScanSuccess(code);
       });
