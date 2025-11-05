@@ -114,6 +114,8 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
       if (response.ok) {
         const data = await response.json();
         setMessages(data.messages || []);
+      } else {
+        console.error('Error fetching messages:', await response.text());
       }
     } catch (error) {
       console.error('Error fetching messages:', error);
@@ -131,6 +133,8 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
       if (response.ok) {
         const data = await response.json();
         setMessages(data.messages || []);
+      } else {
+        console.error('Error fetching group messages:', await response.text());
       }
     } catch (error) {
       console.error('Error fetching group messages:', error);
