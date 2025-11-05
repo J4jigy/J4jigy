@@ -1,51 +1,55 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, FileText, Truck, Package, DollarSign, Calendar, User, Building } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { ArrowLeft, FileText, Truck, Package, Plus, Eye, Download, Send, CheckCircle, Clock, AlertCircle } from 'lucide-react';
+import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { useBusiness } from '../contexts/BusinessContext';
 
 const Challan = () => {
   const navigate = useNavigate();
-  const [selectedSection, setSelectedSection] = useState(null);
+  const { activeBusiness } = useBusiness();
+  const [filterStatus, setFilterStatus] = useState('all');
+  const [challanType, setChallanType] = useState('all');
 
-  // Challan sub-sections
-  const challanSections = [
-    {
-      id: 'delivery',
-      name: 'Delivery Challan',
-      subtitle: 'Goods Dispatch',
-      icon: Truck,
-      color: 'bg-blue-500',
-      description: 'Track goods dispatched to customers'
-    },
-    {
-      id: 'purchase',
-      name: 'Purchase Challan',
-      subtitle: 'Goods Received',
-      icon: Package,
-      color: 'bg-green-500',
-      description: 'Record goods received from suppliers'
-    },
-    {
-      id: 'payment',
-      name: 'Payment Challan',
-      subtitle: 'Tax & Payments',
-      icon: DollarSign,
-      color: 'bg-purple-500',
-      description: 'Manage tax payments and challans'
-    },
-    {
-      id: 'gate',
-      name: 'Gate Pass',
-      subtitle: 'Entry/Exit',
-      icon: Building,
-      color: 'bg-orange-500',
-      description: 'Issue gate passes for material movement'
-    }
+  // Sample challan data
+  const challans = [
+    { id: 'DC-001', party: 'Rajesh Enterprises', type: 'delivery', amount: 25000, date: '2025-01-10', status: 'completed', items: 5 },
+    { id: 'PC-001', party: 'Kumar Suppliers', type: 'purchase', amount: 15000, date: '2025-01-09', status: 'pending', items: 3 },
+    { id: 'DC-002', party: 'Sharma Transport', type: 'delivery', amount: 45000, date: '2025-01-08', status: 'pending', items: 8 },
+    { id: 'GP-001', party: 'Singh Industries', type: 'gate', amount: 0, date: '2025-01-07', status: 'completed', items: 2 },
+    { id: 'DC-003', party: 'Patel & Sons', type: 'delivery', amount: 32000, date: '2025-01-06', status: 'rejected', items: 4 },
   ];
 
-  const handleSectionClick = (section) => {
-    setSelectedSection(section);
+  const totalChallans = challans.length;
+  const completedChallans = challans.filter(c => c.status === 'completed').length;
+  const pendingChallans = challans.filter(c => c.status === 'pending').length;
+  const rejectedChallans = challans.filter(c => c.status === 'rejected').length;
+
+  const filteredChallans = challans.filter(c => {
+    const statusMatch = filterStatus === 'all' || c.status === filterStatus;
+    const typeMatch = challanType === 'all' || c.type === challanType;
+    return statusMatch && typeMatch;
+  });
+
+  const getTypeLabel = (type) => {
+    const labels = {
+      delivery: 'Delivery',
+      purchase: 'Purchase',
+      gate: 'Gate Pass',
+      payment: 'Payment'
+    };
+    return labels[type] || type;
+  };
+
+  const getTypeColor = (type) => {
+    const colors = {
+      delivery: 'text-blue-400',
+      purchase: 'text-green-400',
+      gate: 'text-orange-400',
+      payment: 'text-purple-400'
+    };
+    return colors[type] || 'text-slate-400';
   };
 
   return (
