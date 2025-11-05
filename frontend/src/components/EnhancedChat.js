@@ -75,6 +75,15 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
   
+  // Cleanup camera stream when dialog closes
+  useEffect(() => {
+    if (!open && cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      setCameraStream(null);
+      setShowCamera(false);
+    }
+  }, [open, cameraStream]);
+  
   const fetchContacts = async () => {
     try {
       const token = localStorage.getItem('token');
