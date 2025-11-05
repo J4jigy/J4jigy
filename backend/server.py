@@ -2191,6 +2191,76 @@ async def update_group_settings(
         print(f"Error updating group settings: {e}")
         raise HTTPException(status_code=500, detail="Failed to update group settings")
 
+# Delete Chat Conversation (P2P)
+@api_router.delete("/chat/conversation/{peer_id}")
+async def delete_chat_conversation(
+    peer_id: str,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    try:
+        user_data = verify_token(credentials.credentials)
+        user_id = user_data["user_id"]
+        
+        # Delete all messages between the two users
+        result = await db.messages.delete_many({
+            "$or": [
+                {"sender_id": user_id, "receiver_id": peer_id},
+                {"sender_id": peer_id, "receiver_id": user_id}
+            ]
+        })
+        
+        print(f"✅ Deleted {result.deleted_count} messages in conversation with {peer_id}")
+        
+        return {
+            "success": True, 
+            "message": "Chat conversation deleted successfully",
+            "deleted_count": result.deleted_count
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"❌ Error deleting chat conversation: {type(e).__name__}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to delete conversation: {str(e)}")
+
+# Delete Group
+@api_router.delete("/chat/group/{group_id}")
+async def delete_group(
+    group_id: str,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    try:
+        user_data = verify_token(credentials.credentials)
+        user_id = user_data["user_id"]
+        
+        # Find the group
+        group = await db.groups.find_one({"group_id": group_id})
+        
+        if not group:
+            raise HTTPException(status_code=404, detail="Group not found")
+        
+        # Only the creator can delete the group
+        if group["created_by"] != user_id:
+            raise HTTPException(status_code=403, detail="Only the group creator can delete the group")
+        
+        # Delete all group messages
+        messages_result = await db.messages.delete_many({"group_id": group_id})
+        
+        # Delete the group
+        group_result = await db.groups.delete_one({"group_id": group_id})
+        
+        print(f"✅ Deleted group {group_id} with {messages_result.deleted_count} messages")
+        
+        return {
+            "success": True, 
+            "message": "Group deleted successfully",
+            "deleted_messages": messages_result.deleted_count
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"❌ Error deleting group: {type(e).__name__}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to delete group: {str(e)}")
+
 # Health/Ping endpoint
 @api_router.get("/ping")
 async def ping():
