@@ -72,29 +72,32 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
             type: 'LiveStream',
             target: scannerRef.current,
             constraints: {
-              width: 480,
-              height: 360,
-              facingMode: 'environment',
-              frameRate: { ideal: 120, max: 120 }
+              facingMode: 'environment'
             },
             area: {
-              top: '30%',
-              right: '20%',
-              left: '20%',
-              bottom: '30%'
+              top: '20%',
+              right: '10%',
+              left: '10%',
+              bottom: '20%'
             }
           },
           locator: {
-            patchSize: 'x-small',
+            patchSize: 'medium',
             halfSample: true,
           },
-          numOfWorkers: 1,
-          frequency: 120,
+          numOfWorkers: 2,
+          frequency: 10,
           decoder: {
-            readers: ['code_128_reader'],
+            readers: [
+              'code_128_reader',
+              'ean_reader',
+              'ean_8_reader',
+              'upc_reader',
+              'upc_e_reader',
+            ],
             multiple: false
           },
-          locate: false,
+          locate: true,
         },
         (err) => {
           if (err) {
