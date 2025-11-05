@@ -46,7 +46,6 @@ const API = process.env.REACT_APP_BACKEND_URL ? `${process.env.REACT_APP_BACKEND
 
 // Login Component
 const LoginPage = ({ onLogin }) => {
-  const [name, setName] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [countryCode, setCountryCode] = useState('+91');
   const [rememberMe, setRememberMe] = useState(true);
@@ -58,13 +57,6 @@ const LoginPage = ({ onLogin }) => {
     setLoading(true);
     setError('');
 
-    // Validate name
-    if (name.trim().length < 2) {
-      setError('Name must be at least 2 characters');
-      setLoading(false);
-      return;
-    }
-
     // Validate mobile number
     if (mobileNumber.length !== 10 || !/^\d+$/.test(mobileNumber)) {
       setError('Please enter a valid 10-digit mobile number');
@@ -75,7 +67,6 @@ const LoginPage = ({ onLogin }) => {
     try {
       // Mobile login request to backend (creates user if doesn't exist)
       const response = await axios.post(`${API}/auth/mobile-login`, {
-        name: name.trim(),
         mobile: `${countryCode}${mobileNumber}`
       });
 
