@@ -31,7 +31,8 @@ import {
   Receipt,
   Share2,
   FileBarChart,
-  Fuel
+  Fuel,
+  Printer
 } from 'lucide-react';
 
 const CashInEntry = ({ onBack }) => {
