@@ -1147,6 +1147,21 @@ const CashOutEntry = ({ onBack }) => {
                 placeholder="Enter reference number" 
               />
             </div>
+            <div>
+              <Label className="text-slate-200 text-sm flex items-center gap-2">
+                <Barcode className="w-3 h-3" />
+                Barcode Number
+              </Label>
+              <Input 
+                value={newExpenseBarcode}
+                onChange={(e) => setNewExpenseBarcode(e.target.value)}
+                className="bg-slate-700 border-slate-600 text-white text-sm h-8" 
+                placeholder="Enter or scan barcode" 
+              />
+              {newExpenseBarcode && (
+                <p className="text-xs text-green-400 mt-1">✓ Barcode: {newExpenseBarcode}</p>
+              )}
+            </div>
             {/* Total Value Display */}
             {newExpenseAmount && expenseQty > 0 && (
               <div className="bg-red-600/20 border border-red-500 rounded p-2">
@@ -1156,10 +1171,6 @@ const CashOutEntry = ({ onBack }) => {
                 </div>
               </div>
             )}
-            <Button className="w-full bg-blue-600 hover:bg-blue-700 h-8 text-sm">
-              <Barcode className="w-3 h-3 mr-2" />
-              Add Barcode
-            </Button>
             <Button 
               onClick={saveNewExpense}
               className="w-full bg-red-600 hover:bg-red-700 h-8 text-sm"
