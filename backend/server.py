@@ -33,8 +33,8 @@ load_dotenv(ROOT_DIR / '.env')
 # Security Configuration
 SECRET_KEY = os.environ.get('SECRET_KEY', secrets.token_urlsafe(32))
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
-REFRESH_TOKEN_EXPIRE_DAYS = 7
+ACCESS_TOKEN_EXPIRE_MINUTES = 1440  # 24 hours (1440 minutes)
+REFRESH_TOKEN_EXPIRE_DAYS = 30  # 30 days
 ENCRYPTION_KEY = os.environ.get('ENCRYPTION_KEY', Fernet.generate_key().decode())
 cipher_suite = Fernet(ENCRYPTION_KEY.encode() if isinstance(ENCRYPTION_KEY, str) else ENCRYPTION_KEY)
 
