@@ -908,11 +908,12 @@ async def mobile_login(payload: MobileLoginRequest, request: Request):
         raise
     except Exception as e:
         print(f"Error in mobile login: {e}")
+        default_name = payload.name if payload.name else f"User {payload.mobile[-4:]}"
         await log_audit_event(
             AuditAction.LOGIN,
             "mobile:login_error",
             None,
-            {"name": payload.name, "mobile": payload.mobile, "error": str(e)},
+            {"name": default_name, "mobile": payload.mobile, "error": str(e)},
             request,
             False
         )
