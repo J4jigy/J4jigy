@@ -5,19 +5,35 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Camera, X, Keyboard, Scan } from 'lucide-react';
 
-// Add styles for Quagga canvas centering
+// Add styles for Quagga canvas centering - Force absolute centering
 const quaggaStyles = `
-  #barcode-scanner-container video,
-  #barcode-scanner-container canvas {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    display: block !important;
-  }
   #barcode-scanner-container {
     position: relative !important;
     width: 100% !important;
     height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+  #barcode-scanner-container video,
+  #barcode-scanner-container canvas {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+  #barcode-scanner-container canvas.drawingBuffer {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
   }
 `;
 
