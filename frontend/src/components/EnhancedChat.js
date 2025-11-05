@@ -1164,8 +1164,20 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
                         <span className="text-xl">{contact?.avatar || '👤'}</span>
                         <div className="flex-1">
                           <div className="text-sm text-white">{contact?.name || 'Unknown'}</div>
-                          <div className="text-xs text-slate-400">
-                            {isCreator ? '👑 Creator' : isAdmin ? '⭐ Admin' : 'Member'}
+                          <div className="text-xs text-slate-400 flex items-center gap-1">
+                            {isCreator ? (
+                              <>
+                                <Shield className="w-3 h-3 text-blue-400" />
+                                <span>Creator</span>
+                              </>
+                            ) : isAdmin ? (
+                              <>
+                                <Star className="w-3 h-3 text-yellow-400" />
+                                <span>Admin</span>
+                              </>
+                            ) : (
+                              'Member'
+                            )}
                           </div>
                         </div>
                         {canManage && (
