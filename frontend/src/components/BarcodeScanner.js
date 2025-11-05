@@ -101,13 +101,14 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
         },
         (err) => {
           if (err) {
-            console.error('Quagga initialization error:', err);
-            setError('Unable to access camera. Please use manual input or check camera permissions.');
-            setShowManualInput(true);
+            console.error('❌ Quagga initialization error:', err);
+            console.error('Error details:', err.name, err.message);
+            setError(`Camera error: ${err.message || 'Unable to access camera'}. Please allow camera permissions.`);
             setIsScanning(false);
+            // Don't auto-switch to manual input, let user decide
             return;
           }
-          console.log('Quagga initialized successfully');
+          console.log('✅ Quagga initialized successfully - Camera ready!');
           Quagga.start();
         }
       );
