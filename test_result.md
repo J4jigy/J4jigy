@@ -115,9 +115,7 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "Barcode Scanning in CashInEntry"
-    - "Barcode Scanning in CashOutEntry"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
