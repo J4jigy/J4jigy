@@ -1312,6 +1312,22 @@ const CashInEntry = ({ onBack }) => {
                 <p className="text-sm text-slate-300">Email: business@example.com</p>
               </div>
 
+              {/* Business Header */}
+              <div className="text-center border-b border-slate-600 pb-3 mb-3">
+                <h2 className="text-xl font-bold text-white mb-1">{activeBusiness?.name || 'Business Name'}</h2>
+                {activeBusiness?.address && (
+                  <p className="text-sm text-slate-300">{activeBusiness.address}</p>
+                )}
+                <div className="flex justify-center gap-4 mt-1 text-sm text-slate-300">
+                  {activeBusiness?.phone && (
+                    <span>Phone: {activeBusiness.phone}</span>
+                  )}
+                  {activeBusiness?.gst && (
+                    <span>GSTIN: {activeBusiness.gst}</span>
+                  )}
+                </div>
+              </div>
+
               {/* Bill Details */}
               <div className="flex justify-between text-sm">
                 <div>
