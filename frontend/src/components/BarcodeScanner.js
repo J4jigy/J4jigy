@@ -112,7 +112,10 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
       Quagga.onDetected((result) => {
         const code = result.codeResult.code;
         
-        if (!code || code === lastScanned) return;
+        if (!code) return;
+        
+        // Skip if same as last scanned (within cooldown period)
+        if (code === lastScanned) return;
         
         console.log('⚡ INSTANT SCAN:', code);
         
