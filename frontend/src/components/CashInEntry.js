@@ -9,6 +9,7 @@ import { Label } from './ui/label';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Badge } from './ui/badge';
+import BarcodeScanner from './BarcodeScanner';
 import { 
   ArrowLeft, 
   Settings, 
