@@ -2002,8 +2002,10 @@ async def get_file(file_id: str):
 @api_router.post("/chat/group/create")
 async def create_group(request: CreateGroupRequest, credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
+        print(f"📥 Received create group request from token: {credentials.credentials[:50]}...")
         user_data = verify_token(credentials.credentials)
         user_id = user_data["user_id"]
+        print(f"✅ User verified: {user_id}")
         
         # Create Group object
         group = Group(
