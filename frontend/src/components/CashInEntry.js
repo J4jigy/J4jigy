@@ -32,7 +32,10 @@ import {
   Share2,
   FileBarChart,
   Fuel,
-  Printer
+  Printer,
+  Edit2,
+  Save,
+  X
 } from 'lucide-react';
 
 const CashInEntry = ({ onBack }) => {
