@@ -27,7 +27,8 @@ import {
   Package,
   CircleDollarSign,
   Coins,
-  Search
+  Search,
+  X
 } from 'lucide-react';
 
 const CashOutEntry = ({ onBack }) => {
