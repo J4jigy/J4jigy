@@ -377,10 +377,14 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
         setSelectedMembers([]);
         setView('list');
         fetchGroups();
+      } else if (response.status === 401) {
+        // Token expired or invalid
+        alert('Your session has expired. Please logout and login again to continue.');
+        onOpenChange(false); // Close the chat dialog
       } else {
-        const error = await response.text();
-        console.error('Error creating group:', error);
-        alert('Failed to create group: ' + error);
+        const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
+        console.error('Error creating group:', errorData);
+        alert('Failed to create group: ' + (errorData.detail || 'Unknown error'));
       }
     } catch (error) {
       console.error('Error creating group:', error);
