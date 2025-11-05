@@ -139,6 +139,20 @@ const CashInEntry = ({ onBack }) => {
       '• Goods once sold will not be taken back\n• Subject to jurisdiction\n• Payment due within 30 days'
     )
   );
+  const [tempTermsText, setTempTermsText] = useState(termsText);
+  
+  // Save Terms & Conditions
+  const saveTerms = () => {
+    setTermsText(tempTermsText);
+    setData('terms_conditions', tempTermsText);
+    setIsEditingTerms(false);
+  };
+  
+  // Cancel Terms editing
+  const cancelTermsEdit = () => {
+    setTempTermsText(termsText);
+    setIsEditingTerms(false);
+  };
   
   // Cheque modal states
   const [showChequeModal, setShowChequeModal] = useState(false);
