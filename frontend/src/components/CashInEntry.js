@@ -176,7 +176,7 @@ const CashInEntry = ({ onBack }) => {
     if (foundProduct) {
       // Product found - add to active slot
       if (activeSlot !== null) {
-        incrementItem(activeSlot, foundProduct.name);
+        incQty(foundProduct.name);
         setShowBarcodeModal(false);
         setScannedBarcode('');
         alert(`Product "${foundProduct.name}" added to slot!`);
