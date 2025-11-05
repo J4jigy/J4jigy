@@ -1238,6 +1238,21 @@ const CashInEntry = ({ onBack }) => {
                 placeholder="Enter HSN code" 
               />
             </div>
+            <div>
+              <Label className="text-slate-200 text-sm flex items-center gap-2">
+                <Barcode className="w-3 h-3" />
+                Barcode Number
+              </Label>
+              <Input 
+                value={newProductBarcode}
+                onChange={(e) => setNewProductBarcode(e.target.value)}
+                className="bg-slate-700 border-slate-600 text-white text-sm h-8" 
+                placeholder="Enter or scan barcode" 
+              />
+              {newProductBarcode && (
+                <p className="text-xs text-green-400 mt-1">✓ Barcode: {newProductBarcode}</p>
+              )}
+            </div>
             {/* Total Value Display */}
             {newProductSellingPrice && newProductQuantity > 0 && (
               <div className="bg-blue-600/20 border border-blue-500 rounded p-2">
