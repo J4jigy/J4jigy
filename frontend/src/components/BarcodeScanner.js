@@ -47,17 +47,22 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
 
   useEffect(() => {
     if (isOpen && !showManualInput) {
-      // Start immediately without delay
+      // Ensure clean state before starting
+      stopScanning();
+      
+      // Start scanning with slight delay for cleanup
       const timer = setTimeout(() => {
         startScanning();
-      }, 0);
-      return () => clearTimeout(timer);
+      }, 50);
+      
+      return () => {
+        clearTimeout(timer);
+        stopScanning();
+      };
     }
 
     return () => {
-      if (isOpen) {
-        stopScanning();
-      }
+      stopScanning();
     };
   }, [isOpen, showManualInput]);
 
