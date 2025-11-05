@@ -1362,48 +1362,35 @@ const CashInEntry = ({ onBack }) => {
                 </div>
               </div>
 
-              {/* Items Table */}
-              <div className="border border-slate-600 rounded">
-                <div className="bg-slate-700 px-3 py-2 grid grid-cols-4 gap-2 text-sm font-medium text-white">
-                  <span>Item</span>
-                  <span className="text-center">Qty</span>
-                  <span className="text-right">Rate</span>
-                  <span className="text-right">Amount</span>
+              {/* Items Table - GST Format */}
+              <div className="border border-slate-600">
+                {/* Table Header */}
+                <div className="bg-slate-700 px-2 py-2 grid grid-cols-12 gap-1 text-xs font-semibold text-white border-b border-slate-600">
+                  <span className="col-span-1">S.No</span>
+                  <span className="col-span-4">Item Description</span>
+                  <span className="col-span-2 text-center">HSN</span>
+                  <span className="col-span-1 text-center">Qty</span>
+                  <span className="col-span-2 text-right">Rate</span>
+                  <span className="col-span-2 text-right">Amount</span>
                 </div>
                 
-                {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0 ? (
-                  <>
-                    {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).map(([item, qty]) => (
-                      <div key={item} className="px-3 py-2 grid grid-cols-4 gap-2 text-sm border-b border-slate-600 last:border-b-0">
-                        <span className="text-white">{item}</span>
-                        <span className="text-center text-slate-300">{qty}</span>
-                        <span className="text-right text-slate-300">₹0.00</span>
-                        <span className="text-right text-slate-300">₹0.00</span>
-                      </div>
-                    ))}
-                    
-                    {/* Add manual amount row if slot has amount but no items */}
-                    {parseFloat(slots[selectedSlotForBill]?.amount) > 0 && (
-                      <div className="px-3 py-2 grid grid-cols-4 gap-2 text-sm border-b border-slate-600 last:border-b-0">
-                        <span className="text-white">Manual Entry</span>
-                        <span className="text-center text-slate-300">1</span>
-                        <span className="text-right text-slate-300">₹{slots[selectedSlotForBill]?.amount}</span>
-                        <span className="text-right text-slate-300">₹{slots[selectedSlotForBill]?.amount}</span>
-                      </div>
-                    )}
-                  </>
+                {/* Table Body */}
+                {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
+                  <div className="px-2 py-2 grid grid-cols-12 gap-1 text-xs">
+                    <span className="col-span-1 text-white">1</span>
+                    <span className="col-span-4 text-white">
+                      {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
+                        ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
+                        : 'Service/Product'}
+                    </span>
+                    <span className="col-span-2 text-center text-slate-300">9954</span>
+                    <span className="col-span-1 text-center text-slate-300">1</span>
+                    <span className="col-span-2 text-right text-slate-300">₹{slots[selectedSlotForBill]?.amount}</span>
+                    <span className="col-span-2 text-right text-white font-semibold">₹{slots[selectedSlotForBill]?.amount}</span>
+                  </div>
                 ) : (
-                  <div className="px-3 py-8 text-center text-slate-400">
-                    {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
-                      <div className="px-3 py-2 grid grid-cols-4 gap-2 text-sm">
-                        <span className="text-white">Manual Entry</span>
-                        <span className="text-center text-slate-300">1</span>
-                        <span className="text-right text-slate-300">₹{slots[selectedSlotForBill]?.amount}</span>
-                        <span className="text-right text-slate-300">₹{slots[selectedSlotForBill]?.amount}</span>
-                      </div>
-                    ) : (
-                      "No items added to this slot"
-                    )}
+                  <div className="px-3 py-6 text-center text-slate-400 text-xs">
+                    No items added to this invoice
                   </div>
                 )}
               </div>
