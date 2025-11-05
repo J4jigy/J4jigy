@@ -718,15 +718,37 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
                   <Plus className="w-5 h-5" />
                 </Button>
               )}
-              {view === 'group-chat' && selectedGroup && selectedGroup.admins.includes(userId) && (
+              {view === 'chat' && selectedPeer && (
                 <Button 
-                  onClick={openGroupSettings} 
+                  onClick={deleteChatConversation} 
                   variant="ghost" 
                   size="sm"
-                  className="text-cyan-400 p-1 h-8 w-8"
+                  className="text-red-400 hover:text-red-300 hover:bg-red-900/20 p-1 h-8 w-8"
                 >
-                  <Settings className="w-5 h-5" />
+                  <Trash2 className="w-5 h-5" />
                 </Button>
+              )}
+              {view === 'group-chat' && selectedGroup && selectedGroup.admins.includes(userId) && (
+                <>
+                  <Button 
+                    onClick={openGroupSettings} 
+                    variant="ghost" 
+                    size="sm"
+                    className="text-cyan-400 p-1 h-8 w-8"
+                  >
+                    <Settings className="w-5 h-5" />
+                  </Button>
+                  {selectedGroup.created_by === userId && (
+                    <Button 
+                      onClick={deleteGroupChat} 
+                      variant="ghost" 
+                      size="sm"
+                      className="text-red-400 hover:text-red-300 hover:bg-red-900/20 p-1 h-8 w-8"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </Button>
+                  )}
+                </>
               )}
               <Button 
                 onClick={() => onOpenChange(false)} 
