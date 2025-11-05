@@ -19,9 +19,14 @@ const ScanDocuments = () => {
   const [showPreviewDialog, setShowPreviewDialog] = useState(false);
   const [showPdfEditorDialog, setShowPdfEditorDialog] = useState(false);
   const [showDeletedDialog, setShowDeletedDialog] = useState(false);
+  const [showMergeDialog, setShowMergeDialog] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [stream, setStream] = useState(null);
+  
+  // Merge PDF states
+  const [selectedPdfsForMerge, setSelectedPdfsForMerge] = useState([]);
+  const [mergedPdfName, setMergedPdfName] = useState('');
   
   // Multi-page PDF states
   const [collectedPages, setCollectedPages] = useState([]);
