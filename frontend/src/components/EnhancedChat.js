@@ -148,7 +148,6 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
     try {
       const token = localStorage.getItem('token');
       const messageData = {
-        sender_id: userId,
         receiver_id: selectedPeer?.id || null,
         group_id: selectedGroup?.group_id || null,
         message_type: 'text',
@@ -173,6 +172,8 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
         } else if (selectedGroup) {
           fetchGroupMessages(selectedGroup.group_id);
         }
+      } else {
+        console.error('Error sending message:', await response.text());
       }
     } catch (error) {
       console.error('Error sending message:', error);
