@@ -131,12 +131,13 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
     if (isScanning) {
       try {
         Quagga.stop();
+        Quagga.offDetected();
+        Quagga.offProcessed();
       } catch (e) {
         console.log('Stop scanning error (safe to ignore):', e);
       }
       setIsScanning(false);
       setLastScanned('');
-      // Keep style tag for faster next init
     }
   };
 
