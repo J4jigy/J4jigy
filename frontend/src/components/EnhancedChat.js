@@ -609,6 +609,85 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
     }
   };
   
+  // Delete P2P chat conversation
+  const deleteChatConversation = async () => {
+    if (!selectedPeer) return;
+    
+    if (!window.confirm(`Delete entire conversation with ${selectedPeer.name}?\n\nAll messages will be permanently deleted.`)) {
+      return;
+    }
+    
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${BACKEND_URL}/api/chat/conversation/${selectedPeer.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (response.ok) {
+        alert('Chat conversation deleted successfully');
+        setView('list');
+        setSelectedPeer(null);
+        setMessages([]);
+      } else if (response.status === 401) {
+        alert('⚠️ Your session has expired!\n\nPlease logout and login again.');
+        onOpenChange(false);
+      } else {
+        const error = await response.json().catch(() => ({ detail: 'Unknown error' }));
+        alert('Failed to delete conversation: ' + (error.detail || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error deleting conversation:', error);
+      alert('Failed to delete conversation: ' + error.message);
+    }
+  };
+  
+  // Delete group
+  const deleteGroupChat = async () => {
+    if (!selectedGroup) return;
+    
+    // Check if user is the creator
+    if (selectedGroup.created_by !== userId) {
+      alert('Only the group creator can delete this group.');
+      return;
+    }
+    
+    if (!window.confirm(`Delete group "${selectedGroup.name}"?\n\nThis will permanently delete the group and all its messages for everyone.`)) {
+      return;
+    }
+    
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${BACKEND_URL}/api/chat/group/${selectedGroup.group_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (response.ok) {
+        alert('Group deleted successfully');
+        setView('list');
+        setSelectedGroup(null);
+        setMessages([]);
+        fetchGroups(); // Refresh groups list
+      } else if (response.status === 401) {
+        alert('⚠️ Your session has expired!\n\nPlease logout and login again.');
+        onOpenChange(false);
+      } else if (response.status === 403) {
+        alert('Only the group creator can delete this group.');
+      } else {
+        const error = await response.json().catch(() => ({ detail: 'Unknown error' }));
+        alert('Failed to delete group: ' + (error.detail || 'Unknown error'));
+      }
+    } catch (error) {
+      console.error('Error deleting group:', error);
+      alert('Failed to delete group: ' + error.message);
+    }
+  };
+  
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-slate-800 border-slate-700 max-w-md h-[600px] flex flex-col p-0">
