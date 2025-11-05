@@ -44,20 +44,33 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
       setIsScanning(true);
       setError('');
 
+      // Add style tag for centering
+      const styleTag = document.createElement('style');
+      styleTag.id = 'quagga-center-styles';
+      styleTag.innerHTML = quaggaStyles;
+      document.head.appendChild(styleTag);
+
       Quagga.init(
         {
           inputStream: {
             type: 'LiveStream',
             target: scannerRef.current,
             constraints: {
-              width: 640,
-              height: 480,
+              width: { min: 640, ideal: 1280, max: 1920 },
+              height: { min: 480, ideal: 720, max: 1080 },
               facingMode: 'environment',
+              aspectRatio: { ideal: 16/9 }
             },
+            area: {
+              top: '0%',
+              right: '0%',
+              left: '0%',
+              bottom: '0%'
+            }
           },
           locator: {
-            patchSize: 'medium',
-            halfSample: true,
+            patchSize: 'large',
+            halfSample: false,
           },
           numOfWorkers: 2,
           frequency: 10,
