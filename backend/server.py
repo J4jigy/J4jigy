@@ -832,7 +832,7 @@ async def options_mobile_login(
 @limiter.limit("10/minute")
 async def mobile_login(payload: MobileLoginRequest, request: Request):
     """
-    Simple login with name and mobile number only.
+    Simple login with mobile number only.
     - Creates new user if mobile doesn't exist
     - Logs in existing user if mobile exists
     - Returns JWT tokens for authentication
@@ -841,19 +841,22 @@ async def mobile_login(payload: MobileLoginRequest, request: Request):
         # Find user by mobile number
         user_doc = await db.users.find_one({"mobile": payload.mobile})
         
+        # Generate default name from mobile number if not provided
+        default_name = payload.name if payload.name else f"User {payload.mobile[-4:]}"
+        
         if not user_doc:
-            # Create new user with name and mobile number
+            # Create new user with mobile number
             user = User(
                 username=f"user_{payload.mobile[-6:]}",  # username from last 6 digits
                 email=f"{payload.mobile}@mobile.user",  # placeholder email
-                business_name=f"{payload.name}'s Business",  # business name from user's name
+                business_name=f"{default_name}'s Business",  # business name from user's name
                 mobile=payload.mobile,
                 role=UserRole.USER,
                 is_active=True
             )
             user_doc = user.dict()
             user_doc['password'] = hash_password(secrets.token_urlsafe(16))  # random password
-            user_doc['display_name'] = payload.name  # Store the user's actual name
+            user_doc['display_name'] = default_name  # Store the user's actual name
             
             await db.users.insert_one(user_doc)
             
@@ -864,7 +867,7 @@ async def mobile_login(payload: MobileLoginRequest, request: Request):
                 AuditAction.CREATE,
                 "user:created_via_mobile",
                 user.id,
-                {"name": payload.name, "mobile": payload.mobile},
+                {"name": default_name, "mobile": payload.mobile},
                 request,
                 True
             )
@@ -887,12 +890,12 @@ async def mobile_login(payload: MobileLoginRequest, request: Request):
             AuditAction.LOGIN,
             "mobile:login",
             user.id,
-            {"name": payload.name, "mobile": payload.mobile},
+            {"name": default_name, "mobile": payload.mobile},
             request,
             True
         )
         
-        print(f"\n✅ Mobile Login Successful: {payload.name} ({payload.mobile})")
+        print(f"\n✅ Mobile Login Successful: {default_name} ({payload.mobile})")
         
         return TokenResponse(
             access_token=tokens["access_token"],
