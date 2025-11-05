@@ -370,9 +370,33 @@ const CashOutEntry = ({ onBack }) => {
       return; // Don't save if required fields are empty
     }
 
-    // Add expense to the expenses list
+    // Add expense to the expenses list with barcode
     const expenseName = newExpenseName.trim();
-    setExpenses(prev => [...prev, expenseName]);
+    const expenseData = {
+      name: expenseName,
+      amount: newExpenseAmount,
+      category: newExpenseCategory,
+      description: newExpenseDescription,
+      reference: newExpenseReference,
+      barcode: newExpenseBarcode.trim(),
+      measurement: expenseMeasurement
+    };
+    
+    // Update expenses list to store full expense objects
+    setExpenses(prev => {
+      const updatedExpenses = [...prev];
+      const existingIndex = updatedExpenses.findIndex(exp => 
+        (typeof exp === 'object' ? exp.name : exp) === expenseName
+      );
+      
+      if (existingIndex !== -1) {
+        updatedExpenses[existingIndex] = expenseData;
+      } else {
+        updatedExpenses.push(expenseData);
+      }
+      
+      return updatedExpenses;
+    });
     
     // Add to selected items with quantity
     if (expenseQty > 0) {
@@ -396,10 +420,45 @@ const CashOutEntry = ({ onBack }) => {
     setNewExpenseCategory('General');
     setNewExpenseDescription('');
     setNewExpenseReference('');
+    setNewExpenseBarcode('');
     setExpenseQty(1);
     
     // Close modal
     setShowAddProductModal(false);
+  };
+
+  // Handle barcode scan for expenses
+  const handleBarcodeScan = () => {
+    if (!scannedBarcode.trim()) {
+      alert('Please enter a barcode');
+      return;
+    }
+
+    console.log('Scanning barcode:', scannedBarcode);
+    console.log('Current expenses:', expenses);
+
+    // Find expense with matching barcode
+    const foundExpense = expenses.find(expense => 
+      typeof expense === 'object' && 
+      expense.barcode && 
+      expense.barcode.toLowerCase() === scannedBarcode.toLowerCase()
+    );
+
+    if (foundExpense) {
+      // Expense found - add to cart
+      console.log('Expense found:', foundExpense);
+      incQty(foundExpense.name);
+      setShowBarcodeModal(false);
+      setScannedBarcode('');
+      alert(`Added "${foundExpense.name}" to the cart!`);
+    } else {
+      // Expense not found - open add expense modal with barcode pre-filled
+      console.log('Expense not found, opening Add Expense modal');
+      setNewExpenseBarcode(scannedBarcode);
+      setShowBarcodeModal(false);
+      setShowAddProductModal(true);
+      setScannedBarcode('');
+    }
   };
 
   // Persist selected items to business-specific storage
