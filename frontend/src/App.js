@@ -96,7 +96,7 @@ const LoginPage = ({ onLogin }) => {
               Welcome Back
             </h1>
             <p className="text-slate-400">
-              Enter your name and mobile number to continue
+              Enter your mobile number to continue
             </p>
           </div>
 
@@ -107,20 +107,6 @@ const LoginPage = ({ onLogin }) => {
           )}
 
           <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <Label htmlFor="name" className="text-slate-200">Name</Label>
-              <Input
-                id="name"
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Enter your name"
-                required
-                className="mt-1 bg-slate-700 border-slate-600 text-white"
-                autoFocus
-              />
-            </div>
-
             <div>
               <Label htmlFor="mobile" className="text-slate-200">Mobile Number</Label>
               <div className="flex gap-2 mt-1">
