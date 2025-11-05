@@ -1174,22 +1174,50 @@ const CashOutEntry = ({ onBack }) => {
       <Dialog open={showBarcodeModal} onOpenChange={setShowBarcodeModal}>
         <DialogContent className="bg-slate-800 border-slate-700">
           <DialogHeader>
-            <DialogTitle className="text-white">Receipt Scanner</DialogTitle>
+            <DialogTitle className="text-white">Scan Barcode</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <div className="bg-slate-900 h-64 rounded-lg flex items-center justify-center relative">
-              <div className="w-48 h-48 border-4 border-red-500 rounded-lg"></div>
-              <div className="absolute inset-0 bg-red-500/10 rounded-lg"></div>
-              <span className="absolute text-white text-sm">Position receipt in the frame</span>
+            {/* Barcode Visualization */}
+            <div className="bg-slate-900 h-48 rounded-lg flex items-center justify-center relative border-2 border-slate-700">
+              <div className="w-40 h-32 border-4 border-red-500 rounded-lg animate-pulse"></div>
+              <div className="absolute inset-0 bg-red-500/5 rounded-lg"></div>
+              <Barcode className="absolute w-16 h-16 text-red-400 opacity-50" />
             </div>
+            
+            {/* Manual Barcode Input */}
+            <div className="space-y-2">
+              <Label className="text-white text-sm">Enter Barcode Number</Label>
+              <Input
+                value={scannedBarcode}
+                onChange={(e) => setScannedBarcode(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleBarcodeScan()}
+                placeholder="Scan or type barcode..."
+                className="bg-slate-700 border-slate-600 text-white"
+                autoFocus
+              />
+              <p className="text-xs text-slate-400">
+                💡 Tip: Use a barcode scanner or type the barcode manually
+              </p>
+            </div>
+            
+            {/* Action Buttons */}
             <div className="flex gap-2">
-              <Button className="flex-1 bg-red-600 hover:bg-red-700">
-                Capture
+              <Button 
+                onClick={handleBarcodeScan}
+                disabled={!scannedBarcode.trim()}
+                className="flex-1 bg-red-600 hover:bg-red-700 disabled:opacity-50"
+              >
+                <Scan className="w-4 h-4 mr-2" />
+                Search Expense
               </Button>
               <Button 
-                onClick={() => setShowBarcodeModal(false)}
-                className="flex-1 bg-slate-600 hover:bg-slate-500"
+                onClick={() => {
+                  setShowBarcodeModal(false);
+                  setScannedBarcode('');
+                }}
+                className="flex-1 bg-red-600/20 hover:bg-red-600/40 border-2 border-red-500 text-red-400 hover:text-red-300"
               >
+                <X className="w-4 h-4 mr-2" />
                 Cancel
               </Button>
             </div>
