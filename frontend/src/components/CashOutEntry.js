@@ -1015,7 +1015,8 @@ const CashOutEntry = ({ onBack }) => {
                   <Button onClick={() => confirmDeleteExpense(expenseName)} className="bg-sky-500 hover:bg-sky-600 w-7 h-7" size="sm">✕</Button>
                 </div>
               </div>
-            ))}
+                );
+              })}
           </div>
         </DialogContent>
       </Dialog>
