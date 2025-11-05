@@ -1295,6 +1295,125 @@ const ScanDocuments = () => {
           )}
         </DialogContent>
       </Dialog>
+
+      {/* Merge PDFs Dialog */}
+      <Dialog open={showMergeDialog} onOpenChange={setShowMergeDialog}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-white flex items-center gap-2">
+              <Merge className="w-5 h-5 text-blue-400" />
+              Merge PDFs
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4">
+            {/* Merged PDF Name Input */}
+            <div>
+              <label className="text-sm text-slate-300 mb-2 block">Name for Merged PDF</label>
+              <Input
+                value={mergedPdfName}
+                onChange={(e) => setMergedPdfName(e.target.value)}
+                placeholder="Enter name for merged PDF"
+                className="bg-slate-700 border-slate-600 text-white"
+              />
+            </div>
+
+            {/* Instructions */}
+            <div className="bg-blue-900/20 border border-blue-700/50 rounded-lg p-3">
+              <p className="text-sm text-blue-300">
+                Select at least 2 PDFs to merge. PDFs will be merged in the order you select them.
+              </p>
+            </div>
+
+            {/* PDF Selection List */}
+            <div className="space-y-2">
+              <label className="text-sm text-slate-300 block">
+                Select PDFs to Merge ({selectedPdfsForMerge.length} selected)
+              </label>
+              
+              <div className="space-y-2 max-h-96 overflow-y-auto">
+                {scannedDocuments.map((doc, index) => {
+                  const isSelected = selectedPdfsForMerge.includes(doc.id);
+                  const selectionOrder = selectedPdfsForMerge.indexOf(doc.id) + 1;
+                  
+                  return (
+                    <div
+                      key={doc.id}
+                      onClick={() => togglePdfSelection(doc.id)}
+                      className={`p-4 rounded-lg cursor-pointer transition-all ${
+                        isSelected 
+                          ? 'bg-blue-600/20 border-2 border-blue-500' 
+                          : 'bg-slate-700 border-2 border-slate-600 hover:border-slate-500'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        {/* Checkbox/Order Number */}
+                        <div className={`w-8 h-8 rounded flex items-center justify-center text-sm font-bold ${
+                          isSelected 
+                            ? 'bg-blue-500 text-white' 
+                            : 'bg-slate-600 text-slate-300'
+                        }`}>
+                          {isSelected ? selectionOrder : ''}
+                        </div>
+                        
+                        {/* PDF Icon */}
+                        <FileText className={`w-8 h-8 ${isSelected ? 'text-blue-400' : 'text-slate-400'}`} />
+                        
+                        {/* Document Info */}
+                        <div className="flex-1">
+                          <div className={`font-medium ${isSelected ? 'text-blue-200' : 'text-white'}`}>
+                            {doc.name}
+                          </div>
+                          <div className="text-sm text-slate-400">
+                            {doc.pages} pages • {doc.date}
+                          </div>
+                        </div>
+                        
+                        {/* Check icon */}
+                        {isSelected && (
+                          <Check className="w-5 h-5 text-blue-400" />
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3 pt-4">
+              <Button
+                onClick={() => {
+                  setShowMergeDialog(false);
+                  setSelectedPdfsForMerge([]);
+                  setMergedPdfName('');
+                }}
+                className="flex-1 bg-red-600/20 hover:bg-red-600/40 border-2 border-red-500 text-red-400 hover:text-red-300 rounded-md flex items-center justify-center gap-2"
+              >
+                <X className="w-4 h-4" />
+                Cancel
+              </Button>
+              <Button
+                onClick={mergePdfs}
+                disabled={selectedPdfsForMerge.length < 2 || !mergedPdfName.trim() || isProcessing}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isProcessing ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Merging...
+                  </>
+                ) : (
+                  <>
+                    <Merge className="w-4 h-4 mr-2" />
+                    Merge {selectedPdfsForMerge.length} PDFs
+                  </>
+                )}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
