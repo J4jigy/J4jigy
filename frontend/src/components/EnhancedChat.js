@@ -317,7 +317,6 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
     try {
       const token = localStorage.getItem('token');
       const messageData = {
-        sender_id: userId,
         receiver_id: selectedPeer?.id || null,
         group_id: selectedGroup?.group_id || null,
         message_type: 'location',
