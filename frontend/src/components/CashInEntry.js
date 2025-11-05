@@ -1303,40 +1303,62 @@ const CashInEntry = ({ onBack }) => {
           </DialogHeader>
           
           {selectedSlotForBill !== null && (
-            <div className="space-y-4">
-              {/* Business Header */}
-              <div className="text-center border-b border-slate-600 pb-3">
-                <h2 className="text-lg font-bold text-white">Your Business Name</h2>
-                <p className="text-sm text-slate-300">Address Line 1, Address Line 2</p>
-                <p className="text-sm text-slate-300">Phone: +91 XXXXX XXXXX</p>
-                <p className="text-sm text-slate-300">Email: business@example.com</p>
-              </div>
-
-              {/* Business Header */}
-              <div className="text-center border-b border-slate-600 pb-3 mb-3">
-                <h2 className="text-xl font-bold text-white mb-1">{activeBusiness?.name || 'Business Name'}</h2>
+            <div className="space-y-3">
+              {/* GST Invoice Header */}
+              <div className="text-center border-2 border-slate-600 p-3">
+                <div className="text-2xl font-bold text-white mb-1">{activeBusiness?.name || 'BUSINESS NAME'}</div>
                 {activeBusiness?.address && (
-                  <p className="text-sm text-slate-300">{activeBusiness.address}</p>
+                  <div className="text-sm text-slate-300">{activeBusiness.address}</div>
                 )}
-                <div className="flex justify-center gap-4 mt-1 text-sm text-slate-300">
+                <div className="flex justify-center gap-6 mt-2 text-sm text-slate-300">
                   {activeBusiness?.phone && (
-                    <span>Phone: {activeBusiness.phone}</span>
+                    <span><span className="font-semibold">Phone:</span> {activeBusiness.phone}</span>
                   )}
                   {activeBusiness?.gst && (
-                    <span>GSTIN: {activeBusiness.gst}</span>
+                    <span><span className="font-semibold">GSTIN:</span> {activeBusiness.gst}</span>
                   )}
+                </div>
+                <div className="mt-2 text-lg font-bold text-cyan-400 border-t border-slate-600 pt-2">
+                  TAX INVOICE
                 </div>
               </div>
 
-              {/* Bill Details */}
-              <div className="flex justify-between text-sm">
-                <div>
-                  <p className="text-slate-300">Bill No: <span className="text-white">INV-{String(Date.now()).slice(-6)}</span></p>
-                  <p className="text-slate-300">Date: <span className="text-white">{new Date().toLocaleDateString()}</span></p>
+              {/* Invoice Details - Two Columns */}
+              <div className="grid grid-cols-2 gap-3 border border-slate-600">
+                {/* Left Column - Invoice Details */}
+                <div className="p-3 border-r border-slate-600">
+                  <div className="text-xs space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Invoice No:</span>
+                      <span className="text-white font-semibold">INV-{String(Date.now()).slice(-6)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Date:</span>
+                      <span className="text-white">{new Date().toLocaleDateString('en-GB')}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Time:</span>
+                      <span className="text-white">{new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-slate-300">Customer: <span className="text-white">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span></p>
-                  <p className="text-slate-300">Payment: <span className="text-white">{slots[selectedSlotForBill]?.paymentMode}</span></p>
+                
+                {/* Right Column - Customer Details */}
+                <div className="p-3">
+                  <div className="text-xs space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Customer:</span>
+                      <span className="text-white font-semibold">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Payment Mode:</span>
+                      <span className="text-white">{slots[selectedSlotForBill]?.paymentMode}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">State:</span>
+                      <span className="text-white">Maharashtra</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
