@@ -1370,19 +1370,82 @@ const CashInEntry = ({ onBack }) => {
                 )}
               </div>
 
+              {/* Tax Selection Section */}
+              <div className="border-t border-slate-600 pt-3 space-y-2">
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <Label className="text-xs text-slate-400 mb-1 block">Tax Type</Label>
+                    <Select value={taxType} onValueChange={setTaxType}>
+                      <SelectTrigger className="bg-slate-700 border-slate-600 text-white text-sm h-9">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-slate-700 border-slate-600">
+                        <SelectItem value="CGST+SGST">CGST + SGST</SelectItem>
+                        <SelectItem value="IGST">IGST</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label className="text-xs text-slate-400 mb-1 block">Tax Slab</Label>
+                    <Select value={taxSlab} onValueChange={setTaxSlab}>
+                      <SelectTrigger className="bg-slate-700 border-slate-600 text-white text-sm h-9">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className="bg-slate-700 border-slate-600">
+                        <SelectItem value="0">0%</SelectItem>
+                        <SelectItem value="5">5% (2.5 + 2.5)</SelectItem>
+                        <SelectItem value="18">18% (9 + 9)</SelectItem>
+                        <SelectItem value="28">28% (14 + 14)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+
               {/* Total Section */}
               <div className="border-t border-slate-600 pt-3">
                 <div className="flex justify-between text-sm text-slate-300 mb-1">
                   <span>Subtotal:</span>
                   <span>₹{slots[selectedSlotForBill]?.amount || '0.00'}</span>
                 </div>
-                <div className="flex justify-between text-sm text-slate-300 mb-1">
-                  <span>Tax (0%):</span>
-                  <span>₹0.00</span>
-                </div>
+                {(() => {
+                  const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
+                  const taxRate = parseFloat(taxSlab);
+                  const taxAmount = (subtotal * taxRate) / 100;
+                  const total = subtotal + taxAmount;
+                  
+                  if (taxType === 'CGST+SGST' && taxRate > 0) {
+                    const halfTax = taxAmount / 2;
+                    return (
+                      <>
+                        <div className="flex justify-between text-sm text-slate-300 mb-1">
+                          <span>CGST ({taxRate / 2}%):</span>
+                          <span>₹{halfTax.toFixed(2)}</span>
+                        </div>
+                        <div className="flex justify-between text-sm text-slate-300 mb-1">
+                          <span>SGST ({taxRate / 2}%):</span>
+                          <span>₹{halfTax.toFixed(2)}</span>
+                        </div>
+                      </>
+                    );
+                  } else if (taxRate > 0) {
+                    return (
+                      <div className="flex justify-between text-sm text-slate-300 mb-1">
+                        <span>IGST ({taxRate}%):</span>
+                        <span>₹{taxAmount.toFixed(2)}</span>
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
                 <div className="flex justify-between text-lg font-bold text-white border-t border-slate-600 pt-2">
                   <span>Total:</span>
-                  <span>₹{slots[selectedSlotForBill]?.amount || '0.00'}</span>
+                  <span>₹{(() => {
+                    const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
+                    const taxRate = parseFloat(taxSlab);
+                    const taxAmount = (subtotal * taxRate) / 100;
+                    return (subtotal + taxAmount).toFixed(2);
+                  })()}</span>
                 </div>
               </div>
 
