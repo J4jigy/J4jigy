@@ -1391,7 +1391,7 @@ const CashInEntry = ({ onBack }) => {
                   }}
                   className="flex-1 bg-green-600 hover:bg-green-700"
                 >
-                  <Receipt className="w-4 h-4 mr-2" />
+                  <Printer className="w-4 h-4 mr-2" />
                   Print
                 </Button>
                 <Button
