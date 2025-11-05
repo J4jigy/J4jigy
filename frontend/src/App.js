@@ -65,10 +65,14 @@ const LoginPage = ({ onLogin }) => {
     }
 
     try {
+      console.log('Attempting login with mobile:', `${countryCode}${mobileNumber}`);
+      
       // Mobile login request to backend (creates user if doesn't exist)
       const response = await axios.post(`${API}/auth/mobile-login`, {
         mobile: `${countryCode}${mobileNumber}`
       });
+
+      console.log('Login response received:', response.data);
 
       // Store remember me preference
       if (rememberMe) {
@@ -79,6 +83,7 @@ const LoginPage = ({ onLogin }) => {
       
       onLogin(response.data.access_token, response.data.user);
     } catch (error) {
+      console.error('Login error:', error);
       const detail = error.response?.data?.detail || error.response?.data?.error;
       const message = detail || 'Login failed. Please try again.';
       setError(message);
