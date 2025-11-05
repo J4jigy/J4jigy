@@ -118,10 +118,14 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
 
       Quagga.onDetected((result) => {
         const code = result.codeResult.code;
-        console.log('Barcode detected:', code);
+        const confidence = result.codeResult.decodedCodes
+          .filter(code => code.error !== undefined)
+          .reduce((sum, code) => sum + code.error, 0) / result.codeResult.decodedCodes.length;
         
-        // Prevent duplicate scans
-        if (code !== lastScanned) {
+        console.log('Barcode detected:', code, 'Confidence:', confidence);
+        
+        // Only accept high confidence scans (low error rate)
+        if (confidence < 0.15 && code && code !== lastScanned) {
           setLastScanned(code);
           handleScanSuccess(code);
         }
