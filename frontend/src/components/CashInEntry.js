@@ -158,6 +158,40 @@ const CashInEntry = ({ onBack }) => {
     setIsEditingTerms(false);
   };
   
+  // Handle barcode scan
+  const handleBarcodeScan = () => {
+    if (!scannedBarcode.trim()) {
+      alert('Please enter a barcode');
+      return;
+    }
+    
+    // Get all products from localStorage
+    const allProducts = getData('all_products', []);
+    
+    // Find product with matching barcode
+    const foundProduct = allProducts.find(product => 
+      product.barcode && product.barcode.toLowerCase() === scannedBarcode.toLowerCase()
+    );
+    
+    if (foundProduct) {
+      // Product found - add to active slot
+      if (activeSlot !== null) {
+        incrementItem(activeSlot, foundProduct.name);
+        setShowBarcodeModal(false);
+        setScannedBarcode('');
+        alert(`Product "${foundProduct.name}" added to slot!`);
+      } else {
+        alert('Please select a slot first');
+      }
+    } else {
+      // Product not found - open add product modal with barcode pre-filled
+      setNewProductBarcode(scannedBarcode);
+      setShowBarcodeModal(false);
+      setShowAddProductModal(true);
+      setScannedBarcode('');
+    }
+  };
+  
   // Cheque modal states
   const [showChequeModal, setShowChequeModal] = useState(false);
   const [chequeBankName, setChequeBankName] = useState('');
