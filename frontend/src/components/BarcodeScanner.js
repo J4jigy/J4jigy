@@ -108,24 +108,16 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
         }
       );
 
-      // Track consecutive detections for reliability
-      let detectionCount = {};
-      
       Quagga.onDetected((result) => {
         const code = result.codeResult.code;
         
         if (!code || code === lastScanned) return;
         
-        // Fast detection: Accept after 2 consecutive reads
-        detectionCount[code] = (detectionCount[code] || 0) + 1;
+        console.log('⚡ INSTANT SCAN:', code);
         
-        console.log('Barcode detected:', code, 'Count:', detectionCount[code]);
-        
-        if (detectionCount[code] >= 2) {
-          setLastScanned(code);
-          detectionCount = {}; // Reset
-          handleScanSuccess(code);
-        }
+        // INSTANT DETECTION - Accept immediately on first read
+        setLastScanned(code);
+        handleScanSuccess(code);
       });
     }
   };
