@@ -128,13 +128,13 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 p-4">
-      <div className="bg-slate-900 rounded-lg max-w-2xl w-full border-2 border-slate-700">
+    <div className="fixed inset-0 bg-black/95 flex flex-col items-center justify-center z-50 p-0">
+      <div className="bg-slate-900 w-full h-full flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b-2 border-slate-700 bg-slate-800">
+        <div className="flex items-center justify-between p-4 border-b-2 border-slate-700 bg-slate-800 flex-shrink-0">
           <div className="flex items-center gap-3">
             <Scan className="w-6 h-6 text-blue-400" />
-            <h2 className="text-white text-xl font-bold">{title}</h2>
+            <h2 className="text-white text-lg font-bold">{title}</h2>
           </div>
           <button
             onClick={handleClose}
@@ -145,42 +145,43 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-4">
+        <div className="flex-1 flex flex-col p-4 space-y-4 overflow-auto">
           {!showManualInput ? (
             <>
-              {/* Camera Scanner */}
-              <div className="relative bg-black rounded-lg overflow-hidden border-2 border-blue-500">
-                <div 
-                  ref={scannerRef} 
-                  className="w-full h-96 flex items-center justify-center"
-                  style={{ minHeight: '400px' }}
-                >
-                  {!isScanning && !error && (
-                    <div className="text-white text-center">
-                      <Camera className="w-16 h-16 mx-auto mb-4 animate-pulse text-blue-400" />
-                      <p className="text-lg">Initializing camera...</p>
+              {/* Camera Scanner - Centered */}
+              <div className="flex-1 flex items-center justify-center">
+                <div className="relative bg-black rounded-lg overflow-hidden border-2 border-blue-500 w-full max-w-md">
+                  <div 
+                    ref={scannerRef} 
+                    className="w-full aspect-video flex items-center justify-center"
+                  >
+                    {!isScanning && !error && (
+                      <div className="text-white text-center p-8">
+                        <Camera className="w-16 h-16 mx-auto mb-4 animate-pulse text-blue-400" />
+                        <p className="text-lg">Initializing camera...</p>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Scanning Indicator */}
+                  {isScanning && (
+                    <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-2 shadow-lg">
+                      <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                      SCANNING
                     </div>
                   )}
                 </div>
-                
-                {/* Scanning Indicator */}
-                {isScanning && (
-                  <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-2">
-                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                    SCANNING
-                  </div>
-                )}
               </div>
 
               {error && (
-                <div className="bg-red-500/20 border-2 border-red-500 rounded-lg p-4">
-                  <p className="text-red-300 text-sm font-semibold">{error}</p>
+                <div className="bg-red-500/20 border-2 border-red-500 rounded-lg p-4 flex-shrink-0">
+                  <p className="text-red-300 text-sm font-semibold text-center">{error}</p>
                 </div>
               )}
 
               {/* Instructions */}
               {isScanning && !error && (
-                <div className="bg-blue-500/20 border-2 border-blue-500 rounded-lg p-4">
+                <div className="bg-blue-500/20 border-2 border-blue-500 rounded-lg p-4 flex-shrink-0">
                   <p className="text-blue-300 text-base text-center font-semibold">
                     📷 Hold barcode steady in front of camera
                   </p>
@@ -191,7 +192,7 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
               )}
             </>
           ) : (
-            <>
+            <div className="flex-1 flex flex-col justify-center space-y-4 max-w-md mx-auto w-full">
               {/* Manual Input */}
               <div className="space-y-3">
                 <Label className="text-white text-base font-semibold">Enter Barcode Manually</Label>
@@ -215,11 +216,11 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
               >
                 Submit Barcode
               </Button>
-            </>
+            </div>
           )}
 
-          {/* Toggle Input Method */}
-          <div className="flex gap-3 pt-2">
+          {/* Toggle Input Method - Fixed at bottom */}
+          <div className="flex gap-3 flex-shrink-0">
             <Button
               onClick={toggleInputMethod}
               className="flex-1 bg-slate-700 hover:bg-slate-600 h-12 text-base font-semibold"
