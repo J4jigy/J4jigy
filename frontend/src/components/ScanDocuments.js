@@ -466,6 +466,9 @@ const ScanDocuments = () => {
 
   // Delete document (move to recently deleted)
   const deleteDocument = (id) => {
+    if (!window.confirm('Move this document to Recently Deleted?')) {
+      return;
+    }
     const doc = scannedDocuments.find(d => d.id === id);
     if (doc) {
       setRecentlyDeleted(prev => [...prev, { ...doc, deletedAt: Date.now() }]);
