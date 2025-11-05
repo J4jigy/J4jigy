@@ -120,6 +120,12 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
       Quagga.stop();
       setIsScanning(false);
       setLastScanned('');
+      
+      // Remove style tag
+      const styleTag = document.getElementById('quagga-center-styles');
+      if (styleTag) {
+        styleTag.remove();
+      }
     }
   };
 
