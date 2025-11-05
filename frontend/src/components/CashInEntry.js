@@ -1396,12 +1396,12 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
               {/* Tax Selection Section */}
-              <div className="border-t border-slate-600 pt-3 space-y-2">
+              <div className="border border-slate-600 p-2">
                 <div className="grid grid-cols-2 gap-2">
                   <div>
                     <Label className="text-xs text-slate-400 mb-1 block">Tax Type</Label>
                     <Select value={taxType} onValueChange={setTaxType}>
-                      <SelectTrigger className="bg-slate-700 border-slate-600 text-white text-sm h-9">
+                      <SelectTrigger className="bg-slate-700 border-slate-600 text-white text-xs h-8">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-slate-700 border-slate-600">
@@ -1413,7 +1413,7 @@ const CashInEntry = ({ onBack }) => {
                   <div>
                     <Label className="text-xs text-slate-400 mb-1 block">Tax Slab</Label>
                     <Select value={taxSlab} onValueChange={setTaxSlab}>
-                      <SelectTrigger className="bg-slate-700 border-slate-600 text-white text-sm h-9">
+                      <SelectTrigger className="bg-slate-700 border-slate-600 text-white text-xs h-8">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent className="bg-slate-700 border-slate-600">
@@ -1427,50 +1427,75 @@ const CashInEntry = ({ onBack }) => {
                 </div>
               </div>
 
-              {/* Total Section */}
-              <div className="border-t border-slate-600 pt-3">
-                <div className="flex justify-between text-sm text-slate-300 mb-1">
-                  <span>Subtotal:</span>
-                  <span>₹{slots[selectedSlotForBill]?.amount || '0.00'}</span>
-                </div>
-                {(() => {
-                  const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
-                  const taxRate = parseFloat(taxSlab);
-                  const taxAmount = (subtotal * taxRate) / 100;
-                  const total = subtotal + taxAmount;
-                  
-                  if (taxType === 'CGST+SGST' && taxRate > 0) {
-                    const halfTax = taxAmount / 2;
-                    return (
-                      <>
-                        <div className="flex justify-between text-sm text-slate-300 mb-1">
-                          <span>CGST ({taxRate / 2}%):</span>
-                          <span>₹{halfTax.toFixed(2)}</span>
-                        </div>
-                        <div className="flex justify-between text-sm text-slate-300 mb-1">
-                          <span>SGST ({taxRate / 2}%):</span>
-                          <span>₹{halfTax.toFixed(2)}</span>
-                        </div>
-                      </>
-                    );
-                  } else if (taxRate > 0) {
-                    return (
-                      <div className="flex justify-between text-sm text-slate-300 mb-1">
-                        <span>IGST ({taxRate}%):</span>
-                        <span>₹{taxAmount.toFixed(2)}</span>
-                      </div>
-                    );
-                  }
-                  return null;
-                })()}
-                <div className="flex justify-between text-lg font-bold text-white border-t border-slate-600 pt-2">
-                  <span>Total:</span>
-                  <span>₹{(() => {
+              {/* Total Section - GST Format */}
+              <div className="border border-slate-600">
+                {/* Subtotal and Tax Breakdown */}
+                <div className="bg-slate-800 p-2 space-y-1">
+                  <div className="flex justify-between text-xs text-slate-300">
+                    <span className="font-semibold">Taxable Amount:</span>
+                    <span className="font-semibold">₹{parseFloat(slots[selectedSlotForBill]?.amount || 0).toFixed(2)}</span>
+                  </div>
+                  {(() => {
                     const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                     const taxRate = parseFloat(taxSlab);
                     const taxAmount = (subtotal * taxRate) / 100;
-                    return (subtotal + taxAmount).toFixed(2);
-                  })()}</span>
+                    
+                    if (taxType === 'CGST+SGST' && taxRate > 0) {
+                      const halfTax = taxAmount / 2;
+                      return (
+                        <>
+                          <div className="flex justify-between text-xs text-slate-300">
+                            <span>CGST @ {taxRate / 2}%:</span>
+                            <span>₹{halfTax.toFixed(2)}</span>
+                          </div>
+                          <div className="flex justify-between text-xs text-slate-300">
+                            <span>SGST @ {taxRate / 2}%:</span>
+                            <span>₹{halfTax.toFixed(2)}</span>
+                          </div>
+                        </>
+                      );
+                    } else if (taxRate > 0) {
+                      return (
+                        <div className="flex justify-between text-xs text-slate-300">
+                          <span>IGST @ {taxRate}%:</span>
+                          <span>₹{taxAmount.toFixed(2)}</span>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })()}
+                </div>
+                
+                {/* Grand Total */}
+                <div className="bg-cyan-900/30 border-t-2 border-cyan-600 p-2">
+                  <div className="flex justify-between text-sm font-bold text-white">
+                    <span>TOTAL AMOUNT:</span>
+                    <span className="text-lg">₹{(() => {
+                      const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
+                      const taxRate = parseFloat(taxSlab);
+                      const taxAmount = (subtotal * taxRate) / 100;
+                      return (subtotal + taxAmount).toFixed(2);
+                    })()}</span>
+                  </div>
+                  <div className="text-xs text-cyan-300 mt-1">
+                    <span className="font-semibold">Amount in Words:</span> {(() => {
+                      const total = parseFloat(slots[selectedSlotForBill]?.amount || 0) * (1 + parseFloat(taxSlab) / 100);
+                      return `Rupees ${Math.floor(total)} Only`;
+                    })()}
+                  </div>
+                </div>
+              </div>
+
+              {/* Terms & Conditions Footer */}
+              <div className="border border-slate-600 p-2 bg-slate-800/50">
+                <div className="text-xs text-slate-400">
+                  <div className="font-semibold text-white mb-1">Terms & Conditions:</div>
+                  <div>• Goods once sold will not be taken back</div>
+                  <div>• Subject to jurisdiction</div>
+                </div>
+                <div className="text-right mt-3">
+                  <div className="text-xs text-slate-300">For <span className="font-semibold text-white">{activeBusiness?.name || 'BUSINESS NAME'}</span></div>
+                  <div className="mt-8 text-xs text-slate-400">Authorized Signatory</div>
                 </div>
               </div>
 
