@@ -1047,9 +1047,8 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
                 <h3 className="text-white font-medium">Add Members</h3>
                 <Button
                   onClick={() => setShowAddMemberDialog(false)}
-                  variant="ghost"
                   size="sm"
-                  className="p-1"
+                  className="bg-red-600/20 hover:bg-red-600/40 border-2 border-red-500 text-red-400 hover:text-red-300 p-1 h-8 w-8 rounded-md"
                 >
                   <X className="w-4 h-4" />
                 </Button>
