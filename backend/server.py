@@ -453,10 +453,16 @@ def verify_token(token: str) -> dict:
     """Simple token verification that returns payload"""
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        print(f"✅ Token verified successfully, user_id: {payload.get('user_id')}")
         return payload
-    except jwt.ExpiredSignatureError:
+    except jwt.ExpiredSignatureError as e:
+        print(f"❌ Token expired: {str(e)}")
         raise HTTPException(status_code=401, detail="Token has expired")
-    except jwt.PyJWTError:
+    except jwt.PyJWTError as e:
+        print(f"❌ Invalid token error: {str(e)}")
+        raise HTTPException(status_code=401, detail="Invalid token")
+    except Exception as e:
+        print(f"❌ Unexpected error in verify_token: {str(e)}")
         raise HTTPException(status_code=401, detail="Invalid token")
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> User:
