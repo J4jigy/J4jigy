@@ -56,7 +56,7 @@
 ##   test_all: false
 ##   test_priority: "high_first"  # or "sequential" or "stuck_first"
 ##
-user_problem_statement: "Implement barcode scanning functionality for both CashInEntry and CashOutEntry screens. When a barcode is scanned, it should search for the product/expense in the existing list. If the barcode is not recognized (not found in the list), it should redirect to the 'Add New Product' or 'Add New Expense' popup window with the barcode field pre-filled, allowing users to add the new product/expense with that barcode."
+user_problem_statement: "Implement CAMERA-BASED barcode scanning functionality for both CashInEntry and CashOutEntry screens. When the 'Scan Barcode' button is clicked, the device camera should open and scan physical barcodes in real-time. When a barcode is scanned, it should search for the product/expense in the existing list. If the barcode is recognized, add it to cart. If not recognized, redirect to 'Add New Product/Expense' popup with the barcode field pre-filled."
 
 backend:
   - task: "Barcode Product/Expense Lookup"
