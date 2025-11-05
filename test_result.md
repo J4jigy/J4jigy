@@ -56,6 +56,60 @@
 ##   test_all: false
 ##   test_priority: "high_first"  # or "sequential" or "stuck_first"
 ##
+user_problem_statement: "Implement barcode scanning functionality for both CashInEntry and CashOutEntry screens. When a barcode is scanned, it should search for the product/expense in the existing list. If the barcode is not recognized (not found in the list), it should redirect to the 'Add New Product' or 'Add New Expense' popup window with the barcode field pre-filled, allowing users to add the new product/expense with that barcode."
+
+backend:
+  - task: "Barcode Product/Expense Lookup"
+    implemented: "NA"
+    working: "NA"
+    file: "server.py"
+    stuck_count: 0
+    priority: "low"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "No backend changes required - barcode scanning uses existing product/expense data stored in localStorage via BusinessContext"
+
+frontend:
+  - task: "Barcode Scanning in CashInEntry"
+    implemented: true
+    working: false
+    file: "CashInEntry.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "CashInEntry.js already has complete barcode scanning implementation: 1) State variables: scannedBarcode, showBarcodeModal, newProductBarcode. 2) handleBarcodeScan function that searches products by barcode, adds to cart if found, or opens Add Product modal with barcode pre-filled if not found. 3) Barcode Scanner Modal with input field for manual/scanner entry. 4) Add Product Modal includes barcode field that gets pre-filled. 5) saveNewProduct function saves product with barcode. Implementation complete - needs testing to verify functionality."
+
+  - task: "Barcode Scanning in CashOutEntry"
+    implemented: false
+    working: false
+    file: "CashOutEntry.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "CashOutEntry.js has barcode button and modal structure but no actual scanning logic. Needs implementation: 1) Add state variables (scannedBarcode, newExpenseBarcode). 2) Implement handleBarcodeScan function to search expenses by barcode. 3) Update barcode modal from receipt scanner placeholder to actual barcode scanner with input field. 4) Update Add Expense Modal to include barcode field. 5) Update saveNewExpense to save barcode. Will implement following CashInEntry pattern."
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 0
+  run_ui: false
+
+test_plan:
+  current_focus:
+    - "Barcode Scanning in CashInEntry"
+    - "Barcode Scanning in CashOutEntry"
+  stuck_tasks: []
+  test_all: false
+  test_priority: "high_first"
+
 ## frontend:
   - task: "Enhanced Chat UI with Media Sharing and Group Management"
     implemented: true
