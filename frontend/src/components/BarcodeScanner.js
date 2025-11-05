@@ -138,8 +138,14 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
   };
 
   const handleScanSuccess = (barcode) => {
-    stopScanning();
+    // Don't stop scanning - allow continuous scanning
     onScan(barcode);
+    
+    // Reset lastScanned after 500ms to allow next scan quickly
+    setTimeout(() => {
+      setLastScanned('');
+      console.log('✅ Ready for next scan');
+    }, 500);
   };
 
   const handleManualSubmit = () => {
