@@ -117,8 +117,12 @@ const CashInEntry = ({ onBack }) => {
   const [newProductQuantity, setNewProductQuantity] = useState(1);
   const [newProductMeasurement, setNewProductMeasurement] = useState('Piece');
   const [newProductHsn, setNewProductHsn] = useState('');
+  const [newProductBarcode, setNewProductBarcode] = useState('');
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteAction, setDeleteAction] = useState(null);
+  
+  // Barcode scanning
+  const [scannedBarcode, setScannedBarcode] = useState('');
   
   // Search states
   const [productSearchQuery, setProductSearchQuery] = useState('');
