@@ -77,27 +77,23 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
               facingMode: 'environment',
             },
             area: {
-              top: '20%',
-              right: '10%',
-              left: '10%',
-              bottom: '20%'
+              top: '25%',
+              right: '15%',
+              left: '15%',
+              bottom: '25%'
             }
           },
           locator: {
-            patchSize: 'medium',
+            patchSize: 'small',
             halfSample: true,
           },
-          numOfWorkers: navigator.hardwareConcurrency || 4,
-          frequency: 30,
+          numOfWorkers: 2,
+          frequency: 60,
           decoder: {
-            readers: [
-              'code_128_reader',
-              'ean_reader',
-              'upc_reader',
-            ],
+            readers: ['code_128_reader', 'ean_reader'],
             multiple: false
           },
-          locate: true,
+          locate: false,
         },
         (err) => {
           if (err) {
