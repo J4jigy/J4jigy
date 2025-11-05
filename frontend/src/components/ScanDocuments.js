@@ -629,17 +629,30 @@ const ScanDocuments = () => {
           </div>
         </div>
         
-        {recentlyDeleted.length > 0 && (
-          <Button
-            onClick={() => setShowDeletedDialog(true)}
-            variant="outline"
-            size="sm"
-            className="border-slate-600 text-slate-200 hover:bg-slate-700"
-          >
-            <Trash2 className="w-4 h-4 mr-2" />
-            Recently Deleted ({recentlyDeleted.length})
-          </Button>
-        )}
+        <div className="flex gap-2">
+          {scannedDocuments.length >= 2 && (
+            <Button
+              onClick={openMergeDialog}
+              variant="outline"
+              size="sm"
+              className="border-blue-600 text-blue-400 hover:bg-blue-900/20"
+            >
+              <Merge className="w-4 h-4 mr-2" />
+              Merge PDFs
+            </Button>
+          )}
+          {recentlyDeleted.length > 0 && (
+            <Button
+              onClick={() => setShowDeletedDialog(true)}
+              variant="outline"
+              size="sm"
+              className="border-slate-600 text-slate-200 hover:bg-slate-700"
+            >
+              <Trash2 className="w-4 h-4 mr-2" />
+              Recently Deleted ({recentlyDeleted.length})
+            </Button>
+          )}
+        </div>
       </div>
 
       {/* Processing Status */}
