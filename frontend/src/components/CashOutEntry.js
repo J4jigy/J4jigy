@@ -429,21 +429,16 @@ const CashOutEntry = ({ onBack }) => {
     setShowAddProductModal(false);
   };
 
-  // Handle barcode scan for expenses
-  const handleBarcodeScan = () => {
-    if (!scannedBarcode.trim()) {
-      alert('Please enter a barcode');
-      return;
-    }
-
-    console.log('Scanning barcode:', scannedBarcode);
+  // Handle barcode scan from camera for expenses
+  const handleBarcodeScan = (barcode) => {
+    console.log('Barcode scanned:', barcode);
     console.log('Current expenses:', expenses);
 
     // Find expense with matching barcode
     const foundExpense = expenses.find(expense => 
       typeof expense === 'object' && 
       expense.barcode && 
-      expense.barcode.toLowerCase() === scannedBarcode.toLowerCase()
+      expense.barcode.toLowerCase() === barcode.toLowerCase()
     );
 
     if (foundExpense) {
@@ -451,15 +446,13 @@ const CashOutEntry = ({ onBack }) => {
       console.log('Expense found:', foundExpense);
       incQty(foundExpense.name);
       setShowBarcodeModal(false);
-      setScannedBarcode('');
-      alert(`Added "${foundExpense.name}" to the cart!`);
+      alert(`✅ Expense "${foundExpense.name}" added to cart!`);
     } else {
       // Expense not found - open add expense modal with barcode pre-filled
       console.log('Expense not found, opening Add Expense modal');
-      setNewExpenseBarcode(scannedBarcode);
+      setNewExpenseBarcode(barcode);
       setShowBarcodeModal(false);
       setShowAddProductModal(true);
-      setScannedBarcode('');
     }
   };
 
