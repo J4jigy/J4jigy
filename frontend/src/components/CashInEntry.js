@@ -505,24 +505,42 @@ const CashInEntry = ({ onBack }) => {
       return; // Don't save if required fields are empty
     }
 
-    // Add product to the products list
+    // Create product object
     const productName = newProductName.trim();
+    const newProduct = {
+      name: productName,
+      sellingPrice: parseFloat(newProductSellingPrice),
+      costPrice: parseFloat(newProductCostPrice) || 0,
+      measurement: newProductMeasurement,
+      hsn: newProductHsn,
+      barcode: newProductBarcode.trim(),
+      createdAt: new Date().toISOString()
+    };
+    
+    // Save to global products list in localStorage
+    const allProducts = getData('all_products', []);
+    allProducts.push(newProduct);
+    setData('all_products', allProducts);
+    
+    // Add product to the products list
     setProducts(prev => [...prev, productName]);
     
-    // Add to selected items with quantity
-    if (newProductQuantity > 0) {
-      setSelectedItems(prev => ({
-        ...prev,
-        [productName]: newProductQuantity
-      }));
+    // Add to selected items with quantity for active slot
+    if (activeSlot !== null && newProductQuantity > 0) {
+      incrementItem(activeSlot, productName);
+      for (let i = 1; i < newProductQuantity; i++) {
+        incrementItem(activeSlot, productName);
+      }
     }
 
     // Calculate and add to current amount
     const sellingPrice = parseFloat(newProductSellingPrice) || 0;
-    if (sellingPrice > 0 && newProductQuantity > 0) {
+    if (sellingPrice > 0 && newProductQuantity > 0 && activeSlot !== null) {
       const totalProductValue = sellingPrice * newProductQuantity;
-      const currentAmount = parseFloat(amount) || 0;
-      setAmountForActive((currentAmount + totalProductValue).toString());
+      const currentAmount = parseFloat(slots[activeSlot]?.amount || 0);
+      setSlots(prev => prev.map((slot, idx) => 
+        idx === activeSlot ? { ...slot, amount: (currentAmount + totalProductValue).toFixed(2) } : slot
+      ));
     }
 
     // Reset form
@@ -532,9 +550,11 @@ const CashInEntry = ({ onBack }) => {
     setNewProductQuantity(1);
     setNewProductMeasurement('Piece');
     setNewProductHsn('');
+    setNewProductBarcode('');
     
-    // Close modal
+    // Close modal and show success
     setShowAddProductModal(false);
+    alert(`Product "${productName}" added successfully!`);
   };
 
   // Persist selected items to business-specific storage
