@@ -1311,6 +1311,46 @@ const EnhancedChat = ({ open, onOpenChange, userId }) => {
           </div>
         )}
         
+        {/* Instant Camera Dialog */}
+        {showCamera && (
+          <div className="fixed inset-0 bg-black z-50 flex flex-col">
+            {/* Camera Header */}
+            <div className="p-4 flex items-center justify-between bg-slate-900">
+              <Button 
+                onClick={closeInstantCamera}
+                className="bg-red-600/20 hover:bg-red-600/40 border-2 border-red-500 text-red-400 hover:text-red-300 p-2 h-10 w-10 rounded-md"
+              >
+                <X className="w-5 h-5" />
+              </Button>
+              <h3 className="text-white font-medium">Take Photo</h3>
+              <div className="w-10"></div>
+            </div>
+            
+            {/* Camera View */}
+            <div className="flex-1 bg-black flex items-center justify-center">
+              <video
+                ref={videoRef}
+                autoPlay
+                playsInline
+                className="max-w-full max-h-full"
+              />
+            </div>
+            
+            {/* Capture Button */}
+            <div className="p-6 bg-slate-900 flex justify-center">
+              <Button
+                onClick={captureInstantPhoto}
+                className="bg-white hover:bg-gray-200 text-black w-16 h-16 rounded-full flex items-center justify-center"
+              >
+                <Camera className="w-8 h-8" />
+              </Button>
+            </div>
+            
+            {/* Hidden canvas for capturing */}
+            <canvas ref={canvasRef} className="hidden" />
+          </div>
+        )}
+        
         {/* Hidden File Inputs */}
         <input
           ref={imageInputRef}
