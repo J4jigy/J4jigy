@@ -31,6 +31,7 @@ import Rent from './components/Rent';
 import TransportationExpense from './components/TransportationExpense';
 import OtherExpenses from './components/OtherExpenses';
 import BillsInvoices from './components/BillsInvoices';
+import Challan from './components/Challan';
 import Bank from './components/Bank';
 import CashEnhanced from './components/CashEnhanced';
 import PayablesYouWillGive from './components/PayablesYouWillGive';
