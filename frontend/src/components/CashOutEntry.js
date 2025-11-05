@@ -999,10 +999,13 @@ const CashOutEntry = ({ onBack }) => {
               </div>
             </div>
             {expenses
-              .filter(expense => 
-                expense.toLowerCase().includes(expenseSearchQuery.toLowerCase())
-              )
-              .map((expense) => (
+              .filter(expense => {
+                const expenseName = typeof expense === 'object' ? expense.name : expense;
+                return expenseName.toLowerCase().includes(expenseSearchQuery.toLowerCase());
+              })
+              .map((expense) => {
+                const expenseName = typeof expense === 'object' ? expense.name : expense;
+                return (
               <div key={expense} className="flex items-center justify-between bg-slate-700 p-2 rounded">
                 <span className="text-white text-sm">{expense}</span>
                 <div className="flex items-center gap-1">
