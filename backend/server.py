@@ -802,7 +802,7 @@ async def auth_register(payload: RegisterRequest, request: Request):
 # ===================== Simple Mobile Login Endpoint =====================
 
 class MobileLoginRequest(BaseModel):
-    name: str = Field(..., min_length=2, max_length=100)
+    name: Optional[str] = None
     mobile: str
     
     @validator('mobile')
