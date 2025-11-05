@@ -129,6 +129,14 @@ const CashInEntry = ({ onBack }) => {
   const [taxType, setTaxType] = useState('CGST+SGST'); // CGST+SGST or IGST
   const [taxSlab, setTaxSlab] = useState('0'); // 0, 5, 18, 28
   
+  // Terms & Conditions states
+  const [isEditingTerms, setIsEditingTerms] = useState(false);
+  const [termsText, setTermsText] = useState(
+    getData('terms_conditions', 
+      '• Goods once sold will not be taken back\n• Subject to jurisdiction\n• Payment due within 30 days'
+    )
+  );
+  
   // Cheque modal states
   const [showChequeModal, setShowChequeModal] = useState(false);
   const [chequeBankName, setChequeBankName] = useState('');
