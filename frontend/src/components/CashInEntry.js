@@ -527,9 +527,9 @@ const CashInEntry = ({ onBack }) => {
     
     // Add to selected items with quantity for active slot
     if (activeSlot !== null && newProductQuantity > 0) {
-      incrementItem(activeSlot, productName);
+      incQty(productName);
       for (let i = 1; i < newProductQuantity; i++) {
-        incrementItem(activeSlot, productName);
+        incQty(productName);
       }
     }
 
