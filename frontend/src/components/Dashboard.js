@@ -512,6 +512,7 @@ It's completely free to try!`;
     else if (name.startsWith('company purchase') || name.startsWith('company')) handleNavigate('/company-purchase');
     else if (name.startsWith('bills recharge') || tile.name === 'Bills') handleNavigate('/bills-recharge');
     else if (name.startsWith('other')) handleNavigate('/other-expenses');
+    else if (name.startsWith('challan')) handleNavigate('/challan');
     else if (name.startsWith('bills &')) handleNavigate('/bills-invoices');
     else if (name.startsWith('to do list')) handleNavigate('/todo');
     else if (name.startsWith('scan documents') || tile.name === 'Scan') handleNavigate('/scan-documents');
