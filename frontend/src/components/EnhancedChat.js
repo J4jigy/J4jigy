@@ -4,7 +4,7 @@ import { Input } from './ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { 
   ArrowLeft, Send, Image as ImageIcon, Mic, FileText, Phone, MapPin, 
-  Users, Plus, Settings, X, Paperclip, Check, MoreVertical, Trash2, Camera 
+  Users, Plus, Settings, X, Paperclip, Check, MoreVertical, Trash2, Camera, Shield, Star 
 } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '';
