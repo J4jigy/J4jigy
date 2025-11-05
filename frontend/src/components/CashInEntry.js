@@ -125,6 +125,10 @@ const CashInEntry = ({ onBack }) => {
   const [selectedSlotForBill, setSelectedSlotForBill] = useState(null);
   const [longPressTimer, setLongPressTimer] = useState(null);
   
+  // Tax states
+  const [taxType, setTaxType] = useState('CGST+SGST'); // CGST+SGST or IGST
+  const [taxSlab, setTaxSlab] = useState('0'); // 0, 5, 18, 28
+  
   // Cheque modal states
   const [showChequeModal, setShowChequeModal] = useState(false);
   const [chequeBankName, setChequeBankName] = useState('');
