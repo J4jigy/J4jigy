@@ -194,6 +194,298 @@ const CashInEntry = ({ onBack }) => {
     setTouchStart(0);
     setTouchEnd(0);
   };
+
+  // Helper to calculate tax
+  const calculateTax = () => {
+    const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
+    const taxRate = parseFloat(taxSlab);
+    const taxAmount = (subtotal * taxRate) / 100;
+    const total = subtotal + taxAmount;
+    return { subtotal, taxRate, taxAmount, total };
+  };
+
+  // Render invoice based on format
+  const renderInvoiceFormat = (copyType) => {
+    const slotData = slots[selectedSlotForBill];
+    const { subtotal, taxRate, taxAmount, total } = calculateTax();
+    const customerName = slotData?.customName || slotData?.label;
+    const items = Object.keys(slotData?.selectedItems || {}).join(', ') || 'Service/Product';
+
+    // Format 0: Classic GST Invoice - Simple & Clean
+    if (currentFormat === 0) {
+      return (
+        <div className="space-y-3 bg-white p-4 border-2 border-black">
+          {/* Header */}
+          <div className="text-center border-b-2 border-black pb-3">
+            <h1 className="text-3xl font-bold text-black">{activeBusiness?.name || 'BUSINESS NAME'}</h1>
+            <p className="text-sm text-black mt-1">{activeBusiness?.address}</p>
+            <div className="flex justify-center gap-4 mt-2 text-xs text-black">
+              <span>Ph: {activeBusiness?.phone}</span>
+              <span>GSTIN: {activeBusiness?.gst}</span>
+            </div>
+            <div className="text-lg font-bold text-black mt-2 bg-gray-200 py-1">TAX INVOICE</div>
+          </div>
+
+          {/* Invoice & Customer Info */}
+          <div className="grid grid-cols-2 gap-4 text-xs border border-black p-2">
+            <div>
+              <p><strong>Invoice No:</strong> {invoiceNumber}</p>
+              <p><strong>Date:</strong> {new Date().toLocaleDateString('en-GB')}</p>
+              <p><strong>Time:</strong> {new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</p>
+            </div>
+            <div>
+              <p><strong>Customer:</strong> {customerName}</p>
+              <p><strong>Payment:</strong> {slotData?.paymentMode}</p>
+              <p><strong>State:</strong> Maharashtra</p>
+            </div>
+          </div>
+
+          {/* Items Table */}
+          <table className="w-full border-collapse border border-black text-xs">
+            <thead className="bg-gray-200">
+              <tr>
+                <th className="border border-black p-2 text-left">Item</th>
+                <th className="border border-black p-2">HSN</th>
+                <th className="border border-black p-2">Qty</th>
+                <th className="border border-black p-2 text-right">Rate</th>
+                <th className="border border-black p-2 text-right">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-black p-2">{items}</td>
+                <td className="border border-black p-2 text-center">9954</td>
+                <td className="border border-black p-2 text-center">1</td>
+                <td className="border border-black p-2 text-right">₹{subtotal.toFixed(2)}</td>
+                <td className="border border-black p-2 text-right">₹{subtotal.toFixed(2)}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          {/* Tax & Total */}
+          <div className="border border-black p-2 text-xs">
+            <div className="flex justify-between"><span>Taxable Amount:</span><span>₹{subtotal.toFixed(2)}</span></div>
+            {taxType === 'CGST+SGST' && taxRate > 0 ? (
+              <>
+                <div className="flex justify-between"><span>CGST @ {taxRate/2}%:</span><span>₹{(taxAmount/2).toFixed(2)}</span></div>
+                <div className="flex justify-between"><span>SGST @ {taxRate/2}%:</span><span>₹{(taxAmount/2).toFixed(2)}</span></div>
+              </>
+            ) : taxRate > 0 && (
+              <div className="flex justify-between"><span>IGST @ {taxRate}%:</span><span>₹{taxAmount.toFixed(2)}</span></div>
+            )}
+            <div className="flex justify-between font-bold text-sm mt-2 pt-2 border-t-2 border-black">
+              <span>TOTAL:</span><span>₹{total.toFixed(2)}</span>
+            </div>
+            <p className="mt-1 text-xs">Amount in Words: Rupees {Math.floor(total)} Only</p>
+          </div>
+
+          {/* Footer */}
+          <div className="text-xs border-t border-black pt-2">
+            <p className="font-semibold mb-1">Terms & Conditions:</p>
+            <p className="whitespace-pre-line">{termsText}</p>
+            <div className="text-right mt-4">
+              <p>For {activeBusiness?.name || 'BUSINESS NAME'}</p>
+              <p className="mt-8 border-t border-black inline-block pt-1">Authorized Signatory</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Format 1: Compact GST Invoice - Space Saving
+    if (currentFormat === 1) {
+      return (
+        <div className="space-y-2 bg-white p-3 border border-black">
+          {/* Compact Header */}
+          <div className="flex justify-between items-center border-b border-black pb-2">
+            <div>
+              <h2 className="text-xl font-bold">{activeBusiness?.name || 'BUSINESS NAME'}</h2>
+              <p className="text-xs">{activeBusiness?.address}</p>
+            </div>
+            <div className="text-right text-xs">
+              <p className="font-bold">TAX INVOICE</p>
+              <p>{invoiceNumber}</p>
+              <p>{new Date().toLocaleDateString('en-GB')}</p>
+            </div>
+          </div>
+
+          {/* Inline Info */}
+          <div className="flex justify-between text-xs bg-gray-100 p-2">
+            <span><strong>Customer:</strong> {customerName}</span>
+            <span><strong>GSTIN:</strong> {activeBusiness?.gst}</span>
+            <span><strong>Payment:</strong> {slotData?.paymentMode}</span>
+          </div>
+
+          {/* Compact Table */}
+          <div className="text-xs border border-black">
+            <div className="grid grid-cols-5 bg-gray-200 font-semibold p-1 border-b border-black">
+              <span>Item</span>
+              <span className="text-center">HSN</span>
+              <span className="text-center">Qty</span>
+              <span className="text-right">Rate</span>
+              <span className="text-right">Amt</span>
+            </div>
+            <div className="grid grid-cols-5 p-1">
+              <span>{items}</span>
+              <span className="text-center">9954</span>
+              <span className="text-center">1</span>
+              <span className="text-right">₹{subtotal.toFixed(2)}</span>
+              <span className="text-right">₹{subtotal.toFixed(2)}</span>
+            </div>
+          </div>
+
+          {/* Inline Tax */}
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className="border border-black p-2 bg-gray-50">
+              <p><strong>Taxable:</strong> ₹{subtotal.toFixed(2)}</p>
+              {taxType === 'CGST+SGST' && taxRate > 0 ? (
+                <>
+                  <p>CGST @ {taxRate/2}%: ₹{(taxAmount/2).toFixed(2)}</p>
+                  <p>SGST @ {taxRate/2}%: ₹{(taxAmount/2).toFixed(2)}</p>
+                </>
+              ) : taxRate > 0 && <p>IGST @ {taxRate}%: ₹{taxAmount.toFixed(2)}</p>}
+            </div>
+            <div className="border border-black p-2 bg-gray-200 flex flex-col justify-center">
+              <p className="text-lg font-bold text-center">₹{total.toFixed(2)}</p>
+              <p className="text-center">GRAND TOTAL</p>
+            </div>
+          </div>
+
+          {/* Compact Footer */}
+          <div className="flex justify-between text-xs border-t border-black pt-2">
+            <div className="w-2/3">
+              <p className="font-semibold">T&C:</p>
+              <p className="text-xs">{termsText.split('\n')[0]}</p>
+            </div>
+            <div className="text-right">
+              <p className="text-xs">Auth. Sign.</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Format 2: Detailed GST Invoice - Full Information
+    if (currentFormat === 2) {
+      return (
+        <div className="space-y-4 bg-white p-5">
+          {/* Detailed Header with Logo Space */}
+          <div className="border-4 border-double border-black p-4 text-center">
+            <div className="text-3xl font-serif font-bold mb-2">{activeBusiness?.name || 'BUSINESS NAME'}</div>
+            <div className="text-sm">{activeBusiness?.address}</div>
+            <div className="flex justify-center gap-8 mt-3 text-sm">
+              <span><strong>Phone:</strong> {activeBusiness?.phone}</span>
+              <span><strong>Email:</strong> info@business.com</span>
+            </div>
+            <div className="flex justify-center gap-8 mt-1 text-sm">
+              <span><strong>GSTIN:</strong> {activeBusiness?.gst}</span>
+              <span><strong>State Code:</strong> 27</span>
+            </div>
+            <div className="mt-3 text-xl font-bold bg-black text-white py-2">TAX INVOICE</div>
+          </div>
+
+          {/* Detailed Info Sections */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="border-2 border-black p-3">
+              <h3 className="font-bold mb-2 text-sm bg-gray-200 p-1">INVOICE DETAILS</h3>
+              <div className="text-xs space-y-1">
+                <p><strong>Invoice No:</strong> {invoiceNumber}</p>
+                <p><strong>Invoice Date:</strong> {new Date().toLocaleDateString('en-GB')}</p>
+                <p><strong>Invoice Time:</strong> {new Date().toLocaleTimeString('en-GB')}</p>
+                <p><strong>Due Date:</strong> {new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString('en-GB')}</p>
+              </div>
+            </div>
+            <div className="border-2 border-black p-3">
+              <h3 className="font-bold mb-2 text-sm bg-gray-200 p-1">CUSTOMER DETAILS</h3>
+              <div className="text-xs space-y-1">
+                <p><strong>Name:</strong> {customerName}</p>
+                <p><strong>Payment Mode:</strong> {slotData?.paymentMode}</p>
+                <p><strong>State:</strong> Maharashtra</p>
+                <p><strong>State Code:</strong> 27</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Detailed Items Table */}
+          <table className="w-full border-2 border-black text-xs">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="border border-black p-2 text-left">S.No</th>
+                <th className="border border-black p-2 text-left">Description of Goods</th>
+                <th className="border border-black p-2">HSN/SAC</th>
+                <th className="border border-black p-2">Qty</th>
+                <th className="border border-black p-2">Unit</th>
+                <th className="border border-black p-2 text-right">Rate</th>
+                <th className="border border-black p-2 text-right">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-black p-2">1</td>
+                <td className="border border-black p-2">{items}</td>
+                <td className="border border-black p-2 text-center">9954</td>
+                <td className="border border-black p-2 text-center">1</td>
+                <td className="border border-black p-2 text-center">Nos</td>
+                <td className="border border-black p-2 text-right">₹{subtotal.toFixed(2)}</td>
+                <td className="border border-black p-2 text-right font-semibold">₹{subtotal.toFixed(2)}</td>
+              </tr>
+              <tr>
+                <td colSpan="6" className="border border-black p-2 text-right font-semibold">Sub Total:</td>
+                <td className="border border-black p-2 text-right font-semibold">₹{subtotal.toFixed(2)}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          {/* Detailed Tax Breakdown */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="border-2 border-black p-3">
+              <h3 className="font-bold mb-2 text-sm">TAX CALCULATION</h3>
+              <div className="text-xs space-y-1">
+                <div className="flex justify-between"><span>Taxable Value:</span><span>₹{subtotal.toFixed(2)}</span></div>
+                {taxType === 'CGST+SGST' && taxRate > 0 ? (
+                  <>
+                    <div className="flex justify-between"><span>CGST @ {taxRate/2}%:</span><span>₹{(taxAmount/2).toFixed(2)}</span></div>
+                    <div className="flex justify-between"><span>SGST @ {taxRate/2}%:</span><span>₹{(taxAmount/2).toFixed(2)}</span></div>
+                  </>
+                ) : taxRate > 0 && (
+                  <div className="flex justify-between"><span>IGST @ {taxRate}%:</span><span>₹{taxAmount.toFixed(2)}</span></div>
+                )}
+                <div className="flex justify-between pt-1 border-t border-black"><span>Total Tax:</span><span>₹{taxAmount.toFixed(2)}</span></div>
+              </div>
+            </div>
+            <div className="border-2 border-black p-3 bg-gray-100">
+              <h3 className="font-bold mb-2 text-sm">TOTAL AMOUNT</h3>
+              <div className="text-2xl font-bold text-center my-2">₹{total.toFixed(2)}</div>
+              <p className="text-xs text-center">Amount in Words:</p>
+              <p className="text-xs text-center font-semibold">Rupees {Math.floor(total)} Only</p>
+            </div>
+          </div>
+
+          {/* Detailed Footer */}
+          <div className="border-2 border-black p-3">
+            <h3 className="font-bold mb-2 text-sm">TERMS & CONDITIONS</h3>
+            <p className="text-xs whitespace-pre-line">{termsText}</p>
+          </div>
+
+          {/* Signature */}
+          <div className="flex justify-between items-end">
+            <div className="text-xs">
+              <p className="font-semibold">Customer Signature</p>
+              <div className="w-32 h-16 border-b border-black mt-8"></div>
+            </div>
+            <div className="text-xs text-right">
+              <p className="font-semibold">For {activeBusiness?.name || 'BUSINESS NAME'}</p>
+              <div className="w-32 h-16 border-b border-black mt-8 ml-auto"></div>
+              <p className="mt-1">Authorized Signatory</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Continue with more formats...
+    return null;
+  };
   
   // Handle barcode scan from camera
   const handleBarcodeScan = (barcode) => {
