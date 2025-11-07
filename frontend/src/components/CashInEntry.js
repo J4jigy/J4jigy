@@ -483,7 +483,166 @@ const CashInEntry = ({ onBack }) => {
       );
     }
 
-    // Continue with more formats...
+    // Format 3: Modern Minimalist - Clean Lines
+    if (currentFormat === 3) {
+      return (
+        <div className="space-y-3 bg-white p-4">
+          {/* Minimal Header */}
+          <div className="border-l-8 border-black pl-4">
+            <h1 className="text-4xl font-light tracking-wide">{activeBusiness?.name || 'BUSINESS NAME'}</h1>
+            <p className="text-sm text-gray-600 mt-1">{activeBusiness?.address}</p>
+          </div>
+
+          {/* Invoice Title */}
+          <div className="flex justify-between items-center border-y-2 border-black py-2">
+            <span className="text-2xl font-light">INVOICE</span>
+            <span className="text-sm font-mono">{invoiceNumber}</span>
+          </div>
+
+          {/* Info Grid */}
+          <div className="grid grid-cols-3 gap-4 text-xs">
+            <div>
+              <p className="text-gray-500 uppercase text-xs">Date</p>
+              <p className="font-semibold">{new Date().toLocaleDateString('en-GB')}</p>
+            </div>
+            <div>
+              <p className="text-gray-500 uppercase text-xs">Customer</p>
+              <p className="font-semibold">{customerName}</p>
+            </div>
+            <div>
+              <p className="text-gray-500 uppercase text-xs">Payment</p>
+              <p className="font-semibold">{slotData?.paymentMode}</p>
+            </div>
+          </div>
+
+          {/* Minimal Table */}
+          <div className="mt-4">
+            <div className="grid grid-cols-4 text-xs py-2 border-b-2 border-black font-semibold">
+              <span className="col-span-2">ITEM</span>
+              <span className="text-center">QTY</span>
+              <span className="text-right">AMOUNT</span>
+            </div>
+            <div className="grid grid-cols-4 text-xs py-3 border-b border-gray-300">
+              <span className="col-span-2">{items}</span>
+              <span className="text-center">1</span>
+              <span className="text-right">₹{subtotal.toFixed(2)}</span>
+            </div>
+          </div>
+
+          {/* Minimal Total */}
+          <div className="space-y-1 text-sm ml-auto w-1/2">
+            <div className="flex justify-between text-xs"><span>Subtotal</span><span>₹{subtotal.toFixed(2)}</span></div>
+            {taxRate > 0 && <div className="flex justify-between text-xs"><span>Tax ({taxRate}%)</span><span>₹{taxAmount.toFixed(2)}</span></div>}
+            <div className="flex justify-between font-bold text-lg border-t-2 border-black pt-2">
+              <span>TOTAL</span>
+              <span>₹{total.toFixed(2)}</span>
+            </div>
+          </div>
+
+          {/* Minimal Footer */}
+          <div className="mt-8 text-xs text-gray-600 border-t border-gray-300 pt-3">
+            <p className="text-right">{activeBusiness?.name || 'BUSINESS NAME'} • GSTIN: {activeBusiness?.gst}</p>
+          </div>
+        </div>
+      );
+    }
+
+    // Format 4: Traditional Ledger Style
+    if (currentFormat === 4) {
+      return (
+        <div className="space-y-2 bg-white p-4 border-4 border-black">
+          {/* Ledger Header */}
+          <div className="text-center border-b-4 border-black pb-3 mb-3">
+            <div className="text-3xl font-bold uppercase tracking-widest">{activeBusiness?.name || 'BUSINESS NAME'}</div>
+            <div className="text-xs mt-2">{activeBusiness?.address}</div>
+            <div className="text-xs">Phone: {activeBusiness?.phone} | GSTIN: {activeBusiness?.gst}</div>
+            <div className="inline-block mt-2 px-6 py-1 bg-black text-white font-bold">TAX INVOICE</div>
+          </div>
+
+          {/* Ledger Details */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="border-2 border-black p-2">
+              <table className="w-full text-xs">
+                <tbody>
+                  <tr><td className="font-semibold w-1/2">Invoice No:</td><td>{invoiceNumber}</td></tr>
+                  <tr><td className="font-semibold">Date:</td><td>{new Date().toLocaleDateString('en-GB')}</td></tr>
+                  <tr><td className="font-semibold">Time:</td><td>{new Date().toLocaleTimeString('en-GB')}</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div className="border-2 border-black p-2">
+              <table className="w-full text-xs">
+                <tbody>
+                  <tr><td className="font-semibold w-1/2">Customer:</td><td>{customerName}</td></tr>
+                  <tr><td className="font-semibold">Payment:</td><td>{slotData?.paymentMode}</td></tr>
+                  <tr><td className="font-semibold">State:</td><td>Maharashtra (27)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Ledger Table */}
+          <table className="w-full border-2 border-black text-xs mt-3">
+            <thead className="bg-black text-white">
+              <tr>
+                <th className="border border-white p-2 text-left">PARTICULARS</th>
+                <th className="border border-white p-2">HSN</th>
+                <th className="border border-white p-2">QTY</th>
+                <th className="border border-white p-2 text-right">RATE</th>
+                <th className="border border-white p-2 text-right">AMOUNT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border-2 border-black p-2">{items}</td>
+                <td className="border-2 border-black p-2 text-center">9954</td>
+                <td className="border-2 border-black p-2 text-center">1</td>
+                <td className="border-2 border-black p-2 text-right">₹{subtotal.toFixed(2)}</td>
+                <td className="border-2 border-black p-2 text-right font-bold">₹{subtotal.toFixed(2)}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          {/* Ledger Totals */}
+          <div className="border-2 border-black p-3">
+            <table className="w-full text-xs">
+              <tbody>
+                <tr className="border-b border-black">
+                  <td className="py-1">Taxable Amount</td>
+                  <td className="text-right py-1">₹{subtotal.toFixed(2)}</td>
+                </tr>
+                {taxType === 'CGST+SGST' && taxRate > 0 ? (
+                  <>
+                    <tr><td className="py-1">CGST @ {taxRate/2}%</td><td className="text-right py-1">₹{(taxAmount/2).toFixed(2)}</td></tr>
+                    <tr><td className="py-1">SGST @ {taxRate/2}%</td><td className="text-right py-1">₹{(taxAmount/2).toFixed(2)}</td></tr>
+                  </>
+                ) : taxRate > 0 && (
+                  <tr><td className="py-1">IGST @ {taxRate}%</td><td className="text-right py-1">₹{taxAmount.toFixed(2)}</td></tr>
+                )}
+                <tr className="border-t-2 border-black font-bold">
+                  <td className="py-2">GRAND TOTAL</td>
+                  <td className="text-right text-lg py-2">₹{total.toFixed(2)}</td>
+                </tr>
+              </tbody>
+            </table>
+            <p className="text-xs mt-2 italic">Amount in Words: Rupees {Math.floor(total)} Only</p>
+          </div>
+
+          {/* Ledger Footer */}
+          <div className="grid grid-cols-2 gap-3 mt-3 text-xs">
+            <div className="border-2 border-black p-2">
+              <p className="font-bold mb-1">TERMS & CONDITIONS:</p>
+              <p className="text-xs">{termsText.split('\n')[0]}</p>
+            </div>
+            <div className="border-2 border-black p-2 text-center">
+              <p className="mb-8">For {activeBusiness?.name || 'BUSINESS NAME'}</p>
+              <p className="border-t-2 border-black pt-1 inline-block px-4">Authorized Signatory</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return null;
   };
   
