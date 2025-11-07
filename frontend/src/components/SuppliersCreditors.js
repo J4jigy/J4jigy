@@ -61,10 +61,6 @@ export default function SuppliersCreditors() {
             <Button variant="ghost" size="sm" className="text-green-400">
               <Download className="w-4 h-4" />
             </Button>
-            <Button size="sm" onClick={() => setShowAddDialog(true)} className="bg-indigo-600 hover:bg-indigo-700">
-              <Plus className="w-4 h-4 mr-1" />
-              Add
-            </Button>
           </div>
         </div>
       </div>
