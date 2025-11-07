@@ -151,6 +151,9 @@ const CashInEntry = ({ onBack }) => {
   const [touchStart, setTouchStart] = useState(0);
   const [touchEnd, setTouchEnd] = useState(0);
   
+  // Generate static invoice number once
+  const [invoiceNumber] = useState(() => `INV-${String(Date.now()).slice(-6)}`);
+  
   // Save Terms & Conditions
   const saveTerms = () => {
     setTermsText(tempTermsText);
