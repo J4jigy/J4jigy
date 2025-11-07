@@ -1398,42 +1398,44 @@ const CashInEntry = ({ onBack }) => {
                 </div>
               </div>
 
-                {/* Invoice Details - Two Columns */}
-                <div className="grid grid-cols-2 gap-3 border border-black bg-white">
-                  <div className="p-3 border-r border-black">
-                    <div className="text-xs space-y-1">
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">Invoice No:</span>
-                        <span className="text-black font-semibold">INV-{String(Date.now()).slice(-6)}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">Date:</span>
-                        <span className="text-black">{new Date().toLocaleDateString('en-GB')}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">Time:</span>
-                        <span className="text-black">{new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
-                      </div>
+              {/* Invoice Details - Two Columns */}
+              <div className="grid grid-cols-2 gap-3 border border-slate-600">
+                {/* Left Column - Invoice Details */}
+                <div className="p-3 border-r border-slate-600">
+                  <div className="text-xs space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Invoice No:</span>
+                      <span className="text-white font-semibold">INV-{String(Date.now()).slice(-6)}</span>
                     </div>
-                  </div>
-                  
-                  <div className="p-3">
-                    <div className="text-xs space-y-1">
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">Customer:</span>
-                        <span className="text-black font-semibold">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">Payment Mode:</span>
-                        <span className="text-black">{slots[selectedSlotForBill]?.paymentMode}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">State:</span>
-                        <span className="text-black">Maharashtra</span>
-                      </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Date:</span>
+                      <span className="text-white">{new Date().toLocaleDateString('en-GB')}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Time:</span>
+                      <span className="text-white">{new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
                     </div>
                   </div>
                 </div>
+                
+                {/* Right Column - Customer Details */}
+                <div className="p-3">
+                  <div className="text-xs space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Customer:</span>
+                      <span className="text-white font-semibold">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Payment Mode:</span>
+                      <span className="text-white">{slots[selectedSlotForBill]?.paymentMode}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">State:</span>
+                      <span className="text-white">Maharashtra</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
                 {/* Items Table - GST Format */}
                 <div className="border border-black bg-white">
@@ -1602,42 +1604,44 @@ const CashInEntry = ({ onBack }) => {
                   </div>
                 </div>
 
-                {/* Invoice Details - Two Columns */}
-                <div className="grid grid-cols-2 gap-3 border border-black bg-white">
-                  <div className="p-3 border-r border-black">
-                    <div className="text-xs space-y-1">
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">Invoice No:</span>
-                        <span className="text-black font-semibold">INV-{String(Date.now()).slice(-6)}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">Date:</span>
-                        <span className="text-black">{new Date().toLocaleDateString('en-GB')}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">Time:</span>
-                        <span className="text-black">{new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
-                      </div>
+              {/* Invoice Details - Two Columns */}
+              <div className="grid grid-cols-2 gap-3 border border-slate-600">
+                {/* Left Column - Invoice Details */}
+                <div className="p-3 border-r border-slate-600">
+                  <div className="text-xs space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Invoice No:</span>
+                      <span className="text-white font-semibold">INV-{String(Date.now()).slice(-6)}</span>
                     </div>
-                  </div>
-                  
-                  <div className="p-3">
-                    <div className="text-xs space-y-1">
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">Customer:</span>
-                        <span className="text-black font-semibold">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">Payment Mode:</span>
-                        <span className="text-black">{slots[selectedSlotForBill]?.paymentMode}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">State:</span>
-                        <span className="text-black">Maharashtra</span>
-                      </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Date:</span>
+                      <span className="text-white">{new Date().toLocaleDateString('en-GB')}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Time:</span>
+                      <span className="text-white">{new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
                     </div>
                   </div>
                 </div>
+                
+                {/* Right Column - Customer Details */}
+                <div className="p-3">
+                  <div className="text-xs space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Customer:</span>
+                      <span className="text-white font-semibold">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">Payment Mode:</span>
+                      <span className="text-white">{slots[selectedSlotForBill]?.paymentMode}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400">State:</span>
+                      <span className="text-white">Maharashtra</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
                 {/* Items Table - GST Format */}
                 <div className="border border-black bg-white">
