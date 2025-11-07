@@ -1914,6 +1914,20 @@ const CashInEntry = ({ onBack }) => {
                 </div>
               </div>
               {/* End Merchant Copy */}
+              </div>
+              {/* End Swipeable Container */}
+
+              {/* Format Description */}
+              <div className="mt-4 p-3 bg-slate-700 rounded text-center">
+                <p className="text-white text-xs font-semibold mb-1">
+                  {currentFormat === 0 && 'Format 1: Classic GST Invoice'}
+                  {currentFormat === 1 && 'Format 2: Elegant Serif Design'}
+                  {currentFormat === 2 && 'Format 3: Modern Dashed Style'}
+                  {currentFormat === 3 && 'Format 4: Professional Border'}
+                  {currentFormat === 4 && 'Format 5: Premium Rounded Design'}
+                </p>
+                <p className="text-slate-400 text-xs">Swipe left/right to change format</p>
+              </div>
 
               {/* Action Buttons */}
               <div className="flex gap-3 pt-2">
