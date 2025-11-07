@@ -1378,10 +1378,17 @@ const CashInEntry = ({ onBack }) => {
           </DialogHeader>
           
           {selectedSlotForBill !== null && (
-            <div className="space-y-3">
-              {/* GST Invoice Header */}
-              <div className="text-center border-2 border-black p-3 bg-white">
-                <div className="text-2xl font-bold text-black mb-1">{activeBusiness?.name || 'BUSINESS NAME'}</div>
+            <div className="space-y-6">
+              {/* Customer Copy */}
+              <div className="space-y-3">
+                {/* Copy Label */}
+                <div className="text-center bg-blue-100 border-2 border-blue-500 py-2">
+                  <span className="text-sm font-bold text-blue-800">CUSTOMER COPY</span>
+                </div>
+                
+                {/* GST Invoice Header */}
+                <div className="text-center border-2 border-black p-3 bg-white">
+                  <div className="text-2xl font-bold text-black mb-1">{activeBusiness?.name || 'BUSINESS NAME'}</div>
                 {activeBusiness?.address && (
                   <div className="text-sm text-black">{activeBusiness.address}</div>
                 )}
