@@ -131,14 +131,6 @@ const TransportationExpense = () => {
               <p className="text-xs text-slate-400">Track vehicle expenses</p>
             </div>
           </div>
-          <Button
-            onClick={() => setShowAddDialog(true)}
-            className="bg-blue-600 hover:bg-blue-700"
-            size="sm"
-          >
-            <Plus className="w-4 h-4 mr-1" />
-            Add
-          </Button>
         </div>
       </div>
 
