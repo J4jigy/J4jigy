@@ -72,23 +72,17 @@ backend:
           comment: "Invoice restoration is purely a frontend styling task - no backend changes required"
 
 frontend:
-  - task: "Barcode Scanning in CashInEntry"
+  - task: "Restore Invoice Preview to Original Dark Theme"
     implemented: true
-    working: true
+    working: "NA"
     file: "CashInEntry.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
         - working: "NA"
           agent: "main"
-          comment: "CashInEntry.js already has complete barcode scanning implementation: 1) State variables: scannedBarcode, showBarcodeModal, newProductBarcode. 2) handleBarcodeScan function that searches products by barcode, adds to cart if found, or opens Add Product modal with barcode pre-filled if not found. 3) Barcode Scanner Modal with input field for manual/scanner entry. 4) Add Product Modal includes barcode field that gets pre-filled. 5) saveNewProduct function saves product with barcode. Implementation complete - needs testing to verify functionality."
-        - working: true
-          agent: "testing"
-          comment: "✅ CASHINENTRY BARCODE SCANNING TESTING COMPLETED SUCCESSFULLY: Conducted comprehensive testing of barcode scanning functionality as requested in the review. VERIFIED ALL CRITICAL REQUIREMENTS: ✅ SCAN BARCODE BUTTON: Button functional and opens barcode scanner modal with title 'Scan Barcode', ✅ MANUAL INPUT FIELD: Barcode input field working correctly, accepts manual entry and Enter key functionality, ✅ UNRECOGNIZED BARCODE FLOW: Entering barcode 'TEST001' → Click 'Search Product' → Add Product modal opens with barcode pre-filled in barcode field, product details filled (Test Product 1, ₹100) → 'Save Product & Add to Cart' button working, ✅ RECOGNIZED BARCODE FLOW: Same barcode 'TEST001' searched again → product found and added to cart directly (no modal), ✅ BARCODE FIELD VISIBILITY: Barcode field shows in Add Product modal with proper labeling and visual confirmation, ✅ ENTER KEY SUPPORT: Enter key works in barcode scanner input field, ✅ CANCEL FUNCTIONALITY: Cancel button closes scanner modal properly. TECHNICAL FIXES APPLIED: Fixed missing onClick handler for Scan Barcode button, fixed incrementItem function calls to use incQty, corrected button text to 'Save Product & Add to Cart'. FINAL RESULT: CashInEntry barcode scanning is FULLY WORKING and meets all specified requirements from the review request."
-        - working: true
-          agent: "testing"
-          comment: "🎯 CAMERA-BASED BARCODE SCANNING TESTING COMPLETED SUCCESSFULLY: Conducted comprehensive testing of the NEW camera-based barcode scanning functionality using html5-qrcode library as requested in the review. VERIFIED ALL CRITICAL REQUIREMENTS: ✅ CASHINENTRY CAMERA SCANNING: Login with mobile 1234567890 successful, navigated to Cash In Entry page, Scan Barcode button visible and functional, BarcodeScanner component opens with title 'Scan Product Barcode', camera view element (#barcode-reader) structure present, Use Camera and Cancel buttons visible and functional, ✅ MANUAL INPUT FALLBACK: Manual input toggle working correctly, barcode input field accepts manual entry, entered test barcode 'PROD123' successfully, Submit Barcode button functional, Add Product modal opens with barcode correctly pre-filled, visual confirmation shows '✓ Barcode: PROD123', ✅ CAMERA PERMISSIONS HANDLING: BarcodeScanner component properly handles camera unavailable scenarios, fallback to manual input working seamlessly, error handling implemented for camera access issues, ✅ COMPONENT VERIFICATION: BarcodeScanner.js component exists and properly imported, html5-qrcode library installed (version 2.3.8), camera scanner has proper error handling, toggle between camera/manual input works both ways, Cancel button closes scanner properly, ✅ UI/UX VERIFICATION: Scanner modal has proper dark theme styling, camera frame properly sized and positioned, instructions clear and user-friendly, toggle buttons work smoothly, modal closes on successful scan. TECHNICAL VERIFICATION: Real-time camera-based barcode detection implemented using html5-qrcode, supports multiple barcode formats (CODE_128, CODE_39, EAN_13, EAN_8, UPC_A, UPC_E), proper camera configuration with fps: 10 and qrbox sizing, fallback mechanism to manual input when camera unavailable. FINAL RESULT: CashInEntry camera-based barcode scanning is FULLY WORKING with actual camera functionality and meets all NEW requirements specified in the review request."
+          comment: "INVOICE RESTORATION COMPLETED: Restored CashInEntry.js invoice preview to original dark-themed format. CHANGES MADE: 1) Added 'CUSTOMER COPY' header with blue-themed styling (bg-blue-600/20, border-blue-500, text-blue-400) for visual distinction. 2) Restored Merchant Copy header to dark theme - changed from text-black to text-white, text-slate-300, and text-cyan-400 for 'TAX INVOICE'. 3) Updated Merchant Copy header border from border-black to border-slate-600. 4) Changed 'MERCHANT COPY' header from bg-green-100/text-green-800 to bg-green-600/20/text-green-400 for consistency with dark theme. 5) Both Customer and Merchant copies now have consistent dark theme styling throughout. RESULT: Invoice preview now displays with original dark theme appearance suitable for screen viewing, with both copies styled consistently. Ready for testing."
 
   - task: "Barcode Scanning in CashOutEntry"
     implemented: true
