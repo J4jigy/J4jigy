@@ -198,9 +198,9 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
         <div className="flex-1 flex flex-col p-4 space-y-4 overflow-auto">
           {!showManualInput ? (
             <>
-              {/* Camera Scanner - Centered with ZXing */}
+              {/* Camera Scanner - Centered with ZBar WebAssembly */}
               <div className="flex-1 flex items-center justify-center">
-                <div className="relative bg-black rounded-lg overflow-hidden border-2 border-blue-500 w-full max-w-full">
+                <div className="relative bg-black rounded-lg overflow-hidden border-2 border-green-500 w-full max-w-full">
                   <video
                     ref={videoRef}
                     className="w-full h-full object-cover"
@@ -211,17 +211,17 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
                   {!isScanning && !error && (
                     <div className="absolute inset-0 flex items-center justify-center text-white text-center p-8 z-10 bg-black/50">
                       <div>
-                        <Camera className="w-16 h-16 mx-auto mb-4 animate-pulse text-blue-400" />
-                        <p className="text-lg">Initializing camera...</p>
+                        <Camera className="w-16 h-16 mx-auto mb-4 animate-pulse text-green-400" />
+                        <p className="text-lg">Initializing ZBar scanner...</p>
                       </div>
                     </div>
                   )}
                   
                   {/* Scanning Indicator */}
                   {isScanning && (
-                    <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-2 shadow-lg z-20">
+                    <div className="absolute top-4 right-4 bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2 shadow-lg z-20">
                       <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                      60 FPS SCANNING
+                      ZBAR 60FPS
                     </div>
                   )}
                 </div>
@@ -235,12 +235,12 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
 
               {/* Instructions */}
               {isScanning && !error && (
-                <div className="bg-blue-500/20 border-2 border-blue-500 rounded-lg p-4 flex-shrink-0">
-                  <p className="text-blue-300 text-base text-center font-semibold">
-                    ⚡ Ultra-fast 60 FPS scanning - Position barcode in view
+                <div className="bg-green-500/20 border-2 border-green-500 rounded-lg p-4 flex-shrink-0">
+                  <p className="text-green-300 text-base text-center font-semibold">
+                    ⚡⚡ Professional ZBar WebAssembly Scanner
                   </p>
-                  <p className="text-blue-400 text-sm text-center mt-2">
-                    ~11ms detection time • Instant continuous scanning
+                  <p className="text-green-400 text-sm text-center mt-2">
+                    60 FPS • ~11ms detection • Instant continuous scanning
                   </p>
                 </div>
               )}
