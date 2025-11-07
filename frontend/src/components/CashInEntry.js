@@ -1437,36 +1437,38 @@ const CashInEntry = ({ onBack }) => {
                 </div>
               </div>
 
-                {/* Items Table - GST Format */}
-                <div className="border border-black bg-white">
-                  <div className="bg-gray-200 px-2 py-2 grid grid-cols-12 gap-1 text-xs font-semibold text-black border-b-2 border-black">
-                    <span className="col-span-1">S.No</span>
-                    <span className="col-span-4">Item Description</span>
-                    <span className="col-span-2 text-center">HSN</span>
-                    <span className="col-span-1 text-center">Qty</span>
-                    <span className="col-span-2 text-right">Rate</span>
-                    <span className="col-span-2 text-right">Amount</span>
-                  </div>
-                  
-                  {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
-                    <div className="px-2 py-2 grid grid-cols-12 gap-1 text-xs">
-                      <span className="col-span-1 text-black">1</span>
-                      <span className="col-span-4 text-black">
-                        {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
-                          ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
-                          : 'Service/Product'}
-                      </span>
-                      <span className="col-span-2 text-center text-black">9954</span>
-                      <span className="col-span-1 text-center text-black">1</span>
-                      <span className="col-span-2 text-right text-black">₹{slots[selectedSlotForBill]?.amount}</span>
-                      <span className="col-span-2 text-right text-black font-semibold">₹{slots[selectedSlotForBill]?.amount}</span>
-                    </div>
-                  ) : (
-                    <div className="px-3 py-6 text-center text-gray-600 text-xs">
-                      No items added to this invoice
-                    </div>
-                  )}
+              {/* Items Table - GST Format */}
+              <div className="border border-slate-600">
+                {/* Table Header */}
+                <div className="bg-slate-700 px-2 py-2 grid grid-cols-12 gap-1 text-xs font-semibold text-white border-b border-slate-600">
+                  <span className="col-span-1">S.No</span>
+                  <span className="col-span-4">Item Description</span>
+                  <span className="col-span-2 text-center">HSN</span>
+                  <span className="col-span-1 text-center">Qty</span>
+                  <span className="col-span-2 text-right">Rate</span>
+                  <span className="col-span-2 text-right">Amount</span>
                 </div>
+                
+                {/* Table Body */}
+                {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
+                  <div className="px-2 py-2 grid grid-cols-12 gap-1 text-xs">
+                    <span className="col-span-1 text-white">1</span>
+                    <span className="col-span-4 text-white">
+                      {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
+                        ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
+                        : 'Service/Product'}
+                    </span>
+                    <span className="col-span-2 text-center text-slate-300">9954</span>
+                    <span className="col-span-1 text-center text-slate-300">1</span>
+                    <span className="col-span-2 text-right text-slate-300">₹{slots[selectedSlotForBill]?.amount}</span>
+                    <span className="col-span-2 text-right text-white font-semibold">₹{slots[selectedSlotForBill]?.amount}</span>
+                  </div>
+                ) : (
+                  <div className="px-3 py-6 text-center text-slate-400 text-xs">
+                    No items added to this invoice
+                  </div>
+                )}
+              </div>
 
                 {/* Total Section - GST Format */}
                 <div className="border border-black bg-white">
@@ -1643,36 +1645,38 @@ const CashInEntry = ({ onBack }) => {
                 </div>
               </div>
 
-                {/* Items Table - GST Format */}
-                <div className="border border-black bg-white">
-                  <div className="bg-gray-200 px-2 py-2 grid grid-cols-12 gap-1 text-xs font-semibold text-black border-b-2 border-black">
-                    <span className="col-span-1">S.No</span>
-                    <span className="col-span-4">Item Description</span>
-                    <span className="col-span-2 text-center">HSN</span>
-                    <span className="col-span-1 text-center">Qty</span>
-                    <span className="col-span-2 text-right">Rate</span>
-                    <span className="col-span-2 text-right">Amount</span>
-                  </div>
-                  
-                  {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
-                    <div className="px-2 py-2 grid grid-cols-12 gap-1 text-xs">
-                      <span className="col-span-1 text-black">1</span>
-                      <span className="col-span-4 text-black">
-                        {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
-                          ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
-                          : 'Service/Product'}
-                      </span>
-                      <span className="col-span-2 text-center text-black">9954</span>
-                      <span className="col-span-1 text-center text-black">1</span>
-                      <span className="col-span-2 text-right text-black">₹{slots[selectedSlotForBill]?.amount}</span>
-                      <span className="col-span-2 text-right text-black font-semibold">₹{slots[selectedSlotForBill]?.amount}</span>
-                    </div>
-                  ) : (
-                    <div className="px-3 py-6 text-center text-gray-600 text-xs">
-                      No items added to this invoice
-                    </div>
-                  )}
+              {/* Items Table - GST Format */}
+              <div className="border border-slate-600">
+                {/* Table Header */}
+                <div className="bg-slate-700 px-2 py-2 grid grid-cols-12 gap-1 text-xs font-semibold text-white border-b border-slate-600">
+                  <span className="col-span-1">S.No</span>
+                  <span className="col-span-4">Item Description</span>
+                  <span className="col-span-2 text-center">HSN</span>
+                  <span className="col-span-1 text-center">Qty</span>
+                  <span className="col-span-2 text-right">Rate</span>
+                  <span className="col-span-2 text-right">Amount</span>
                 </div>
+                
+                {/* Table Body */}
+                {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
+                  <div className="px-2 py-2 grid grid-cols-12 gap-1 text-xs">
+                    <span className="col-span-1 text-white">1</span>
+                    <span className="col-span-4 text-white">
+                      {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
+                        ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
+                        : 'Service/Product'}
+                    </span>
+                    <span className="col-span-2 text-center text-slate-300">9954</span>
+                    <span className="col-span-1 text-center text-slate-300">1</span>
+                    <span className="col-span-2 text-right text-slate-300">₹{slots[selectedSlotForBill]?.amount}</span>
+                    <span className="col-span-2 text-right text-white font-semibold">₹{slots[selectedSlotForBill]?.amount}</span>
+                  </div>
+                ) : (
+                  <div className="px-3 py-6 text-center text-slate-400 text-xs">
+                    No items added to this invoice
+                  </div>
+                )}
+              </div>
 
                 {/* Total Section - GST Format */}
                 <div className="border border-black bg-white">
