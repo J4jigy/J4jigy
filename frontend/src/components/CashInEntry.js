@@ -163,6 +163,34 @@ const CashInEntry = ({ onBack }) => {
     setTempTermsText(termsText);
     setIsEditingTerms(false);
   };
+
+  // Swipe handlers for invoice formats
+  const handleTouchStart = (e) => {
+    setTouchStart(e.touches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+    
+    if (isLeftSwipe && currentFormat < 4) {
+      setCurrentFormat(currentFormat + 1);
+    }
+    
+    if (isRightSwipe && currentFormat > 0) {
+      setCurrentFormat(currentFormat - 1);
+    }
+    
+    setTouchStart(0);
+    setTouchEnd(0);
+  };
   
   // Handle barcode scan from camera
   const handleBarcodeScan = (barcode) => {
