@@ -1471,9 +1471,9 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
                 {/* Total Section - GST Format */}
-                <div className="border border-black bg-white">
-                  <div className="bg-gray-100 p-2 space-y-1">
-                    <div className="flex justify-between text-xs text-black">
+                <div className="border border-slate-600">
+                  <div className="bg-slate-800 p-2 space-y-1">
+                    <div className="flex justify-between text-xs text-slate-300">
                       <span className="font-semibold">Taxable Amount:</span>
                       <span className="font-semibold">₹{parseFloat(slots[selectedSlotForBill]?.amount || 0).toFixed(2)}</span>
                     </div>
@@ -1486,11 +1486,11 @@ const CashInEntry = ({ onBack }) => {
                         const halfTax = taxAmount / 2;
                         return (
                           <>
-                            <div className="flex justify-between text-xs text-black">
+                            <div className="flex justify-between text-xs text-slate-300">
                               <span>CGST @ {taxRate / 2}%:</span>
                               <span>₹{halfTax.toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between text-xs text-black">
+                            <div className="flex justify-between text-xs text-slate-300">
                               <span>SGST @ {taxRate / 2}%:</span>
                               <span>₹{halfTax.toFixed(2)}</span>
                             </div>
@@ -1498,7 +1498,7 @@ const CashInEntry = ({ onBack }) => {
                         );
                       } else if (taxRate > 0) {
                         return (
-                          <div className="flex justify-between text-xs text-black">
+                          <div className="flex justify-between text-xs text-slate-300">
                             <span>IGST @ {taxRate}%:</span>
                             <span>₹{taxAmount.toFixed(2)}</span>
                           </div>
@@ -1508,17 +1508,17 @@ const CashInEntry = ({ onBack }) => {
                     })()}
                   </div>
                   
-                  <div className="bg-gray-300 border-t-2 border-black p-2">
-                    <div className="flex justify-between text-sm font-bold text-black">
+                  <div className="bg-cyan-900/30 border-t-2 border-black p-2">
+                    <div className="flex justify-between text-sm font-bold text-white">
                       <span>TOTAL AMOUNT:</span>
-                      <span className="text-lg">₹{(() => {
+                      <span className="text-lg text-white">₹{(() => {
                         const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                         const taxRate = parseFloat(taxSlab);
                         const taxAmount = (subtotal * taxRate) / 100;
                         return (subtotal + taxAmount).toFixed(2);
                       })()}</span>
                     </div>
-                    <div className="text-xs text-black mt-1">
+                    <div className="text-xs text-slate-300 mt-1">
                       <span className="font-semibold">Amount in Words:</span> {(() => {
                         const total = parseFloat(slots[selectedSlotForBill]?.amount || 0) * (1 + parseFloat(taxSlab) / 100);
                         return `Rupees ${Math.floor(total)} Only`;
@@ -1528,9 +1528,9 @@ const CashInEntry = ({ onBack }) => {
                 </div>
 
                 {/* Terms & Conditions Footer */}
-                <div className="border border-black p-2 bg-white">
+                <div className="border border-slate-600 p-2 bg-slate-800/50">
                   <div className="flex justify-between items-center mb-2">
-                    <div className="font-semibold text-black text-xs">Terms & Conditions:</div>
+                    <div className="font-semibold text-white text-xs">Terms & Conditions:</div>
                     {!isEditingTerms ? (
                       <Button
                         onClick={() => {
@@ -1555,12 +1555,12 @@ const CashInEntry = ({ onBack }) => {
                     )}
                   </div>
                   
-                  <div className="text-xs text-black">
+                  <div className="text-xs text-slate-300">
                     {isEditingTerms ? (
                       <textarea
                         value={tempTermsText}
                         onChange={(e) => setTempTermsText(e.target.value)}
-                        className="w-full bg-white border border-gray-400 text-black text-xs p-2 rounded min-h-[80px] focus:outline-none focus:border-blue-500"
+                        className="w-full bg-slate-700 border border-slate-600 text-white text-xs p-2 rounded min-h-[80px] focus:outline-none focus:border-blue-500"
                         placeholder="Enter terms and conditions..."
                       />
                     ) : (
@@ -1571,8 +1571,8 @@ const CashInEntry = ({ onBack }) => {
                   </div>
                   
                   <div className="text-right mt-3">
-                    <div className="text-xs text-black">For <span className="font-semibold text-black">{activeBusiness?.name || 'BUSINESS NAME'}</span></div>
-                    <div className="mt-8 text-xs text-black border-t border-black pt-1 inline-block">Authorized Signatory</div>
+                    <div className="text-xs text-slate-300">For <span className="font-semibold text-black">{activeBusiness?.name || 'BUSINESS NAME'}</span></div>
+                    <div className="mt-8 text-xs text-slate-300 border-t border-slate-600 pt-1 inline-block">Authorized Signatory</div>
                   </div>
                 </div>
               </div>
@@ -1679,9 +1679,9 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
                 {/* Total Section - GST Format */}
-                <div className="border border-black bg-white">
-                  <div className="bg-gray-100 p-2 space-y-1">
-                    <div className="flex justify-between text-xs text-black">
+                <div className="border border-slate-600">
+                  <div className="bg-slate-800 p-2 space-y-1">
+                    <div className="flex justify-between text-xs text-slate-300">
                       <span className="font-semibold">Taxable Amount:</span>
                       <span className="font-semibold">₹{parseFloat(slots[selectedSlotForBill]?.amount || 0).toFixed(2)}</span>
                     </div>
@@ -1694,11 +1694,11 @@ const CashInEntry = ({ onBack }) => {
                         const halfTax = taxAmount / 2;
                         return (
                           <>
-                            <div className="flex justify-between text-xs text-black">
+                            <div className="flex justify-between text-xs text-slate-300">
                               <span>CGST @ {taxRate / 2}%:</span>
                               <span>₹{halfTax.toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between text-xs text-black">
+                            <div className="flex justify-between text-xs text-slate-300">
                               <span>SGST @ {taxRate / 2}%:</span>
                               <span>₹{halfTax.toFixed(2)}</span>
                             </div>
@@ -1706,7 +1706,7 @@ const CashInEntry = ({ onBack }) => {
                         );
                       } else if (taxRate > 0) {
                         return (
-                          <div className="flex justify-between text-xs text-black">
+                          <div className="flex justify-between text-xs text-slate-300">
                             <span>IGST @ {taxRate}%:</span>
                             <span>₹{taxAmount.toFixed(2)}</span>
                           </div>
@@ -1716,17 +1716,17 @@ const CashInEntry = ({ onBack }) => {
                     })()}
                   </div>
                   
-                  <div className="bg-gray-300 border-t-2 border-black p-2">
-                    <div className="flex justify-between text-sm font-bold text-black">
+                  <div className="bg-cyan-900/30 border-t-2 border-black p-2">
+                    <div className="flex justify-between text-sm font-bold text-white">
                       <span>TOTAL AMOUNT:</span>
-                      <span className="text-lg">₹{(() => {
+                      <span className="text-lg text-white">₹{(() => {
                         const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                         const taxRate = parseFloat(taxSlab);
                         const taxAmount = (subtotal * taxRate) / 100;
                         return (subtotal + taxAmount).toFixed(2);
                       })()}</span>
                     </div>
-                    <div className="text-xs text-black mt-1">
+                    <div className="text-xs text-slate-300 mt-1">
                       <span className="font-semibold">Amount in Words:</span> {(() => {
                         const total = parseFloat(slots[selectedSlotForBill]?.amount || 0) * (1 + parseFloat(taxSlab) / 100);
                         return `Rupees ${Math.floor(total)} Only`;
@@ -1736,15 +1736,15 @@ const CashInEntry = ({ onBack }) => {
                 </div>
 
                 {/* Terms & Conditions Footer */}
-                <div className="border border-black p-2 bg-white">
-                  <div className="font-semibold text-black text-xs mb-2">Terms & Conditions:</div>
-                  <div className="text-xs text-black whitespace-pre-line">
+                <div className="border border-slate-600 p-2 bg-slate-800/50">
+                  <div className="font-semibold text-white text-xs mb-2">Terms & Conditions:</div>
+                  <div className="text-xs text-slate-300 whitespace-pre-line">
                     {termsText}
                   </div>
                   
                   <div className="text-right mt-3">
-                    <div className="text-xs text-black">For <span className="font-semibold text-black">{activeBusiness?.name || 'BUSINESS NAME'}</span></div>
-                    <div className="mt-8 text-xs text-black border-t border-black pt-1 inline-block">Authorized Signatory</div>
+                    <div className="text-xs text-slate-300">For <span className="font-semibold text-black">{activeBusiness?.name || 'BUSINESS NAME'}</span></div>
+                    <div className="mt-8 text-xs text-slate-300 border-t border-slate-600 pt-1 inline-block">Authorized Signatory</div>
                   </div>
                 </div>
               </div>
