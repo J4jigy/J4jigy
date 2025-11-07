@@ -1582,6 +1582,7 @@ const CashInEntry = ({ onBack }) => {
                   </div>
                 </div>
               </div>
+              </div>
               {/* End Customer Copy */}
 
               {/* Page Break for Print */}
