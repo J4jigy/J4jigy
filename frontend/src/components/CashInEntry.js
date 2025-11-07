@@ -1503,10 +1503,10 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
               {/* Total Section - GST Format */}
-              <div className="border border-slate-600">
+              <div className="border border-black bg-white">
                 {/* Subtotal and Tax Breakdown */}
-                <div className="bg-slate-800 p-2 space-y-1">
-                  <div className="flex justify-between text-xs text-slate-300">
+                <div className="bg-gray-100 p-2 space-y-1">
+                  <div className="flex justify-between text-xs text-black">
                     <span className="font-semibold">Taxable Amount:</span>
                     <span className="font-semibold">₹{parseFloat(slots[selectedSlotForBill]?.amount || 0).toFixed(2)}</span>
                   </div>
@@ -1519,11 +1519,11 @@ const CashInEntry = ({ onBack }) => {
                       const halfTax = taxAmount / 2;
                       return (
                         <>
-                          <div className="flex justify-between text-xs text-slate-300">
+                          <div className="flex justify-between text-xs text-black">
                             <span>CGST @ {taxRate / 2}%:</span>
                             <span>₹{halfTax.toFixed(2)}</span>
                           </div>
-                          <div className="flex justify-between text-xs text-slate-300">
+                          <div className="flex justify-between text-xs text-black">
                             <span>SGST @ {taxRate / 2}%:</span>
                             <span>₹{halfTax.toFixed(2)}</span>
                           </div>
@@ -1531,7 +1531,7 @@ const CashInEntry = ({ onBack }) => {
                       );
                     } else if (taxRate > 0) {
                       return (
-                        <div className="flex justify-between text-xs text-slate-300">
+                        <div className="flex justify-between text-xs text-black">
                           <span>IGST @ {taxRate}%:</span>
                           <span>₹{taxAmount.toFixed(2)}</span>
                         </div>
@@ -1542,8 +1542,8 @@ const CashInEntry = ({ onBack }) => {
                 </div>
                 
                 {/* Grand Total */}
-                <div className="bg-cyan-900/30 border-t-2 border-cyan-600 p-2">
-                  <div className="flex justify-between text-sm font-bold text-white">
+                <div className="bg-gray-300 border-t-2 border-black p-2">
+                  <div className="flex justify-between text-sm font-bold text-black">
                     <span>TOTAL AMOUNT:</span>
                     <span className="text-lg">₹{(() => {
                       const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
