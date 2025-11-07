@@ -1601,12 +1601,12 @@ const CashInEntry = ({ onBack }) => {
                 </div>
                 
                 {/* Terms Content */}
-                <div className="text-xs text-slate-400">
+                <div className="text-xs text-black">
                   {isEditingTerms ? (
                     <textarea
                       value={tempTermsText}
                       onChange={(e) => setTempTermsText(e.target.value)}
-                      className="w-full bg-slate-700 border border-slate-600 text-white text-xs p-2 rounded min-h-[80px] focus:outline-none focus:border-cyan-500"
+                      className="w-full bg-white border border-gray-400 text-black text-xs p-2 rounded min-h-[80px] focus:outline-none focus:border-blue-500"
                       placeholder="Enter terms and conditions..."
                     />
                   ) : (
