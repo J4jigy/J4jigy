@@ -1,64 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Quagga from '@ericblade/quagga2';
+import { BrowserMultiFormatReader } from '@zxing/browser';
+import { BarcodeFormat } from '@zxing/library';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Camera, X, Keyboard, Scan } from 'lucide-react';
 
-// Add styles for Quagga canvas centering - Force absolute centering
-const quaggaStyles = `
-  #barcode-scanner-container {
-    position: relative !important;
-    width: 100% !important;
-    height: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    overflow: hidden !important;
-  }
-  #barcode-scanner-container video,
-  #barcode-scanner-container canvas {
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 100% !important;
-    max-height: 100% !important;
-    object-fit: cover !important;
-    display: block !important;
-  }
-  #barcode-scanner-container canvas.drawingBuffer {
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-  }
-`;
-
 const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => {
-  const scannerRef = useRef(null);
+  const videoRef = useRef(null);
+  const readerRef = useRef(null);
   const [isScanning, setIsScanning] = useState(false);
   const [manualInput, setManualInput] = useState('');
   const [showManualInput, setShowManualInput] = useState(false);
   const [error, setError] = useState('');
   const [lastScanned, setLastScanned] = useState('');
+  const scanningRef = useRef(false);
 
   useEffect(() => {
     if (isOpen && !showManualInput) {
-      // Ensure clean state before starting
-      stopScanning();
-      
-      // Start scanning with slight delay for cleanup
-      const timer = setTimeout(() => {
-        startScanning();
-      }, 50);
-      
-      return () => {
-        clearTimeout(timer);
-        stopScanning();
-      };
+      startScanning();
     }
 
     return () => {
@@ -66,95 +26,112 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
     };
   }, [isOpen, showManualInput]);
 
-  const startScanning = () => {
-    if (scannerRef.current && !isScanning) {
+  const startScanning = async () => {
+    if (!videoRef.current || scanningRef.current) return;
+
+    try {
       setIsScanning(true);
       setError('');
+      scanningRef.current = true;
 
-      // Add style tag for centering (check if already exists)
-      if (!document.getElementById('quagga-center-styles')) {
-        const styleTag = document.createElement('style');
-        styleTag.id = 'quagga-center-styles';
-        styleTag.innerHTML = quaggaStyles;
-        document.head.appendChild(styleTag);
+      // Initialize ZXing reader with optimized settings
+      const reader = new BrowserMultiFormatReader();
+      readerRef.current = reader;
+
+      // Configure for fastest scanning - only essential formats
+      const hints = new Map();
+      const formats = [
+        BarcodeFormat.CODE_128,
+        BarcodeFormat.EAN_13,
+        BarcodeFormat.EAN_8,
+        BarcodeFormat.UPC_A,
+        BarcodeFormat.UPC_E,
+      ];
+      hints.set(2, formats); // DecodeHintType.POSSIBLE_FORMATS = 2
+
+      // Get camera with optimal settings for speed
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: 'environment',
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+          frameRate: { ideal: 60, max: 60 }
+        }
+      });
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        videoRef.current.play();
       }
 
-      // Optimized config for fast initialization
-      const config = {
-        inputStream: {
-          type: 'LiveStream',
-          target: scannerRef.current,
-          constraints: {
-            width: 640,
-            height: 480,
-            facingMode: 'environment',
-          },
-          area: {
-            top: '25%',
-            right: '15%',
-            left: '15%',
-            bottom: '25%'
-          },
-          singleChannel: false
-        },
-        locator: {
-          patchSize: 'small',
-          halfSample: true,
-        },
-        numOfWorkers: 2,
-        frequency: 90,
-        decoder: {
-          readers: ['code_128_reader', 'ean_reader'],
-          multiple: false
-        },
-        locate: false,
+      console.log('✅ ZXing Camera ready - 60 FPS scanning started!');
+
+      // Ultra-fast continuous scanning loop
+      const scan = async () => {
+        if (!scanningRef.current || !videoRef.current) return;
+
+        try {
+          const result = await reader.decodeFromVideoElement(videoRef.current);
+          if (result && result.getText()) {
+            const barcode = result.getText();
+            if (barcode !== lastScanned) {
+              console.log('⚡ INSTANT SCAN:', barcode);
+              setLastScanned(barcode);
+              handleScanSuccess(barcode);
+            }
+          }
+        } catch (e) {
+          // Continue scanning on error (no barcode found)
+        }
+
+        // Request next frame immediately for 60 FPS
+        if (scanningRef.current) {
+          requestAnimationFrame(scan);
+        }
       };
 
-      Quagga.init(config, (err) => {
-        if (err) {
-          console.error('❌ Quagga initialization error:', err);
-          setError(`Camera error: ${err.message || 'Unable to access camera'}. Please allow camera permissions.`);
-          setIsScanning(false);
-          return;
-        }
-        console.log('✅ Camera ready!');
-        Quagga.start();
-      });
+      // Start scanning loop
+      scan();
 
-      Quagga.onDetected((result) => {
-        const code = result.codeResult.code;
-        if (!code || code === lastScanned) return;
-        
-        console.log('⚡ SCAN:', code);
-        setLastScanned(code);
-        handleScanSuccess(code);
-      });
+    } catch (err) {
+      console.error('❌ Camera error:', err);
+      setError(`Camera error: ${err.message}. Please allow camera permissions.`);
+      setIsScanning(false);
+      scanningRef.current = false;
     }
   };
 
   const stopScanning = () => {
-    if (isScanning) {
-      try {
-        Quagga.stop();
-        Quagga.offDetected();
-        Quagga.offProcessed();
-      } catch (e) {
-        console.log('Stop scanning error (safe to ignore):', e);
-      }
-      setIsScanning(false);
-      setLastScanned('');
+    scanningRef.current = false;
+    
+    if (videoRef.current && videoRef.current.srcObject) {
+      const stream = videoRef.current.srcObject;
+      const tracks = stream.getTracks();
+      tracks.forEach(track => track.stop());
+      videoRef.current.srcObject = null;
     }
+
+    if (readerRef.current) {
+      try {
+        readerRef.current.reset();
+      } catch (e) {
+        // Ignore
+      }
+    }
+
+    setIsScanning(false);
+    setLastScanned('');
   };
 
   const handleScanSuccess = (barcode) => {
     // Don't stop scanning - allow continuous scanning
     onScan(barcode);
     
-    // Ultra-fast reset (17ms) for maximum speed back-to-back scanning
+    // Ultra-fast reset (11ms) for 60 FPS back-to-back scanning
     setTimeout(() => {
       setLastScanned('');
       console.log('✅ Ready for next scan');
-    }, 17);
+    }, 11);
   };
 
   const handleManualSubmit = () => {
