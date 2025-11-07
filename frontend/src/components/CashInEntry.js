@@ -1895,7 +1895,75 @@ const CashInEntry = ({ onBack }) => {
                     <span className="text-sm font-bold text-blue-800">CUSTOMER COPY</span>
                   </div>
                   {renderInvoiceFormat('customer')}
-                {activeBusiness?.address && (
+                </div>
+                {/* End Customer Copy */}
+
+                {/* Page Break for Print */}
+                <div className="print:break-before-page border-t-4 border-dashed border-gray-400 my-6"></div>
+
+                {/* Merchant Copy */}
+                <div className="space-y-3">
+                  <div className="text-center bg-green-100 border-2 border-green-500 py-2">
+                    <span className="text-sm font-bold text-green-800">MERCHANT COPY</span>
+                  </div>
+                  {renderInvoiceFormat('merchant')}
+                </div>
+                {/* End Merchant Copy */}
+              </div>
+              {/* End Swipeable Container */}
+
+              {/* Format Description */}
+              <div className="mt-4 p-3 bg-slate-700 rounded text-center">
+                <p className="text-white text-xs font-semibold mb-1">
+                  {currentFormat === 0 && 'Format 1: Classic GST Invoice - Simple & Clean'}
+                  {currentFormat === 1 && 'Format 2: Compact Invoice - Space Saving'}
+                  {currentFormat === 2 && 'Format 3: Detailed Invoice - Full Information'}
+                  {currentFormat === 3 && 'Format 4: Modern Minimalist - Clean Lines'}
+                  {currentFormat === 4 && 'Format 5: Traditional Ledger Style'}
+                </p>
+                <p className="text-slate-400 text-xs">Swipe left/right to change format</p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-2 mt-4">
+                <Button
+                  className="flex-1 bg-green-600 hover:bg-green-700"
+                  onClick={async () => {
+                    try {
+                      // Print functionality
+                      window.print();
+                    } catch (error) {
+                      console.error('Print error:', error);
+                    }
+                  }}
+                >
+                  <Printer className="w-4 h-4 mr-2" />
+                  Print Invoice
+                </Button>
+                <Button
+                  className="flex-1 bg-blue-600 hover:bg-blue-700"
+                  onClick={() => setShowBillPreview(false)}
+                >
+                  Close
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Barcode Scanner with Camera */}
+      <BarcodeScanner
+        isOpen={showBarcodeModal}
+        onClose={() => setShowBarcodeModal(false)}
+        onScan={handleBarcodeScan}
+        title="Scan Product Barcode"
+      />
+    </div>
+  );
+};
+
+export default CashInEntry;
                   <div className="text-sm text-black">{activeBusiness.address}</div>
                 )}
                 <div className="flex justify-center gap-6 mt-2 text-sm text-black">
