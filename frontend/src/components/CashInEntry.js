@@ -1378,64 +1378,375 @@ const CashInEntry = ({ onBack }) => {
           </DialogHeader>
           
           {selectedSlotForBill !== null && (
-            <div>
-              {/* Format Selector and Indicators */}
-              <div className="flex items-center justify-between mb-4 bg-slate-700 p-3 rounded">
-                <span className="text-white text-sm font-semibold">Invoice Format {currentFormat + 1}/5</span>
-                <div className="flex gap-2">
-                  {[0, 1, 2, 3, 4].map((format) => (
-                    <button
-                      key={format}
-                      onClick={() => setCurrentFormat(format)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        currentFormat === format ? 'bg-green-400 w-6' : 'bg-slate-500'
-                      }`}
-                    />
-                  ))}
+            <div className="space-y-6">
+              {/* Customer Copy */}
+              <div className="space-y-3">
+                <div className="text-center bg-blue-100 border-2 border-blue-500 py-2">
+                  <span className="text-sm font-bold text-blue-800">CUSTOMER COPY</span>
                 </div>
-              </div>
-
-              {/* Swipeable Invoice Container */}
-              <div
-                className="space-y-6"
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-              >
-                {/* Customer Copy */}
-                <div className="space-y-3">
-                  <div className="text-center bg-blue-100 border-2 border-blue-500 py-2">
-                    <span className="text-sm font-bold text-blue-800">CUSTOMER COPY</span>
+                
+                {/* GST Invoice Header */}
+                <div className="text-center border-2 border-black p-3 bg-white">
+                  <div className="text-2xl font-bold text-black mb-1">{activeBusiness?.name || 'BUSINESS NAME'}</div>
+                  {activeBusiness?.address && (
+                    <div className="text-sm text-black">{activeBusiness.address}</div>
+                  )}
+                  <div className="flex justify-center gap-6 mt-2 text-sm text-black">
+                    {activeBusiness?.phone && (
+                      <span><span className="font-semibold">Phone:</span> {activeBusiness.phone}</span>
+                    )}
+                    {activeBusiness?.gst && (
+                      <span><span className="font-semibold">GSTIN:</span> {activeBusiness.gst}</span>
+                    )}
                   </div>
-                  {renderInvoiceFormat('customer')}
-                </div>
-                {/* End Customer Copy */}
-
-                {/* Page Break for Print */}
-                <div className="print:break-before-page border-t-4 border-dashed border-gray-400 my-6"></div>
-
-                {/* Merchant Copy */}
-                <div className="space-y-3">
-                  <div className="text-center bg-green-100 border-2 border-green-500 py-2">
-                    <span className="text-sm font-bold text-green-800">MERCHANT COPY</span>
+                  <div className="mt-2 text-lg font-bold text-black border-t-2 border-black pt-2">
+                    TAX INVOICE
                   </div>
-                  {renderInvoiceFormat('merchant')}
                 </div>
-                {/* End Merchant Copy */}
-              </div>
-              {/* End Swipeable Container */}
 
-              {/* Format Description */}
-              <div className="mt-4 p-3 bg-slate-700 rounded text-center">
-                <p className="text-white text-xs font-semibold mb-1">
-                  {currentFormat === 0 && 'Format 1: Classic GST Invoice - Simple & Clean'}
-                  {currentFormat === 1 && 'Format 2: Compact Invoice - Space Saving'}
-                  {currentFormat === 2 && 'Format 3: Detailed Invoice - Full Information'}
-                  {currentFormat === 3 && 'Format 4: Modern Minimalist - Clean Lines'}
-                  {currentFormat === 4 && 'Format 5: Traditional Ledger Style'}
-                </p>
-                <p className="text-slate-400 text-xs">Swipe left/right to change format</p>
+                {/* Invoice Details - Two Columns */}
+                <div className="grid grid-cols-2 gap-3 border border-black bg-white">
+                  <div className="p-3 border-r border-black">
+                    <div className="text-xs space-y-1">
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">Invoice No:</span>
+                        <span className="text-black font-semibold">INV-{String(Date.now()).slice(-6)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">Date:</span>
+                        <span className="text-black">{new Date().toLocaleDateString('en-GB')}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">Time:</span>
+                        <span className="text-black">{new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="p-3">
+                    <div className="text-xs space-y-1">
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">Customer:</span>
+                        <span className="text-black font-semibold">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">Payment Mode:</span>
+                        <span className="text-black">{slots[selectedSlotForBill]?.paymentMode}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">State:</span>
+                        <span className="text-black">Maharashtra</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Items Table - GST Format */}
+                <div className="border border-black bg-white">
+                  <div className="bg-gray-200 px-2 py-2 grid grid-cols-12 gap-1 text-xs font-semibold text-black border-b-2 border-black">
+                    <span className="col-span-1">S.No</span>
+                    <span className="col-span-4">Item Description</span>
+                    <span className="col-span-2 text-center">HSN</span>
+                    <span className="col-span-1 text-center">Qty</span>
+                    <span className="col-span-2 text-right">Rate</span>
+                    <span className="col-span-2 text-right">Amount</span>
+                  </div>
+                  
+                  {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
+                    <div className="px-2 py-2 grid grid-cols-12 gap-1 text-xs">
+                      <span className="col-span-1 text-black">1</span>
+                      <span className="col-span-4 text-black">
+                        {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
+                          ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
+                          : 'Service/Product'}
+                      </span>
+                      <span className="col-span-2 text-center text-black">9954</span>
+                      <span className="col-span-1 text-center text-black">1</span>
+                      <span className="col-span-2 text-right text-black">₹{slots[selectedSlotForBill]?.amount}</span>
+                      <span className="col-span-2 text-right text-black font-semibold">₹{slots[selectedSlotForBill]?.amount}</span>
+                    </div>
+                  ) : (
+                    <div className="px-3 py-6 text-center text-gray-600 text-xs">
+                      No items added to this invoice
+                    </div>
+                  )}
+                </div>
+
+                {/* Total Section - GST Format */}
+                <div className="border border-black bg-white">
+                  <div className="bg-gray-100 p-2 space-y-1">
+                    <div className="flex justify-between text-xs text-black">
+                      <span className="font-semibold">Taxable Amount:</span>
+                      <span className="font-semibold">₹{parseFloat(slots[selectedSlotForBill]?.amount || 0).toFixed(2)}</span>
+                    </div>
+                    {(() => {
+                      const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
+                      const taxRate = parseFloat(taxSlab);
+                      const taxAmount = (subtotal * taxRate) / 100;
+                      
+                      if (taxType === 'CGST+SGST' && taxRate > 0) {
+                        const halfTax = taxAmount / 2;
+                        return (
+                          <>
+                            <div className="flex justify-between text-xs text-black">
+                              <span>CGST @ {taxRate / 2}%:</span>
+                              <span>₹{halfTax.toFixed(2)}</span>
+                            </div>
+                            <div className="flex justify-between text-xs text-black">
+                              <span>SGST @ {taxRate / 2}%:</span>
+                              <span>₹{halfTax.toFixed(2)}</span>
+                            </div>
+                          </>
+                        );
+                      } else if (taxRate > 0) {
+                        return (
+                          <div className="flex justify-between text-xs text-black">
+                            <span>IGST @ {taxRate}%:</span>
+                            <span>₹{taxAmount.toFixed(2)}</span>
+                          </div>
+                        );
+                      }
+                      return null;
+                    })()}
+                  </div>
+                  
+                  <div className="bg-gray-300 border-t-2 border-black p-2">
+                    <div className="flex justify-between text-sm font-bold text-black">
+                      <span>TOTAL AMOUNT:</span>
+                      <span className="text-lg">₹{(() => {
+                        const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
+                        const taxRate = parseFloat(taxSlab);
+                        const taxAmount = (subtotal * taxRate) / 100;
+                        return (subtotal + taxAmount).toFixed(2);
+                      })()}</span>
+                    </div>
+                    <div className="text-xs text-black mt-1">
+                      <span className="font-semibold">Amount in Words:</span> {(() => {
+                        const total = parseFloat(slots[selectedSlotForBill]?.amount || 0) * (1 + parseFloat(taxSlab) / 100);
+                        return `Rupees ${Math.floor(total)} Only`;
+                      })()}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Terms & Conditions Footer */}
+                <div className="border border-black p-2 bg-white">
+                  <div className="flex justify-between items-center mb-2">
+                    <div className="font-semibold text-black text-xs">Terms & Conditions:</div>
+                    {!isEditingTerms ? (
+                      <Button
+                        onClick={() => {
+                          setTempTermsText(termsText);
+                          setIsEditingTerms(true);
+                        }}
+                        variant="ghost"
+                        size="sm"
+                        className="text-xs h-6 px-2"
+                      >
+                        Edit
+                      </Button>
+                    ) : (
+                      <div className="flex gap-1">
+                        <Button onClick={saveTerms} size="sm" className="h-6 px-2 text-xs bg-green-600 hover:bg-green-700">
+                          Save
+                        </Button>
+                        <Button onClick={cancelTermsEdit} variant="ghost" size="sm" className="h-6 px-2 text-xs">
+                          Cancel
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="text-xs text-black">
+                    {isEditingTerms ? (
+                      <textarea
+                        value={tempTermsText}
+                        onChange={(e) => setTempTermsText(e.target.value)}
+                        className="w-full bg-white border border-gray-400 text-black text-xs p-2 rounded min-h-[80px] focus:outline-none focus:border-blue-500"
+                        placeholder="Enter terms and conditions..."
+                      />
+                    ) : (
+                      <div className="whitespace-pre-line">
+                        {termsText}
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="text-right mt-3">
+                    <div className="text-xs text-black">For <span className="font-semibold text-black">{activeBusiness?.name || 'BUSINESS NAME'}</span></div>
+                    <div className="mt-8 text-xs text-black border-t border-black pt-1 inline-block">Authorized Signatory</div>
+                  </div>
+                </div>
               </div>
+              {/* End Customer Copy */}
+
+              {/* Page Break for Print */}
+              <div className="print:break-before-page border-t-4 border-dashed border-gray-400 my-6"></div>
+
+              {/* Merchant Copy */}
+              <div className="space-y-3">
+                <div className="text-center bg-green-100 border-2 border-green-500 py-2">
+                  <span className="text-sm font-bold text-green-800">MERCHANT COPY</span>
+                </div>
+                
+                {/* GST Invoice Header */}
+                <div className="text-center border-2 border-black p-3 bg-white">
+                  <div className="text-2xl font-bold text-black mb-1">{activeBusiness?.name || 'BUSINESS NAME'}</div>
+                  {activeBusiness?.address && (
+                    <div className="text-sm text-black">{activeBusiness.address}</div>
+                  )}
+                  <div className="flex justify-center gap-6 mt-2 text-sm text-black">
+                    {activeBusiness?.phone && (
+                      <span><span className="font-semibold">Phone:</span> {activeBusiness.phone}</span>
+                    )}
+                    {activeBusiness?.gst && (
+                      <span><span className="font-semibold">GSTIN:</span> {activeBusiness.gst}</span>
+                    )}
+                  </div>
+                  <div className="mt-2 text-lg font-bold text-black border-t-2 border-black pt-2">
+                    TAX INVOICE
+                  </div>
+                </div>
+
+                {/* Invoice Details - Two Columns */}
+                <div className="grid grid-cols-2 gap-3 border border-black bg-white">
+                  <div className="p-3 border-r border-black">
+                    <div className="text-xs space-y-1">
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">Invoice No:</span>
+                        <span className="text-black font-semibold">INV-{String(Date.now()).slice(-6)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">Date:</span>
+                        <span className="text-black">{new Date().toLocaleDateString('en-GB')}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">Time:</span>
+                        <span className="text-black">{new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="p-3">
+                    <div className="text-xs space-y-1">
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">Customer:</span>
+                        <span className="text-black font-semibold">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">Payment Mode:</span>
+                        <span className="text-black">{slots[selectedSlotForBill]?.paymentMode}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">State:</span>
+                        <span className="text-black">Maharashtra</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Items Table - GST Format */}
+                <div className="border border-black bg-white">
+                  <div className="bg-gray-200 px-2 py-2 grid grid-cols-12 gap-1 text-xs font-semibold text-black border-b-2 border-black">
+                    <span className="col-span-1">S.No</span>
+                    <span className="col-span-4">Item Description</span>
+                    <span className="col-span-2 text-center">HSN</span>
+                    <span className="col-span-1 text-center">Qty</span>
+                    <span className="col-span-2 text-right">Rate</span>
+                    <span className="col-span-2 text-right">Amount</span>
+                  </div>
+                  
+                  {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
+                    <div className="px-2 py-2 grid grid-cols-12 gap-1 text-xs">
+                      <span className="col-span-1 text-black">1</span>
+                      <span className="col-span-4 text-black">
+                        {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
+                          ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
+                          : 'Service/Product'}
+                      </span>
+                      <span className="col-span-2 text-center text-black">9954</span>
+                      <span className="col-span-1 text-center text-black">1</span>
+                      <span className="col-span-2 text-right text-black">₹{slots[selectedSlotForBill]?.amount}</span>
+                      <span className="col-span-2 text-right text-black font-semibold">₹{slots[selectedSlotForBill]?.amount}</span>
+                    </div>
+                  ) : (
+                    <div className="px-3 py-6 text-center text-gray-600 text-xs">
+                      No items added to this invoice
+                    </div>
+                  )}
+                </div>
+
+                {/* Total Section - GST Format */}
+                <div className="border border-black bg-white">
+                  <div className="bg-gray-100 p-2 space-y-1">
+                    <div className="flex justify-between text-xs text-black">
+                      <span className="font-semibold">Taxable Amount:</span>
+                      <span className="font-semibold">₹{parseFloat(slots[selectedSlotForBill]?.amount || 0).toFixed(2)}</span>
+                    </div>
+                    {(() => {
+                      const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
+                      const taxRate = parseFloat(taxSlab);
+                      const taxAmount = (subtotal * taxRate) / 100;
+                      
+                      if (taxType === 'CGST+SGST' && taxRate > 0) {
+                        const halfTax = taxAmount / 2;
+                        return (
+                          <>
+                            <div className="flex justify-between text-xs text-black">
+                              <span>CGST @ {taxRate / 2}%:</span>
+                              <span>₹{halfTax.toFixed(2)}</span>
+                            </div>
+                            <div className="flex justify-between text-xs text-black">
+                              <span>SGST @ {taxRate / 2}%:</span>
+                              <span>₹{halfTax.toFixed(2)}</span>
+                            </div>
+                          </>
+                        );
+                      } else if (taxRate > 0) {
+                        return (
+                          <div className="flex justify-between text-xs text-black">
+                            <span>IGST @ {taxRate}%:</span>
+                            <span>₹{taxAmount.toFixed(2)}</span>
+                          </div>
+                        );
+                      }
+                      return null;
+                    })()}
+                  </div>
+                  
+                  <div className="bg-gray-300 border-t-2 border-black p-2">
+                    <div className="flex justify-between text-sm font-bold text-black">
+                      <span>TOTAL AMOUNT:</span>
+                      <span className="text-lg">₹{(() => {
+                        const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
+                        const taxRate = parseFloat(taxSlab);
+                        const taxAmount = (subtotal * taxRate) / 100;
+                        return (subtotal + taxAmount).toFixed(2);
+                      })()}</span>
+                    </div>
+                    <div className="text-xs text-black mt-1">
+                      <span className="font-semibold">Amount in Words:</span> {(() => {
+                        const total = parseFloat(slots[selectedSlotForBill]?.amount || 0) * (1 + parseFloat(taxSlab) / 100);
+                        return `Rupees ${Math.floor(total)} Only`;
+                      })()}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Terms & Conditions Footer */}
+                <div className="border border-black p-2 bg-white">
+                  <div className="font-semibold text-black text-xs mb-2">Terms & Conditions:</div>
+                  <div className="text-xs text-black whitespace-pre-line">
+                    {termsText}
+                  </div>
+                  
+                  <div className="text-right mt-3">
+                    <div className="text-xs text-black">For <span className="font-semibold text-black">{activeBusiness?.name || 'BUSINESS NAME'}</span></div>
+                    <div className="mt-8 text-xs text-black border-t border-black pt-1 inline-block">Authorized Signatory</div>
+                  </div>
+                </div>
+              </div>
+              {/* End Merchant Copy */}
 
               {/* Action Buttons */}
               <div className="flex gap-2 mt-4">
