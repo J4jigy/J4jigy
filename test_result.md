@@ -56,7 +56,7 @@
 ##   test_all: false
 ##   test_priority: "high_first"  # or "sequential" or "stuck_first"
 ##
-user_problem_statement: "Restore the CashInEntry.js invoice preview to its original dark-themed format. The invoice format had been modified multiple times (barcode scanning features, swipeable formats, color changes for printing), and now needs to be restored to the original dark theme appearance with consistent styling for both Customer and Merchant copies."
+user_problem_statement: "Phase 1: Restore the CashInEntry.js invoice preview to its original dark-themed format. Phase 2: Add tax selection box under invoice preview with GST configuration options (Tax Type: CGST+SGST/IGST, Tax Rate: 0%/5%/12%/18%/28%) that updates the invoice calculations in real-time."
 
 backend:
   - task: "No backend changes required"
