@@ -2001,6 +2001,7 @@ const CashInEntry = ({ onBack }) => {
                 </Button>
               </div>
             </div>
+            </div>
           )}
         </DialogContent>
       </Dialog>
