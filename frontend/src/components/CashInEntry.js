@@ -1618,8 +1618,8 @@ const CashInEntry = ({ onBack }) => {
                 
                 {/* Signatory Section */}
                 <div className="text-right mt-3">
-                  <div className="text-xs text-slate-300">For <span className="font-semibold text-white">{activeBusiness?.name || 'BUSINESS NAME'}</span></div>
-                  <div className="mt-8 text-xs text-slate-400">Authorized Signatory</div>
+                  <div className="text-xs text-black">For <span className="font-semibold text-black">{activeBusiness?.name || 'BUSINESS NAME'}</span></div>
+                  <div className="mt-8 text-xs text-black border-t border-black pt-1 inline-block">Authorized Signatory</div>
                 </div>
               </div>
 
