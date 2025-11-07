@@ -1411,9 +1411,32 @@ const CashInEntry = ({ onBack }) => {
           </DialogHeader>
           
           {selectedSlotForBill !== null && (
-            <div className="space-y-6">
-              {/* Customer Copy */}
-              <div className="space-y-3">
+            <div>
+              {/* Format Selector and Indicators */}
+              <div className="flex items-center justify-between mb-4 bg-slate-700 p-3 rounded">
+                <span className="text-white text-sm font-semibold">Invoice Format {currentFormat + 1}/5</span>
+                <div className="flex gap-2">
+                  {[0, 1, 2, 3, 4].map((format) => (
+                    <button
+                      key={format}
+                      onClick={() => setCurrentFormat(format)}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        currentFormat === format ? 'bg-green-400 w-6' : 'bg-slate-500'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Swipeable Invoice Container */}
+              <div
+                className="space-y-6"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
+                {/* Customer Copy */}
+                <div className="space-y-3">
                 {/* Copy Label */}
                 <div className="text-center bg-blue-100 border-2 border-blue-500 py-2">
                   <span className="text-sm font-bold text-blue-800">CUSTOMER COPY</span>
