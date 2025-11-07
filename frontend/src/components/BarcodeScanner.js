@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { BrowserMultiFormatReader } from '@zxing/browser';
-import { BarcodeFormat } from '@zxing/library';
+import { scanImageData } from '@undecaf/zbar-wasm';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -8,13 +7,15 @@ import { Camera, X, Keyboard, Scan } from 'lucide-react';
 
 const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => {
   const videoRef = useRef(null);
-  const readerRef = useRef(null);
+  const canvasRef = useRef(null);
+  const streamRef = useRef(null);
   const [isScanning, setIsScanning] = useState(false);
   const [manualInput, setManualInput] = useState('');
   const [showManualInput, setShowManualInput] = useState(false);
   const [error, setError] = useState('');
   const [lastScanned, setLastScanned] = useState('');
   const scanningRef = useRef(false);
+  const animationRef = useRef(null);
 
   useEffect(() => {
     if (isOpen && !showManualInput) {
@@ -27,70 +28,82 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
   }, [isOpen, showManualInput]);
 
   const startScanning = async () => {
-    if (!videoRef.current || scanningRef.current) return;
+    if (scanningRef.current) return;
 
     try {
       setIsScanning(true);
       setError('');
       scanningRef.current = true;
 
-      // Initialize ZXing reader with optimized settings
-      const reader = new BrowserMultiFormatReader();
-      readerRef.current = reader;
-
-      // Configure for fastest scanning - only essential formats
-      const hints = new Map();
-      const formats = [
-        BarcodeFormat.CODE_128,
-        BarcodeFormat.EAN_13,
-        BarcodeFormat.EAN_8,
-        BarcodeFormat.UPC_A,
-        BarcodeFormat.UPC_E,
-      ];
-      hints.set(2, formats); // DecodeHintType.POSSIBLE_FORMATS = 2
-
-      // Get camera with optimal settings for speed
+      // Get high-performance camera stream
       const stream = await navigator.mediaDevices.getUserMedia({
         video: {
           facingMode: 'environment',
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
+          width: { ideal: 1280, max: 1920 },
+          height: { ideal: 720, max: 1080 },
           frameRate: { ideal: 60, max: 60 }
         }
       });
 
+      streamRef.current = stream;
+
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        videoRef.current.play();
+        await videoRef.current.play();
       }
 
-      console.log('✅ ZXing Camera ready - 60 FPS scanning started!');
+      console.log('✅ ZBar Camera ready - Ultra-fast scanning started!');
 
-      // Ultra-fast continuous scanning loop
+      // Initialize canvas for frame capture
+      if (!canvasRef.current) {
+        canvasRef.current = document.createElement('canvas');
+      }
+
+      // Ultra-fast scanning loop with ZBar WebAssembly
       const scan = async () => {
-        if (!scanningRef.current || !videoRef.current) return;
+        if (!scanningRef.current || !videoRef.current || videoRef.current.paused || videoRef.current.ended) {
+          return;
+        }
 
         try {
-          const result = await reader.decodeFromVideoElement(videoRef.current);
-          if (result && result.getText()) {
-            const barcode = result.getText();
-            if (barcode !== lastScanned) {
-              console.log('⚡ INSTANT SCAN:', barcode);
+          const video = videoRef.current;
+          const canvas = canvasRef.current;
+
+          // Set canvas size to match video
+          if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+          }
+
+          // Capture current video frame
+          const ctx = canvas.getContext('2d', { willReadFrequently: true });
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+          // Get image data for ZBar
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+          // Scan with ZBar (extremely fast WebAssembly)
+          const symbols = await scanImageData(imageData);
+
+          if (symbols && symbols.length > 0) {
+            const barcode = symbols[0].decode();
+            if (barcode && barcode !== lastScanned) {
+              console.log('⚡⚡ INSTANT SCAN:', barcode);
               setLastScanned(barcode);
               handleScanSuccess(barcode);
             }
           }
         } catch (e) {
-          // Continue scanning on error (no barcode found)
+          // Continue scanning on error
         }
 
-        // Request next frame immediately for 60 FPS
+        // Request next frame for continuous 60 FPS scanning
         if (scanningRef.current) {
-          requestAnimationFrame(scan);
+          animationRef.current = requestAnimationFrame(scan);
         }
       };
 
-      // Start scanning loop
+      // Start the scanning loop
       scan();
 
     } catch (err) {
@@ -103,20 +116,21 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
 
   const stopScanning = () => {
     scanningRef.current = false;
+
+    // Cancel animation frame
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
+    }
     
-    if (videoRef.current && videoRef.current.srcObject) {
-      const stream = videoRef.current.srcObject;
-      const tracks = stream.getTracks();
-      tracks.forEach(track => track.stop());
-      videoRef.current.srcObject = null;
+    // Stop video stream
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
     }
 
-    if (readerRef.current) {
-      try {
-        readerRef.current.reset();
-      } catch (e) {
-        // Ignore
-      }
+    if (videoRef.current) {
+      videoRef.current.srcObject = null;
     }
 
     setIsScanning(false);
@@ -124,10 +138,10 @@ const BarcodeScanner = ({ isOpen, onClose, onScan, title = "Scan Barcode" }) => 
   };
 
   const handleScanSuccess = (barcode) => {
-    // Don't stop scanning - allow continuous scanning
+    // Don't stop scanning - allow continuous rapid scanning
     onScan(barcode);
     
-    // Ultra-fast reset (11ms) for 60 FPS back-to-back scanning
+    // Ultra-fast reset (11ms) for maximum speed back-to-back scanning
     setTimeout(() => {
       setLastScanned('');
       console.log('✅ Ready for next scan');
