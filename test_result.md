@@ -56,7 +56,7 @@
 ##   test_all: false
 ##   test_priority: "high_first"  # or "sequential" or "stuck_first"
 ##
-user_problem_statement: "Implement CAMERA-BASED barcode scanning functionality for both CashInEntry and CashOutEntry screens. When the 'Scan Barcode' button is clicked, the device camera should open and scan physical barcodes in real-time. When a barcode is scanned, it should search for the product/expense in the existing list. If the barcode is recognized, add it to cart. If not recognized, redirect to 'Add New Product/Expense' popup with the barcode field pre-filled."
+user_problem_statement: "Restore the CashInEntry.js invoice preview to its original dark-themed format. The invoice format had been modified multiple times (barcode scanning features, swipeable formats, color changes for printing), and now needs to be restored to the original dark theme appearance with consistent styling for both Customer and Merchant copies."
 
 backend:
   - task: "Barcode Product/Expense Lookup"
