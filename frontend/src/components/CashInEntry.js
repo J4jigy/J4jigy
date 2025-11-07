@@ -1552,7 +1552,7 @@ const CashInEntry = ({ onBack }) => {
                       return (subtotal + taxAmount).toFixed(2);
                     })()}</span>
                   </div>
-                  <div className="text-xs text-cyan-300 mt-1">
+                  <div className="text-xs text-black mt-1">
                     <span className="font-semibold">Amount in Words:</span> {(() => {
                       const total = parseFloat(slots[selectedSlotForBill]?.amount || 0) * (1 + parseFloat(taxSlab) / 100);
                       return `Rupees ${Math.floor(total)} Only`;
@@ -1562,10 +1562,10 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
               {/* Terms & Conditions Footer */}
-              <div className="border border-slate-600 p-2 bg-slate-800/50">
+              <div className="border border-black p-2 bg-white">
                 {/* Header with Edit Button */}
                 <div className="flex justify-between items-center mb-2">
-                  <div className="font-semibold text-white text-xs">Terms & Conditions:</div>
+                  <div className="font-semibold text-black text-xs">Terms & Conditions:</div>
                   {!isEditingTerms ? (
                     <Button
                       onClick={() => {
