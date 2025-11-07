@@ -1583,7 +1583,6 @@ const CashInEntry = ({ onBack }) => {
                 </div>
               </div>
               </div>
-              {/* End Customer Copy */}
 
               {/* Page Break for Print */}
               <div className="print:break-before-page border-t-4 border-dashed border-gray-400 my-6"></div>
