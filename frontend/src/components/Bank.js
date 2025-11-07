@@ -215,16 +215,6 @@ export default function Bank() {
           ))}
         </div>
 
-        {/* Add Account Button */}
-        <Button 
-          onClick={() => setShowAddDialog(true)} 
-          variant="outline" 
-          className="w-full border-slate-600 text-slate-300 hover:bg-slate-800 mb-4"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Add Bank Account
-        </Button>
-
         {/* Filters */}
         <h2 className="text-sm font-bold text-white mb-3">Recent Transactions</h2>
         <Card className="bg-slate-800 border-slate-700 mb-4">
