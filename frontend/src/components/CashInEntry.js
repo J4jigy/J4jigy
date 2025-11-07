@@ -144,7 +144,12 @@ const CashInEntry = ({ onBack }) => {
       '• Goods once sold will not be taken back\n• Subject to jurisdiction\n• Payment due within 30 days'
     )
   );
-  const [tempTermsText, setTempTermsText] = useState(termsText);
+  const [tempTermsText, setTempTermsText] = useState('');
+  
+  // Invoice format states
+  const [currentFormat, setCurrentFormat] = useState(0); // 0-4 for 5 formats
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
   
   // Save Terms & Conditions
   const saveTerms = () => {
