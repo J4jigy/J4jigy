@@ -1719,13 +1719,39 @@ const CashInEntry = ({ onBack }) => {
               {/* Merchant Copy */}
               <div className="space-y-3">
                 {/* Copy Label */}
-                <div className="text-center bg-green-100 border-2 border-green-500 py-2">
-                  <span className="text-sm font-bold text-green-800">MERCHANT COPY</span>
+                <div className={`text-center py-2 ${
+                  currentFormat === 0 ? 'bg-green-100 border-2 border-green-500' :
+                  currentFormat === 1 ? 'bg-indigo-100 border-2 border-indigo-500' :
+                  currentFormat === 2 ? 'bg-amber-100 border-2 border-amber-500' :
+                  currentFormat === 3 ? 'bg-cyan-100 border-2 border-cyan-500' :
+                  'bg-rose-100 border-2 border-rose-500'
+                }`}>
+                  <span className={`text-sm font-bold ${
+                    currentFormat === 0 ? 'text-green-800' :
+                    currentFormat === 1 ? 'text-indigo-800' :
+                    currentFormat === 2 ? 'text-amber-800' :
+                    currentFormat === 3 ? 'text-cyan-800' :
+                    'text-rose-800'
+                  }`}>
+                    MERCHANT COPY - Format {currentFormat + 1}
+                  </span>
                 </div>
                 
-                {/* GST Invoice Header */}
-                <div className="text-center border-2 border-black p-3 bg-white">
-                  <div className="text-2xl font-bold text-black mb-1">{activeBusiness?.name || 'BUSINESS NAME'}</div>
+                {/* GST Invoice Header - Format Specific */}
+                <div className={`text-center p-3 bg-white ${
+                  currentFormat === 0 ? 'border-2 border-black' :
+                  currentFormat === 1 ? 'border-4 border-double border-indigo-600' :
+                  currentFormat === 2 ? 'border-2 border-dashed border-amber-600' :
+                  currentFormat === 3 ? 'border-t-4 border-b-4 border-cyan-600' :
+                  'rounded-lg border-2 border-rose-600 shadow-lg'
+                }`}>
+                  <div className={`font-bold text-black mb-1 ${
+                    currentFormat === 0 ? 'text-2xl' :
+                    currentFormat === 1 ? 'text-3xl font-serif' :
+                    currentFormat === 2 ? 'text-2xl tracking-wide' :
+                    currentFormat === 3 ? 'text-2xl underline' :
+                    'text-2xl italic'
+                  }`}>{activeBusiness?.name || 'BUSINESS NAME'}</div>
                   {activeBusiness?.address && (
                     <div className="text-sm text-black">{activeBusiness.address}</div>
                   )}
