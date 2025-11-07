@@ -1378,31 +1378,25 @@ const CashInEntry = ({ onBack }) => {
           </DialogHeader>
           
           {selectedSlotForBill !== null && (
-            <div className="space-y-6">
-              {/* Customer Copy */}
-              <div className="space-y-3">
-                <div className="text-center bg-blue-100 border-2 border-blue-500 py-2">
-                  <span className="text-sm font-bold text-blue-800">CUSTOMER COPY</span>
-                </div>
-                
-                {/* GST Invoice Header */}
-                <div className="text-center border-2 border-black p-3 bg-white">
-                  <div className="text-2xl font-bold text-black mb-1">{activeBusiness?.name || 'BUSINESS NAME'}</div>
-                  {activeBusiness?.address && (
-                    <div className="text-sm text-black">{activeBusiness.address}</div>
+            <div className="space-y-3">
+              {/* GST Invoice Header */}
+              <div className="text-center border-2 border-slate-600 p-3">
+                <div className="text-2xl font-bold text-white mb-1">{activeBusiness?.name || 'BUSINESS NAME'}</div>
+                {activeBusiness?.address && (
+                  <div className="text-sm text-slate-300">{activeBusiness.address}</div>
+                )}
+                <div className="flex justify-center gap-6 mt-2 text-sm text-slate-300">
+                  {activeBusiness?.phone && (
+                    <span><span className="font-semibold">Phone:</span> {activeBusiness.phone}</span>
                   )}
-                  <div className="flex justify-center gap-6 mt-2 text-sm text-black">
-                    {activeBusiness?.phone && (
-                      <span><span className="font-semibold">Phone:</span> {activeBusiness.phone}</span>
-                    )}
-                    {activeBusiness?.gst && (
-                      <span><span className="font-semibold">GSTIN:</span> {activeBusiness.gst}</span>
-                    )}
-                  </div>
-                  <div className="mt-2 text-lg font-bold text-black border-t-2 border-black pt-2">
-                    TAX INVOICE
-                  </div>
+                  {activeBusiness?.gst && (
+                    <span><span className="font-semibold">GSTIN:</span> {activeBusiness.gst}</span>
+                  )}
                 </div>
+                <div className="mt-2 text-lg font-bold text-cyan-400 border-t border-slate-600 pt-2">
+                  TAX INVOICE
+                </div>
+              </div>
 
                 {/* Invoice Details - Two Columns */}
                 <div className="grid grid-cols-2 gap-3 border border-black bg-white">
