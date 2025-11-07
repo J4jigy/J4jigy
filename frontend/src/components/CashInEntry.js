@@ -1377,6 +1377,55 @@ const CashInEntry = ({ onBack }) => {
             </DialogTitle>
           </DialogHeader>
           
+          {/* Tax Selection Box */}
+          <div className="bg-slate-700/50 border border-slate-600 rounded-lg p-3 space-y-3">
+            <div className="text-white text-sm font-semibold mb-2">GST Configuration</div>
+            
+            {/* Tax Type Selection */}
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <label className="text-xs text-slate-300 mb-1 block">Tax Type</label>
+                <select
+                  value={taxType}
+                  onChange={(e) => setTaxType(e.target.value)}
+                  className="w-full bg-slate-800 border border-slate-600 text-white rounded px-2 py-1.5 text-sm focus:outline-none focus:border-blue-500"
+                >
+                  <option value="CGST+SGST">CGST + SGST</option>
+                  <option value="IGST">IGST</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="text-xs text-slate-300 mb-1 block">Tax Rate (%)</label>
+                <select
+                  value={taxSlab}
+                  onChange={(e) => setTaxSlab(e.target.value)}
+                  className="w-full bg-slate-800 border border-slate-600 text-white rounded px-2 py-1.5 text-sm focus:outline-none focus:border-blue-500"
+                >
+                  <option value="0">0% (No Tax)</option>
+                  <option value="5">5%</option>
+                  <option value="12">12%</option>
+                  <option value="18">18%</option>
+                  <option value="28">28%</option>
+                </select>
+              </div>
+            </div>
+            
+            {/* Tax Preview */}
+            <div className="bg-slate-800/50 border border-slate-600 rounded p-2 flex justify-between items-center text-xs">
+              <span className="text-slate-300">
+                {taxType === 'CGST+SGST' && parseFloat(taxSlab) > 0 
+                  ? `CGST: ${parseFloat(taxSlab) / 2}% + SGST: ${parseFloat(taxSlab) / 2}%` 
+                  : parseFloat(taxSlab) > 0 
+                    ? `IGST: ${taxSlab}%` 
+                    : 'No Tax Applied'}
+              </span>
+              <span className="text-cyan-400 font-semibold">
+                Total: {parseFloat(taxSlab)}%
+              </span>
+            </div>
+          </div>
+          
           {selectedSlotForBill !== null && (
             <div className="space-y-3">
               {/* Customer Copy */}
