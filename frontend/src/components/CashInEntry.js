@@ -1582,7 +1582,6 @@ const CashInEntry = ({ onBack }) => {
                   </div>
                 </div>
               </div>
-              </div>
 
               {/* Page Break for Print */}
               <div className="print:break-before-page border-t-4 border-dashed border-gray-400 my-6"></div>
