@@ -1607,8 +1607,8 @@ const CashInEntry = ({ onBack }) => {
 
                 {/* Total Section - GST Format */}
                 <div className="border-2 border-black">
-                  <div className="bg-white p-3 space-y-1">
-                    <div className="flex justify-between text-xs text-black">
+                  <div className="bg-white p-2 space-y-0.5">
+                    <div className="flex justify-between text-[10px] text-black">
                       <span className="font-semibold">Taxable Amount:</span>
                       <span className="font-semibold">₹{parseFloat(slots[selectedSlotForBill]?.amount || 0).toFixed(2)}</span>
                     </div>
@@ -1621,11 +1621,11 @@ const CashInEntry = ({ onBack }) => {
                         const halfTax = taxAmount / 2;
                         return (
                           <>
-                            <div className="flex justify-between text-xs text-black">
+                            <div className="flex justify-between text-[10px] text-black">
                               <span>CGST @ {taxRate / 2}%:</span>
                               <span>₹{halfTax.toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between text-xs text-black">
+                            <div className="flex justify-between text-[10px] text-black">
                               <span>SGST @ {taxRate / 2}%:</span>
                               <span>₹{halfTax.toFixed(2)}</span>
                             </div>
@@ -1633,7 +1633,7 @@ const CashInEntry = ({ onBack }) => {
                         );
                       } else if (taxRate > 0) {
                         return (
-                          <div className="flex justify-between text-xs text-black">
+                          <div className="flex justify-between text-[10px] text-black">
                             <span>IGST @ {taxRate}%:</span>
                             <span>₹{taxAmount.toFixed(2)}</span>
                           </div>
@@ -1643,17 +1643,17 @@ const CashInEntry = ({ onBack }) => {
                     })()}
                   </div>
                   
-                  <div className="bg-gray-100 border-t-2 border-black p-3">
-                    <div className="flex justify-between text-sm font-bold text-black">
+                  <div className="bg-gray-100 border-t-2 border-black p-2">
+                    <div className="flex justify-between text-xs font-bold text-black">
                       <span>TOTAL AMOUNT:</span>
-                      <span className="text-lg text-black">₹{(() => {
+                      <span className="text-sm text-black">₹{(() => {
                         const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                         const taxRate = parseFloat(taxSlab);
                         const taxAmount = (subtotal * taxRate) / 100;
                         return (subtotal + taxAmount).toFixed(2);
                       })()}</span>
                     </div>
-                    <div className="text-xs text-black mt-1">
+                    <div className="text-[10px] text-black mt-0.5">
                       <span className="font-semibold">Amount in Words:</span> {(() => {
                         const total = parseFloat(slots[selectedSlotForBill]?.amount || 0) * (1 + parseFloat(taxSlab) / 100);
                         return `Rupees ${Math.floor(total)} Only`;
@@ -1663,9 +1663,9 @@ const CashInEntry = ({ onBack }) => {
                 </div>
 
                 {/* Terms & Conditions Footer */}
-                <div className="border-2 border-black p-4 bg-white">
-                  <div className="flex justify-between items-center mb-2">
-                    <div className="font-semibold text-black text-xs">Terms & Conditions:</div>
+                <div className="border-2 border-black p-2 bg-white">
+                  <div className="flex justify-between items-center mb-1">
+                    <div className="font-semibold text-black text-[10px]">Terms & Conditions:</div>
                     {!isEditingTerms ? (
                       <Button
                         onClick={() => {
@@ -1674,28 +1674,28 @@ const CashInEntry = ({ onBack }) => {
                         }}
                         variant="ghost"
                         size="sm"
-                        className="text-xs h-6 px-2 text-blue-600 hover:text-blue-700"
+                        className="text-[10px] h-5 px-1 text-blue-600 hover:text-blue-700"
                       >
                         Edit
                       </Button>
                     ) : (
                       <div className="flex gap-1">
-                        <Button onClick={saveTerms} size="sm" className="h-6 px-2 text-xs bg-green-600 hover:bg-green-700 text-white">
+                        <Button onClick={saveTerms} size="sm" className="h-5 px-1 text-[10px] bg-green-600 hover:bg-green-700 text-white">
                           Save
                         </Button>
-                        <Button onClick={cancelTermsEdit} variant="ghost" size="sm" className="h-6 px-2 text-xs text-gray-600">
+                        <Button onClick={cancelTermsEdit} variant="ghost" size="sm" className="h-5 px-1 text-[10px] text-gray-600">
                           Cancel
                         </Button>
                       </div>
                     )}
                   </div>
                   
-                  <div className="text-xs text-black">
+                  <div className="text-[10px] text-black">
                     {isEditingTerms ? (
                       <textarea
                         value={tempTermsText}
                         onChange={(e) => setTempTermsText(e.target.value)}
-                        className="w-full bg-white border border-gray-300 text-black text-xs p-2 rounded min-h-[80px] focus:outline-none focus:border-blue-500"
+                        className="w-full bg-white border border-gray-300 text-black text-[10px] p-1 rounded min-h-[60px] focus:outline-none focus:border-blue-500"
                         placeholder="Enter terms and conditions..."
                       />
                     ) : (
@@ -1705,9 +1705,9 @@ const CashInEntry = ({ onBack }) => {
                     )}
                   </div>
                   
-                  <div className="text-right mt-3">
-                    <div className="text-xs text-black">For <span className="font-semibold text-black">{activeBusiness?.name || 'BUSINESS NAME'}</span></div>
-                    <div className="mt-8 text-xs text-black border-t border-black pt-1 inline-block">Authorized Signatory</div>
+                  <div className="text-right mt-2">
+                    <div className="text-[10px] text-black">For <span className="font-semibold text-black">{activeBusiness?.name || 'BUSINESS NAME'}</span></div>
+                    <div className="mt-4 text-[10px] text-black border-t border-black pt-1 inline-block">Authorized Signatory</div>
                   </div>
                 </div>
 
