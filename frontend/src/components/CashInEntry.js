@@ -1481,9 +1481,9 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
               {/* Items Table - GST Format */}
-              <div className="border-2 border-black overflow-x-auto">
+              <div className="border border-black overflow-x-auto">
                 {/* Table Header */}
-                <div className="bg-gray-100 px-2 py-2 flex items-center gap-2 text-xs font-semibold text-black border-b-2 border-black min-w-full">
+                <div className="bg-gray-100 px-1 py-1 flex items-center gap-1 text-xs font-semibold text-black border-b border-black min-w-full">
                   <span style={{width: '8%', minWidth: '40px'}} className="text-center">S.No</span>
                   <span style={{width: '35%', minWidth: '100px'}} className="px-2">Item Description</span>
                   <span style={{width: '15%', minWidth: '60px'}} className="text-center">HSN</span>
