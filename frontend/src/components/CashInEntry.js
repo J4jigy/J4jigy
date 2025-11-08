@@ -1649,7 +1649,7 @@ const CashInEntry = ({ onBack }) => {
                   Close
                 </Button>
               </div>
-            </ div>
+            </div>
           )}
         </DialogContent>
       </Dialog>
