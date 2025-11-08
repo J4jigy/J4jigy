@@ -1442,10 +1442,10 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
               {/* Invoice Details - Two Columns */}
-              <div className="grid grid-cols-2 gap-0 border-2 border-black">
+              <div className="grid grid-cols-2 gap-0 border border-black">
                 {/* Left Column - Invoice Details */}
-                <div className="p-2 border-r border-black">
-                  <div className="text-xs space-y-0.5">
+                <div className="p-1 border-r border-black">
+                  <div className="text-xs space-y-0">
                     <div className="flex justify-between">
                       <span className="text-gray-700">Invoice No:</span>
                       <span className="text-black font-semibold">INV-{String(Date.now()).slice(-6)}</span>
