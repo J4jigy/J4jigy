@@ -1002,6 +1002,97 @@ const CashInEntry = ({ onBack }) => {
           ))}
         </div>
 
+        {/* Challan Preview - Shows when swiped right on slots */}
+        {showChallanPreview && (
+          <div className="bg-white border-2 border-cyan-500 rounded-lg p-3 space-y-2 animate-in slide-in-from-right">
+            {/* Challan Header */}
+            <div className="flex items-center justify-between border-b-2 border-cyan-500 pb-2">
+              <div className="flex items-center gap-2">
+                <FileText className="w-5 h-5 text-cyan-600" />
+                <h3 className="text-cyan-600 font-bold text-sm">DELIVERY CHALLAN</h3>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowChallanPreview(false)}
+                className="h-6 w-6 p-0 text-slate-600 hover:text-slate-900"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+
+            {/* Challan Quick Info */}
+            <div className="space-y-2">
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-slate-100 p-2 rounded border border-slate-300">
+                  <div className="text-slate-600 text-[10px]">Challan No.</div>
+                  <div className="text-black font-semibold">DC-{String(Date.now()).slice(-4)}</div>
+                </div>
+                <div className="bg-slate-100 p-2 rounded border border-slate-300">
+                  <div className="text-slate-600 text-[10px]">Date</div>
+                  <div className="text-black font-semibold">{new Date().toLocaleDateString('en-GB')}</div>
+                </div>
+              </div>
+
+              <div className="bg-slate-100 p-2 rounded border border-slate-300 text-xs">
+                <div className="text-slate-600 text-[10px]">Party Name</div>
+                <div className="text-black font-semibold">{slots[activeSlot]?.customName || selectedCustomer || slots[activeSlot]?.label}</div>
+              </div>
+
+              {/* Vehicle Number Input */}
+              <div className="bg-slate-100 p-2 rounded border border-slate-300">
+                <div className="text-slate-600 text-[10px] mb-1">Vehicle Number</div>
+                <input
+                  type="text"
+                  value={challanVehicleNumber}
+                  onChange={(e) => setChallanVehicleNumber(e.target.value.toUpperCase())}
+                  placeholder="e.g., MH12AB1234"
+                  className="w-full bg-white border border-slate-300 text-black h-7 text-xs px-2 rounded placeholder:text-slate-400 focus:border-cyan-500 focus:outline-none"
+                />
+              </div>
+
+              <div className="bg-slate-100 p-2 rounded border border-slate-300 text-xs">
+                <div className="text-slate-600 text-[10px]">Amount</div>
+                <div className="text-green-600 font-bold text-base">₹{slots[activeSlot]?.amount || amount}</div>
+              </div>
+
+              {/* Items Preview */}
+              {Object.keys(slots[activeSlot]?.selectedItems || {}).length > 0 && (
+                <div className="bg-slate-100 p-2 rounded border border-slate-300 text-xs">
+                  <div className="text-slate-600 text-[10px] mb-1">Items ({Object.keys(slots[activeSlot]?.selectedItems || {}).length})</div>
+                  <div className="text-black space-y-1">
+                    {Object.entries(slots[activeSlot]?.selectedItems || {}).map(([name, qty]) => (
+                      <div key={name} className="flex justify-between py-0.5 border-b border-slate-200 last:border-0">
+                        <span className="text-[10px]">{name}</span>
+                        <span className="text-slate-600 text-[10px]">x{qty}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="grid grid-cols-2 gap-2 mt-2">
+                <Button
+                  size="sm"
+                  className="bg-blue-600 hover:bg-blue-700 text-white h-8 text-xs"
+                  onClick={generateChallan}
+                >
+                  <FileText className="w-3 h-3 mr-1" />
+                  Generate
+                </Button>
+                <Button
+                  size="sm"
+                  className="bg-slate-600 hover:bg-slate-700 text-white h-8 text-xs"
+                  onClick={() => navigate('/challan')}
+                >
+                  View All
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Amount Display */}
         <Card className="bg-slate-800 border-slate-700">
           <CardContent className="p-1 text-center">
