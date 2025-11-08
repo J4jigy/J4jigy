@@ -1818,94 +1818,170 @@ const CashInEntry = ({ onBack }) => {
                   </div>
                 </div>
 
-              {/* Challan Preview - Shows when swiped right on invoice */}
+              {/* Challan Preview - Full view like invoice, shows when swiped right */}
               {showChallanInInvoice && selectedSlotForBill !== null && (
-                <div className="mt-3 bg-slate-800 border-2 border-cyan-500 rounded-lg p-3 animate-in slide-in-from-right">
-                  <div className="flex items-center justify-between mb-2">
+                <div className="space-y-2 bg-white p-2 rounded w-full border-2 border-cyan-500">
+                  {/* Challan Header */}
+                  <div className="flex items-center justify-between border-b-2 border-cyan-500 pb-2">
                     <div className="flex items-center gap-2">
-                      <FileText className="w-5 h-5 text-cyan-400" />
-                      <h3 className="text-white font-semibold text-sm">Challan Preview</h3>
+                      <FileText className="w-6 h-6 text-cyan-600" />
+                      <h2 className="text-cyan-600 font-bold text-lg">DELIVERY CHALLAN</h2>
                     </div>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => setShowChallanInInvoice(false)}
-                      className="h-6 w-6 p-0 text-slate-400 hover:text-white"
+                      className="h-8 w-8 p-0 text-slate-600 hover:text-slate-900"
                     >
-                      <X className="w-4 h-4" />
+                      <X className="w-5 h-5" />
                     </Button>
                   </div>
                   
-                  {/* Challan Quick Info */}
-                  <div className="space-y-2">
-                    <div className="grid grid-cols-2 gap-2 text-xs">
-                      <div className="bg-slate-700/50 p-2 rounded">
-                        <div className="text-slate-400">Challan No.</div>
-                        <div className="text-white font-semibold">DC-{String(Date.now()).slice(-4)}</div>
-                      </div>
-                      <div className="bg-slate-700/50 p-2 rounded">
-                        <div className="text-slate-400">Date</div>
-                        <div className="text-white font-semibold">{new Date().toLocaleDateString('en-GB')}</div>
-                      </div>
+                  {/* Business Details */}
+                  <div className="text-center border-2 border-black p-2">
+                    <div className="text-lg font-bold text-black mb-1">{activeBusiness?.name || 'BUSINESS NAME'}</div>
+                    {activeBusiness?.address && (
+                      <div className="text-xs text-black">{activeBusiness.address}</div>
+                    )}
+                    <div className="flex justify-center gap-4 mt-1 text-xs text-black flex-wrap">
+                      {activeBusiness?.phone && (
+                        <span><span className="font-semibold">Phone:</span> {activeBusiness.phone}</span>
+                      )}
+                      {activeBusiness?.gst && (
+                        <span><span className="font-semibold">GSTIN:</span> {activeBusiness.gst}</span>
+                      )}
                     </div>
-                    
-                    <div className="bg-slate-700/50 p-2 rounded text-xs">
-                      <div className="text-slate-400">Party Name</div>
-                      <div className="text-white font-semibold">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</div>
-                    </div>
-                    
-                    <div className="bg-slate-700/50 p-2 rounded text-xs">
-                      <div className="text-slate-400 mb-1">Vehicle Number</div>
-                      <Input
-                        value={challanVehicleNumber}
-                        onChange={(e) => setChallanVehicleNumber(e.target.value.toUpperCase())}
-                        placeholder="Enter vehicle number (e.g., MH12AB1234)"
-                        className="bg-slate-800 border-slate-600 text-white h-8 text-xs placeholder:text-slate-500"
-                      />
-                    </div>
-                    
-                    <div className="bg-slate-700/50 p-2 rounded text-xs">
-                      <div className="text-slate-400">Amount</div>
-                      <div className="text-green-400 font-bold text-lg">₹{slots[selectedSlotForBill]?.amount}</div>
-                    </div>
-                    
-                    {/* Items Preview */}
-                    {Object.keys(slots[selectedSlotForBill]?.selectedItems || {}).length > 0 && (
-                      <div className="bg-slate-700/50 p-2 rounded text-xs">
-                        <div className="text-slate-400 mb-1">Items ({Object.keys(slots[selectedSlotForBill]?.selectedItems || {}).length})</div>
-                        <div className="text-white">
-                          {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).map(([name, qty]) => (
-                            <div key={name} className="flex justify-between py-0.5">
-                              <span>{name}</span>
-                              <span className="text-slate-400">x{qty}</span>
-                            </div>
-                          ))}
+                  </div>
+
+                  {/* Challan Details - Two Columns */}
+                  <div className="grid grid-cols-2 gap-0 border-2 border-black">
+                    {/* Left Column */}
+                    <div className="p-2 border-r border-black">
+                      <div className="text-xs space-y-0.5">
+                        <div className="flex justify-between">
+                          <span className="text-gray-700">Challan No:</span>
+                          <span className="text-black font-semibold text-[10px]">DC-{String(Date.now()).slice(-4)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-700">Date:</span>
+                          <span className="text-black text-[10px]">{new Date().toLocaleDateString('en-GB')}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-700">Time:</span>
+                          <span className="text-black text-[10px]">{new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
                         </div>
                       </div>
-                    )}
-                    
-                    {/* Action Buttons */}
-                    <div className="grid grid-cols-2 gap-2 mt-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="bg-blue-600 hover:bg-blue-700 text-white border-blue-500 h-8 text-xs"
-                        onClick={generateChallan}
-                      >
-                        <FileText className="w-3 h-3 mr-1" />
-                        Generate
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="bg-slate-700 hover:bg-slate-600 text-white border-slate-600 h-8 text-xs"
-                        onClick={() => {
-                          navigate('/challan');
-                        }}
-                      >
-                        View All
-                      </Button>
                     </div>
+                    
+                    {/* Right Column */}
+                    <div className="p-2">
+                      <div className="text-xs space-y-0.5">
+                        <div className="flex justify-between">
+                          <span className="text-gray-700">Party:</span>
+                          <span className="text-black font-semibold text-[10px] truncate max-w-[120px]">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-700">Amount:</span>
+                          <span className="text-black text-[10px]">₹{slots[selectedSlotForBill]?.amount}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-700">Payment:</span>
+                          <span className="text-black text-[10px]">{slots[selectedSlotForBill]?.paymentMode}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Vehicle Number Input */}
+                  <div className="border-2 border-black p-2">
+                    <div className="text-xs font-semibold text-black mb-1">Vehicle Number</div>
+                    <Input
+                      value={challanVehicleNumber}
+                      onChange={(e) => setChallanVehicleNumber(e.target.value.toUpperCase())}
+                      placeholder="e.g., MH12AB1234"
+                      className="bg-white border-2 border-gray-300 text-black h-8 text-xs placeholder:text-gray-400 focus:border-cyan-500"
+                    />
+                  </div>
+
+                  {/* Items Table */}
+                  <div className="border-2 border-black">
+                    <div className="bg-gray-100 px-2 py-2 grid grid-cols-12 gap-1 text-[10px] font-semibold text-black border-b-2 border-black">
+                      <span className="col-span-1 text-center">S.No</span>
+                      <span className="col-span-6 pl-2">Item Details</span>
+                      <span className="col-span-2 text-center">Qty</span>
+                      <span className="col-span-3 text-right">Amount</span>
+                    </div>
+                    
+                    {Object.keys(slots[selectedSlotForBill]?.selectedItems || {}).length > 0 ? (
+                      <div className="bg-white">
+                        {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).map(([name, qty], index) => (
+                          <div key={name} className="px-2 py-2 grid grid-cols-12 gap-1 text-[10px] border-b border-gray-200">
+                            <span className="col-span-1 text-center text-black">{index + 1}</span>
+                            <span className="col-span-6 pl-2 text-black break-words">{name}</span>
+                            <span className="col-span-2 text-center text-gray-700">{qty}</span>
+                            <span className="col-span-3 text-right text-black">-</span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="px-2 py-4 text-center text-gray-500 text-[10px] bg-white">
+                        No items in this challan
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Total Items */}
+                  <div className="border-2 border-black bg-gray-100 p-2">
+                    <div className="flex justify-between text-xs font-semibold text-black">
+                      <span>Total Items:</span>
+                      <span>{Object.keys(slots[selectedSlotForBill]?.selectedItems || {}).length}</span>
+                    </div>
+                  </div>
+
+                  {/* Remarks */}
+                  <div className="border-2 border-black p-2 bg-white">
+                    <div className="text-xs font-semibold text-black mb-1">Remarks:</div>
+                    <div className="text-[10px] text-gray-600 min-h-[40px]">
+                      Goods delivered in good condition
+                    </div>
+                  </div>
+
+                  {/* Signatures */}
+                  <div className="grid grid-cols-2 gap-4 border-2 border-black p-3 bg-white">
+                    <div className="text-center">
+                      <div className="text-[10px] text-black mb-8">Receiver's Signature</div>
+                      <div className="border-t border-black pt-1"></div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-[10px] text-black mb-8">For {activeBusiness?.name || 'BUSINESS NAME'}</div>
+                      <div className="border-t border-black pt-1">Authorized Signatory</div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex justify-center gap-2 mt-4">
+                    <Button
+                      className="bg-blue-600 hover:bg-blue-700 px-4 py-2 text-xs text-white"
+                      onClick={generateChallan}
+                    >
+                      <FileText className="w-3 h-3 mr-1" />
+                      Generate Challan
+                    </Button>
+                    <Button
+                      className="bg-slate-600 hover:bg-slate-700 px-4 py-2 text-xs text-white"
+                      onClick={() => {
+                        navigate('/challan');
+                      }}
+                    >
+                      View All Challans
+                    </Button>
+                    <Button
+                      className="bg-red-600 hover:bg-red-700 px-4 py-2 text-xs text-white"
+                      onClick={() => setShowChallanInInvoice(false)}
+                    >
+                      <X className="w-3 h-3 mr-1" />
+                      Close
+                    </Button>
                   </div>
                 </div>
               )}
