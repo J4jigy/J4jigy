@@ -1554,7 +1554,7 @@ const CashInEntry = ({ onBack }) => {
                 </div>
                 
                 {/* Right Column - Customer Details */}
-                <div className="p-3">
+                <div className="p-4">
                   <div className="text-xs space-y-1">
                     <div className="flex justify-between">
                       <span className="text-gray-700">Customer:</span>
