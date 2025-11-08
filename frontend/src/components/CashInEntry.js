@@ -765,6 +765,60 @@ const CashInEntry = ({ onBack }) => {
     console.log('Transaction saved, slot reset');
   };
 
+  // Generate Challan function
+  const generateChallan = () => {
+    // Validate required data
+    if (!selectedCustomer) {
+      alert('Please select a party/customer name');
+      return;
+    }
+    
+    if (parseFloat(amount) <= 0) {
+      alert('Please enter an amount greater than 0');
+      return;
+    }
+
+    // Generate challan number
+    const challanNumber = `DC-${String(Date.now()).slice(-6)}`;
+    
+    // Get current date
+    const currentDate = new Date().toISOString().split('T')[0];
+    
+    // Create challan object
+    const newChallan = {
+      id: challanNumber,
+      party: selectedCustomer,
+      type: 'delivery',
+      amount: parseFloat(amount),
+      date: currentDate,
+      status: 'pending',
+      items: Object.keys(selectedItems).length,
+      itemDetails: selectedItems,
+      paymentMode: paymentMode,
+      createdAt: new Date().toISOString(),
+      slotId: slots[activeSlot].id,
+      slotLabel: slots[activeSlot].customName || slots[activeSlot].label
+    };
+
+    // Get existing challans from localStorage
+    const existingChallans = getData('challans', []);
+    
+    // Add new challan
+    const updatedChallans = [newChallan, ...existingChallans];
+    
+    // Save to localStorage
+    setData('challans', updatedChallans);
+    
+    // Show success message
+    alert(`Challan ${challanNumber} generated successfully for ${selectedCustomer}`);
+    
+    // Close challan preview
+    setShowChallanPreview(false);
+    
+    // Optionally reset the current slot or navigate
+    console.log('Challan generated:', newChallan);
+  };
+
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col max-h-screen overflow-hidden">
       {/* Header */}
