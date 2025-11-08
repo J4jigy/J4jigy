@@ -1712,9 +1712,9 @@ const CashInEntry = ({ onBack }) => {
                 </div>
 
               {/* Action Buttons */}
-              <div className="flex justify-center gap-4 mt-6 w-full max-w-6xl">
+              <div className="flex justify-center gap-2 mt-4 w-full">
                 <Button
-                  className="bg-green-600 hover:bg-green-700 px-6"
+                  className="bg-green-600 hover:bg-green-700 px-4 py-2 text-xs"
                   onClick={async () => {
                     try {
                       // Print functionality
@@ -1724,21 +1724,21 @@ const CashInEntry = ({ onBack }) => {
                     }
                   }}
                 >
-                  <Printer className="w-4 h-4 mr-2" />
+                  <Printer className="w-3 h-3 mr-1" />
                   Print
                 </Button>
                 <Button
-                  className="bg-purple-600 hover:bg-purple-700 px-6"
+                  className="bg-purple-600 hover:bg-purple-700 px-4 py-2 text-xs"
                   onClick={() => setShowShareOptions(true)}
                 >
-                  <Share2 className="w-4 h-4 mr-2" />
+                  <Share2 className="w-3 h-3 mr-1" />
                   Share
                 </Button>
                 <Button
-                  className="bg-blue-600 hover:bg-blue-700 px-6"
+                  className="bg-blue-600 hover:bg-blue-700 px-4 py-2 text-xs"
                   onClick={() => setShowBillModal(false)}
                 >
-                  <X className="w-4 h-4 mr-2" />
+                  <X className="w-3 h-3 mr-1" />
                   Close
                 </Button>
               </div>
