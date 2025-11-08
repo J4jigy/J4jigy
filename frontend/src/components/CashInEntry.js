@@ -1369,11 +1369,11 @@ const CashInEntry = ({ onBack }) => {
 
       {/* Bill/Invoice Modal */}
       <Dialog open={showBillModal} onOpenChange={setShowBillModal}>
-        <DialogContent className="bg-slate-800 border-slate-700 max-w-2xl w-full mx-auto my-1 max-h-[98vh] overflow-y-auto p-3">
-          <DialogHeader className="pb-1">
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-xl w-full mx-auto my-0 h-screen overflow-y-auto p-2">
+          <DialogHeader className="pb-0">
             <DialogTitle className="text-white flex items-center gap-1 text-xs">
               <FileBarChart className="w-3 h-3 text-green-400" />
-              Invoice - {selectedSlotForBill !== null ? slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label : ''}
+              Invoice
             </DialogTitle>
           </DialogHeader>
           
