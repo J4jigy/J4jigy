@@ -1521,7 +1521,7 @@ const CashInEntry = ({ onBack }) => {
 
                 {/* Total Section - GST Format */}
                 <div className="border-2 border-black">
-                  <div className="bg-white p-2 space-y-1">
+                  <div className="bg-white p-1.5 space-y-0.5">
                     <div className="flex justify-between text-xs text-black">
                       <span className="font-semibold">Taxable Amount:</span>
                       <span className="font-semibold">₹{parseFloat(slots[selectedSlotForBill]?.amount || 0).toFixed(2)}</span>
@@ -1557,18 +1557,18 @@ const CashInEntry = ({ onBack }) => {
                     })()}
                   </div>
                   
-                  <div className="bg-gray-100 border-t-2 border-black p-2">
-                    <div className="flex justify-between text-sm font-bold text-black">
+                  <div className="bg-gray-100 border-t-2 border-black p-1.5">
+                    <div className="flex justify-between text-xs font-bold text-black">
                       <span>TOTAL AMOUNT:</span>
-                      <span className="text-lg text-black">₹{(() => {
+                      <span className="text-sm text-black">₹{(() => {
                         const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                         const taxRate = parseFloat(taxSlab);
                         const taxAmount = (subtotal * taxRate) / 100;
                         return (subtotal + taxAmount).toFixed(2);
                       })()}</span>
                     </div>
-                    <div className="text-xs text-black mt-1">
-                      <span className="font-semibold">Amount in Words:</span> {(() => {
+                    <div className="text-xs text-black mt-0.5">
+                      <span className="font-semibold">In Words:</span> {(() => {
                         const total = parseFloat(slots[selectedSlotForBill]?.amount || 0) * (1 + parseFloat(taxSlab) / 100);
                         return `Rupees ${Math.floor(total)} Only`;
                       })()}
