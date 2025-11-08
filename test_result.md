@@ -56,7 +56,7 @@
 ##   test_all: false
 ##   test_priority: "high_first"  # or "sequential" or "stuck_first"
 ##
-user_problem_statement: "Phase 1: Restore the CashInEntry.js invoice preview to its original dark-themed format. Phase 2: Add tax selection box under invoice preview with GST configuration options (Tax Type: CGST+SGST/IGST, Tax Rate: 0%/5%/12%/18%/28%) that updates the invoice calculations in real-time."
+user_problem_statement: "Fix the invoice preview in CashInEntry.js to fit properly on mobile screens. Text should not overflow boxes, and the invoice should use almost full screen width horizontally with compact, mobile-optimized sizing."
 
 backend:
   - task: "No backend changes required"
