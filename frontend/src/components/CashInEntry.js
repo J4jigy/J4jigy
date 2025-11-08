@@ -1421,35 +1421,33 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
               {/* Items Table - GST Format */}
-              <div className="border border-black overflow-x-auto">
+              <div className="border border-black text-xs">
                 {/* Table Header */}
-                <div className="bg-gray-100 px-1 py-1 flex items-center gap-1 text-xs font-semibold text-black border-b border-black min-w-full">
-                  <span style={{width: '8%', minWidth: '40px'}} className="text-center">S.No</span>
-                  <span style={{width: '35%', minWidth: '100px'}} className="px-2">Item Description</span>
-                  <span style={{width: '15%', minWidth: '60px'}} className="text-center">HSN</span>
-                  <span style={{width: '10%', minWidth: '40px'}} className="text-center">Qty</span>
-                  <span style={{width: '16%', minWidth: '70px'}} className="text-right">Rate</span>
-                  <span style={{width: '16%', minWidth: '70px'}} className="text-right">Amount</span>
+                <div className="bg-gray-100 px-0.5 py-0.5 flex gap-0.5 font-semibold text-black border-b border-black">
+                  <span className="w-8 text-center">No</span>
+                  <span className="flex-1">Item</span>
+                  <span className="w-12 text-center">HSN</span>
+                  <span className="w-8 text-center">Qty</span>
+                  <span className="w-16 text-right">Rate</span>
+                  <span className="w-16 text-right">Amt</span>
                 </div>
                 
                 {/* Table Body */}
                 {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
-                  <div className="px-1 py-1 flex items-center gap-1 text-xs bg-white min-w-full">
-                    <span style={{width: '8%', minWidth: '40px'}} className="text-center text-black">1</span>
-                    <span style={{width: '35%', minWidth: '100px'}} className="px-2 text-black break-words">
+                  <div className="px-0.5 py-0.5 flex gap-0.5 bg-white">
+                    <span className="w-8 text-center text-black">1</span>
+                    <span className="flex-1 text-black truncate">
                       {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
                         ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
                         : 'Service/Product'}
                     </span>
-                    <span style={{width: '15%', minWidth: '60px'}} className="text-center text-gray-700">9954</span>
-                    <span style={{width: '10%', minWidth: '40px'}} className="text-center text-gray-700">1</span>
-                    <span style={{width: '16%', minWidth: '70px'}} className="text-right text-gray-700">₹{slots[selectedSlotForBill]?.amount}</span>
-                    <span style={{width: '16%', minWidth: '70px'}} className="text-right text-black font-semibold">₹{slots[selectedSlotForBill]?.amount}</span>
+                    <span className="w-12 text-center text-gray-700">9954</span>
+                    <span className="w-8 text-center text-gray-700">1</span>
+                    <span className="w-16 text-right text-gray-700">₹{slots[selectedSlotForBill]?.amount}</span>
+                    <span className="w-16 text-right text-black font-semibold">₹{slots[selectedSlotForBill]?.amount}</span>
                   </div>
                 ) : (
-                  <div className="px-3 py-6 text-center text-gray-500 text-xs bg-white">
-                    No items added to this invoice
-                  </div>
+                  <div className="p-2 text-center text-gray-500 bg-white">No items</div>
                 )}
               </div>
 
