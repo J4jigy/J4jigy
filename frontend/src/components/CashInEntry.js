@@ -1694,6 +1694,137 @@ const CashInEntry = ({ onBack }) => {
         onScan={handleBarcodeScan}
         title="Scan Product Barcode"
       />
+
+      {/* Share Options Dialog */}
+      <Dialog open={showShareOptions} onOpenChange={setShowShareOptions}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-white flex items-center gap-2">
+              <Share2 className="w-5 h-5 text-purple-400" />
+              Share Invoice
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-3">
+            {/* Share Within App Chat */}
+            <Button
+              className="w-full bg-blue-600 hover:bg-blue-700 h-14 text-left justify-start"
+              onClick={() => {
+                setShowShareOptions(false);
+                // Navigate to chat with invoice data
+                alert('Share within app chat feature - Coming soon!');
+              }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="bg-blue-500 p-2 rounded-lg">
+                  <Users className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="font-semibold">Share within App Chat</div>
+                  <div className="text-xs text-blue-200">Send invoice to contacts in app</div>
+                </div>
+              </div>
+            </Button>
+
+            {/* Share Outside App */}
+            <Button
+              className="w-full bg-green-600 hover:bg-green-700 h-14 text-left justify-start"
+              onClick={async () => {
+                setShowShareOptions(false);
+                try {
+                  const slot = slots[selectedSlotForBill];
+                  const subtotal = parseFloat(slot?.amount || 0);
+                  const taxRate = parseFloat(taxSlab);
+                  const taxAmount = (subtotal * taxRate) / 100;
+                  const total = subtotal + taxAmount;
+                  
+                  const invoiceText = `
+📄 TAX INVOICE
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+🏢 ${activeBusiness?.name || 'BUSINESS NAME'}
+${activeBusiness?.address || ''}
+📞 Phone: ${activeBusiness?.phone || 'N/A'}
+🆔 GSTIN: ${activeBusiness?.gst || 'N/A'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 Invoice Details:
+Invoice No: ${slot?.invoiceNumber || 'N/A'}
+Date: ${slot?.invoiceDate || 'N/A'}
+Time: ${slot?.invoiceTime || 'N/A'}
+
+👤 Customer: ${slot?.customName || slot?.label}
+💳 Payment: ${slot?.paymentMode}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+📦 Items:
+${Object.entries(slot?.selectedItems || {}).length > 0 
+  ? Object.keys(slot?.selectedItems).join(', ') 
+  : 'Service/Product'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+💰 Amount Details:
+Taxable Amount: ₹${subtotal.toFixed(2)}
+${taxType === 'CGST+SGST' && taxRate > 0 
+  ? `CGST @ ${taxRate / 2}%: ₹${(taxAmount / 2).toFixed(2)}\nSGST @ ${taxRate / 2}%: ₹${(taxAmount / 2).toFixed(2)}`
+  : taxRate > 0 
+    ? `IGST @ ${taxRate}%: ₹${taxAmount.toFixed(2)}`
+    : 'No Tax Applied'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+💵 TOTAL AMOUNT: ₹${total.toFixed(2)}
+In Words: Rupees ${Math.floor(total)} Only
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 ${termsText || 'Terms & Conditions Apply'}
+
+✍️ For ${activeBusiness?.name || 'BUSINESS NAME'}
+Authorized Signatory
+                  `.trim();
+
+                  if (navigator.share) {
+                    await navigator.share({
+                      title: `Invoice ${slot?.invoiceNumber}`,
+                      text: invoiceText
+                    });
+                  } else {
+                    // Fallback: Copy to clipboard
+                    await navigator.clipboard.writeText(invoiceText);
+                    alert('Invoice copied to clipboard!');
+                  }
+                } catch (error) {
+                  console.error('Share error:', error);
+                  alert('Failed to share invoice');
+                }
+              }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="bg-green-500 p-2 rounded-lg">
+                  <Share2 className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="font-semibold">Share Outside App</div>
+                  <div className="text-xs text-green-200">WhatsApp, SMS, Email, etc.</div>
+                </div>
+              </div>
+            </Button>
+
+            {/* Cancel Button */}
+            <Button
+              variant="outline"
+              className="w-full border-slate-600 text-slate-300 hover:bg-slate-700"
+              onClick={() => setShowShareOptions(false)}
+            >
+              Cancel
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
