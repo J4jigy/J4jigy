@@ -498,11 +498,13 @@ const CashInEntry = ({ onBack }) => {
     const isRightSwipe = distance < -minSwipeDistance;
     
     if (isRightSwipe) {
-      // Swipe right detected - show Challan preview
-      setShowChallanPreview(true);
+      // Swipe right detected - show Invoice preview
+      generateInvoiceForSlot(activeSlot);
+      setSelectedSlotForBill(activeSlot);
+      setShowBillModal(true);
     } else if (isLeftSwipe) {
-      // Swipe left detected - hide Challan preview
-      setShowChallanPreview(false);
+      // Swipe left detected - show Challan preview
+      setShowChallanPreview(true);
     }
   };
 
