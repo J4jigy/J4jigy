@@ -1626,11 +1626,7 @@ const CashInEntry = ({ onBack }) => {
                 </div>
               </div>
 
-              {/* Page Break for Print */}
-              <div className="print:break-before-page border-t-4 border-dashed border-gray-400 my-6"></div>
-
-              {/* Merchant Copy */}
-              <div className="space-y-3">
+              {/* Single Invoice - No Duplicate Copies */}
                 <div className="text-center bg-green-600/20 border-2 border-green-500 py-2">
                   <span className="text-sm font-bold text-green-400">MERCHANT COPY</span>
                 </div>
