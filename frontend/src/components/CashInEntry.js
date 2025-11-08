@@ -1643,7 +1643,7 @@ const CashInEntry = ({ onBack }) => {
                 </Button>
                 <Button
                   className="flex-1 bg-blue-600 hover:bg-blue-700"
-                  onClick={() => setShowBillPreview(false)}
+                  onClick={() => setShowBillModal(false)}
                 >
                   Close
                 </Button>
