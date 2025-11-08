@@ -1380,21 +1380,38 @@ It's completely free to try!`;
 
       {/* Cash In/Out Floating Buttons */}
       <div className="fixed bottom-6 left-4 right-4">
-        <div className="flex gap-4">
-          <Button 
-            className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 rounded-xl shadow-lg"
-            onClick={() => handleNavigate('/cash-in')}
-          >
-            <Plus className="w-5 h-5 mr-2" />
-            Cash In
-          </Button>
-          <Button 
-            className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 rounded-xl shadow-lg"
-            onClick={() => handleNavigate('/cash-out')}
-          >
-            <Minus className="w-5 h-5 mr-2" />
-            Cash Out
-          </Button>
+        <div className="flex flex-col gap-3">
+          {/* Scan & Pay Button - Centered above Cash In/Out */}
+          <div className="flex justify-center">
+            <Button 
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 px-8 rounded-xl shadow-lg"
+              onClick={() => {
+                // Add Scan & Pay functionality here
+                console.log('Scan & Pay clicked');
+              }}
+            >
+              <ScanLine className="w-5 h-5 mr-2" />
+              Scan & Pay
+            </Button>
+          </div>
+          
+          {/* Cash In/Out Buttons */}
+          <div className="flex gap-4">
+            <Button 
+              className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 rounded-xl shadow-lg"
+              onClick={() => handleNavigate('/cash-in')}
+            >
+              <Plus className="w-5 h-5 mr-2" />
+              Cash In
+            </Button>
+            <Button 
+              className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 rounded-xl shadow-lg"
+              onClick={() => handleNavigate('/cash-out')}
+            >
+              <Minus className="w-5 h-5 mr-2" />
+              Cash Out
+            </Button>
+          </div>
         </div>
       </div>
 
