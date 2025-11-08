@@ -1571,9 +1571,9 @@ const CashInEntry = ({ onBack }) => {
                 </div>
 
                 {/* Terms & Conditions Footer */}
-                <div className="border-2 border-black p-1.5 bg-white">
-                  <div className="flex justify-between items-center mb-1">
-                    <div className="font-semibold text-black text-xs">Terms & Conditions:</div>
+                <div className="border border-black p-1 bg-white">
+                  <div className="flex justify-between items-center">
+                    <div className="font-semibold text-black text-xs">Terms:</div>
                     {!isEditingTerms ? (
                       <Button
                         onClick={() => {
@@ -1582,16 +1582,16 @@ const CashInEntry = ({ onBack }) => {
                         }}
                         variant="ghost"
                         size="sm"
-                        className="text-xs h-5 px-2 text-blue-600 hover:text-blue-700"
+                        className="text-xs h-4 px-1 text-blue-600 hover:text-blue-700"
                       >
                         Edit
                       </Button>
                     ) : (
-                      <div className="flex gap-1">
-                        <Button onClick={saveTerms} size="sm" className="h-5 px-2 text-xs bg-green-600 hover:bg-green-700 text-white">
+                      <div className="flex gap-0.5">
+                        <Button onClick={saveTerms} size="sm" className="h-4 px-1 text-xs bg-green-600 hover:bg-green-700 text-white">
                           Save
                         </Button>
-                        <Button onClick={cancelTermsEdit} variant="ghost" size="sm" className="h-5 px-2 text-xs text-gray-600">
+                        <Button onClick={cancelTermsEdit} variant="ghost" size="sm" className="h-4 px-1 text-xs text-gray-600">
                           Cancel
                         </Button>
                       </div>
@@ -1603,24 +1603,24 @@ const CashInEntry = ({ onBack }) => {
                       <textarea
                         value={tempTermsText}
                         onChange={(e) => setTempTermsText(e.target.value)}
-                        className="w-full bg-white border border-gray-300 text-black text-xs p-1.5 rounded min-h-[60px] focus:outline-none focus:border-blue-500"
-                        placeholder="Enter terms and conditions..."
+                        className="w-full bg-white border border-gray-300 text-black text-xs p-1 rounded min-h-[40px] focus:outline-none focus:border-blue-500"
+                        placeholder="Enter terms..."
                       />
                     ) : (
-                      <div className="whitespace-pre-line text-xs">
+                      <div className="whitespace-pre-line text-xs line-clamp-2">
                         {termsText}
                       </div>
                     )}
                   </div>
                   
-                  <div className="text-right mt-2">
-                    <div className="text-xs text-black">For <span className="font-semibold text-black">{activeBusiness?.name || 'BUSINESS NAME'}</span></div>
-                    <div className="mt-4 text-xs text-black border-t border-black pt-0.5 inline-block">Authorized Signatory</div>
+                  <div className="text-right mt-1">
+                    <div className="text-xs text-black">For {activeBusiness?.name || 'BUSINESS'}</div>
+                    <div className="mt-2 text-xs text-black border-t border-black pt-0.5 inline-block">Auth. Sign</div>
                   </div>
                 </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-2 mt-2">
+              <div className="flex gap-1 mt-1">
                 <Button
                   className="flex-1 bg-green-600 hover:bg-green-700"
                   onClick={async () => {
