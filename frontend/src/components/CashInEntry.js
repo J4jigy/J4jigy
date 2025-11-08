@@ -1053,10 +1053,7 @@ const CashInEntry = ({ onBack }) => {
                   variant="outline"
                   size="sm"
                   className="bg-blue-600 hover:bg-blue-700 text-white border-blue-500 h-8 text-xs"
-                  onClick={() => {
-                    console.log('Generate Challan clicked');
-                    // Add challan generation logic here
-                  }}
+                  onClick={generateChallan}
                 >
                   <FileText className="w-3 h-3 mr-1" />
                   Generate
