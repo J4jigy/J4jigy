@@ -141,6 +141,13 @@ const CashInEntry = ({ onBack }) => {
   const [selectedSlotForBill, setSelectedSlotForBill] = useState(null);
   const [longPressTimer, setLongPressTimer] = useState(null);
   
+  // Challan preview state for invoice dialog
+  const [showChallanInInvoice, setShowChallanInInvoice] = useState(false);
+  
+  // Swipe detection state for invoice
+  const [invoiceTouchStart, setInvoiceTouchStart] = useState(null);
+  const [invoiceTouchEnd, setInvoiceTouchEnd] = useState(null);
+  
   // Tax states
   const [taxType, setTaxType] = useState('CGST+SGST'); // CGST+SGST or IGST
   const [taxSlab, setTaxSlab] = useState('0'); // 0, 5, 18, 28
