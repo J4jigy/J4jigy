@@ -1577,7 +1577,7 @@ const CashInEntry = ({ onBack }) => {
                 {/* Table Header */}
                 <div className="bg-gray-100 px-2 py-2 grid grid-cols-12 gap-1 text-[10px] font-semibold text-black border-b-2 border-black">
                   <span className="col-span-1 text-center">S.No</span>
-                  <span className="col-span-4">Item Details</span>
+                  <span className="col-span-4 pl-2">Item Details</span>
                   <span className="col-span-2 text-center">HSN</span>
                   <span className="col-span-1 text-center">Qty</span>
                   <span className="col-span-2 text-right">Rate</span>
@@ -1588,7 +1588,7 @@ const CashInEntry = ({ onBack }) => {
                 {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
                   <div className="px-2 py-2 grid grid-cols-12 gap-1 text-[10px] bg-white">
                     <span className="col-span-1 text-center text-black">1</span>
-                    <span className="col-span-4 text-black break-words">
+                    <span className="col-span-4 pl-2 text-black break-words">
                       {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
                         ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
                         : 'Service/Product'}
