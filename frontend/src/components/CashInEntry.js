@@ -1489,8 +1489,8 @@ const CashInEntry = ({ onBack }) => {
               {/* Items Table - GST Format */}
               <div className="border-2 border-black">
                 {/* Table Header */}
-                <div className="bg-gray-100 px-2 py-2 grid grid-cols-12 gap-1 text-xs font-semibold text-black border-b-2 border-black">
-                  <span className="col-span-1">S.No</span>
+                <div className="bg-gray-100 px-3 py-2 grid grid-cols-12 gap-3 text-xs font-semibold text-black border-b-2 border-black">
+                  <span className="col-span-1 text-center">S.No</span>
                   <span className="col-span-4">Item Description</span>
                   <span className="col-span-2 text-center">HSN</span>
                   <span className="col-span-1 text-center">Qty</span>
@@ -1500,8 +1500,8 @@ const CashInEntry = ({ onBack }) => {
                 
                 {/* Table Body */}
                 {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
-                  <div className="px-2 py-2 grid grid-cols-12 gap-1 text-xs bg-white">
-                    <span className="col-span-1 text-black">1</span>
+                  <div className="px-3 py-2 grid grid-cols-12 gap-3 text-xs bg-white">
+                    <span className="col-span-1 text-center text-black">1</span>
                     <span className="col-span-4 text-black">
                       {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
                         ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
