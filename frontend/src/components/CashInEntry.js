@@ -1513,14 +1513,14 @@ const CashInEntry = ({ onBack }) => {
           </div>
           
           {selectedSlotForBill !== null && (
-            <div id="invoice-content" className="space-y-3 bg-white p-6 rounded w-full max-w-6xl">
+            <div id="invoice-content" className="space-y-2 bg-white p-2 rounded w-full">
               {/* GST Invoice Header */}
-              <div className="text-center border-2 border-black p-4">
-                <div className="text-2xl font-bold text-black mb-1">{activeBusiness?.name || 'BUSINESS NAME'}</div>
+              <div className="text-center border-2 border-black p-2">
+                <div className="text-lg font-bold text-black mb-1">{activeBusiness?.name || 'BUSINESS NAME'}</div>
                 {activeBusiness?.address && (
-                  <div className="text-sm text-black">{activeBusiness.address}</div>
+                  <div className="text-xs text-black">{activeBusiness.address}</div>
                 )}
-                <div className="flex justify-center gap-6 mt-2 text-sm text-black">
+                <div className="flex justify-center gap-4 mt-1 text-xs text-black flex-wrap">
                   {activeBusiness?.phone && (
                     <span><span className="font-semibold">Phone:</span> {activeBusiness.phone}</span>
                   )}
@@ -1528,7 +1528,7 @@ const CashInEntry = ({ onBack }) => {
                     <span><span className="font-semibold">GSTIN:</span> {activeBusiness.gst}</span>
                   )}
                 </div>
-                <div className="mt-2 text-lg font-bold text-black border-t-2 border-black pt-2">
+                <div className="mt-1 text-base font-bold text-black border-t-2 border-black pt-1">
                   TAX INVOICE
                 </div>
               </div>
@@ -1536,37 +1536,37 @@ const CashInEntry = ({ onBack }) => {
               {/* Invoice Details - Two Columns */}
               <div className="grid grid-cols-2 gap-0 border-2 border-black">
                 {/* Left Column - Invoice Details */}
-                <div className="p-4 border-r border-black">
-                  <div className="text-xs space-y-1">
+                <div className="p-2 border-r border-black">
+                  <div className="text-xs space-y-0.5">
                     <div className="flex justify-between">
                       <span className="text-gray-700">Invoice No:</span>
-                      <span className="text-black font-semibold">{slots[selectedSlotForBill]?.invoiceNumber || `INV-${selectedSlotForBill + 1}-${String(Date.now()).slice(-6)}`}</span>
+                      <span className="text-black font-semibold text-[10px]">{slots[selectedSlotForBill]?.invoiceNumber || `INV-${selectedSlotForBill + 1}-${String(Date.now()).slice(-6)}`}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-700">Date:</span>
-                      <span className="text-black">{slots[selectedSlotForBill]?.invoiceDate || new Date().toLocaleDateString('en-GB')}</span>
+                      <span className="text-black text-[10px]">{slots[selectedSlotForBill]?.invoiceDate || new Date().toLocaleDateString('en-GB')}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-700">Time:</span>
-                      <span className="text-black">{slots[selectedSlotForBill]?.invoiceTime || new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
+                      <span className="text-black text-[10px]">{slots[selectedSlotForBill]?.invoiceTime || new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
                     </div>
                   </div>
                 </div>
                 
                 {/* Right Column - Customer Details */}
-                <div className="p-4">
-                  <div className="text-xs space-y-1">
+                <div className="p-2">
+                  <div className="text-xs space-y-0.5">
                     <div className="flex justify-between">
                       <span className="text-gray-700">Customer:</span>
-                      <span className="text-black font-semibold">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span>
+                      <span className="text-black font-semibold text-[10px] truncate max-w-[120px]">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-700">Payment Mode:</span>
-                      <span className="text-black">{slots[selectedSlotForBill]?.paymentMode}</span>
+                      <span className="text-gray-700">Payment:</span>
+                      <span className="text-black text-[10px]">{slots[selectedSlotForBill]?.paymentMode}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-700">State:</span>
-                      <span className="text-black">Maharashtra</span>
+                      <span className="text-black text-[10px]">Maharashtra</span>
                     </div>
                   </div>
                 </div>
@@ -1575,9 +1575,9 @@ const CashInEntry = ({ onBack }) => {
               {/* Items Table - GST Format */}
               <div className="border-2 border-black">
                 {/* Table Header */}
-                <div className="bg-gray-100 px-4 py-3 grid grid-cols-12 gap-3 text-xs font-semibold text-black border-b-2 border-black">
+                <div className="bg-gray-100 px-2 py-2 grid grid-cols-12 gap-1 text-[10px] font-semibold text-black border-b-2 border-black">
                   <span className="col-span-1 text-center">S.No</span>
-                  <span className="col-span-4 pl-3">Item Details</span>
+                  <span className="col-span-4">Item Details</span>
                   <span className="col-span-2 text-center">HSN</span>
                   <span className="col-span-1 text-center">Qty</span>
                   <span className="col-span-2 text-right">Rate</span>
@@ -1586,9 +1586,9 @@ const CashInEntry = ({ onBack }) => {
                 
                 {/* Table Body */}
                 {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
-                  <div className="px-4 py-3 grid grid-cols-12 gap-3 text-xs bg-white">
+                  <div className="px-2 py-2 grid grid-cols-12 gap-1 text-[10px] bg-white">
                     <span className="col-span-1 text-center text-black">1</span>
-                    <span className="col-span-4 pl-3 text-black">
+                    <span className="col-span-4 text-black break-words">
                       {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
                         ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
                         : 'Service/Product'}
@@ -1599,7 +1599,7 @@ const CashInEntry = ({ onBack }) => {
                     <span className="col-span-2 text-right text-black font-semibold">₹{slots[selectedSlotForBill]?.amount}</span>
                   </div>
                 ) : (
-                  <div className="px-3 py-6 text-center text-gray-500 text-xs bg-white">
+                  <div className="px-2 py-4 text-center text-gray-500 text-[10px] bg-white">
                     No items added to this invoice
                   </div>
                 )}
