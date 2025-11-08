@@ -1551,18 +1551,18 @@ const CashInEntry = ({ onBack }) => {
                     })()}
                   </div>
                   
-                  <div className="bg-gray-100 border-t-2 border-black p-1.5">
+                  <div className="bg-gray-100 border-t border-black p-1">
                     <div className="flex justify-between text-xs font-bold text-black">
-                      <span>TOTAL AMOUNT:</span>
-                      <span className="text-sm text-black">₹{(() => {
+                      <span>TOTAL:</span>
+                      <span>₹{(() => {
                         const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                         const taxRate = parseFloat(taxSlab);
                         const taxAmount = (subtotal * taxRate) / 100;
                         return (subtotal + taxAmount).toFixed(2);
                       })()}</span>
                     </div>
-                    <div className="text-xs text-black mt-0.5">
-                      <span className="font-semibold">In Words:</span> {(() => {
+                    <div className="text-xs text-black">
+                      {(() => {
                         const total = parseFloat(slots[selectedSlotForBill]?.amount || 0) * (1 + parseFloat(taxSlab) / 100);
                         return `Rupees ${Math.floor(total)} Only`;
                       })()}
