@@ -1912,12 +1912,11 @@ Authorized Signatory
               onClick={async () => {
                 setShowShareOptions(false);
                 try {
+                  // Generate PDF
+                  const pdfFile = await generateInvoicePDF();
                   const slot = slots[selectedSlotForBill];
-                  const subtotal = parseFloat(slot?.amount || 0);
-                  const taxRate = parseFloat(taxSlab);
-                  const taxAmount = (subtotal * taxRate) / 100;
-                  const total = subtotal + taxAmount;
                   
+                  // Share using Web Share API
                   const invoiceText = `
 📄 TAX INVOICE
 ━━━━━━━━━━━━━━━━━━━━━━━━
