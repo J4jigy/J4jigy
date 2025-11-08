@@ -477,6 +477,34 @@ const CashInEntry = ({ onBack }) => {
     }
   };
 
+  // Swipe detection handlers
+  const minSwipeDistance = 50; // minimum distance for swipe
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isRightSwipe) {
+      // Swipe right detected - show Challan preview
+      setShowChallanPreview(true);
+    } else if (isLeftSwipe) {
+      // Swipe left detected - hide Challan preview
+      setShowChallanPreview(false);
+    }
+  };
+
   const createContact = async (name, type) => {
     try {
       const token = localStorage.getItem('token');
