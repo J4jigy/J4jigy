@@ -357,9 +357,29 @@ const CashInEntry = ({ onBack }) => {
     incQty(product);
   };
 
+  // Generate unique invoice details for a slot
+  const generateInvoiceForSlot = (slotIndex) => {
+    const now = new Date();
+    const timestamp = Date.now();
+    const invoiceNumber = `INV-${slotIndex + 1}-${String(timestamp).slice(-6)}`;
+    const invoiceDate = now.toLocaleDateString('en-GB');
+    const invoiceTime = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    
+    // Update slot with invoice details
+    const updatedSlots = [...slots];
+    updatedSlots[slotIndex] = {
+      ...updatedSlots[slotIndex],
+      invoiceNumber,
+      invoiceDate,
+      invoiceTime
+    };
+    setSlots(updatedSlots);
+  };
+
   // Long press handling for bill/invoice
   const handleSlotMouseDown = (slotIndex) => {
     const timer = setTimeout(() => {
+      generateInvoiceForSlot(slotIndex);
       setSelectedSlotForBill(slotIndex);
       setShowBillModal(true);
     }, 800); // 800ms for long press
@@ -375,6 +395,7 @@ const CashInEntry = ({ onBack }) => {
 
   const handleSlotTouchStart = (slotIndex) => {
     const timer = setTimeout(() => {
+      generateInvoiceForSlot(slotIndex);
       setSelectedSlotForBill(slotIndex);
       setShowBillModal(true);
     }, 800); // 800ms for long press
