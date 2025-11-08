@@ -133,6 +133,7 @@ const CashInEntry = ({ onBack }) => {
   
   // Bill/Invoice modal states
   const [showBillModal, setShowBillModal] = useState(false);
+  const [showShareOptions, setShowShareOptions] = useState(false);
   const [selectedSlotForBill, setSelectedSlotForBill] = useState(null);
   const [longPressTimer, setLongPressTimer] = useState(null);
   
