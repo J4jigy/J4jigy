@@ -1777,75 +1777,39 @@ const CashInEntry = ({ onBack }) => {
                   onClick={async () => {
                     setShowContactsList(false);
                     try {
+                      // Generate PDF
+                      const pdfFile = await generateInvoicePDF();
                       const slot = slots[selectedSlotForBill];
-                      const subtotal = parseFloat(slot?.amount || 0);
-                      const taxRate = parseFloat(taxSlab);
-                      const taxAmount = (subtotal * taxRate) / 100;
-                      const total = subtotal + taxAmount;
                       
-                      const invoiceText = `
-📄 TAX INVOICE
-━━━━━━━━━━━━━━━━━━━━━━━━
-
-🏢 ${activeBusiness?.name || 'BUSINESS NAME'}
-${activeBusiness?.address || ''}
-📞 Phone: ${activeBusiness?.phone || 'N/A'}
-🆔 GSTIN: ${activeBusiness?.gst || 'N/A'}
-
-━━━━━━━━━━━━━━━━━━━━━━━━
-
-📋 Invoice Details:
-Invoice No: ${slot?.invoiceNumber || 'N/A'}
-Date: ${slot?.invoiceDate || 'N/A'}
-Time: ${slot?.invoiceTime || 'N/A'}
-
-👤 Customer: ${slot?.customName || slot?.label}
-💳 Payment: ${slot?.paymentMode}
-
-━━━━━━━━━━━━━━━━━━━━━━━━
-
-📦 Items:
-${Object.entries(slot?.selectedItems || {}).length > 0 
-  ? Object.keys(slot?.selectedItems).join(', ') 
-  : 'Service/Product'}
-
-━━━━━━━━━━━━━━━━━━━━━━━━
-
-💰 Amount Details:
-Taxable Amount: ₹${subtotal.toFixed(2)}
-${taxType === 'CGST+SGST' && taxRate > 0 
-  ? `CGST @ ${taxRate / 2}%: ₹${(taxAmount / 2).toFixed(2)}\nSGST @ ${taxRate / 2}%: ₹${(taxAmount / 2).toFixed(2)}`
-  : taxRate > 0 
-    ? `IGST @ ${taxRate}%: ₹${taxAmount.toFixed(2)}`
-    : 'No Tax Applied'}
-
-━━━━━━━━━━━━━━━━━━━━━━━━
-
-💵 TOTAL AMOUNT: ₹${total.toFixed(2)}
-In Words: Rupees ${Math.floor(total)} Only
-
-━━━━━━━━━━━━━━━━━━━━━━━━
-
-📝 ${termsText || 'Terms & Conditions Apply'}
-
-✍️ For ${activeBusiness?.name || 'BUSINESS NAME'}
-Authorized Signatory
-                      `.trim();
-
-                      // Send message via chat API
-                      const token = localStorage.getItem('token');
-                      await axios.post(`${API}/api/chat/send`, {
-                        peer_id: contact.id,
-                        message: invoiceText,
-                        type: 'text'
-                      }, {
-                        headers: { Authorization: `Bearer ${token}` }
-                      });
-                      
-                      alert(`Invoice sent to ${contact.name}!`);
+                      // Convert PDF to base64
+                      const reader = new FileReader();
+                      reader.readAsDataURL(pdfFile);
+                      reader.onloadend = async () => {
+                        try {
+                          const base64data = reader.result;
+                          
+                          // Send PDF via chat API
+                          const token = localStorage.getItem('token');
+                          await axios.post(`${API}/api/chat/send`, {
+                            peer_id: contact.id,
+                            message: `Invoice ${slot?.invoiceNumber} - ${activeBusiness?.name || 'Business'}`,
+                            type: 'file',
+                            file_data: base64data,
+                            file_name: `Invoice_${slot?.invoiceNumber}.pdf`,
+                            file_type: 'application/pdf'
+                          }, {
+                            headers: { Authorization: `Bearer ${token}` }
+                          });
+                          
+                          alert(`Invoice PDF sent to ${contact.name}!`);
+                        } catch (error) {
+                          console.error('Error sending invoice:', error);
+                          alert('Failed to send invoice. Please try again.');
+                        }
+                      };
                     } catch (error) {
-                      console.error('Error sending invoice:', error);
-                      alert('Failed to send invoice. Please try again.');
+                      console.error('Error generating PDF:', error);
+                      alert('Failed to generate invoice PDF. Please try again.');
                     }
                   }}
                 >
