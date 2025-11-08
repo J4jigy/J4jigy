@@ -1576,13 +1576,57 @@ const CashInEntry = ({ onBack }) => {
                   </div>
                 </div>
 
-                {/* Terms & Auth */}
-                <div className="border border-black p-0.5 bg-white text-xs text-black">
-                  <div className="text-right">Auth. Sign: {activeBusiness?.name || 'Business'}</div>
+                {/* Terms & Conditions Footer */}
+                <div className="border-2 border-black p-2 bg-white">
+                  <div className="flex justify-between items-center mb-2">
+                    <div className="font-semibold text-black text-xs">Terms & Conditions:</div>
+                    {!isEditingTerms ? (
+                      <Button
+                        onClick={() => {
+                          setTempTermsText(termsText);
+                          setIsEditingTerms(true);
+                        }}
+                        variant="ghost"
+                        size="sm"
+                        className="text-xs h-6 px-2 text-blue-600 hover:text-blue-700"
+                      >
+                        Edit
+                      </Button>
+                    ) : (
+                      <div className="flex gap-1">
+                        <Button onClick={saveTerms} size="sm" className="h-6 px-2 text-xs bg-green-600 hover:bg-green-700 text-white">
+                          Save
+                        </Button>
+                        <Button onClick={cancelTermsEdit} variant="ghost" size="sm" className="h-6 px-2 text-xs text-gray-600">
+                          Cancel
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="text-xs text-black">
+                    {isEditingTerms ? (
+                      <textarea
+                        value={tempTermsText}
+                        onChange={(e) => setTempTermsText(e.target.value)}
+                        className="w-full bg-white border border-gray-300 text-black text-xs p-2 rounded min-h-[80px] focus:outline-none focus:border-blue-500"
+                        placeholder="Enter terms and conditions..."
+                      />
+                    ) : (
+                      <div className="whitespace-pre-line">
+                        {termsText}
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="text-right mt-3">
+                    <div className="text-xs text-black">For <span className="font-semibold text-black">{activeBusiness?.name || 'BUSINESS NAME'}</span></div>
+                    <div className="mt-8 text-xs text-black border-t border-black pt-1 inline-block">Authorized Signatory</div>
+                  </div>
                 </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-1">
+              <div className="flex gap-2 mt-4">
                 <Button
                   className="flex-1 bg-green-600 hover:bg-green-700"
                   onClick={async () => {
