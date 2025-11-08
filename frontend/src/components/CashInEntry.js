@@ -1613,7 +1613,7 @@ const CashInEntry = ({ onBack }) => {
             </div>
           </div>
           
-          {selectedSlotForBill !== null && (
+          {selectedSlotForBill !== null && !showChallanInInvoice && (
             <div 
               id="invoice-content" 
               className="space-y-2 bg-white p-2 rounded w-full"
