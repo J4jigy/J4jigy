@@ -1899,11 +1899,18 @@ const CashInEntry = ({ onBack }) => {
             <Button
               className="w-full bg-green-600 hover:bg-green-700 h-14 text-left justify-start"
               onClick={async () => {
-                setShowShareOptions(false);
                 try {
+                  setShowShareOptions(false);
+                  
+                  // Show loading indicator
+                  const loadingAlert = alert('Generating PDF... Please wait');
+                  
                   // Generate PDF
+                  console.log('Starting PDF generation...');
                   const pdfFile = await generateInvoicePDF();
                   const slot = slots[selectedSlotForBill];
+                  
+                  console.log('PDF generated, preparing to share...');
                   
                   // Share using Web Share API
                   const invoiceText = `
