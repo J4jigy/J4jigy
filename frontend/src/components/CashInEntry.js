@@ -1447,11 +1447,43 @@ const CashInEntry = ({ onBack }) => {
                 </div>
               </div>
 
-              {/* Invoice Details - Single Row */}
-              <div className="border border-black p-0.5 text-xs flex justify-between">
-                <span>Inv: INV-{String(Date.now()).slice(-6)}</span>
-                <span>{new Date().toLocaleDateString('en-GB')}</span>
-                <span>{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span>
+              {/* Invoice Details - Two Columns */}
+              <div className="grid grid-cols-2 gap-0 border-2 border-black">
+                {/* Left Column - Invoice Details */}
+                <div className="p-3 border-r border-black">
+                  <div className="text-xs space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Invoice No:</span>
+                      <span className="text-black font-semibold">INV-{String(Date.now()).slice(-6)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Date:</span>
+                      <span className="text-black">{new Date().toLocaleDateString('en-GB')}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Time:</span>
+                      <span className="text-black">{new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Right Column - Customer Details */}
+                <div className="p-3">
+                  <div className="text-xs space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Customer:</span>
+                      <span className="text-black font-semibold">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Payment Mode:</span>
+                      <span className="text-black">{slots[selectedSlotForBill]?.paymentMode}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">State:</span>
+                      <span className="text-black">Maharashtra</span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Items Table - GST Format */}
