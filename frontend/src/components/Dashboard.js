@@ -83,9 +83,6 @@ export default function Dashboard({ user, onLogout }) {
   ]);
   const [newMessage, setNewMessage] = useState('');
   
-  // Scan & Pay dialog state
-  const [showScanPayDialog, setShowScanPayDialog] = useState(false);
-  
   // Contact and chat states
   const [showPeerList, setShowPeerList] = useState(true); // Show contact list by default
   const [selectedPeer, setSelectedPeer] = useState(null);
