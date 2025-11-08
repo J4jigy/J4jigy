@@ -796,6 +796,7 @@ const CashInEntry = ({ onBack }) => {
     const newChallan = {
       id: challanNumber,
       party: partyName,
+      vehicleNumber: challanVehicleNumber || 'N/A',
       type: 'delivery',
       amount: parseFloat(slot.amount),
       date: currentDate,
@@ -818,10 +819,13 @@ const CashInEntry = ({ onBack }) => {
     setData('challans', updatedChallans);
     
     // Show success message
-    alert(`Challan ${challanNumber} generated successfully for ${partyName}`);
+    alert(`Challan ${challanNumber} generated successfully for ${partyName}${challanVehicleNumber ? ` (Vehicle: ${challanVehicleNumber})` : ''}`);
     
     // Close challan preview in invoice if open
     setShowChallanInInvoice(false);
+    
+    // Reset vehicle number
+    setChallanVehicleNumber('');
     
     // Optionally reset the current slot or navigate
     console.log('Challan generated:', newChallan);
