@@ -1369,17 +1369,17 @@ const CashInEntry = ({ onBack }) => {
 
       {/* Bill/Invoice Modal */}
       <Dialog open={showBillModal} onOpenChange={setShowBillModal}>
-        <DialogContent className="bg-slate-800 border-slate-700 max-w-md w-full mx-auto my-4 max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-white flex items-center gap-2">
-              <FileBarChart className="w-5 h-5 text-green-400" />
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-2xl w-full mx-auto my-2 max-h-[95vh] overflow-y-auto">
+          <DialogHeader className="pb-2">
+            <DialogTitle className="text-white flex items-center gap-2 text-sm">
+              <FileBarChart className="w-4 h-4 text-green-400" />
               Bill / Invoice - {selectedSlotForBill !== null ? slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label : ''}
             </DialogTitle>
           </DialogHeader>
           
           {/* Tax Selection Box */}
-          <div className="bg-slate-700/50 border border-slate-600 rounded-lg p-3 space-y-3">
-            <div className="text-white text-sm font-semibold mb-2">GST Configuration</div>
+          <div className="bg-slate-700/50 border border-slate-600 rounded-lg p-2 space-y-2">
+            <div className="text-white text-xs font-semibold">GST Configuration</div>
             
             {/* Tax Type Selection */}
             <div className="grid grid-cols-2 gap-2">
