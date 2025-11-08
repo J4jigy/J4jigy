@@ -1491,7 +1491,7 @@ const CashInEntry = ({ onBack }) => {
                 {/* Table Header */}
                 <div className="bg-gray-100 px-2 py-2 grid grid-cols-12 gap-2 text-xs font-semibold text-black border-b-2 border-black">
                   <span className="col-span-1">S.No</span>
-                  <span className="col-span-4">Item Description</span>
+                  <span className="col-span-4">Item Details</span>
                   <span className="col-span-2 text-center">HSN</span>
                   <span className="col-span-1 text-center">Qty</span>
                   <span className="col-span-2 text-right">Rate</span>
