@@ -1455,7 +1455,7 @@ const CashInEntry = ({ onBack }) => {
 
       {/* Bill/Invoice Modal */}
       <Dialog open={showBillModal} onOpenChange={setShowBillModal}>
-        <DialogContent className="bg-slate-800 border-slate-700 max-w-2xl w-full mx-auto my-4 max-h-[90vh] overflow-y-auto">
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-2xl w-full mx-auto my-4 max-h-[90vh] overflow-y-auto flex flex-col items-center">
           <DialogHeader>
             <DialogTitle className="text-white flex items-center gap-2">
               <FileBarChart className="w-5 h-5 text-green-400" />
