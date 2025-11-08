@@ -1626,8 +1626,6 @@ const CashInEntry = ({ onBack }) => {
                 </div>
               </div>
 
-              {/* Single Invoice - Merchant Copy removed */}
-
               {/* Action Buttons */}
               <div className="flex gap-2 mt-4">
                 <Button
