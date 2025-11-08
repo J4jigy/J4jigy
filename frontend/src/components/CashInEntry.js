@@ -1369,37 +1369,61 @@ const CashInEntry = ({ onBack }) => {
 
       {/* Bill/Invoice Modal */}
       <Dialog open={showBillModal} onOpenChange={setShowBillModal}>
-        <DialogContent className="bg-slate-800 border-slate-700 max-w-xl w-full mx-auto my-0 h-screen overflow-y-auto p-2">
-          <DialogHeader className="pb-0">
-            <DialogTitle className="text-white flex items-center gap-1 text-xs">
-              <FileBarChart className="w-3 h-3 text-green-400" />
-              Invoice
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-2xl w-full mx-auto my-4 max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-white flex items-center gap-2">
+              <FileBarChart className="w-5 h-5 text-green-400" />
+              Bill / Invoice - {selectedSlotForBill !== null ? slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label : ''}
             </DialogTitle>
           </DialogHeader>
           
           {/* Tax Selection Box */}
-          <div className="bg-slate-700/50 border border-slate-600 rounded p-1 flex gap-1 items-center">
-            <span className="text-white text-xs">Tax:</span>
-            <select
-              value={taxType}
-              onChange={(e) => setTaxType(e.target.value)}
-              className="flex-1 bg-slate-800 border-0 text-white rounded px-1 py-0.5 text-xs focus:outline-none"
-            >
-              <option value="CGST+SGST">CGST+SGST</option>
-              <option value="IGST">IGST</option>
-            </select>
+          <div className="bg-slate-700/50 border border-slate-600 rounded-lg p-3 space-y-3">
+            <div className="text-white text-sm font-semibold mb-2">GST Configuration</div>
             
-            <select
-              value={taxSlab}
-              onChange={(e) => setTaxSlab(e.target.value)}
-              className="w-16 bg-slate-800 border-0 text-white rounded px-1 py-0.5 text-xs focus:outline-none"
-            >
-              <option value="0">0%</option>
-              <option value="5">5%</option>
-              <option value="12">12%</option>
-              <option value="18">18%</option>
-              <option value="28">28%</option>
-            </select>
+            {/* Tax Type Selection */}
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <label className="text-xs text-slate-300 mb-1 block">Tax Type</label>
+                <select
+                  value={taxType}
+                  onChange={(e) => setTaxType(e.target.value)}
+                  className="w-full bg-slate-800 border border-slate-600 text-white rounded px-2 py-1.5 text-sm focus:outline-none focus:border-blue-500"
+                >
+                  <option value="CGST+SGST">CGST + SGST</option>
+                  <option value="IGST">IGST</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="text-xs text-slate-300 mb-1 block">Tax Rate (%)</label>
+                <select
+                  value={taxSlab}
+                  onChange={(e) => setTaxSlab(e.target.value)}
+                  className="w-full bg-slate-800 border border-slate-600 text-white rounded px-2 py-1.5 text-sm focus:outline-none focus:border-blue-500"
+                >
+                  <option value="0">0% (No Tax)</option>
+                  <option value="5">5%</option>
+                  <option value="12">12%</option>
+                  <option value="18">18%</option>
+                  <option value="28">28%</option>
+                </select>
+              </div>
+            </div>
+            
+            {/* Tax Preview */}
+            <div className="bg-slate-800/50 border border-slate-600 rounded p-2 flex justify-between items-center text-xs">
+              <span className="text-slate-300">
+                {taxType === 'CGST+SGST' && parseFloat(taxSlab) > 0 
+                  ? `CGST: ${parseFloat(taxSlab) / 2}% + SGST: ${parseFloat(taxSlab) / 2}%` 
+                  : parseFloat(taxSlab) > 0 
+                    ? `IGST: ${taxSlab}%` 
+                    : 'No Tax Applied'}
+              </span>
+              <span className="text-cyan-400 font-semibold">
+                Total: {parseFloat(taxSlab)}%
+              </span>
+            </div>
           </div>
           
           {selectedSlotForBill !== null && (
