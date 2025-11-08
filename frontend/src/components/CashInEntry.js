@@ -1479,15 +1479,15 @@ const CashInEntry = ({ onBack }) => {
                   <div className="text-xs space-y-1">
                     <div className="flex justify-between">
                       <span className="text-gray-700">Invoice No:</span>
-                      <span className="text-black font-semibold">INV-{selectedSlotForBill + 1}-{String(Date.now()).slice(-6)}</span>
+                      <span className="text-black font-semibold">{slots[selectedSlotForBill]?.invoiceNumber || `INV-${selectedSlotForBill + 1}-${String(Date.now()).slice(-6)}`}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-700">Date:</span>
-                      <span className="text-black">{new Date().toLocaleDateString('en-GB')}</span>
+                      <span className="text-black">{slots[selectedSlotForBill]?.invoiceDate || new Date().toLocaleDateString('en-GB')}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-700">Time:</span>
-                      <span className="text-black">{new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
+                      <span className="text-black">{slots[selectedSlotForBill]?.invoiceTime || new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
                     </div>
                   </div>
                 </div>
