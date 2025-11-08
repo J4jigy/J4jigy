@@ -8,24 +8,18 @@ import { useBusiness } from '../contexts/BusinessContext';
 
 const Challan = () => {
   const navigate = useNavigate();
-  const { activeBusiness, getData } = useBusiness();
+  const { activeBusiness } = useBusiness();
   const [filterStatus, setFilterStatus] = useState('all');
   const [challanType, setChallanType] = useState('all');
 
-  // Load challans from localStorage
-  const storedChallans = getData('challans', []);
-  
-  // Sample challan data - merge with stored challans
-  const sampleChallans = [
+  // Sample challan data
+  const challans = [
     { id: 'DC-001', party: 'Rajesh Enterprises', type: 'delivery', amount: 25000, date: '2025-01-10', status: 'completed', items: 5 },
     { id: 'PC-001', party: 'Kumar Suppliers', type: 'purchase', amount: 15000, date: '2025-01-09', status: 'pending', items: 3 },
     { id: 'DC-002', party: 'Sharma Transport', type: 'delivery', amount: 45000, date: '2025-01-08', status: 'pending', items: 8 },
     { id: 'GP-001', party: 'Singh Industries', type: 'gate', amount: 0, date: '2025-01-07', status: 'completed', items: 2 },
     { id: 'DC-003', party: 'Patel & Sons', type: 'delivery', amount: 32000, date: '2025-01-06', status: 'rejected', items: 4 },
   ];
-  
-  // Combine stored and sample challans
-  const challans = [...storedChallans, ...sampleChallans];
 
   const totalChallans = challans.length;
   const completedChallans = challans.filter(c => c.status === 'completed').length;
