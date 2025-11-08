@@ -1962,14 +1962,31 @@ In Words: Rupees ${Math.floor(total)} Only
 Authorized Signatory
                   `.trim();
 
-                  if (navigator.share && navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
-                    await navigator.share({
-                      title: `Invoice ${slot?.invoiceNumber}`,
-                      text: `Invoice from ${activeBusiness?.name || 'Business'}`,
-                      files: [pdfFile]
-                    });
+                  // Try to share with Web Share API
+                  if (navigator.share) {
+                    try {
+                      // Check if files can be shared
+                      if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
+                        await navigator.share({
+                          title: `Invoice ${slot?.invoiceNumber}`,
+                          text: `Invoice from ${activeBusiness?.name || 'Business'}`,
+                          files: [pdfFile]
+                        });
+                        console.log('PDF shared successfully via Web Share API');
+                      } else {
+                        // If files not supported, download instead
+                        throw new Error('File sharing not supported');
+                      }
+                    } catch (shareError) {
+                      if (shareError.name === 'AbortError') {
+                        console.log('Share cancelled by user');
+                        return;
+                      }
+                      throw shareError;
+                    }
                   } else {
                     // Fallback: Download PDF
+                    console.log('Web Share API not available, downloading PDF...');
                     const url = URL.createObjectURL(pdfFile);
                     const a = document.createElement('a');
                     a.href = url;
@@ -1978,11 +1995,11 @@ Authorized Signatory
                     a.click();
                     document.body.removeChild(a);
                     URL.revokeObjectURL(url);
-                    alert('Invoice PDF downloaded!');
+                    alert('Invoice PDF downloaded! Check your downloads folder.');
                   }
                 } catch (error) {
                   console.error('Share error:', error);
-                  alert('Failed to generate/share invoice PDF');
+                  alert(`Error: ${error.message || 'Failed to generate/share invoice PDF. Please try again.'}`);
                 }
               }}
             >
