@@ -1612,8 +1612,14 @@ const CashInEntry = ({ onBack }) => {
             </div>
           </div>
           
-          {selectedSlotForBill !== null && (
-            <div id="invoice-content" className="space-y-2 bg-white p-2 rounded w-full">
+          {selectedSlotForBill !== null && !showChallanInInvoice && (
+            <div 
+              id="invoice-content" 
+              className="space-y-2 bg-white p-2 rounded w-full"
+              onTouchStart={onInvoiceTouchStart}
+              onTouchMove={onInvoiceTouchMove}
+              onTouchEnd={onInvoiceTouchEnd}
+            >
               {/* GST Invoice Header */}
               <div className="text-center border-2 border-black p-2">
                 <div className="text-lg font-bold text-black mb-1">{activeBusiness?.name || 'BUSINESS NAME'}</div>
