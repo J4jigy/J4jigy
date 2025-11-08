@@ -1575,7 +1575,7 @@ const CashInEntry = ({ onBack }) => {
               {/* Items Table - GST Format */}
               <div className="border-2 border-black">
                 {/* Table Header */}
-                <div className="bg-gray-100 px-2 py-2 grid grid-cols-12 gap-2 text-xs font-semibold text-black border-b-2 border-black">
+                <div className="bg-gray-100 px-4 py-3 grid grid-cols-12 gap-3 text-xs font-semibold text-black border-b-2 border-black">
                   <span className="col-span-1 text-center">S.No</span>
                   <span className="col-span-4 pl-3">Item Details</span>
                   <span className="col-span-2 text-center">HSN</span>
