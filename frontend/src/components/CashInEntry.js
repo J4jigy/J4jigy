@@ -63,13 +63,6 @@ const CashInEntry = ({ onBack }) => {
   const [selectedTime, setSelectedTime] = useState(new Date().toTimeString().slice(0, 5));
   const [selectedCustomer, setSelectedCustomer] = useState('');
   const [selectedItems, setSelectedItems] = useState({});
-  
-  // Challan preview state
-  const [showChallanPreview, setShowChallanPreview] = useState(false);
-  
-  // Swipe detection state
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
 
   const incQty = (name) => {
     // Update selectedItems for current view
