@@ -1414,6 +1414,76 @@ It's completely free to try!`;
         </div>
       </div>
 
+      {/* Scan & Pay Dialog */}
+      <Dialog open={showScanPayDialog} onOpenChange={setShowScanPayDialog}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-white text-center text-xl">Scan & Pay</DialogTitle>
+          </DialogHeader>
+          <div className="grid grid-cols-2 gap-4 p-4">
+            {/* Scan & Pay */}
+            <button
+              onClick={() => {
+                console.log('Scan & Pay clicked');
+                // Add navigation or functionality here
+              }}
+              className="flex flex-col items-center justify-center p-6 bg-gradient-to-br from-purple-600/20 to-purple-700/20 hover:from-purple-600/30 hover:to-purple-700/30 border border-purple-500/30 rounded-xl transition-all duration-200 space-y-3"
+            >
+              <QrCode className="w-12 h-12 text-purple-400" />
+              <span className="text-white text-sm font-medium text-center">Scan & Pay</span>
+            </button>
+
+            {/* Pay To Mobile */}
+            <button
+              onClick={() => {
+                console.log('Pay To Mobile clicked');
+                // Add navigation or functionality here
+              }}
+              className="flex flex-col items-center justify-center p-6 bg-gradient-to-br from-blue-600/20 to-blue-700/20 hover:from-blue-600/30 hover:to-blue-700/30 border border-blue-500/30 rounded-xl transition-all duration-200 space-y-3"
+            >
+              <Smartphone className="w-12 h-12 text-blue-400" />
+              <span className="text-white text-sm font-medium text-center">Pay To Mobile</span>
+            </button>
+
+            {/* Pay To Bank */}
+            <button
+              onClick={() => {
+                console.log('Pay To Bank clicked');
+                // Add navigation or functionality here
+              }}
+              className="flex flex-col items-center justify-center p-6 bg-gradient-to-br from-green-600/20 to-green-700/20 hover:from-green-600/30 hover:to-green-700/30 border border-green-500/30 rounded-xl transition-all duration-200 space-y-3"
+            >
+              <Landmark className="w-12 h-12 text-green-400" />
+              <span className="text-white text-sm font-medium text-center">Pay To Bank</span>
+            </button>
+
+            {/* Pay To UPI */}
+            <button
+              onClick={() => {
+                console.log('Pay To UPI clicked');
+                // Add navigation or functionality here
+              }}
+              className="flex flex-col items-center justify-center p-6 bg-gradient-to-br from-orange-600/20 to-orange-700/20 hover:from-orange-600/30 hover:to-orange-700/30 border border-orange-500/30 rounded-xl transition-all duration-200 space-y-3"
+            >
+              <Wallet className="w-12 h-12 text-orange-400" />
+              <span className="text-white text-sm font-medium text-center">Pay To UPI</span>
+            </button>
+
+            {/* Pay Bills & Recharges - Full Width */}
+            <button
+              onClick={() => {
+                console.log('Pay Bills & Recharges clicked');
+                // Add navigation or functionality here
+              }}
+              className="col-span-2 flex flex-col items-center justify-center p-6 bg-gradient-to-br from-cyan-600/20 to-cyan-700/20 hover:from-cyan-600/30 hover:to-cyan-700/30 border border-cyan-500/30 rounded-xl transition-all duration-200 space-y-3"
+            >
+              <FileText className="w-12 h-12 text-cyan-400" />
+              <span className="text-white text-sm font-medium text-center">Pay Bills & Recharges</span>
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Export Dialog */}
       <Dialog open={showExportDialog} onOpenChange={setShowExportDialog}>
         <DialogContent className="bg-slate-800 border-slate-700">
