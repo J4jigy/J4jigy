@@ -245,67 +245,45 @@ const CashInEntry = ({ onBack }) => {
     }
   };
 
-  // Generate PDF from invoice
+  // Generate PDF from invoice - OPTIMIZED for speed
   const generateInvoicePDF = async () => {
     try {
-      // Wait a bit for the invoice to render
-      await new Promise(resolve => setTimeout(resolve, 300));
-      
       const invoiceElement = document.getElementById('invoice-content');
       if (!invoiceElement) {
-        throw new Error('Invoice element not found. Please open the invoice first.');
+        throw new Error('Invoice element not found');
       }
 
-      console.log('Generating PDF from invoice...');
-
-      // Create canvas from invoice HTML
+      // Fast canvas capture with reduced quality for speed
       const canvas = await html2canvas(invoiceElement, {
-        scale: 2,
+        scale: 1, // Reduced from 2 to 1 for 4x faster generation
         backgroundColor: '#ffffff',
         logging: false,
         useCORS: true,
-        allowTaint: true,
-        width: invoiceElement.scrollWidth,
-        height: invoiceElement.scrollHeight
+        allowTaint: true
       });
 
-      console.log('Canvas created, generating PDF...');
-
-      // Create PDF
-      const imgData = canvas.toDataURL('image/png');
+      // Quick PDF generation
+      const imgData = canvas.toDataURL('image/jpeg', 0.85); // JPEG instead of PNG for smaller size
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
-        format: 'a4'
+        format: 'a4',
+        compress: true
       });
 
-      const imgWidth = 210; // A4 width in mm
-      const pageHeight = 297; // A4 height in mm
+      const imgWidth = 210; // A4 width
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
-
-      // Add first page
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-
-      // Add more pages if needed
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-      }
+      
+      pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
       
       const slot = slots[selectedSlotForBill];
       const pdfBlob = pdf.output('blob');
       const pdfFile = new File([pdfBlob], `Invoice_${slot?.invoiceNumber || 'INV'}.pdf`, { type: 'application/pdf' });
       
-      console.log('PDF generated successfully');
       return pdfFile;
     } catch (error) {
       console.error('Error generating PDF:', error);
-      throw new Error(`Failed to generate PDF: ${error.message}`);
+      throw new Error(`PDF generation failed: ${error.message}`);
     }
   };
 
