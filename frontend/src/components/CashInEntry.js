@@ -1378,46 +1378,28 @@ const CashInEntry = ({ onBack }) => {
           </DialogHeader>
           
           {/* Tax Selection Box */}
-          <div className="bg-slate-700/50 border border-slate-600 rounded p-1.5 space-y-1">
-            <div className="text-white text-xs font-semibold">GST</div>
+          <div className="bg-slate-700/50 border border-slate-600 rounded p-1 flex gap-1 items-center">
+            <span className="text-white text-xs">Tax:</span>
+            <select
+              value={taxType}
+              onChange={(e) => setTaxType(e.target.value)}
+              className="flex-1 bg-slate-800 border-0 text-white rounded px-1 py-0.5 text-xs focus:outline-none"
+            >
+              <option value="CGST+SGST">CGST+SGST</option>
+              <option value="IGST">IGST</option>
+            </select>
             
-            {/* Tax Type Selection */}
-            <div className="flex gap-1">
-              <select
-                value={taxType}
-                onChange={(e) => setTaxType(e.target.value)}
-                className="flex-1 bg-slate-800 border border-slate-600 text-white rounded px-1.5 py-0.5 text-xs focus:outline-none"
-              >
-                <option value="CGST+SGST">CGST+SGST</option>
-                <option value="IGST">IGST</option>
-              </select>
-              
-              <select
-                value={taxSlab}
-                onChange={(e) => setTaxSlab(e.target.value)}
-                className="w-20 bg-slate-800 border border-slate-600 text-white rounded px-1.5 py-0.5 text-xs focus:outline-none"
-              >
-                <option value="0">0%</option>
-                <option value="5">5%</option>
-                <option value="12">12%</option>
-                <option value="18">18%</option>
-                <option value="28">28%</option>
-              </select>
-            </div>
-            
-            {/* Tax Preview */}
-            <div className="bg-slate-800/50 border border-slate-600 rounded p-1 flex justify-between items-center text-xs">
-              <span className="text-slate-300">
-                {taxType === 'CGST+SGST' && parseFloat(taxSlab) > 0 
-                  ? `CGST: ${parseFloat(taxSlab) / 2}% + SGST: ${parseFloat(taxSlab) / 2}%` 
-                  : parseFloat(taxSlab) > 0 
-                    ? `IGST: ${taxSlab}%` 
-                    : 'No Tax Applied'}
-              </span>
-              <span className="text-cyan-400 font-semibold">
-                Total: {parseFloat(taxSlab)}%
-              </span>
-            </div>
+            <select
+              value={taxSlab}
+              onChange={(e) => setTaxSlab(e.target.value)}
+              className="w-16 bg-slate-800 border-0 text-white rounded px-1 py-0.5 text-xs focus:outline-none"
+            >
+              <option value="0">0%</option>
+              <option value="5">5%</option>
+              <option value="12">12%</option>
+              <option value="18">18%</option>
+              <option value="28">28%</option>
+            </select>
           </div>
           
           {selectedSlotForBill !== null && (
