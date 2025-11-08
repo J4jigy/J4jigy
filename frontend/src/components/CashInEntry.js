@@ -248,17 +248,28 @@ const CashInEntry = ({ onBack }) => {
   // Generate PDF from invoice
   const generateInvoicePDF = async () => {
     try {
+      // Wait a bit for the invoice to render
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
       const invoiceElement = document.getElementById('invoice-content');
       if (!invoiceElement) {
-        throw new Error('Invoice element not found');
+        throw new Error('Invoice element not found. Please open the invoice first.');
       }
+
+      console.log('Generating PDF from invoice...');
 
       // Create canvas from invoice HTML
       const canvas = await html2canvas(invoiceElement, {
         scale: 2,
         backgroundColor: '#ffffff',
-        logging: false
+        logging: false,
+        useCORS: true,
+        allowTaint: true,
+        width: invoiceElement.scrollWidth,
+        height: invoiceElement.scrollHeight
       });
+
+      console.log('Canvas created, generating PDF...');
 
       // Create PDF
       const imgData = canvas.toDataURL('image/png');
@@ -269,18 +280,32 @@ const CashInEntry = ({ onBack }) => {
       });
 
       const imgWidth = 210; // A4 width in mm
+      const pageHeight = 297; // A4 height in mm
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      // Add first page
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      // Add more pages if needed
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
       
       const slot = slots[selectedSlotForBill];
       const pdfBlob = pdf.output('blob');
       const pdfFile = new File([pdfBlob], `Invoice_${slot?.invoiceNumber || 'INV'}.pdf`, { type: 'application/pdf' });
       
+      console.log('PDF generated successfully');
       return pdfFile;
     } catch (error) {
       console.error('Error generating PDF:', error);
-      throw error;
+      throw new Error(`Failed to generate PDF: ${error.message}`);
     }
   };
 
