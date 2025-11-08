@@ -229,6 +229,20 @@ const CashInEntry = ({ onBack }) => {
     setData('cashin_data', { slots, activeSlot });
   }, [slots, activeSlot, setData]);
 
+  // Fetch contacts for sharing
+  const fetchContacts = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${API}/api/contacts`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setContacts(response.data || []);
+    } catch (error) {
+      console.error('Error fetching contacts:', error);
+      setContacts([]);
+    }
+  };
+
   // Sample data
   const quickAmounts = [1, 2, 5, 10, 20, 50, 100, 200, 500];
   const [products, setProducts] = useState([]); // Empty - no default products
