@@ -143,6 +143,7 @@ const CashInEntry = ({ onBack }) => {
   
   // Challan preview state for invoice dialog
   const [showChallanInInvoice, setShowChallanInInvoice] = useState(false);
+  const [challanVehicleNumber, setChallanVehicleNumber] = useState('');
   
   // Swipe detection state for invoice
   const [invoiceTouchStart, setInvoiceTouchStart] = useState(null);
