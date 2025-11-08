@@ -1663,7 +1663,7 @@ const CashInEntry = ({ onBack }) => {
                 </div>
 
                 {/* Terms & Conditions Footer */}
-                <div className="border-2 border-black p-2 bg-white">
+                <div className="border-2 border-black p-4 bg-white">
                   <div className="flex justify-between items-center mb-2">
                     <div className="font-semibold text-black text-xs">Terms & Conditions:</div>
                     {!isEditingTerms ? (
