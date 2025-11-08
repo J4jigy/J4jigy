@@ -478,6 +478,98 @@ const CashInEntry = ({ onBack }) => {
     }
   };
 
+  // Swipe detection handlers for slots
+  const minSwipeDistance = 50;
+
+  const onSlotsTouchStart = (e) => {
+    setSlotsTouchEnd(null);
+    setSlotsTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onSlotsTouchMove = (e) => {
+    setSlotsTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onSlotsTouchEnd = () => {
+    if (!slotsTouchStart || !slotsTouchEnd) return;
+    
+    const distance = slotsTouchStart - slotsTouchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isRightSwipe) {
+      // Swipe right detected - show Challan preview
+      setShowChallanPreview(true);
+    } else if (isLeftSwipe) {
+      // Swipe left detected - hide Challan preview
+      setShowChallanPreview(false);
+    }
+  };
+
+  // Generate Challan function
+  const generateChallan = () => {
+    // Use data from active slot
+    const slot = slots[activeSlot];
+    
+    // Get party name
+    const partyName = slot.customName || selectedCustomer;
+    
+    // Validate required data
+    if (!partyName || partyName === slot.label) {
+      alert('Please add a customer name to this slot before generating challan');
+      return;
+    }
+    
+    if (parseFloat(slot.amount) <= 0) {
+      alert('Please enter an amount greater than 0');
+      return;
+    }
+
+    // Generate challan number
+    const challanNumber = `DC-${String(Date.now()).slice(-6)}`;
+    
+    // Get current date
+    const currentDate = new Date().toISOString().split('T')[0];
+    
+    // Create challan object using invoice data
+    const newChallan = {
+      id: challanNumber,
+      party: partyName,
+      vehicleNumber: challanVehicleNumber || 'N/A',
+      type: 'delivery',
+      amount: parseFloat(slot.amount),
+      date: currentDate,
+      status: 'pending',
+      items: Object.keys(slot.selectedItems || {}).length,
+      itemDetails: slot.selectedItems || {},
+      paymentMode: slot.paymentMode || 'Cash',
+      createdAt: new Date().toISOString(),
+      slotId: slot.id,
+      slotLabel: slot.customName || slot.label,
+      invoiceNumber: slot.invoiceNumber
+    };
+
+    // Get existing challans from localStorage
+    const existingChallans = getData('challans', []);
+    
+    // Add new challan
+    const updatedChallans = [newChallan, ...existingChallans];
+    
+    // Save to localStorage
+    setData('challans', updatedChallans);
+    
+    // Show success message
+    alert(`Challan ${challanNumber} generated successfully for ${partyName}${challanVehicleNumber ? ` (Vehicle: ${challanVehicleNumber})` : ''}`);
+    
+    // Close challan preview
+    setShowChallanPreview(false);
+    
+    // Reset vehicle number
+    setChallanVehicleNumber('');
+    
+    console.log('Challan generated:', newChallan);
+  };
+
   const createContact = async (name, type) => {
     try {
       const token = localStorage.getItem('token');
