@@ -1624,6 +1624,7 @@ const CashInEntry = ({ onBack }) => {
                     <div className="mt-8 text-xs text-black border-t border-black pt-1 inline-block">Authorized Signatory</div>
                   </div>
                 </div>
+              </div>
 
               {/* Action Buttons */}
               <div className="flex gap-2 mt-4">
@@ -1648,7 +1649,7 @@ const CashInEntry = ({ onBack }) => {
                   Close
                 </Button>
               </div>
-            </div>
+            </ div>
           )}
         </DialogContent>
       </Dialog>
