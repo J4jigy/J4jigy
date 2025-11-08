@@ -1711,6 +1711,129 @@ const CashInEntry = ({ onBack }) => {
         title="Scan Product Barcode"
       />
 
+      {/* Contacts List Dialog */}
+      <Dialog open={showContactsList} onOpenChange={setShowContactsList}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-md max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-white flex items-center gap-2">
+              <Users className="w-5 h-5 text-blue-400" />
+              Select Contact to Share Invoice
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-2">
+            {contacts.length === 0 ? (
+              <div className="text-center py-8 text-slate-400">
+                <Users className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                <p>No contacts found</p>
+                <p className="text-xs mt-1">Add contacts from the Chat section</p>
+              </div>
+            ) : (
+              contacts.map((contact) => (
+                <Button
+                  key={contact.id}
+                  className="w-full bg-slate-700 hover:bg-slate-600 h-16 text-left justify-start"
+                  onClick={async () => {
+                    setShowContactsList(false);
+                    try {
+                      const slot = slots[selectedSlotForBill];
+                      const subtotal = parseFloat(slot?.amount || 0);
+                      const taxRate = parseFloat(taxSlab);
+                      const taxAmount = (subtotal * taxRate) / 100;
+                      const total = subtotal + taxAmount;
+                      
+                      const invoiceText = `
+📄 TAX INVOICE
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+🏢 ${activeBusiness?.name || 'BUSINESS NAME'}
+${activeBusiness?.address || ''}
+📞 Phone: ${activeBusiness?.phone || 'N/A'}
+🆔 GSTIN: ${activeBusiness?.gst || 'N/A'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 Invoice Details:
+Invoice No: ${slot?.invoiceNumber || 'N/A'}
+Date: ${slot?.invoiceDate || 'N/A'}
+Time: ${slot?.invoiceTime || 'N/A'}
+
+👤 Customer: ${slot?.customName || slot?.label}
+💳 Payment: ${slot?.paymentMode}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+📦 Items:
+${Object.entries(slot?.selectedItems || {}).length > 0 
+  ? Object.keys(slot?.selectedItems).join(', ') 
+  : 'Service/Product'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+💰 Amount Details:
+Taxable Amount: ₹${subtotal.toFixed(2)}
+${taxType === 'CGST+SGST' && taxRate > 0 
+  ? `CGST @ ${taxRate / 2}%: ₹${(taxAmount / 2).toFixed(2)}\nSGST @ ${taxRate / 2}%: ₹${(taxAmount / 2).toFixed(2)}`
+  : taxRate > 0 
+    ? `IGST @ ${taxRate}%: ₹${taxAmount.toFixed(2)}`
+    : 'No Tax Applied'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+💵 TOTAL AMOUNT: ₹${total.toFixed(2)}
+In Words: Rupees ${Math.floor(total)} Only
+
+━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 ${termsText || 'Terms & Conditions Apply'}
+
+✍️ For ${activeBusiness?.name || 'BUSINESS NAME'}
+Authorized Signatory
+                      `.trim();
+
+                      // Send message via chat API
+                      const token = localStorage.getItem('token');
+                      await axios.post(`${API}/api/chat/send`, {
+                        peer_id: contact.id,
+                        message: invoiceText,
+                        type: 'text'
+                      }, {
+                        headers: { Authorization: `Bearer ${token}` }
+                      });
+                      
+                      alert(`Invoice sent to ${contact.name}!`);
+                    } catch (error) {
+                      console.error('Error sending invoice:', error);
+                      alert('Failed to send invoice. Please try again.');
+                    }
+                  }}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="bg-blue-600 p-2 rounded-full">
+                      <User className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-white">{contact.name}</div>
+                      {contact.phone && (
+                        <div className="text-xs text-slate-400">{contact.phone}</div>
+                      )}
+                    </div>
+                  </div>
+                </Button>
+              ))
+            )}
+            
+            <Button
+              variant="outline"
+              className="w-full border-slate-600 text-slate-300 hover:bg-slate-700 mt-4"
+              onClick={() => setShowContactsList(false)}
+            >
+              Cancel
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Share Options Dialog */}
       <Dialog open={showShareOptions} onOpenChange={setShowShareOptions}>
         <DialogContent className="bg-slate-800 border-slate-700 max-w-md">
