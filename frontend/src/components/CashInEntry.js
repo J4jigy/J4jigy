@@ -790,6 +790,7 @@ const CashInEntry = ({ onBack }) => {
               onClick={() => {
                 if (activeSlot === idx) {
                   // If clicking on the currently active slot, open bill/invoice
+                  generateInvoiceForSlot(idx);
                   setSelectedSlotForBill(idx);
                   setShowBillModal(true);
                 } else {
