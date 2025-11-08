@@ -1712,7 +1712,7 @@ const CashInEntry = ({ onBack }) => {
                 </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-2 mt-4">
+              <div className="flex gap-2 mt-4 w-full">
                 <Button
                   className="flex-1 bg-green-600 hover:bg-green-700"
                   onClick={async () => {
