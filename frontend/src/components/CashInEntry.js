@@ -1725,10 +1725,10 @@ const CashInEntry = ({ onBack }) => {
             {/* Share Within App Chat */}
             <Button
               className="w-full bg-blue-600 hover:bg-blue-700 h-14 text-left justify-start"
-              onClick={() => {
+              onClick={async () => {
                 setShowShareOptions(false);
-                // Navigate to chat with invoice data
-                alert('Share within app chat feature - Coming soon!');
+                await fetchContacts();
+                setShowContactsList(true);
               }}
             >
               <div className="flex items-center gap-3">
