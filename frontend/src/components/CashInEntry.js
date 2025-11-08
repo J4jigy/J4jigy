@@ -245,6 +245,45 @@ const CashInEntry = ({ onBack }) => {
     }
   };
 
+  // Generate PDF from invoice
+  const generateInvoicePDF = async () => {
+    try {
+      const invoiceElement = document.getElementById('invoice-content');
+      if (!invoiceElement) {
+        throw new Error('Invoice element not found');
+      }
+
+      // Create canvas from invoice HTML
+      const canvas = await html2canvas(invoiceElement, {
+        scale: 2,
+        backgroundColor: '#ffffff',
+        logging: false
+      });
+
+      // Create PDF
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4'
+      });
+
+      const imgWidth = 210; // A4 width in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      
+      const slot = slots[selectedSlotForBill];
+      const pdfBlob = pdf.output('blob');
+      const pdfFile = new File([pdfBlob], `Invoice_${slot?.invoiceNumber || 'INV'}.pdf`, { type: 'application/pdf' });
+      
+      return pdfFile;
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      throw error;
+    }
+  };
+
   // Sample data
   const quickAmounts = [1, 2, 5, 10, 20, 50, 100, 200, 500];
   const [products, setProducts] = useState([]); // Empty - no default products
