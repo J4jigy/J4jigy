@@ -1487,33 +1487,35 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
               {/* Items Table - GST Format */}
-              <div className="border border-black text-xs">
+              <div className="border-2 border-black">
                 {/* Table Header */}
-                <div className="bg-gray-100 px-0.5 py-0.5 flex gap-0.5 font-semibold text-black border-b border-black">
-                  <span className="w-8 text-center">No</span>
-                  <span className="flex-1">Item</span>
-                  <span className="w-12 text-center">HSN</span>
-                  <span className="w-8 text-center">Qty</span>
-                  <span className="w-16 text-right">Rate</span>
-                  <span className="w-16 text-right">Amt</span>
+                <div className="bg-gray-100 px-2 py-2 grid grid-cols-12 gap-2 text-xs font-semibold text-black border-b-2 border-black">
+                  <span className="col-span-1">S.No</span>
+                  <span className="col-span-4">Item Description</span>
+                  <span className="col-span-2 text-center">HSN</span>
+                  <span className="col-span-1 text-center">Qty</span>
+                  <span className="col-span-2 text-right">Rate</span>
+                  <span className="col-span-2 text-right">Amount</span>
                 </div>
                 
                 {/* Table Body */}
                 {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
-                  <div className="px-0.5 py-0.5 flex gap-0.5 bg-white">
-                    <span className="w-8 text-center text-black">1</span>
-                    <span className="flex-1 text-black truncate">
+                  <div className="px-2 py-2 grid grid-cols-12 gap-2 text-xs bg-white">
+                    <span className="col-span-1 text-black">1</span>
+                    <span className="col-span-4 text-black">
                       {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
                         ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
                         : 'Service/Product'}
                     </span>
-                    <span className="w-12 text-center text-gray-700">9954</span>
-                    <span className="w-8 text-center text-gray-700">1</span>
-                    <span className="w-16 text-right text-gray-700">₹{slots[selectedSlotForBill]?.amount}</span>
-                    <span className="w-16 text-right text-black font-semibold">₹{slots[selectedSlotForBill]?.amount}</span>
+                    <span className="col-span-2 text-center text-gray-700">9954</span>
+                    <span className="col-span-1 text-center text-gray-700">1</span>
+                    <span className="col-span-2 text-right text-gray-700">₹{slots[selectedSlotForBill]?.amount}</span>
+                    <span className="col-span-2 text-right text-black font-semibold">₹{slots[selectedSlotForBill]?.amount}</span>
                   </div>
                 ) : (
-                  <div className="p-2 text-center text-gray-500 bg-white">No items</div>
+                  <div className="px-3 py-6 text-center text-gray-500 text-xs bg-white">
+                    No items added to this invoice
+                  </div>
                 )}
               </div>
 
