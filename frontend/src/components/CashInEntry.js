@@ -898,12 +898,7 @@ const CashInEntry = ({ onBack }) => {
         </div>
 
         {/* POS multi-customer boxes */}
-        <div 
-          className="grid grid-cols-6 gap-1"
-          onTouchStart={onTouchStart}
-          onTouchMove={onTouchMove}
-          onTouchEnd={onTouchEnd}
-        >
+        <div className="grid grid-cols-6 gap-1">
           {slots.map((slot, idx) => (
             <button
               key={slot.id}
