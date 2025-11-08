@@ -1468,8 +1468,8 @@ const CashInEntry = ({ onBack }) => {
                 </div>
                 
                 {/* Right Column - Customer Details */}
-                <div className="p-3">
-                  <div className="text-xs space-y-1">
+                <div className="p-2">
+                  <div className="text-xs space-y-0.5">
                     <div className="flex justify-between">
                       <span className="text-gray-700">Customer:</span>
                       <span className="text-black font-semibold">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span>
