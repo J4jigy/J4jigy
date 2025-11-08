@@ -1384,14 +1384,13 @@ It's completely free to try!`;
           {/* Scan & Pay Button - Centered above Cash In/Out */}
           <div className="flex justify-center">
             <Button 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-3 px-8 rounded-xl shadow-lg"
+              className="w-14 h-14 rounded-full bg-purple-500/20 hover:bg-purple-500/40 active:bg-purple-500/60 border border-purple-400/30 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200"
               onClick={() => {
                 // Add Scan & Pay functionality here
                 console.log('Scan & Pay clicked');
               }}
             >
-              <ScanLine className="w-5 h-5 mr-2" />
-              Scan & Pay
+              <QrCode className="w-6 h-6 text-purple-400" />
             </Button>
           </div>
           
