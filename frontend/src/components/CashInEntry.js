@@ -1494,7 +1494,7 @@ const CashInEntry = ({ onBack }) => {
                 
                 {/* Table Body */}
                 {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
-                  <div className="px-2 py-2 flex items-center gap-2 text-xs bg-white min-w-full">
+                  <div className="px-1 py-1 flex items-center gap-1 text-xs bg-white min-w-full">
                     <span style={{width: '8%', minWidth: '40px'}} className="text-center text-black">1</span>
                     <span style={{width: '35%', minWidth: '100px'}} className="px-2 text-black break-words">
                       {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
