@@ -477,6 +477,34 @@ const CashInEntry = ({ onBack }) => {
     }
   };
 
+  // Swipe detection handlers for invoice
+  const minSwipeDistance = 50;
+
+  const onInvoiceTouchStart = (e) => {
+    setInvoiceTouchEnd(null);
+    setInvoiceTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onInvoiceTouchMove = (e) => {
+    setInvoiceTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onInvoiceTouchEnd = () => {
+    if (!invoiceTouchStart || !invoiceTouchEnd) return;
+    
+    const distance = invoiceTouchStart - invoiceTouchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isRightSwipe) {
+      // Swipe right detected - show Challan preview
+      setShowChallanInInvoice(true);
+    } else if (isLeftSwipe) {
+      // Swipe left detected - hide Challan preview
+      setShowChallanInInvoice(false);
+    }
+  };
+
   const createContact = async (name, type) => {
     try {
       const token = localStorage.getItem('token');
