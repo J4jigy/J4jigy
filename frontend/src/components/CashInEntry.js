@@ -1966,19 +1966,27 @@ In Words: Rupees ${Math.floor(total)} Only
 Authorized Signatory
                   `.trim();
 
-                  if (navigator.share) {
+                  if (navigator.share && navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
                     await navigator.share({
                       title: `Invoice ${slot?.invoiceNumber}`,
-                      text: invoiceText
+                      text: `Invoice from ${activeBusiness?.name || 'Business'}`,
+                      files: [pdfFile]
                     });
                   } else {
-                    // Fallback: Copy to clipboard
-                    await navigator.clipboard.writeText(invoiceText);
-                    alert('Invoice copied to clipboard!');
+                    // Fallback: Download PDF
+                    const url = URL.createObjectURL(pdfFile);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `Invoice_${slot?.invoiceNumber}.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    alert('Invoice PDF downloaded!');
                   }
                 } catch (error) {
                   console.error('Share error:', error);
-                  alert('Failed to share invoice');
+                  alert('Failed to generate/share invoice PDF');
                 }
               }}
             >
