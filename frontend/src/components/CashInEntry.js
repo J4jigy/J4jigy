@@ -1855,6 +1855,16 @@ const CashInEntry = ({ onBack }) => {
                     </div>
                     
                     <div className="bg-slate-700/50 p-2 rounded text-xs">
+                      <div className="text-slate-400 mb-1">Vehicle Number</div>
+                      <Input
+                        value={challanVehicleNumber}
+                        onChange={(e) => setChallanVehicleNumber(e.target.value.toUpperCase())}
+                        placeholder="Enter vehicle number (e.g., MH12AB1234)"
+                        className="bg-slate-800 border-slate-600 text-white h-8 text-xs placeholder:text-slate-500"
+                      />
+                    </div>
+                    
+                    <div className="bg-slate-700/50 p-2 rounded text-xs">
                       <div className="text-slate-400">Amount</div>
                       <div className="text-green-400 font-bold text-lg">₹{slots[selectedSlotForBill]?.amount}</div>
                     </div>
