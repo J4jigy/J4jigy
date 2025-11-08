@@ -1643,7 +1643,7 @@ const CashInEntry = ({ onBack }) => {
                     })()}
                   </div>
                   
-                  <div className="bg-gray-100 border-t-2 border-black p-2">
+                  <div className="bg-gray-100 border-t-2 border-black p-3">
                     <div className="flex justify-between text-sm font-bold text-black">
                       <span>TOTAL AMOUNT:</span>
                       <span className="text-lg text-black">₹{(() => {
