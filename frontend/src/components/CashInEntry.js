@@ -1513,7 +1513,7 @@ const CashInEntry = ({ onBack }) => {
           </div>
           
           {selectedSlotForBill !== null && (
-            <div id="invoice-content" className="space-y-3 bg-white p-6 rounded w-full max-w-4xl">
+            <div id="invoice-content" className="space-y-3 bg-white p-6 rounded w-full max-w-6xl">
               {/* GST Invoice Header */}
               <div className="text-center border-2 border-black p-4">
                 <div className="text-2xl font-bold text-black mb-1">{activeBusiness?.name || 'BUSINESS NAME'}</div>
