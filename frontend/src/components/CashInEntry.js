@@ -767,13 +767,20 @@ const CashInEntry = ({ onBack }) => {
 
   // Generate Challan function
   const generateChallan = () => {
+    // Use data from selected slot if generating from invoice, otherwise use current active slot
+    const slotIndex = selectedSlotForBill !== null ? selectedSlotForBill : activeSlot;
+    const slot = slots[slotIndex];
+    
+    // Get party name - use slot's custom name or selected customer
+    const partyName = slot.customName || selectedCustomer || slot.label;
+    
     // Validate required data
-    if (!selectedCustomer) {
+    if (!partyName || partyName === slot.label) {
       alert('Please select a party/customer name');
       return;
     }
     
-    if (parseFloat(amount) <= 0) {
+    if (parseFloat(slot.amount) <= 0) {
       alert('Please enter an amount greater than 0');
       return;
     }
@@ -787,17 +794,17 @@ const CashInEntry = ({ onBack }) => {
     // Create challan object
     const newChallan = {
       id: challanNumber,
-      party: selectedCustomer,
+      party: partyName,
       type: 'delivery',
-      amount: parseFloat(amount),
+      amount: parseFloat(slot.amount),
       date: currentDate,
       status: 'pending',
-      items: Object.keys(selectedItems).length,
-      itemDetails: selectedItems,
-      paymentMode: paymentMode,
+      items: Object.keys(slot.selectedItems || {}).length,
+      itemDetails: slot.selectedItems || {},
+      paymentMode: slot.paymentMode || 'Cash',
       createdAt: new Date().toISOString(),
-      slotId: slots[activeSlot].id,
-      slotLabel: slots[activeSlot].customName || slots[activeSlot].label
+      slotId: slot.id,
+      slotLabel: slot.customName || slot.label
     };
 
     // Get existing challans from localStorage
@@ -810,7 +817,10 @@ const CashInEntry = ({ onBack }) => {
     setData('challans', updatedChallans);
     
     // Show success message
-    alert(`Challan ${challanNumber} generated successfully for ${selectedCustomer}`);
+    alert(`Challan ${challanNumber} generated successfully for ${partyName}`);
+    
+    // Close challan preview in invoice if open
+    setShowChallanInInvoice(false);
     
     // Optionally reset the current slot or navigate
     console.log('Challan generated:', newChallan);
