@@ -1464,7 +1464,7 @@ const CashInEntry = ({ onBack }) => {
           </DialogHeader>
           
           {/* Tax Selection Box */}
-          <div className="bg-slate-700/50 border border-slate-600 rounded-lg p-3 space-y-3">
+          <div className="bg-slate-700/50 border border-slate-600 rounded-lg p-3 space-y-3 w-full">
             <div className="text-white text-sm font-semibold mb-2">GST Configuration</div>
             
             {/* Tax Type Selection */}
