@@ -130,8 +130,7 @@ metadata:
   run_ui: true
 
 test_plan:
-  current_focus:
-    - "Restore Invoice Preview to Original Dark Theme"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
