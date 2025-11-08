@@ -777,9 +777,6 @@ const CashInEntry = ({ onBack }) => {
     // Show success message
     alert(`Challan ${challanNumber} generated successfully for ${selectedCustomer}`);
     
-    // Close challan preview
-    setShowChallanPreview(false);
-    
     // Optionally reset the current slot or navigate
     console.log('Challan generated:', newChallan);
   };
