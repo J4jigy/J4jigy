@@ -1487,30 +1487,30 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
               {/* Items Table - GST Format */}
-              <div className="border-2 border-black">
+              <div className="border-2 border-black overflow-x-auto">
                 {/* Table Header */}
-                <div className="bg-gray-100 px-4 py-2 flex items-center text-xs font-semibold text-black border-b-2 border-black">
-                  <span className="w-12 text-center flex-shrink-0">S.No</span>
-                  <span className="flex-1 px-3">Item Description</span>
-                  <span className="w-20 text-center flex-shrink-0">HSN</span>
-                  <span className="w-12 text-center flex-shrink-0">Qty</span>
-                  <span className="w-24 text-right flex-shrink-0">Rate</span>
-                  <span className="w-24 text-right flex-shrink-0">Amount</span>
+                <div className="bg-gray-100 px-2 py-2 flex items-center gap-2 text-xs font-semibold text-black border-b-2 border-black min-w-full">
+                  <span style={{width: '8%', minWidth: '40px'}} className="text-center">S.No</span>
+                  <span style={{width: '35%', minWidth: '100px'}} className="px-2">Item Description</span>
+                  <span style={{width: '15%', minWidth: '60px'}} className="text-center">HSN</span>
+                  <span style={{width: '10%', minWidth: '40px'}} className="text-center">Qty</span>
+                  <span style={{width: '16%', minWidth: '70px'}} className="text-right">Rate</span>
+                  <span style={{width: '16%', minWidth: '70px'}} className="text-right">Amount</span>
                 </div>
                 
                 {/* Table Body */}
                 {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
-                  <div className="px-4 py-2 flex items-center text-xs bg-white">
-                    <span className="w-12 text-center flex-shrink-0 text-black">1</span>
-                    <span className="flex-1 px-3 text-black">
+                  <div className="px-2 py-2 flex items-center gap-2 text-xs bg-white min-w-full">
+                    <span style={{width: '8%', minWidth: '40px'}} className="text-center text-black">1</span>
+                    <span style={{width: '35%', minWidth: '100px'}} className="px-2 text-black break-words">
                       {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
                         ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
                         : 'Service/Product'}
                     </span>
-                    <span className="w-20 text-center flex-shrink-0 text-gray-700">9954</span>
-                    <span className="w-12 text-center flex-shrink-0 text-gray-700">1</span>
-                    <span className="w-24 text-right flex-shrink-0 text-gray-700">₹{slots[selectedSlotForBill]?.amount}</span>
-                    <span className="w-24 text-right flex-shrink-0 text-black font-semibold">₹{slots[selectedSlotForBill]?.amount}</span>
+                    <span style={{width: '15%', minWidth: '60px'}} className="text-center text-gray-700">9954</span>
+                    <span style={{width: '10%', minWidth: '40px'}} className="text-center text-gray-700">1</span>
+                    <span style={{width: '16%', minWidth: '70px'}} className="text-right text-gray-700">₹{slots[selectedSlotForBill]?.amount}</span>
+                    <span style={{width: '16%', minWidth: '70px'}} className="text-right text-black font-semibold">₹{slots[selectedSlotForBill]?.amount}</span>
                   </div>
                 ) : (
                   <div className="px-3 py-6 text-center text-gray-500 text-xs bg-white">
