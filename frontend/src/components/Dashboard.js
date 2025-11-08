@@ -1380,34 +1380,21 @@ It's completely free to try!`;
 
       {/* Cash In/Out Floating Buttons */}
       <div className="fixed bottom-6 left-4 right-4">
-        <div className="flex flex-col gap-3">
-          {/* Scan & Pay Button - Centered above Cash In/Out */}
-          <div className="flex justify-center">
-            <Button 
-              className="w-14 h-14 rounded-full bg-purple-500/20 hover:bg-purple-500/40 active:bg-purple-500/60 border border-purple-400/30 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200 p-0"
-              onClick={() => setShowScanPayDialog(true)}
-            >
-              <QrCode className="w-[52px] h-[52px] text-purple-400" strokeWidth={1.5} />
-            </Button>
-          </div>
-          
-          {/* Cash In/Out Buttons */}
-          <div className="flex gap-4">
-            <Button 
-              className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 rounded-xl shadow-lg"
-              onClick={() => handleNavigate('/cash-in')}
-            >
-              <Plus className="w-5 h-5 mr-2" />
-              Cash In
-            </Button>
-            <Button 
-              className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 rounded-xl shadow-lg"
-              onClick={() => handleNavigate('/cash-out')}
-            >
-              <Minus className="w-5 h-5 mr-2" />
-              Cash Out
-            </Button>
-          </div>
+        <div className="flex gap-4">
+          <Button 
+            className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 rounded-xl shadow-lg"
+            onClick={() => handleNavigate('/cash-in')}
+          >
+            <Plus className="w-5 h-5 mr-2" />
+            Cash In
+          </Button>
+          <Button 
+            className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 rounded-xl shadow-lg"
+            onClick={() => handleNavigate('/cash-out')}
+          >
+            <Minus className="w-5 h-5 mr-2" />
+            Cash Out
+          </Button>
         </div>
       </div>
 
