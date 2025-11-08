@@ -1390,7 +1390,7 @@ It's completely free to try!`;
                 console.log('Scan & Pay clicked');
               }}
             >
-              <QrCode className="w-8 h-8 text-purple-400" />
+              <QrCode className="w-10 h-10 text-purple-400" />
             </Button>
           </div>
           
