@@ -1880,66 +1880,10 @@ const CashInEntry = ({ onBack }) => {
                 try {
                   setShowShareOptions(false);
                   
-                  // Show loading indicator
-                  const loadingAlert = alert('Generating PDF... Please wait');
-                  
-                  // Generate PDF
-                  console.log('Starting PDF generation...');
+                  // Generate PDF (fast - optimized)
                   const pdfFile = await generateInvoicePDF();
                   const slot = slots[selectedSlotForBill];
                   
-                  console.log('PDF generated, preparing to share...');
-                  
-                  // Share using Web Share API
-                  const invoiceText = `
-📄 TAX INVOICE
-━━━━━━━━━━━━━━━━━━━━━━━━
-
-🏢 ${activeBusiness?.name || 'BUSINESS NAME'}
-${activeBusiness?.address || ''}
-📞 Phone: ${activeBusiness?.phone || 'N/A'}
-🆔 GSTIN: ${activeBusiness?.gst || 'N/A'}
-
-━━━━━━━━━━━━━━━━━━━━━━━━
-
-📋 Invoice Details:
-Invoice No: ${slot?.invoiceNumber || 'N/A'}
-Date: ${slot?.invoiceDate || 'N/A'}
-Time: ${slot?.invoiceTime || 'N/A'}
-
-👤 Customer: ${slot?.customName || slot?.label}
-💳 Payment: ${slot?.paymentMode}
-
-━━━━━━━━━━━━━━━━━━━━━━━━
-
-📦 Items:
-${Object.entries(slot?.selectedItems || {}).length > 0 
-  ? Object.keys(slot?.selectedItems).join(', ') 
-  : 'Service/Product'}
-
-━━━━━━━━━━━━━━━━━━━━━━━━
-
-💰 Amount Details:
-Taxable Amount: ₹${subtotal.toFixed(2)}
-${taxType === 'CGST+SGST' && taxRate > 0 
-  ? `CGST @ ${taxRate / 2}%: ₹${(taxAmount / 2).toFixed(2)}\nSGST @ ${taxRate / 2}%: ₹${(taxAmount / 2).toFixed(2)}`
-  : taxRate > 0 
-    ? `IGST @ ${taxRate}%: ₹${taxAmount.toFixed(2)}`
-    : 'No Tax Applied'}
-
-━━━━━━━━━━━━━━━━━━━━━━━━
-
-💵 TOTAL AMOUNT: ₹${total.toFixed(2)}
-In Words: Rupees ${Math.floor(total)} Only
-
-━━━━━━━━━━━━━━━━━━━━━━━━
-
-📝 ${termsText || 'Terms & Conditions Apply'}
-
-✍️ For ${activeBusiness?.name || 'BUSINESS NAME'}
-Authorized Signatory
-                  `.trim();
-
                   // Try to share with Web Share API
                   if (navigator.share) {
                     try {
