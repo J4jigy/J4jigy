@@ -1382,37 +1382,31 @@ const CashInEntry = ({ onBack }) => {
             <div className="text-white text-xs font-semibold">GST</div>
             
             {/* Tax Type Selection */}
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <label className="text-xs text-slate-300 mb-0.5 block">Tax Type</label>
-                <select
-                  value={taxType}
-                  onChange={(e) => setTaxType(e.target.value)}
-                  className="w-full bg-slate-800 border border-slate-600 text-white rounded px-2 py-1 text-xs focus:outline-none focus:border-blue-500"
-                >
-                  <option value="CGST+SGST">CGST + SGST</option>
-                  <option value="IGST">IGST</option>
-                </select>
-              </div>
+            <div className="flex gap-1">
+              <select
+                value={taxType}
+                onChange={(e) => setTaxType(e.target.value)}
+                className="flex-1 bg-slate-800 border border-slate-600 text-white rounded px-1.5 py-0.5 text-xs focus:outline-none"
+              >
+                <option value="CGST+SGST">CGST+SGST</option>
+                <option value="IGST">IGST</option>
+              </select>
               
-              <div>
-                <label className="text-xs text-slate-300 mb-0.5 block">Tax Rate (%)</label>
-                <select
-                  value={taxSlab}
-                  onChange={(e) => setTaxSlab(e.target.value)}
-                  className="w-full bg-slate-800 border border-slate-600 text-white rounded px-2 py-1 text-xs focus:outline-none focus:border-blue-500"
-                >
-                  <option value="0">0% (No Tax)</option>
-                  <option value="5">5%</option>
-                  <option value="12">12%</option>
-                  <option value="18">18%</option>
-                  <option value="28">28%</option>
-                </select>
-              </div>
+              <select
+                value={taxSlab}
+                onChange={(e) => setTaxSlab(e.target.value)}
+                className="w-20 bg-slate-800 border border-slate-600 text-white rounded px-1.5 py-0.5 text-xs focus:outline-none"
+              >
+                <option value="0">0%</option>
+                <option value="5">5%</option>
+                <option value="12">12%</option>
+                <option value="18">18%</option>
+                <option value="28">28%</option>
+              </select>
             </div>
             
             {/* Tax Preview */}
-            <div className="bg-slate-800/50 border border-slate-600 rounded p-1.5 flex justify-between items-center text-xs">
+            <div className="bg-slate-800/50 border border-slate-600 rounded p-1 flex justify-between items-center text-xs">
               <span className="text-slate-300">
                 {taxType === 'CGST+SGST' && parseFloat(taxSlab) > 0 
                   ? `CGST: ${parseFloat(taxSlab) / 2}% + SGST: ${parseFloat(taxSlab) / 2}%` 
