@@ -1514,8 +1514,8 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
                 {/* Total Section - GST Format */}
-                <div className="border-2 border-black">
-                  <div className="bg-white p-1.5 space-y-0.5">
+                <div className="border border-black">
+                  <div className="bg-white p-1 space-y-0">
                     <div className="flex justify-between text-xs text-black">
                       <span className="font-semibold">Taxable Amount:</span>
                       <span className="font-semibold">₹{parseFloat(slots[selectedSlotForBill]?.amount || 0).toFixed(2)}</span>
