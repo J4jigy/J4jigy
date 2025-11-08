@@ -1427,14 +1427,14 @@ const CashInEntry = ({ onBack }) => {
           </div>
           
           {selectedSlotForBill !== null && (
-            <div className="space-y-3 bg-white p-4 rounded">
+            <div className="space-y-2 bg-white p-3 rounded">
               {/* GST Invoice Header */}
-              <div className="text-center border-2 border-black p-3">
-                <div className="text-2xl font-bold text-black mb-1">{activeBusiness?.name || 'BUSINESS NAME'}</div>
+              <div className="text-center border-2 border-black p-2">
+                <div className="text-lg font-bold text-black mb-0.5">{activeBusiness?.name || 'BUSINESS NAME'}</div>
                 {activeBusiness?.address && (
-                  <div className="text-sm text-black">{activeBusiness.address}</div>
+                  <div className="text-xs text-black">{activeBusiness.address}</div>
                 )}
-                <div className="flex justify-center gap-6 mt-2 text-sm text-black">
+                <div className="flex justify-center gap-4 mt-1 text-xs text-black">
                   {activeBusiness?.phone && (
                     <span><span className="font-semibold">Phone:</span> {activeBusiness.phone}</span>
                   )}
@@ -1442,7 +1442,7 @@ const CashInEntry = ({ onBack }) => {
                     <span><span className="font-semibold">GSTIN:</span> {activeBusiness.gst}</span>
                   )}
                 </div>
-                <div className="mt-2 text-lg font-bold text-black border-t-2 border-black pt-2">
+                <div className="mt-1 text-sm font-bold text-black border-t-2 border-black pt-1">
                   TAX INVOICE
                 </div>
               </div>
