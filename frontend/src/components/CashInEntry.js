@@ -245,7 +245,7 @@ const CashInEntry = ({ onBack }) => {
     }
   };
 
-  // Generate PDF from invoice - OPTIMIZED for speed
+  // Generate complete, clear, and visible PDF
   const generateInvoicePDF = async () => {
     try {
       const invoiceElement = document.getElementById('invoice-content');
@@ -253,28 +253,28 @@ const CashInEntry = ({ onBack }) => {
         throw new Error('Invoice element not found');
       }
 
-      // Fast canvas capture with reduced quality for speed
+      // Capture full invoice with good quality
       const canvas = await html2canvas(invoiceElement, {
-        scale: 1, // Reduced from 2 to 1 for 4x faster generation
+        scale: 1.5, // Good balance between quality and speed
         backgroundColor: '#ffffff',
         logging: false,
         useCORS: true,
-        allowTaint: true
+        allowTaint: true,
+        windowWidth: invoiceElement.scrollWidth,
+        windowHeight: invoiceElement.scrollHeight
       });
 
-      // Quick PDF generation
-      const imgData = canvas.toDataURL('image/jpeg', 0.85); // JPEG instead of PNG for smaller size
+      // Create PDF with proper dimensions
+      const imgData = canvas.toDataURL('image/jpeg', 0.92); // High quality JPEG
       const pdf = new jsPDF({
         orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4',
+        unit: 'px',
+        format: [canvas.width, canvas.height],
         compress: true
       });
 
-      const imgWidth = 210; // A4 width
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      
-      pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
+      // Add image to fit entire page
+      pdf.addImage(imgData, 'JPEG', 0, 0, canvas.width, canvas.height);
       
       const slot = slots[selectedSlotForBill];
       const pdfBlob = pdf.output('blob');
