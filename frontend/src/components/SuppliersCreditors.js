@@ -96,7 +96,7 @@ export default function SuppliersCreditors() {
             onClick={() => setActiveTab('creditors')}
             className={`flex-1 ${
               activeTab === 'creditors'
-                ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                ? 'bg-red-600 hover:bg-red-700 text-white'
                 : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
             }`}
           >
