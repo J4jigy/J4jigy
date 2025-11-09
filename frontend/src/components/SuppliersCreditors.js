@@ -187,32 +187,32 @@ export default function SuppliersCreditors() {
         <div className="space-y-3">
           {filteredList.map(item => (
             <Card 
-              key={supplier.id} 
+              key={item.id} 
               className="bg-slate-800 border-slate-700 cursor-pointer hover:border-indigo-500 transition-colors"
               onClick={() => {
-                setSelectedSupplier(supplier);
+                setSelectedSupplier(item);
                 setShowDetailsDialog(true);
               }}
             >
               <CardContent className="p-3">
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex-1">
-                    <p className="text-sm font-bold text-white">{supplier.name}</p>
+                    <p className="text-sm font-bold text-white">{item.name}</p>
                     <div className="flex items-center gap-3 mt-1">
                       <span className="text-xs text-slate-400 flex items-center gap-1">
-                        <Phone className="w-3 h-3" /> {supplier.phone}
+                        <Phone className="w-3 h-3" /> {item.phone}
                       </span>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-bold text-red-400">₹{supplier.balance.toLocaleString()}</p>
+                    <p className="text-sm font-bold text-red-400">₹{item.balance.toLocaleString()}</p>
                     <p className="text-xs text-slate-400">Payable</p>
                   </div>
                 </div>
                 <div className="flex justify-between items-center pt-2 border-t border-slate-700">
-                  <span className="text-xs text-slate-400">Credit: {supplier.creditDays} days</span>
-                  <span className="text-xs text-slate-400">Last: {supplier.lastPurchase}</span>
-                  {supplier.status === 'warning' && (
+                  <span className="text-xs text-slate-400">Credit: {item.creditDays} days</span>
+                  <span className="text-xs text-slate-400">Last: {item.lastPurchase}</span>
+                  {item.status === 'warning' && (
                     <span className="text-xs bg-red-900/50 text-red-300 px-2 py-0.5 rounded">Overdue</span>
                   )}
                 </div>
