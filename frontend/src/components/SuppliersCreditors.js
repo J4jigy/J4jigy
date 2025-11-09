@@ -19,28 +19,40 @@ export default function SuppliersCreditors() {
   const [selectedSupplier, setSelectedSupplier] = useState(null);
   const [activeTab, setActiveTab] = useState('suppliers'); // Tab state: 'suppliers' or 'creditors'
 
-  // Get suppliers data
+  // Get suppliers and creditors data
   const suppliers = getData('suppliers', []);
+  const creditors = getData('creditors', []);
 
   // Sample suppliers
   const sampleSuppliers = suppliers.length > 0 ? suppliers : [
-    { id: 1, name: 'Oil India Ltd', phone: '9876543220', email: 'oil@example.com', balance: 150000, creditDays: 30, lastPurchase: '2025-01-10', status: 'active' },
-    { id: 2, name: 'Bharat Petroleum', phone: '9876543221', email: 'bharat@example.com', balance: 200000, creditDays: 45, lastPurchase: '2025-01-09', status: 'active' },
-    { id: 3, name: 'Equipment Suppliers Co', phone: '9876543222', email: 'equip@example.com', balance: 85000, creditDays: 30, lastPurchase: '2025-01-08', status: 'warning' },
-    { id: 4, name: 'Parts & Accessories', phone: '9876543223', email: 'parts@example.com', balance: 45000, creditDays: 15, lastPurchase: '2025-01-05', status: 'active' },
+    { id: 1, name: 'Oil India Ltd', phone: '9876543220', email: 'oil@example.com', balance: 150000, creditDays: 30, lastPurchase: '2025-01-10', status: 'active', type: 'supplier' },
+    { id: 2, name: 'Bharat Petroleum', phone: '9876543221', email: 'bharat@example.com', balance: 200000, creditDays: 45, lastPurchase: '2025-01-09', status: 'active', type: 'supplier' },
+    { id: 3, name: 'Equipment Suppliers Co', phone: '9876543222', email: 'equip@example.com', balance: 85000, creditDays: 30, lastPurchase: '2025-01-08', status: 'warning', type: 'supplier' },
+    { id: 4, name: 'Parts & Accessories', phone: '9876543223', email: 'parts@example.com', balance: 45000, creditDays: 15, lastPurchase: '2025-01-05', status: 'active', type: 'supplier' },
   ];
 
-  // Calculate totals
-  const totalPayable = sampleSuppliers.reduce((sum, s) => sum + s.balance, 0);
-  const activeSuppliers = sampleSuppliers.filter(s => s.status === 'active').length;
-  const overdueSuppliers = sampleSuppliers.filter(s => s.status === 'warning').length;
-  const avgPayable = sampleSuppliers.length > 0 ? totalPayable / sampleSuppliers.length : 0;
+  // Sample creditors
+  const sampleCreditors = creditors.length > 0 ? creditors : [
+    { id: 5, name: 'ABC Finance Ltd', phone: '9876543224', email: 'abc@example.com', balance: 300000, creditDays: 60, lastPurchase: '2025-01-11', status: 'active', type: 'creditor' },
+    { id: 6, name: 'XYZ Bank Loan', phone: '9876543225', email: 'xyz@example.com', balance: 500000, creditDays: 90, lastPurchase: '2025-01-10', status: 'active', type: 'creditor' },
+    { id: 7, name: 'Vendor Credit Account', phone: '9876543226', email: 'vendor@example.com', balance: 75000, creditDays: 30, lastPurchase: '2025-01-07', status: 'warning', type: 'creditor' },
+    { id: 8, name: 'Business Creditor', phone: '9876543227', email: 'business@example.com', balance: 120000, creditDays: 45, lastPurchase: '2025-01-06', status: 'active', type: 'creditor' },
+  ];
 
-  // Filter suppliers
-  const filteredSuppliers = sampleSuppliers.filter(supplier => {
-    const matchesSearch = supplier.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         supplier.phone.includes(searchQuery);
-    const matchesFilter = filterStatus === 'all' || supplier.status === filterStatus;
+  // Get current list based on active tab
+  const currentList = activeTab === 'suppliers' ? sampleSuppliers : sampleCreditors;
+
+  // Calculate totals for current tab
+  const totalPayable = currentList.reduce((sum, s) => sum + s.balance, 0);
+  const activeCount = currentList.filter(s => s.status === 'active').length;
+  const overdueCount = currentList.filter(s => s.status === 'warning').length;
+  const avgPayable = currentList.length > 0 ? totalPayable / currentList.length : 0;
+
+  // Filter current list
+  const filteredList = currentList.filter(item => {
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         item.phone.includes(searchQuery);
+    const matchesFilter = filterStatus === 'all' || item.status === filterStatus;
     return matchesSearch && matchesFilter;
   });
 
