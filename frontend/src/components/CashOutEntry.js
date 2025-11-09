@@ -81,6 +81,7 @@ const CashOutEntry = ({ onBack }) => {
   const [showCategoryList, setShowCategoryList] = useState(false);
   const [showCustomerDebtorModal, setShowCustomerDebtorModal] = useState(false);
   const [showSupplierCreditorModal, setShowSupplierCreditorModal] = useState(false);
+  const [supplierCreditorTab, setSupplierCreditorTab] = useState('suppliers'); // Tab state
   
   // Add New Expense Modal States
   const [newExpenseName, setNewExpenseName] = useState('');
