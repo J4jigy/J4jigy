@@ -306,7 +306,7 @@ const CashInEntry = ({ onBack }) => {
   const financeSubcategories = [
     { name: 'Bank', icon: Landmark, selectable: true },
     { name: 'Cash', icon: Coins, selectable: true },
-    { name: 'Rent', icon: Building, selectable: true }
+    { name: 'Rent Received', icon: Building, selectable: true }
   ];
   const financeCategories = [
     { name: 'Bills / Recharge', icon: FileText },
