@@ -155,7 +155,7 @@ export default function CustomersDebtors() {
               <p className="text-lg font-bold text-white">₹{avgBalance.toFixed(0)}</p>
               <div className="flex items-center gap-1 mt-1">
                 <IndianRupee className="w-3 h-3 text-white" />
-                <span className="text-xs text-white">per customer</span>
+                <span className="text-xs text-white">per {activeTab === 'customers' ? 'customer' : 'debtor'}</span>
               </div>
             </CardContent>
           </Card>
@@ -163,7 +163,7 @@ export default function CustomersDebtors() {
           <Card className="bg-gradient-to-br from-purple-600 to-purple-700 border-0">
             <CardContent className="p-3">
               <p className="text-xs text-purple-100">Active</p>
-              <p className="text-lg font-bold text-white">{activeCustomers}</p>
+              <p className="text-lg font-bold text-white">{activeCount}</p>
               <div className="flex items-center gap-1 mt-1">
                 <UserPlus className="w-3 h-3 text-white" />
                 <span className="text-xs text-white">in good standing</span>
@@ -174,7 +174,7 @@ export default function CustomersDebtors() {
           <Card className="bg-gradient-to-br from-orange-600 to-red-600 border-0">
             <CardContent className="p-3">
               <p className="text-xs text-orange-100">Overdue</p>
-              <p className="text-lg font-bold text-white">{overdueCustomers}</p>
+              <p className="text-lg font-bold text-white">{overdueCount}</p>
               <div className="flex items-center gap-1 mt-1">
                 <AlertCircle className="w-3 h-3 text-white" />
                 <span className="text-xs text-white">needs attention</span>
