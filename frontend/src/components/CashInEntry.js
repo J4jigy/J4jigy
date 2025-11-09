@@ -594,6 +594,13 @@ const CashInEntry = ({ onBack }) => {
   };
 
   const handleCategorySelect = (category) => {
+    // Check if "Customers / Debtors (देनदार)" is selected
+    if (category === 'Customers / Debtors (देनदार)') {
+      setShowBusinessModal(false);
+      setShowCustomerDebtorModal(true);
+      return;
+    }
+    
     // Set the selected customer directly for business and finance options
     setSelectedCustomer(category);
     setShowBusinessModal(false);
