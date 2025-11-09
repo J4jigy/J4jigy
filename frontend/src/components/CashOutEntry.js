@@ -615,7 +615,10 @@ const CashOutEntry = ({ onBack }) => {
           <Button
             variant="outline"
             className="bg-slate-800 border-slate-700 text-white justify-start h-auto py-1"
-            onClick={() => setShowBusinessModal(true)}
+            onClick={() => {
+              setActiveTab('business');
+              setShowBusinessModal(true);
+            }}
           >
             <div className="text-left">
               <div className="text-xs text-slate-400">Vendor</div>
