@@ -17,6 +17,7 @@ export default function SuppliersCreditors() {
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showDetailsDialog, setShowDetailsDialog] = useState(false);
   const [selectedSupplier, setSelectedSupplier] = useState(null);
+  const [activeTab, setActiveTab] = useState('suppliers'); // Tab state: 'suppliers' or 'creditors'
 
   // Get suppliers data
   const suppliers = getData('suppliers', []);
