@@ -139,12 +139,17 @@ const CashOutEntry = ({ onBack }) => {
   const [expenses, setExpenses] = useState([]); // Empty - no default expenses
   const businessCategories = [
     { name: 'Customers / Debtors (देनदार)', icon: Users, selectable: true },
-    { name: 'Suppliers / Creditors (लेनदार)', icon: Building, selectable: true }
+    { name: 'Suppliers / Creditors (लेनदार)', icon: Building, selectable: true },
+    { name: 'Company Purchase', icon: Package, selectable: true },
+    { name: 'Staff', icon: Users, selectable: true }
   ];
   const financeSubcategories = [
+    { name: 'Bills / Recharges', icon: FileText, selectable: true },
+    { name: 'Rent Given', icon: Building, selectable: true },
     { name: 'Bank', icon: Landmark, selectable: true },
     { name: 'Cash', icon: Coins, selectable: true },
-    { name: 'Rent', icon: Building, selectable: true }
+    { name: 'Transport Expense', icon: Truck, selectable: true },
+    { name: 'Other Expenses', icon: FileText, selectable: true }
   ];
   const financeCategories = [
     { name: 'Bills / Recharge', icon: FileText },
