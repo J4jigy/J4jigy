@@ -19,6 +19,7 @@ export default function CustomersDebtors() {
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [showDetailsDialog, setShowDetailsDialog] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [activeTab, setActiveTab] = useState('customers'); // Tab state: 'customers' or 'debtors'
   const [newCustomer, setNewCustomer] = useState({
     name: '',
     phone: '',
@@ -28,25 +29,37 @@ export default function CustomersDebtors() {
     openingBalance: ''
   });
 
-  // Get customers data
+  // Get customers and debtors data
   const customers = getData('customers', []);
+  const debtors = getData('debtors', []);
 
-  // Sample customers if empty
+  // Sample customers
   const sampleCustomers = customers.length > 0 ? customers : [
-    { id: 1, name: 'Rajesh Enterprises', phone: '9876543210', email: 'rajesh@example.com', balance: 25000, creditLimit: 50000, lastTransaction: '2025-01-10', status: 'active' },
-    { id: 2, name: 'Sharma Transport', phone: '9876543211', email: 'sharma@example.com', balance: 15000, creditLimit: 30000, lastTransaction: '2025-01-09', status: 'active' },
-    { id: 3, name: 'Kumar Industries', phone: '9876543212', email: 'kumar@example.com', balance: 45000, creditLimit: 50000, lastTransaction: '2025-01-08', status: 'warning' },
-    { id: 4, name: 'Patel & Sons', phone: '9876543213', email: 'patel@example.com', balance: 8000, creditLimit: 20000, lastTransaction: '2025-01-07', status: 'active' },
+    { id: 1, name: 'Rajesh Enterprises', phone: '9876543210', email: 'rajesh@example.com', balance: 25000, creditLimit: 50000, lastTransaction: '2025-01-10', status: 'active', type: 'customer' },
+    { id: 2, name: 'Sharma Transport', phone: '9876543211', email: 'sharma@example.com', balance: 15000, creditLimit: 30000, lastTransaction: '2025-01-09', status: 'active', type: 'customer' },
+    { id: 3, name: 'Kumar Industries', phone: '9876543212', email: 'kumar@example.com', balance: 45000, creditLimit: 50000, lastTransaction: '2025-01-08', status: 'warning', type: 'customer' },
+    { id: 4, name: 'Patel & Sons', phone: '9876543213', email: 'patel@example.com', balance: 8000, creditLimit: 20000, lastTransaction: '2025-01-07', status: 'active', type: 'customer' },
   ];
 
-  // Calculate totals
-  const totalReceivable = sampleCustomers.reduce((sum, c) => sum + c.balance, 0);
-  const activeCustomers = sampleCustomers.filter(c => c.status === 'active').length;
-  const overdueCustomers = sampleCustomers.filter(c => c.status === 'warning').length;
-  const avgBalance = sampleCustomers.length > 0 ? totalReceivable / sampleCustomers.length : 0;
+  // Sample debtors
+  const sampleDebtors = debtors.length > 0 ? debtors : [
+    { id: 5, name: 'Verma Construction', phone: '9876543214', email: 'verma@example.com', balance: 35000, creditLimit: 60000, lastTransaction: '2025-01-11', status: 'active', type: 'debtor' },
+    { id: 6, name: 'Gupta Traders', phone: '9876543215', email: 'gupta@example.com', balance: 50000, creditLimit: 70000, lastTransaction: '2025-01-10', status: 'warning', type: 'debtor' },
+    { id: 7, name: 'Singh Motors', phone: '9876543216', email: 'singh@example.com', balance: 20000, creditLimit: 40000, lastTransaction: '2025-01-09', status: 'active', type: 'debtor' },
+    { id: 8, name: 'Yadav Supplies', phone: '9876543217', email: 'yadav@example.com', balance: 12000, creditLimit: 25000, lastTransaction: '2025-01-08', status: 'active', type: 'debtor' },
+  ];
 
-  // Filter customers
-  const filteredCustomers = sampleCustomers.filter(customer => {
+  // Get current list based on active tab
+  const currentList = activeTab === 'customers' ? sampleCustomers : sampleDebtors;
+
+  // Calculate totals for current tab
+  const totalReceivable = currentList.reduce((sum, c) => sum + c.balance, 0);
+  const activeCount = currentList.filter(c => c.status === 'active').length;
+  const overdueCount = currentList.filter(c => c.status === 'warning').length;
+  const avgBalance = currentList.length > 0 ? totalReceivable / currentList.length : 0;
+
+  // Filter current list
+  const filteredCustomers = currentList.filter(customer => {
     const matchesSearch = customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          customer.phone.includes(searchQuery);
     const matchesFilter = filterStatus === 'all' || customer.status === filterStatus;
