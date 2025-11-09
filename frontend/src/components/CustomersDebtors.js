@@ -222,7 +222,7 @@ export default function CustomersDebtors() {
               <CardContent className="p-3">
                 <div className="flex justify-between items-start mb-2">
                   <div className="flex-1">
-                    <p className="text-sm font-bold text-white">{customer.name}</p>
+                    <p className={`text-sm font-bold ${activeTab === 'debtors' ? 'text-red-400 bg-red-500/10 px-2 py-1 rounded' : 'text-white'}`}>{customer.name}</p>
                     <div className="flex items-center gap-3 mt-1">
                       <span className="text-xs text-slate-400 flex items-center gap-1">
                         <Phone className="w-3 h-3" /> {customer.phone}
