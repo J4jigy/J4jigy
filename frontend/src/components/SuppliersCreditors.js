@@ -135,10 +135,10 @@ export default function SuppliersCreditors() {
           <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-0">
             <CardContent className="p-3">
               <p className="text-xs text-blue-100">Active</p>
-              <p className="text-lg font-bold text-white">{activeSuppliers}</p>
+              <p className="text-lg font-bold text-white">{activeCount}</p>
               <div className="flex items-center gap-1 mt-1">
                 <Truck className="w-3 h-3 text-white" />
-                <span className="text-xs text-white">suppliers</span>
+                <span className="text-xs text-white">{activeTab === 'suppliers' ? 'suppliers' : 'creditors'}</span>
               </div>
             </CardContent>
           </Card>
@@ -146,7 +146,7 @@ export default function SuppliersCreditors() {
           <Card className="bg-gradient-to-br from-orange-600 to-red-600 border-0">
             <CardContent className="p-3">
               <p className="text-xs text-orange-100">Overdue</p>
-              <p className="text-lg font-bold text-white">{overdueSuppliers}</p>
+              <p className="text-lg font-bold text-white">{overdueCount}</p>
               <div className="flex items-center gap-1 mt-1">
                 <AlertTriangle className="w-3 h-3 text-white" />
                 <span className="text-xs text-white">urgent payments</span>
