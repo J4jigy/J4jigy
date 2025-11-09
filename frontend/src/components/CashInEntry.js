@@ -1376,6 +1376,37 @@ const CashInEntry = ({ onBack }) => {
         </DialogContent>
       </Dialog>
 
+      {/* Supplier / Creditor Sub-Selection Modal */}
+      <Dialog open={showSupplierCreditorModal} onOpenChange={setShowSupplierCreditorModal}>
+        <DialogContent className="bg-slate-800 border-slate-700">
+          <DialogHeader>
+            <DialogTitle className="text-white">Select Type</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-2">
+            <Button
+              onClick={() => {
+                handleCategorySelect('Suppliers');
+                setShowSupplierCreditorModal(false);
+              }}
+              className="w-full justify-start bg-slate-700 hover:bg-slate-600 text-white text-sm py-3"
+            >
+              <Building className="w-4 h-4 mr-2" />
+              Suppliers
+            </Button>
+            <Button
+              onClick={() => {
+                handleCategorySelect('Creditors (लेनदार)');
+                setShowSupplierCreditorModal(false);
+              }}
+              className="w-full justify-start bg-slate-700 hover:bg-slate-600 text-white text-sm py-3"
+            >
+              <Building className="w-4 h-4 mr-2" />
+              Creditors (लेनदार)
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Finance Modal */}
       <Dialog open={showFinanceModal} onOpenChange={setShowFinanceModal}>
         <DialogContent className="bg-slate-800 border-slate-700">
