@@ -949,6 +949,37 @@ const CashOutEntry = ({ onBack }) => {
         </DialogContent>
       </Dialog>
 
+      {/* Customer / Debtor Sub-Selection Modal */}
+      <Dialog open={showCustomerDebtorModal} onOpenChange={setShowCustomerDebtorModal}>
+        <DialogContent className="bg-slate-800 border-slate-700">
+          <DialogHeader>
+            <DialogTitle className="text-white">Select Type</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-2">
+            <Button
+              onClick={() => {
+                handleCategorySelect('Customers');
+                setShowCustomerDebtorModal(false);
+              }}
+              className="w-full justify-start bg-slate-700 hover:bg-slate-600 text-white text-sm py-3"
+            >
+              <Users className="w-4 h-4 mr-2" />
+              Customers
+            </Button>
+            <Button
+              onClick={() => {
+                handleCategorySelect('Debtors (देनदार)');
+                setShowCustomerDebtorModal(false);
+              }}
+              className="w-full justify-start bg-slate-700 hover:bg-slate-600 text-white text-sm py-3"
+            >
+              <Users className="w-4 h-4 mr-2" />
+              Debtors (देनदार)
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Category List Modal */}
       <Dialog open={showCategoryList} onOpenChange={setShowCategoryList}>
         <DialogContent className="bg-slate-800 border-slate-700 max-w-md max-h-96">
