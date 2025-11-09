@@ -137,9 +137,13 @@ const CashOutEntry = ({ onBack }) => {
   const quickAmounts = [1, 2, 5, 10, 20, 50, 100, 200, 500];
   const [expenses, setExpenses] = useState([]); // Empty - no default expenses
   const businessCategories = [
-    { name: 'Customers / Debtors (देनदार)', icon: Users },
-    { name: 'Suppliers / Creditors (लेनदार)', icon: Building },
-    { name: 'Staff', icon: Users }
+    { name: 'Customers / Debtors (देनदार)', icon: Users, selectable: true },
+    { name: 'Suppliers / Creditors (लेनदार)', icon: Building, selectable: true }
+  ];
+  const financeSubcategories = [
+    { name: 'Bank', icon: Landmark, selectable: true },
+    { name: 'Cash', icon: Coins, selectable: true },
+    { name: 'Rent', icon: Building, selectable: true }
   ];
   const financeCategories = [
     { name: 'Bills / Recharge', icon: FileText },
