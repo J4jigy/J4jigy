@@ -876,14 +876,46 @@ const CashOutEntry = ({ onBack }) => {
         </DialogContent>
       </Dialog>
 
-      {/* Business Modal */}
-      <Dialog open={showBusinessModal} onOpenChange={setShowBusinessModal}>
-        <DialogContent className="bg-slate-800 border-slate-700">
+      {/* Vendor Selection Modal with Tabs (Combined Business + Finance) */}
+      <Dialog open={showBusinessModal || showFinanceModal} onOpenChange={(open) => {
+        setShowBusinessModal(open);
+        setShowFinanceModal(open);
+        if (!open) setActiveTab('business');
+      }}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-white">Business Categories</DialogTitle>
+            <DialogTitle className="text-white">Vendor Selection</DialogTitle>
           </DialogHeader>
-          <div className="space-y-2">
-            {businessCategories.map((category) => {
+          
+          {/* Tabs */}
+          <div className="flex gap-2 border-b border-slate-700">
+            <Button
+              onClick={() => setActiveTab('business')}
+              className={`flex-1 rounded-b-none ${
+                activeTab === 'business' 
+                  ? 'bg-blue-600 hover:bg-blue-700' 
+                  : 'bg-slate-700 hover:bg-slate-600'
+              }`}
+            >
+              <Users className="w-4 h-4 mr-2" />
+              Business
+            </Button>
+            <Button
+              onClick={() => setActiveTab('finance')}
+              className={`flex-1 rounded-b-none ${
+                activeTab === 'finance' 
+                  ? 'bg-blue-600 hover:bg-blue-700' 
+                  : 'bg-slate-700 hover:bg-slate-600'
+              }`}
+            >
+              <CircleDollarSign className="w-4 h-4 mr-2" />
+              Finance
+            </Button>
+          </div>
+
+          {/* Tab Content */}
+          <div className="space-y-2 max-h-96 overflow-y-auto">
+            {activeTab === 'business' && businessCategories.map((category) => {
               const IconComponent = category.icon;
               return (
                 <Button
@@ -896,18 +928,8 @@ const CashOutEntry = ({ onBack }) => {
                 </Button>
               );
             })}
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Finance Modal */}
-      <Dialog open={showFinanceModal} onOpenChange={setShowFinanceModal}>
-        <DialogContent className="bg-slate-800 border-slate-700">
-          <DialogHeader>
-            <DialogTitle className="text-white">Finance Categories</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-2">
-            {financeCategories.map((category) => {
+            
+            {activeTab === 'finance' && financeSubcategories.map((category) => {
               const IconComponent = category.icon;
               return (
                 <Button
