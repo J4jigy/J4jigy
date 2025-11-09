@@ -38,7 +38,8 @@ import {
   Printer,
   Edit2,
   Save,
-  X
+  X,
+  Landmark
 } from 'lucide-react';
 
 const CashInEntry = ({ onBack }) => {
