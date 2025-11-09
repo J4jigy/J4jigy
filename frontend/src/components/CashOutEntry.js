@@ -30,7 +30,8 @@ import {
   Coins,
   Search,
   X,
-  Landmark
+  Landmark,
+  Truck
 } from 'lucide-react';
 
 const CashOutEntry = ({ onBack }) => {
