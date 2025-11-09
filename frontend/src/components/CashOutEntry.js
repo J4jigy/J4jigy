@@ -243,6 +243,14 @@ const CashOutEntry = ({ onBack }) => {
   };
 
   const handleCategorySelect = (category) => {
+    // Check if "Customers / Debtors (देनदार)" is selected
+    if (category === 'Customers / Debtors (देनदार)') {
+      setShowBusinessModal(false);
+      setShowFinanceModal(false);
+      setShowCustomerDebtorModal(true);
+      return;
+    }
+    
     setSelectedCategory(category);
     setNewEntryTitle(
       financeCategories.some(cat => cat.name === category) 
