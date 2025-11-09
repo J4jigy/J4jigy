@@ -185,7 +185,7 @@ export default function SuppliersCreditors() {
 
         {/* Suppliers List */}
         <div className="space-y-3">
-          {filteredSuppliers.map(supplier => (
+          {filteredList.map(item => (
             <Card 
               key={supplier.id} 
               className="bg-slate-800 border-slate-700 cursor-pointer hover:border-indigo-500 transition-colors"
