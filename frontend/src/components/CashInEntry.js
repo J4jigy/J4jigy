@@ -602,6 +602,13 @@ const CashInEntry = ({ onBack }) => {
       return;
     }
     
+    // Check if "Suppliers / Creditors (लेनदार)" is selected
+    if (category === 'Suppliers / Creditors (लेनदार)') {
+      setShowBusinessModal(false);
+      setShowSupplierCreditorModal(true);
+      return;
+    }
+    
     // Set the selected customer directly for business and finance options
     setSelectedCustomer(category);
     setShowBusinessModal(false);
