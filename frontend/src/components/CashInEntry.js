@@ -124,6 +124,7 @@ const CashInEntry = ({ onBack }) => {
   const [showAddProductModal, setShowAddProductModal] = useState(false);
   const [showBarcodeModal, setShowBarcodeModal] = useState(false);
   const [showCategoryList, setShowCategoryList] = useState(false);
+  const [showCustomerDebtorModal, setShowCustomerDebtorModal] = useState(false);
   
   // Add New Product Modal States
   const [newProductName, setNewProductName] = useState('');
