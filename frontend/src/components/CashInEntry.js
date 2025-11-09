@@ -303,6 +303,8 @@ const CashInEntry = ({ onBack }) => {
     { name: 'Suppliers / Creditors (लेनदार)', icon: Building, selectable: true }
   ];
   const financeSubcategories = [
+    { name: 'Bank', icon: Landmark, selectable: true },
+    { name: 'Cash', icon: Coins, selectable: true },
     { name: 'Rent', icon: Building, selectable: true }
   ];
   const financeCategories = [
