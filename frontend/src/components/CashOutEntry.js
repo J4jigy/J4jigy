@@ -974,7 +974,7 @@ const CashOutEntry = ({ onBack }) => {
       <Dialog open={showProductModal} onOpenChange={setShowProductModal}>
         <DialogContent className="bg-slate-800 border-slate-700 max-w-sm w-full mx-auto my-4 max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-white text-lg">Select Expenses</DialogTitle>
+            <DialogTitle className="text-white text-lg">Product / Expense Selection</DialogTitle>
           </DialogHeader>
           <div className="space-y-2 max-h-[60vh] overflow-y-auto">
             <div className="flex flex-col gap-2 mb-3">
