@@ -634,7 +634,7 @@ const CashOutEntry = ({ onBack }) => {
             onClick={() => setShowProductModal(true)}
           >
             <div className="text-left">
-              <div className="text-xs text-slate-400">Expenses</div>
+              <div className="text-xs text-slate-400">Product / Expense</div>
               <div className="text-xs truncate">
                 {Object.keys(selectedItems).length > 0 
                   ? Object.entries(selectedItems).map(([name, qty]) => `${name} x${qty}`).join(', ')
