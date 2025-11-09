@@ -145,10 +145,10 @@ const CashOutEntry = ({ onBack }) => {
     { name: 'Staff', icon: Users, selectable: true }
   ];
   const financeSubcategories = [
-    { name: 'Bills / Recharges Expenses', icon: FileText, selectable: true },
-    { name: 'Rent Given', icon: Building, selectable: true },
     { name: 'Bank', icon: Landmark, selectable: true },
     { name: 'Cash', icon: Coins, selectable: true },
+    { name: 'Bills / Recharges Expenses', icon: FileText, selectable: true },
+    { name: 'Rent Given', icon: Building, selectable: true },
     { name: 'Transport Expense', icon: Truck, selectable: true },
     { name: 'Other Expenses', icon: FileText, selectable: true }
   ];
