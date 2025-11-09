@@ -300,12 +300,10 @@ const CashInEntry = ({ onBack }) => {
   const [products, setProducts] = useState([]); // Empty - no default products
   const businessCategories = [
     { name: 'Customers / Debtors (देनदार)', icon: Users, selectable: true },
-    { name: 'Suppliers / Creditors (लेनदार)', icon: Building, selectable: true },
-    { name: 'Staff', icon: Users, selectable: true }
+    { name: 'Suppliers / Creditors (लेनदार)', icon: Building, selectable: true }
   ];
   const financeSubcategories = [
-    { name: 'Rent', icon: Building, selectable: true },
-    { name: 'Other', icon: FileText, selectable: true }
+    { name: 'Rent', icon: Building, selectable: true }
   ];
   const financeCategories = [
     { name: 'Bills / Recharge', icon: FileText },
