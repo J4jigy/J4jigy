@@ -124,7 +124,7 @@ export default function CustomersDebtors() {
             onClick={() => setActiveTab('debtors')}
             className={`flex-1 ${
               activeTab === 'debtors'
-                ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                ? 'bg-red-600 hover:bg-red-700 text-white'
                 : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
             }`}
           >
