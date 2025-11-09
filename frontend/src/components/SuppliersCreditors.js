@@ -127,7 +127,7 @@ export default function SuppliersCreditors() {
               <p className="text-lg font-bold text-white">₹{avgPayable.toFixed(0)}</p>
               <div className="flex items-center gap-1 mt-1">
                 <IndianRupee className="w-3 h-3 text-white" />
-                <span className="text-xs text-white">per supplier</span>
+                <span className="text-xs text-white">per {activeTab === 'suppliers' ? 'supplier' : 'creditor'}</span>
               </div>
             </CardContent>
           </Card>
