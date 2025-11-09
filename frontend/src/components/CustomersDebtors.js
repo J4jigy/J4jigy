@@ -144,7 +144,7 @@ export default function CustomersDebtors() {
               <p className="text-lg font-bold text-white">₹{totalReceivable.toLocaleString()}</p>
               <div className="flex items-center gap-1 mt-1">
                 <TrendingUp className="w-3 h-3 text-white" />
-                <span className="text-xs text-white">{sampleCustomers.length} customers</span>
+                <span className="text-xs text-white">{currentList.length} {activeTab === 'customers' ? 'customers' : 'debtors'}</span>
               </div>
             </CardContent>
           </Card>
