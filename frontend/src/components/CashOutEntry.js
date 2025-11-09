@@ -252,6 +252,14 @@ const CashOutEntry = ({ onBack }) => {
       return;
     }
     
+    // Check if "Suppliers / Creditors (लेनदार)" is selected
+    if (category === 'Suppliers / Creditors (लेनदार)') {
+      setShowBusinessModal(false);
+      setShowFinanceModal(false);
+      setShowSupplierCreditorModal(true);
+      return;
+    }
+    
     setSelectedCategory(category);
     setNewEntryTitle(
       financeCategories.some(cat => cat.name === category) 
