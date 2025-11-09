@@ -116,7 +116,7 @@ export default function SuppliersCreditors() {
               <p className="text-lg font-bold text-white">₹{totalPayable.toLocaleString()}</p>
               <div className="flex items-center gap-1 mt-1">
                 <TrendingDown className="w-3 h-3 text-white" />
-                <span className="text-xs text-white">{sampleSuppliers.length} suppliers</span>
+                <span className="text-xs text-white">{currentList.length} {activeTab === 'suppliers' ? 'suppliers' : 'creditors'}</span>
               </div>
             </CardContent>
           </Card>
