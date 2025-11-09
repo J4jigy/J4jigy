@@ -66,8 +66,36 @@ export default function SuppliersCreditors() {
         </div>
       </div>
 
+      {/* Tabs */}
+      <div className="px-4 pt-4">
+        <div className="flex gap-2 mb-4">
+          <Button
+            onClick={() => setActiveTab('suppliers')}
+            className={`flex-1 ${
+              activeTab === 'suppliers'
+                ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+            }`}
+          >
+            <Truck className="w-4 h-4 mr-2" />
+            Suppliers
+          </Button>
+          <Button
+            onClick={() => setActiveTab('creditors')}
+            className={`flex-1 ${
+              activeTab === 'creditors'
+                ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+            }`}
+          >
+            <TrendingDown className="w-4 h-4 mr-2" />
+            Creditors (लेनदार)
+          </Button>
+        </div>
+      </div>
+
       {/* Content */}
-      <div className="px-4 py-4">
+      <div className="px-4">
         {/* Summary Cards */}
         <div className="grid grid-cols-2 gap-3 mb-4">
           <Card className="bg-gradient-to-br from-red-600 to-red-700 border-0">
