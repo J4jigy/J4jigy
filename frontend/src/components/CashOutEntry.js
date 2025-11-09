@@ -78,6 +78,7 @@ const CashOutEntry = ({ onBack }) => {
   const [showAddProductModal, setShowAddProductModal] = useState(false);
   const [showBarcodeModal, setShowBarcodeModal] = useState(false);
   const [showCategoryList, setShowCategoryList] = useState(false);
+  const [activeTab, setActiveTab] = useState('business'); // For customer selection tabs
   
   // Add New Expense Modal States
   const [newExpenseName, setNewExpenseName] = useState('');
