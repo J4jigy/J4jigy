@@ -106,8 +106,36 @@ export default function CustomersDebtors() {
         </div>
       </div>
 
+      {/* Tabs */}
+      <div className="px-4 pt-4">
+        <div className="flex gap-2 mb-4">
+          <Button
+            onClick={() => setActiveTab('customers')}
+            className={`flex-1 ${
+              activeTab === 'customers'
+                ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+            }`}
+          >
+            <UserPlus className="w-4 h-4 mr-2" />
+            Customers
+          </Button>
+          <Button
+            onClick={() => setActiveTab('debtors')}
+            className={`flex-1 ${
+              activeTab === 'debtors'
+                ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+            }`}
+          >
+            <AlertCircle className="w-4 h-4 mr-2" />
+            Debtors (देनदार)
+          </Button>
+        </div>
+      </div>
+
       {/* Content */}
-      <div className="px-4 py-4">
+      <div className="px-4">
         {/* Summary Cards */}
         <div className="grid grid-cols-2 gap-3 mb-4">
           <Card className="bg-gradient-to-br from-green-600 to-green-700 border-0">
