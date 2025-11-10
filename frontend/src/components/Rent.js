@@ -1,5 +1,5 @@
-import React from 'react';
-import { ArrowLeft, Building, Calendar, IndianRupee, CheckCircle, AlertCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowLeft, Building, Calendar, IndianRupee, CheckCircle, AlertCircle, TrendingUp, TrendingDown } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
@@ -7,22 +7,46 @@ import { useBusiness } from '../contexts/BusinessContext';
 
 export default function Rent() {
   const navigate = useNavigate();
-  const { activeBusiness } = useBusiness();
+  const { activeBusiness, getData } = useBusiness();
+  const [activeTab, setActiveTab] = useState('received'); // 'received' or 'given'
 
-  const rentDetails = {
+  // Rent Received data (income)
+  const rentReceivedData = {
     monthlyRent: 50000,
     advance: 100000,
     agreementStart: '2024-01-01',
     agreementEnd: '2025-12-31',
-    landlord: 'Property Owner Name',
+    tenant: 'Tenant Name',
     propertyAddress: 'Shop Address, City'
   };
 
-  const rentHistory = [
-    { id: 1, month: 'January 2025', amount: 50000, paidDate: '2025-01-05', status: 'paid' },
-    { id: 2, month: 'December 2024', amount: 50000, paidDate: '2024-12-05', status: 'paid' },
-    { id: 3, month: 'November 2024', amount: 50000, paidDate: '2024-11-05', status: 'paid' },
+  const rentReceivedHistory = [
+    { id: 1, month: 'January 2025', amount: 50000, paidDate: '2025-01-05', status: 'paid', type: 'received' },
+    { id: 2, month: 'December 2024', amount: 50000, paidDate: '2024-12-05', status: 'paid', type: 'received' },
+    { id: 3, month: 'November 2024', amount: 50000, paidDate: '2024-11-05', status: 'paid', type: 'received' },
   ];
+
+  // Rent Given data (expense)
+  const rentGivenData = {
+    monthlyRent: 35000,
+    advance: 70000,
+    agreementStart: '2024-06-01',
+    agreementEnd: '2026-05-31',
+    landlord: 'Property Owner Name',
+    propertyAddress: 'Office Space Address, City'
+  };
+
+  const rentGivenHistory = [
+    { id: 4, month: 'January 2025', amount: 35000, paidDate: '2025-01-03', status: 'paid', type: 'given' },
+    { id: 5, month: 'December 2024', amount: 35000, paidDate: '2024-12-03', status: 'paid', type: 'given' },
+    { id: 6, month: 'November 2024', amount: 35000, paidDate: '2024-11-03', status: 'paid', type: 'given' },
+  ];
+
+  // Get current data based on active tab
+  const currentData = activeTab === 'received' ? rentReceivedData : rentGivenData;
+  const currentHistory = activeTab === 'received' ? rentReceivedHistory : rentGivenHistory;
+  const personLabel = activeTab === 'received' ? 'Tenant' : 'Landlord';
+  const personName = activeTab === 'received' ? currentData.tenant : currentData.landlord;
 
   return (
     <div className="min-h-screen bg-slate-900 text-white pb-20">
