@@ -81,6 +81,11 @@ const CashInEntry = ({ onBack }) => {
   const [gatePassDriverName, setGatePassDriverName] = useState('');
   const [selectedSlotForGatePass, setSelectedSlotForGatePass] = useState(null);
 
+  // Double-click detection state
+  const [lastClickTime, setLastClickTime] = useState(0);
+  const [lastClickedSlot, setLastClickedSlot] = useState(null);
+  const doubleClickDelay = 300; // 300ms window for double-click
+
   const incQty = (name) => {
     // Update selectedItems for current view
     setSelectedItems(prev => ({ ...prev, [name]: (prev[name] || 0) + 1 }));
