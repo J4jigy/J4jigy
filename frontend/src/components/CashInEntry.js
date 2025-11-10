@@ -495,20 +495,37 @@ const CashInEntry = ({ onBack }) => {
   const onSlotsTouchStart = (e) => {
     setSlotsTouchEnd(null);
     setSlotsTouchStart(e.targetTouches[0].clientX);
+    setSlotsTouchEndY(null);
+    setSlotsTouchStartY(e.targetTouches[0].clientY);
   };
 
   const onSlotsTouchMove = (e) => {
     setSlotsTouchEnd(e.targetTouches[0].clientX);
+    setSlotsTouchEndY(e.targetTouches[0].clientY);
   };
 
   const onSlotsTouchEnd = () => {
-    if (!slotsTouchStart || !slotsTouchEnd) return;
+    if (!slotsTouchStart || !slotsTouchEnd || !slotsTouchStartY || !slotsTouchEndY) return;
     
-    const distance = slotsTouchStart - slotsTouchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
+    const distanceX = slotsTouchStart - slotsTouchEnd;
+    const distanceY = slotsTouchStartY - slotsTouchEndY;
     
-    if (isRightSwipe) {
+    const isLeftSwipe = distanceX > minSwipeDistance && Math.abs(distanceY) < minSwipeDistance;
+    const isRightSwipe = distanceX < -minSwipeDistance && Math.abs(distanceY) < minSwipeDistance;
+    const isUpSwipe = distanceY > minSwipeDistance && Math.abs(distanceX) < minSwipeDistance;
+    
+    if (isUpSwipe) {
+      // Swipe up detected - show Gate Pass
+      const slot = slots[activeSlot];
+      if (parseFloat(slot.amount) > 0) {
+        setSelectedSlotForGatePass(activeSlot);
+        setGatePassVehicleNumber('');
+        setGatePassDriverName(slot.customName || '');
+        setShowGatePass(true);
+      } else {
+        alert('Please add items and amount to generate gate pass');
+      }
+    } else if (isRightSwipe) {
       // Swipe right detected - show Invoice preview
       generateInvoiceForSlot(activeSlot);
       setSelectedSlotForBill(activeSlot);
