@@ -62,7 +62,35 @@ export default function Rent() {
         </div>
       </div>
 
-      <div className="px-4 py-4">
+      {/* Tabs */}
+      <div className="px-4 pt-4">
+        <div className="flex gap-2 mb-4">
+          <Button
+            onClick={() => setActiveTab('received')}
+            className={`flex-1 ${
+              activeTab === 'received'
+                ? 'bg-green-600 hover:bg-green-700 text-white'
+                : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+            }`}
+          >
+            <TrendingUp className="w-4 h-4 mr-2" />
+            Rent Received
+          </Button>
+          <Button
+            onClick={() => setActiveTab('given')}
+            className={`flex-1 ${
+              activeTab === 'given'
+                ? 'bg-red-600 hover:bg-red-700 text-white'
+                : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+            }`}
+          >
+            <TrendingDown className="w-4 h-4 mr-2" />
+            Rent Given
+          </Button>
+        </div>
+      </div>
+
+      <div className="px-4">
         <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-0 mb-4">
           <CardContent className="p-4">
             <div className="flex items-center gap-3 mb-3">
