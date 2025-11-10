@@ -1088,8 +1088,9 @@ const CashInEntry = ({ onBack }) => {
                   setShowBillModal(true);
                 } else {
                   // If clicking on a different slot, switch to it
+                  console.log(`Switching to slot ${idx}, amount: ${slot.amount}`);
                   setActiveSlot(idx);
-                  setAmount(slot.amount);
+                  setAmount(slot.amount || '0');
                   setPaymentMode(slot.paymentMode || 'Cash');
                   setSelectedItems(slot.selectedItems || {});
                 }
