@@ -1346,7 +1346,7 @@ const CashInEntry = ({ onBack }) => {
 
               {/* Helper Text */}
               <div className="text-[10px] text-slate-500 text-center pt-1 border-t border-slate-200">
-                ↑ Swipe UP on slot to open Gate Pass
+                ← Swipe LEFT on slot to open Gate Pass | Double-click for Invoice
               </div>
             </div>
           </div>
