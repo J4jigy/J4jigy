@@ -926,17 +926,17 @@ const CashInEntry = ({ onBack }) => {
     }
   };
 
-  // Handle coin click with sound - memoized for performance
-  const handleCoinClick = useCallback((amount) => {
+  // Handle coin click with sound
+  const handleCoinClick = (amount) => {
     playActualCoinSound();
     handleQuickAmount(amount);
-  }, []);
+  };
 
-  // Handle currency note click with sound - memoized for performance
-  const handleNoteClick = useCallback((amount) => {
+  // Handle currency note click with sound
+  const handleNoteClick = (amount) => {
     playActualCoinSound();
     handleQuickAmount(amount);
-  }, []);
+  };
 
   // Handle transaction save and reset current slot
   const handleSave = () => {
