@@ -538,7 +538,7 @@ const CashInEntry = ({ onBack }) => {
       // Swipe left detected - show Challan preview
       setShowChallanPreview(true);
     }
-  };
+  }, [slotsTouchStart, slotsTouchEnd, slotsTouchStartY, slotsTouchEndY, slots, activeSlot]);
 
   // Generate Challan function
   const generateChallan = () => {
