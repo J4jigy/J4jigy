@@ -944,6 +944,13 @@ const CashInEntry = ({ onBack }) => {
     console.log('Transaction saved, slot reset');
   };
 
+  // Memoize filtered products for better performance
+  const filteredProducts = useMemo(() => {
+    return products.filter(product => 
+      product.toLowerCase().includes(productSearchQuery.toLowerCase())
+    );
+  }, [products, productSearchQuery]);
+
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col max-h-screen overflow-hidden">
       {/* Header */}
