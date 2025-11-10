@@ -1233,6 +1233,7 @@ It's completely free to try!`;
               <div className="flex gap-2">
                 <Button
                   onClick={() => {
+                    console.log('📝 Saving business profile:', businessToEdit);
                     updateBusiness(businessToEdit.id, businessToEdit);
                     setShowBusinessProfileDialog(false);
                     setBusinessToEdit(null);
