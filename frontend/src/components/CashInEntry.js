@@ -230,14 +230,20 @@ const CashInEntry = ({ onBack }) => {
     const savedData = getData('cashin_data', null);
     if (savedData) {
       try {
-        const { slots, activeSlot } = savedData;
+        const { slots: savedSlots, activeSlot: savedActiveSlot } = savedData;
         
-        if (slots && Array.isArray(slots) && slots.length > 0) {
-          setSlots(slots);
-        }
-        
-        if (typeof activeSlot === 'number' && activeSlot >= 0 && activeSlot < slots.length) {
-          setActiveSlot(activeSlot);
+        if (savedSlots && Array.isArray(savedSlots) && savedSlots.length > 0) {
+          setSlots(savedSlots);
+          
+          // Sync amount state with the active slot's amount
+          const activeSlotIndex = typeof savedActiveSlot === 'number' && savedActiveSlot >= 0 && savedActiveSlot < savedSlots.length 
+            ? savedActiveSlot 
+            : 0;
+          
+          setActiveSlot(activeSlotIndex);
+          setAmount(savedSlots[activeSlotIndex]?.amount || '0');
+          setPaymentMode(savedSlots[activeSlotIndex]?.paymentMode || 'Cash');
+          setSelectedItems(savedSlots[activeSlotIndex]?.selectedItems || {});
         }
       } catch (e) {
         console.error('Failed to parse saved slots:', e);
