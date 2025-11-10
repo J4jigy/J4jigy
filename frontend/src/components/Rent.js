@@ -91,13 +91,13 @@ export default function Rent() {
       </div>
 
       <div className="px-4">
-        <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-0 mb-4">
+        <Card className={`border-0 mb-4 ${activeTab === 'received' ? 'bg-gradient-to-br from-green-600 to-green-700' : 'bg-gradient-to-br from-red-600 to-red-700'}`}>
           <CardContent className="p-4">
             <div className="flex items-center gap-3 mb-3">
               <Building className="w-8 h-8 text-white" />
               <div>
-                <p className="text-sm text-blue-100">Monthly Rent</p>
-                <p className="text-2xl font-bold text-white">₹{rentDetails.monthlyRent.toLocaleString()}</p>
+                <p className={`text-sm ${activeTab === 'received' ? 'text-green-100' : 'text-red-100'}`}>Monthly Rent</p>
+                <p className="text-2xl font-bold text-white">₹{currentData.monthlyRent.toLocaleString()}</p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2 text-xs text-blue-100">
