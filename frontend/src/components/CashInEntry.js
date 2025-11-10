@@ -245,9 +245,13 @@ const CashInEntry = ({ onBack }) => {
     }
   }, [activeBusiness.id, getData]); // reload when business changes
 
-  // persist slots and active slot to business-specific storage
+  // persist slots and active slot to business-specific storage with debounce
   useEffect(() => {
-    setData('cashin_data', { slots, activeSlot });
+    const timeoutId = setTimeout(() => {
+      setData('cashin_data', { slots, activeSlot });
+    }, 500); // Debounce for 500ms to reduce frequent saves
+    
+    return () => clearTimeout(timeoutId);
   }, [slots, activeSlot, setData]);
 
   // Fetch contacts for sharing
