@@ -1347,7 +1347,7 @@ It's completely free to try!`;
 
       {/* Floating Buttons */}
       {showFloatingChat && (
-        <div className="fixed bottom-24 right-4 z-50 flex flex-col gap-3">
+        <div className="fixed bottom-28 right-8 z-50 flex flex-col gap-3">
           {/* Share/WhatsApp Button */}
           <Button
             onClick={() => setShowInviteDialog(true)}
