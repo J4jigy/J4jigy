@@ -72,6 +72,14 @@ const CashInEntry = ({ onBack }) => {
   // Swipe detection state for slots
   const [slotsTouchStart, setSlotsTouchStart] = useState(null);
   const [slotsTouchEnd, setSlotsTouchEnd] = useState(null);
+  const [slotsTouchStartY, setSlotsTouchStartY] = useState(null);
+  const [slotsTouchEndY, setSlotsTouchEndY] = useState(null);
+  
+  // Gate Pass state
+  const [showGatePass, setShowGatePass] = useState(false);
+  const [gatePassVehicleNumber, setGatePassVehicleNumber] = useState('');
+  const [gatePassDriverName, setGatePassDriverName] = useState('');
+  const [selectedSlotForGatePass, setSelectedSlotForGatePass] = useState(null);
 
   const incQty = (name) => {
     // Update selectedItems for current view
