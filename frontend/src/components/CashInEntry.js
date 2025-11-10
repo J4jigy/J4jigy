@@ -600,6 +600,72 @@ const CashInEntry = ({ onBack }) => {
     console.log('Challan generated:', newChallan);
   };
 
+  // Generate Gate Pass function
+  const generateGatePass = () => {
+    const slot = slots[selectedSlotForGatePass];
+    
+    // Validate required data
+    if (!gatePassVehicleNumber.trim()) {
+      alert('Please enter vehicle number');
+      return;
+    }
+    
+    if (parseFloat(slot.amount) <= 0) {
+      alert('Please enter an amount greater than 0');
+      return;
+    }
+
+    // Generate gate pass number
+    const gatePassNumber = `GP-${String(Date.now()).slice(-6)}`;
+    
+    // Get current date and time
+    const now = new Date();
+    const currentDate = now.toISOString().split('T')[0];
+    const currentTime = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+    
+    // Create gate pass object
+    const newGatePass = {
+      id: gatePassNumber,
+      vehicleNumber: gatePassVehicleNumber.toUpperCase(),
+      driverName: gatePassDriverName || 'N/A',
+      customerName: slot.customName || slot.label,
+      amount: parseFloat(slot.amount),
+      date: currentDate,
+      time: currentTime,
+      status: 'active',
+      items: Object.keys(slot.selectedItems || {}).length,
+      itemDetails: slot.selectedItems || {},
+      paymentMode: slot.paymentMode || 'Cash',
+      createdAt: now.toISOString(),
+      slotId: slot.id,
+      slotLabel: slot.customName || slot.label,
+      invoiceNumber: slot.invoiceNumber,
+      exitTime: null
+    };
+
+    // Get existing gate passes from localStorage
+    const existingGatePasses = getData('gate_passes', []);
+    
+    // Add new gate pass
+    const updatedGatePasses = [newGatePass, ...existingGatePasses];
+    
+    // Save to localStorage
+    setData('gate_passes', updatedGatePasses);
+    
+    // Show success message
+    alert(`Gate Pass ${gatePassNumber} generated successfully!\nVehicle: ${gatePassVehicleNumber.toUpperCase()}\nAmount: ₹${slot.amount}`);
+    
+    // Close gate pass dialog
+    setShowGatePass(false);
+    
+    // Reset fields
+    setGatePassVehicleNumber('');
+    setGatePassDriverName('');
+    setSelectedSlotForGatePass(null);
+    
+    console.log('Gate Pass generated:', newGatePass);
+  };
+
   const createContact = async (name, type) => {
     try {
       const token = localStorage.getItem('token');
