@@ -207,9 +207,25 @@ export const BusinessProvider = ({ children }) => {
     );
     setBusinesses(updatedBusinesses);
     
+    // Save to localStorage immediately to ensure persistence
+    try {
+      localStorage.setItem('app_businesses', JSON.stringify(updatedBusinesses));
+      console.log('✅ Business data saved successfully:', updates);
+    } catch (error) {
+      console.error('❌ Error saving business immediately:', error);
+    }
+    
     // Update active business if it's the one being edited
     if (activeBusiness.id === businessId) {
-      setActiveBusiness({ ...activeBusiness, ...updates });
+      const updatedActiveBusiness = { ...activeBusiness, ...updates };
+      setActiveBusiness(updatedActiveBusiness);
+      
+      // Also save active business ID to ensure it persists
+      try {
+        localStorage.setItem('app_active_business_id', updatedActiveBusiness.id.toString());
+      } catch (error) {
+        console.error('❌ Error saving active business ID:', error);
+      }
     }
   };
 
