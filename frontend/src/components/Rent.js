@@ -135,7 +135,7 @@ export default function Rent() {
 
         <h2 className="text-sm font-bold text-white mb-3">Payment History</h2>
         <div className="space-y-3">
-          {rentHistory.map(rent => (
+          {currentHistory.map(rent => (
             <Card key={rent.id} className="bg-slate-800 border-slate-700">
               <CardContent className="p-3">
                 <div className="flex justify-between items-center">
