@@ -1086,18 +1086,29 @@ const CashInEntry = ({ onBack }) => {
             <button
               key={slot.id}
               onClick={() => {
-                if (activeSlot === idx) {
-                  // If clicking on the currently active slot, open bill/invoice
+                const currentTime = Date.now();
+                const timeSinceLastClick = currentTime - lastClickTime;
+                
+                // Check for double-click on any slot
+                if (lastClickedSlot === idx && timeSinceLastClick < doubleClickDelay) {
+                  // Double-click detected - open invoice
+                  console.log(`Double-click on slot ${idx} - opening invoice`);
                   generateInvoiceForSlot(idx);
                   setSelectedSlotForBill(idx);
                   setShowBillModal(true);
+                  // Reset double-click tracking
+                  setLastClickTime(0);
+                  setLastClickedSlot(null);
                 } else {
-                  // If clicking on a different slot, switch to it
-                  console.log(`Switching to slot ${idx}, amount: ${slot.amount}`);
+                  // Single click - switch to this slot
+                  console.log(`Single click on slot ${idx} - switching`);
                   setActiveSlot(idx);
                   setAmount(slot.amount || '0');
                   setPaymentMode(slot.paymentMode || 'Cash');
                   setSelectedItems(slot.selectedItems || {});
+                  // Track this click for double-click detection
+                  setLastClickTime(currentTime);
+                  setLastClickedSlot(idx);
                 }
               }}
               onMouseDown={() => handleSlotMouseDown(idx)}
