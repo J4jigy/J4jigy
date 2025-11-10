@@ -1203,6 +1203,121 @@ const CashInEntry = ({ onBack }) => {
           </div>
         )}
 
+        {/* Gate Pass Dialog - Shows when swiped up on slots */}
+        {showGatePass && selectedSlotForGatePass !== null && (
+          <div className="bg-white border-2 border-green-500 rounded-lg p-3 space-y-2 animate-in slide-in-from-bottom">
+            {/* Gate Pass Header */}
+            <div className="flex items-center justify-between border-b-2 border-green-500 pb-2">
+              <div className="flex items-center gap-2">
+                <FileText className="w-5 h-5 text-green-600" />
+                <h3 className="text-green-600 font-bold text-sm">GATE PASS - EXIT</h3>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowGatePass(false)}
+                className="h-6 w-6 p-0 text-slate-600 hover:text-slate-900"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+
+            {/* Gate Pass Info */}
+            <div className="space-y-2">
+              <div className="grid grid-cols-2 gap-2 text-xs">
+                <div className="bg-slate-100 p-2 rounded border border-slate-300">
+                  <div className="text-slate-600 text-[10px]">Gate Pass No.</div>
+                  <div className="text-black font-semibold">GP-{String(Date.now()).slice(-4)}</div>
+                </div>
+                <div className="bg-slate-100 p-2 rounded border border-slate-300">
+                  <div className="text-slate-600 text-[10px]">Date & Time</div>
+                  <div className="text-black font-semibold text-[10px]">
+                    {new Date().toLocaleDateString('en-GB')} {new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-slate-100 p-2 rounded border border-slate-300 text-xs">
+                <div className="text-slate-600 text-[10px]">Customer Name</div>
+                <div className="text-black font-semibold">{slots[selectedSlotForGatePass]?.customName || slots[selectedSlotForGatePass]?.label}</div>
+              </div>
+
+              {/* Vehicle Number Input - Required */}
+              <div className="bg-yellow-50 p-2 rounded border-2 border-green-500">
+                <div className="text-green-700 text-[10px] font-semibold mb-1 flex items-center gap-1">
+                  <span className="text-red-500">*</span> Vehicle Number (Required)
+                </div>
+                <input
+                  type="text"
+                  value={gatePassVehicleNumber}
+                  onChange={(e) => setGatePassVehicleNumber(e.target.value.toUpperCase())}
+                  placeholder="e.g., MH12AB1234"
+                  className="w-full bg-white border-2 border-green-400 text-black h-8 text-sm font-bold px-2 rounded placeholder:text-slate-400 focus:border-green-600 focus:outline-none uppercase"
+                  autoFocus
+                />
+              </div>
+
+              {/* Driver Name Input - Optional */}
+              <div className="bg-slate-100 p-2 rounded border border-slate-300">
+                <div className="text-slate-600 text-[10px] mb-1">Driver Name (Optional)</div>
+                <input
+                  type="text"
+                  value={gatePassDriverName}
+                  onChange={(e) => setGatePassDriverName(e.target.value)}
+                  placeholder="Enter driver name"
+                  className="w-full bg-white border border-slate-300 text-black h-7 text-xs px-2 rounded placeholder:text-slate-400 focus:border-green-500 focus:outline-none"
+                />
+              </div>
+
+              <div className="bg-green-50 p-2 rounded border border-green-300 text-xs">
+                <div className="text-green-700 text-[10px]">Total Amount</div>
+                <div className="text-green-600 font-bold text-base">₹{slots[selectedSlotForGatePass]?.amount || '0'}</div>
+              </div>
+
+              {/* Items Preview */}
+              {Object.keys(slots[selectedSlotForGatePass]?.selectedItems || {}).length > 0 && (
+                <div className="bg-slate-100 p-2 rounded border border-slate-300 text-xs">
+                  <div className="text-slate-600 text-[10px] mb-1">Items ({Object.keys(slots[selectedSlotForGatePass]?.selectedItems || {}).length})</div>
+                  <div className="text-black space-y-1">
+                    {Object.entries(slots[selectedSlotForGatePass]?.selectedItems || {}).map(([name, qty]) => (
+                      <div key={name} className="flex justify-between py-0.5 border-b border-slate-200 last:border-0">
+                        <span className="text-[10px]">{name}</span>
+                        <span className="text-slate-600 text-[10px]">x{qty}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="grid grid-cols-2 gap-2 mt-2">
+                <Button
+                  size="sm"
+                  className="bg-green-600 hover:bg-green-700 text-white h-9 text-xs font-semibold"
+                  onClick={generateGatePass}
+                  disabled={!gatePassVehicleNumber.trim()}
+                >
+                  <FileText className="w-3 h-3 mr-1" />
+                  Generate Pass
+                </Button>
+                <Button
+                  size="sm"
+                  className="bg-slate-600 hover:bg-slate-700 text-white h-9 text-xs"
+                  onClick={() => setShowGatePass(false)}
+                >
+                  <X className="w-3 h-3 mr-1" />
+                  Cancel
+                </Button>
+              </div>
+
+              {/* Helper Text */}
+              <div className="text-[10px] text-slate-500 text-center pt-1 border-t border-slate-200">
+                ↑ Swipe UP on slot to open Gate Pass
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Amount Display */}
         <Card className="bg-slate-800 border-slate-700">
           <CardContent className="p-1 text-center">
