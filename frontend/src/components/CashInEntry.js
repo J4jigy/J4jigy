@@ -524,8 +524,8 @@ const CashInEntry = ({ onBack }) => {
     const isRightSwipe = distanceX < -minSwipeDistance && Math.abs(distanceY) < minSwipeDistance;
     const isUpSwipe = distanceY > minSwipeDistance && Math.abs(distanceX) < minSwipeDistance;
     
-    if (isUpSwipe) {
-      // Swipe up detected - show Gate Pass
+    if (isLeftSwipe) {
+      // Swipe left detected - show Gate Pass
       const slot = slots[activeSlot];
       if (parseFloat(slot.amount) > 0) {
         setSelectedSlotForGatePass(activeSlot);
@@ -536,13 +536,13 @@ const CashInEntry = ({ onBack }) => {
         alert('Please add items and amount to generate gate pass');
       }
     } else if (isRightSwipe) {
-      // Swipe right detected - show Invoice preview
+      // Swipe right detected - show Challan preview
+      setShowChallanPreview(true);
+    } else if (isUpSwipe) {
+      // Swipe up detected - show Invoice preview
       generateInvoiceForSlot(activeSlot);
       setSelectedSlotForBill(activeSlot);
       setShowBillModal(true);
-    } else if (isLeftSwipe) {
-      // Swipe left detected - show Challan preview
-      setShowChallanPreview(true);
     }
   };
 
