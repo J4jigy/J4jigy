@@ -56,7 +56,7 @@
 ##   test_all: false
 ##   test_priority: "high_first"  # or "sequential" or "stuck_first"
 ##
-user_problem_statement: "Fix the invoice preview in CashInEntry.js to fit properly on mobile screens. Text should not overflow boxes, and the invoice should use almost full screen width horizontally with compact, mobile-optimized sizing."
+user_problem_statement: "Complete the 'Rent Received' and 'Rent Given' tab functionality in Rent.js. The component should have two switchable tabs - 'Rent Received' (green) and 'Rent Given' (red) with separate data management and display."
 
 backend:
   - task: "No backend changes required"
