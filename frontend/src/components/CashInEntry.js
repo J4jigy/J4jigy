@@ -502,19 +502,19 @@ const CashInEntry = ({ onBack }) => {
   // Swipe detection handlers for slots
   const minSwipeDistance = 50;
 
-  const onSlotsTouchStart = useCallback((e) => {
+  const onSlotsTouchStart = (e) => {
     setSlotsTouchEnd(null);
     setSlotsTouchStart(e.targetTouches[0].clientX);
     setSlotsTouchEndY(null);
     setSlotsTouchStartY(e.targetTouches[0].clientY);
-  }, []);
+  };
 
-  const onSlotsTouchMove = useCallback((e) => {
+  const onSlotsTouchMove = (e) => {
     setSlotsTouchEnd(e.targetTouches[0].clientX);
     setSlotsTouchEndY(e.targetTouches[0].clientY);
-  }, []);
+  };
 
-  const onSlotsTouchEnd = useCallback(() => {
+  const onSlotsTouchEnd = () => {
     if (!slotsTouchStart || !slotsTouchEnd || !slotsTouchStartY || !slotsTouchEndY) return;
     
     const distanceX = slotsTouchStart - slotsTouchEnd;
