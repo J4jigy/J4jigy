@@ -81,7 +81,7 @@ const CashInEntry = ({ onBack }) => {
   const [gatePassDriverName, setGatePassDriverName] = useState('');
   const [selectedSlotForGatePass, setSelectedSlotForGatePass] = useState(null);
 
-  const incQty = (name) => {
+  const incQty = useCallback((name) => {
     // Update selectedItems for current view
     setSelectedItems(prev => ({ ...prev, [name]: (prev[name] || 0) + 1 }));
     
@@ -91,9 +91,9 @@ const CashInEntry = ({ onBack }) => {
         ? { ...slot, selectedItems: { ...slot.selectedItems, [name]: (slot.selectedItems[name] || 0) + 1 } }
         : slot
     ));
-  };
+  }, [activeSlot]);
   
-  const decQty = (name) => {
+  const decQty = useCallback((name) => {
     // Update selectedItems for current view
     setSelectedItems(prev => {
       const curr = prev[name] || 0;
@@ -118,7 +118,7 @@ const CashInEntry = ({ onBack }) => {
       }
       return slot;
     }));
-  };
+  }, [activeSlot]);
   const [paymentMode, setPaymentMode] = useState('Cash');
   const [showCreditTermsDropdown, setShowCreditTermsDropdown] = useState(false);
   const [selectedCreditTerm, setSelectedCreditTerm] = useState('');
