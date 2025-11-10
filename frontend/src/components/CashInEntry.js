@@ -1695,11 +1695,7 @@ const CashInEntry = ({ onBack }) => {
                 className="bg-slate-700 border-slate-600 text-white pl-10 h-8 text-sm"
               />
             </div>
-            {products
-              .filter(product => 
-                product.toLowerCase().includes(productSearchQuery.toLowerCase())
-              )
-              .map((product) => (
+            {filteredProducts.map((product) => (
               <div key={product} className="flex items-center justify-between bg-slate-700 p-2 rounded">
                 <span className="text-white text-sm">{product}</span>
                 <div className="flex items-center gap-1">
