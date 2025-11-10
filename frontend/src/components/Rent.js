@@ -100,14 +100,14 @@ export default function Rent() {
                 <p className="text-2xl font-bold text-white">₹{currentData.monthlyRent.toLocaleString()}</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-2 text-xs text-blue-100">
+            <div className={`grid grid-cols-2 gap-2 text-xs ${activeTab === 'received' ? 'text-green-100' : 'text-red-100'}`}>
               <div>
-                <p className="text-blue-200">Landlord</p>
-                <p className="font-medium">{rentDetails.landlord}</p>
+                <p className={activeTab === 'received' ? 'text-green-200' : 'text-red-200'}>{personLabel}</p>
+                <p className="font-medium">{personName}</p>
               </div>
               <div>
-                <p className="text-blue-200">Advance</p>
-                <p className="font-medium">₹{rentDetails.advance.toLocaleString()}</p>
+                <p className={activeTab === 'received' ? 'text-green-200' : 'text-red-200'}>Advance</p>
+                <p className="font-medium">₹{currentData.advance.toLocaleString()}</p>
               </div>
             </div>
           </CardContent>
@@ -119,15 +119,15 @@ export default function Rent() {
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-slate-400">Start Date</span>
-                <span className="text-white">{rentDetails.agreementStart}</span>
+                <span className="text-white">{currentData.agreementStart}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">End Date</span>
-                <span className="text-white">{rentDetails.agreementEnd}</span>
+                <span className="text-white">{currentData.agreementEnd}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-400">Property</span>
-                <span className="text-white text-right">{rentDetails.propertyAddress}</span>
+                <span className="text-white text-right">{currentData.propertyAddress}</span>
               </div>
             </div>
           </CardContent>
