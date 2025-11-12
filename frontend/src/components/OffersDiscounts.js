@@ -283,6 +283,13 @@ export default function OffersDiscounts() {
             <p className="text-slate-400">No coupons found matching your search.</p>
           </div>
         )}
+
+        {/* Floating Add Button */}
+        <button
+          className="fixed bottom-20 right-8 bg-red-600 hover:bg-red-700 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:shadow-xl transition-all z-50"
+        >
+          <Plus className="w-6 h-6" />
+        </button>
       </div>
     </div>
   );
