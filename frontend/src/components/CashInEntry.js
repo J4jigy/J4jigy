@@ -86,6 +86,11 @@ const CashInEntry = ({ onBack }) => {
   const [lastClickedSlot, setLastClickedSlot] = useState(null);
   const doubleClickDelay = 300; // 300ms window for double-click
 
+  // Contact list state
+  const [contactList, setContactList] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [showContactListModal, setShowContactListModal] = useState(false);
+
   const incQty = (name) => {
     // Update selectedItems for current view
     setSelectedItems(prev => ({ ...prev, [name]: (prev[name] || 0) + 1 }));
