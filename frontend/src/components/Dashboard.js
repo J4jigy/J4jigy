@@ -1527,6 +1527,7 @@ It's completely free to try!`;
           </Button>
         </div>
       </div>
+      )}
 
       {/* Export Dialog */}
       <Dialog open={showExportDialog} onOpenChange={setShowExportDialog}>
