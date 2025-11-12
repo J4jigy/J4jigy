@@ -984,7 +984,7 @@ It's completely free to try!`;
                 {getTilesForTab(tab).map((tile, idx) => {
                   const IconComponent = tile.icon;
                   return (
-                    <Card key={idx} onClick={() => handleTileClick(tile)} className="bg-slate-700/80 border border-slate-600 hover:bg-slate-600 transition-all duration-200 cursor-pointer shadow-xl aspect-square flex items-center justify-center">
+                    <Card key={idx} onClick={() => handleTileClick(tile)} className="bg-slate-700/80 border border-slate-600 hover:bg-slate-600 transition-all duration-200 cursor-pointer shadow-xl aspect-square flex items-center justify-center relative">
                       <CardContent className="p-3 flex flex-col items-center justify-center text-center w-full h-full">
                         <IconComponent className={`w-8 h-8 mb-2 ${tile.iconColor}`} />
                         <div className="text-center">
@@ -994,6 +994,11 @@ It's completely free to try!`;
                           )}
                         </div>
                       </CardContent>
+                      {tile.showAddButton && (
+                        <div className="absolute top-1 right-1 bg-green-500 hover:bg-green-600 rounded-full w-5 h-5 flex items-center justify-center transition-colors">
+                          <Plus className="w-3 h-3 text-white" />
+                        </div>
+                      )}
                     </Card>
                   );
                 })}
