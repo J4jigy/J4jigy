@@ -621,8 +621,10 @@ const CashInEntry = ({ onBack }) => {
       return;
     }
     
-    if (parseFloat(slot.amount) <= 0) {
-      alert('Please enter an amount greater than 0');
+    // Check if slot and amount exist and are valid
+    const amount = slot?.amount ? parseFloat(slot.amount) : 0;
+    if (!slot || amount <= 0 || isNaN(amount)) {
+      alert('Please add an amount to the slot before generating gate pass');
       return;
     }
 
