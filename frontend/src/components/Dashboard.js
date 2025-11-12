@@ -931,7 +931,7 @@ It's completely free to try!`;
                     className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
                   >
                     <FileBarChart className="w-4 h-4 mr-2" />
-                    User Guide
+                    User Guide & Tutorials
                   </Button>
                   <Button 
                     variant="outline" 
@@ -944,8 +944,61 @@ It's completely free to try!`;
                     variant="outline" 
                     className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
                   >
+                    <MessageCircle className="w-4 h-4 mr-2" />
+                    Live Chat Support
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
                     <Star className="w-4 h-4 mr-2" />
-                    Rate Us
+                    Rate & Review App
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <Gift className="w-4 h-4 mr-2" />
+                    What's New
+                  </Button>
+                </div>
+              </div>
+
+              {/* Community & Social Section */}
+              <div className="border-t border-slate-600 pt-4">
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <Users className="w-4 h-4 text-pink-400" />
+                  Community
+                </h4>
+                <div className="space-y-2">
+                  <Button 
+                    onClick={() => {
+                      setShowProfileDialog(false);
+                      handleNavigate('/community');
+                    }} 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <Star className="w-4 h-4 mr-2" />
+                    Community Ratings
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      setShowProfileDialog(false);
+                      setShowInviteDialog(true);
+                    }} 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <Share2 className="w-4 h-4 mr-2" />
+                    Invite Friends
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <Users className="w-4 h-4 mr-2" />
+                    Join WhatsApp Group
                   </Button>
                 </div>
               </div>
