@@ -9,33 +9,47 @@ import { useBusiness } from '../contexts/BusinessContext';
 const Challan = () => {
   const navigate = useNavigate();
   const { activeBusiness, getData } = useBusiness();
+  const [activeTab, setActiveTab] = useState('challan'); // 'challan' or 'gatepass'
   const [filterStatus, setFilterStatus] = useState('all');
   const [challanType, setChallanType] = useState('all');
 
-  // Load challans from localStorage
+  // Load challans and gate passes from localStorage
   const storedChallans = getData('challans', []);
+  const storedGatePasses = getData('gate_passes', []);
   
-  // Sample challan data - merge with stored challans
+  // Sample challan data
   const sampleChallans = [
     { id: 'DC-001', party: 'Rajesh Enterprises', type: 'delivery', amount: 25000, date: '2025-01-10', status: 'completed', items: 5 },
     { id: 'PC-001', party: 'Kumar Suppliers', type: 'purchase', amount: 15000, date: '2025-01-09', status: 'pending', items: 3 },
     { id: 'DC-002', party: 'Sharma Transport', type: 'delivery', amount: 45000, date: '2025-01-08', status: 'pending', items: 8 },
-    { id: 'GP-001', party: 'Singh Industries', type: 'gate', amount: 0, date: '2025-01-07', status: 'completed', items: 2 },
     { id: 'DC-003', party: 'Patel & Sons', type: 'delivery', amount: 32000, date: '2025-01-06', status: 'rejected', items: 4 },
   ];
   
-  // Combine stored and sample challans
+  // Sample gate pass data
+  const sampleGatePasses = [
+    { id: 'GP-001', party: 'Singh Industries', vehicleNumber: 'MH12AB1234', amount: 5000, date: '2025-01-10', status: 'completed', items: 2 },
+    { id: 'GP-002', party: 'Kumar Transport', vehicleNumber: 'DL01CD5678', amount: 8000, date: '2025-01-09', status: 'pending', items: 4 },
+    { id: 'GP-003', party: 'Sharma Logistics', vehicleNumber: 'GJ05EF9012', amount: 3500, date: '2025-01-08', status: 'completed', items: 1 },
+  ];
+  
+  // Combine stored and sample data
   const challans = [...storedChallans, ...sampleChallans];
+  const gatePasses = [...storedGatePasses, ...sampleGatePasses];
 
-  const totalChallans = challans.length;
-  const completedChallans = challans.filter(c => c.status === 'completed').length;
-  const pendingChallans = challans.filter(c => c.status === 'pending').length;
-  const rejectedChallans = challans.filter(c => c.status === 'rejected').length;
+  // Calculate stats based on active tab
+  const currentData = activeTab === 'challan' ? challans : gatePasses;
+  const totalCount = currentData.length;
+  const completedCount = currentData.filter(c => c.status === 'completed').length;
+  const pendingCount = currentData.filter(c => c.status === 'pending').length;
+  const rejectedCount = currentData.filter(c => c.status === 'rejected').length;
 
-  const filteredChallans = challans.filter(c => {
+  const filteredData = currentData.filter(c => {
     const statusMatch = filterStatus === 'all' || c.status === filterStatus;
-    const typeMatch = challanType === 'all' || c.type === challanType;
-    return statusMatch && typeMatch;
+    if (activeTab === 'challan') {
+      const typeMatch = challanType === 'all' || c.type === challanType;
+      return statusMatch && typeMatch;
+    }
+    return statusMatch;
   });
 
   const getTypeLabel = (type) => {
