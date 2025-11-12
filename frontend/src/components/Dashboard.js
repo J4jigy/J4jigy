@@ -1508,6 +1508,7 @@ It's completely free to try!`;
       {/* Scan Documents functionality moved to dedicated page */}
 
       {/* Cash In/Out Floating Buttons */}
+      {!showProfileDialog && (
       <div className="fixed bottom-6 left-4 right-4">
         <div className="flex gap-4">
           <Button 
