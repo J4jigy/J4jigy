@@ -228,7 +228,6 @@ const CashInEntry = ({ onBack }) => {
   const [chequeIfscCode, setChequeIfscCode] = useState('');
   const [chequeNumber, setChequeNumber] = useState('');
   
-  const [selectedCategory, setSelectedCategory] = useState('');
   const [newEntryTitle, setNewEntryTitle] = useState('');
   const [darkTheme, setDarkTheme] = useState(true);
   const [notifications, setNotifications] = useState(true);
