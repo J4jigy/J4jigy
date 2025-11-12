@@ -806,6 +806,24 @@ It's completely free to try!`;
                     <Users className="w-4 h-4 mr-2" />
                     Manage Staff
                   </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <Receipt className="w-4 h-4 mr-2" />
+                    Tax & GST Settings
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      setShowProfileDialog(false);
+                      handleNavigate('/fuel-dispenser');
+                    }} 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <Fuel className="w-4 h-4 mr-2" />
+                    Fuel Dispenser Setup
+                  </Button>
                 </div>
               </div>
 
