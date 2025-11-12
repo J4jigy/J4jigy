@@ -1076,9 +1076,6 @@ const CashInEntry = ({ onBack }) => {
         {/* POS multi-customer boxes */}
         <div 
           className="grid grid-cols-6 gap-1"
-          onTouchStart={onSlotsTouchStart}
-          onTouchMove={onSlotsTouchMove}
-          onTouchEnd={onSlotsTouchEnd}
         >
           {slots.map((slot, idx) => (
             <button
@@ -1112,8 +1109,15 @@ const CashInEntry = ({ onBack }) => {
               onMouseDown={() => handleSlotMouseDown(idx)}
               onMouseUp={handleSlotMouseUp}
               onMouseLeave={handleSlotMouseUp}
-              onTouchStart={() => handleSlotTouchStart(idx)}
-              onTouchEnd={handleSlotTouchEnd}
+              onTouchStart={(e) => {
+                handleSlotTouchStart(idx);
+                onSlotsTouchStart(e);
+              }}
+              onTouchMove={onSlotsTouchMove}
+              onTouchEnd={(e) => {
+                handleSlotTouchEnd();
+                onSlotsTouchEnd();
+              }}
               className={`aspect-square rounded-md flex items-center justify-center border transition ${
                 activeSlot === idx ? 'bg-blue-700 border-blue-500' : 'bg-slate-800 border-slate-700'
               }`}
