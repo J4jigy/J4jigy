@@ -532,14 +532,10 @@ const CashInEntry = ({ onBack }) => {
     if (isLeftSwipe) {
       // Swipe left detected - show Gate Pass
       const slot = slots[activeSlot];
-      if (parseFloat(slot.amount) > 0) {
-        setSelectedSlotForGatePass(activeSlot);
-        setGatePassVehicleNumber('');
-        setGatePassDriverName(slot.customName || '');
-        setShowGatePass(true);
-      } else {
-        alert('Please add items and amount to generate gate pass');
-      }
+      setSelectedSlotForGatePass(activeSlot);
+      setGatePassVehicleNumber('');
+      setGatePassDriverName(slot.customName || '');
+      setShowGatePass(true);
     } else if (isRightSwipe) {
       // Swipe right detected - show Challan preview
       setShowChallanPreview(true);
