@@ -827,6 +827,49 @@ It's completely free to try!`;
                 </div>
               </div>
 
+              {/* Reports & Analytics Section */}
+              <div className="border-t border-slate-600 pt-4">
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <BarChart3 className="w-4 h-4 text-purple-400" />
+                  Reports & Analytics
+                </h4>
+                <div className="space-y-2">
+                  <Button 
+                    onClick={() => {
+                      setShowProfileDialog(false);
+                      handleNavigate('/daily-sales');
+                    }} 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <TrendingUp className="w-4 h-4 mr-2" />
+                    Daily Sales Report
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      setShowProfileDialog(false);
+                      handleNavigate('/profit-loss');
+                    }} 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <PieChart className="w-4 h-4 mr-2" />
+                    Profit & Loss
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      setShowProfileDialog(false);
+                      handleNavigate('/balance-sheet');
+                    }} 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <FileBarChart className="w-4 h-4 mr-2" />
+                    Balance Sheet
+                  </Button>
+                </div>
+              </div>
+
               {/* Settings Section */}
               <div className="border-t border-slate-600 pt-4">
                 <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
@@ -835,6 +878,10 @@ It's completely free to try!`;
                 </h4>
                 <div className="space-y-2">
                   <Button 
+                    onClick={() => {
+                      setShowProfileDialog(false);
+                      handleNavigate('/calendar-reminders');
+                    }} 
                     variant="outline" 
                     className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
                   >
@@ -852,8 +899,22 @@ It's completely free to try!`;
                     variant="outline" 
                     className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
                   >
+                    <Upload className="w-4 h-4 mr-2" />
+                    Import Data
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
                     <Shield className="w-4 h-4 mr-2" />
                     Privacy & Security
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <Zap className="w-4 h-4 mr-2" />
+                    App Preferences
                   </Button>
                 </div>
               </div>
