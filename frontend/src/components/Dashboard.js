@@ -777,6 +777,100 @@ It's completely free to try!`;
                 </div>
               </div>
 
+              {/* Business Profile Section */}
+              <div className="border-t border-slate-600 pt-4">
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <Building className="w-4 h-4 text-cyan-400" />
+                  Business Profile
+                </h4>
+                <div className="space-y-2">
+                  <Button 
+                    onClick={() => {
+                      setShowProfileDialog(false);
+                      setShowBusinessProfileDialog(true);
+                    }} 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <Edit2 className="w-4 h-4 mr-2" />
+                    Edit Business Details
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      setShowProfileDialog(false);
+                      handleNavigate('/staff');
+                    }} 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <Users className="w-4 h-4 mr-2" />
+                    Manage Staff
+                  </Button>
+                </div>
+              </div>
+
+              {/* Settings Section */}
+              <div className="border-t border-slate-600 pt-4">
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <Settings className="w-4 h-4 text-orange-400" />
+                  Settings
+                </h4>
+                <div className="space-y-2">
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <Calendar className="w-4 h-4 mr-2" />
+                    Reminders & Notifications
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Backup & Export Data
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <Shield className="w-4 h-4 mr-2" />
+                    Privacy & Security
+                  </Button>
+                </div>
+              </div>
+
+              {/* Help & Support Section */}
+              <div className="border-t border-slate-600 pt-4">
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <MessageCircle className="w-4 h-4 text-green-400" />
+                  Help & Support
+                </h4>
+                <div className="space-y-2">
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <FileBarChart className="w-4 h-4 mr-2" />
+                    User Guide
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <Send className="w-4 h-4 mr-2" />
+                    Contact Support
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
+                  >
+                    <Star className="w-4 h-4 mr-2" />
+                    Rate Us
+                  </Button>
+                </div>
+              </div>
+
               {/* Admin Panel */}
               {(user?.is_admin || user?.role === 'admin' || user?.role === 'super_admin') && (
                 <div className="border-t border-slate-600 pt-4">
