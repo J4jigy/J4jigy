@@ -504,10 +504,11 @@ const CashInEntry = ({ onBack }) => {
     }
   };
 
-  // Swipe detection handlers for slots
-  const minSwipeDistance = 50;
+  // Swipe detection handlers for slots - more sensitive for smooth experience
+  const minSwipeDistance = 40; // Reduced from 50 to 40 for easier swiping
 
   const onSlotsTouchStart = (e) => {
+    // Don't prevent default to allow smooth touch
     setSlotsTouchEnd(null);
     setSlotsTouchStart(e.targetTouches[0].clientX);
     setSlotsTouchEndY(null);
@@ -524,13 +525,18 @@ const CashInEntry = ({ onBack }) => {
     
     const distanceX = slotsTouchStart - slotsTouchEnd;
     const distanceY = slotsTouchStartY - slotsTouchEndY;
+    const absDeltaX = Math.abs(distanceX);
+    const absDeltaY = Math.abs(distanceY);
     
-    const isLeftSwipe = distanceX > minSwipeDistance && Math.abs(distanceY) < minSwipeDistance;
-    const isRightSwipe = distanceX < -minSwipeDistance && Math.abs(distanceY) < minSwipeDistance;
-    const isUpSwipe = distanceY > minSwipeDistance && Math.abs(distanceX) < minSwipeDistance;
+    // Improved swipe detection with better thresholds
+    const isLeftSwipe = distanceX > minSwipeDistance && absDeltaY < (minSwipeDistance * 1.5);
+    const isRightSwipe = distanceX < -minSwipeDistance && absDeltaY < (minSwipeDistance * 1.5);
+    const isUpSwipe = distanceY > minSwipeDistance && absDeltaX < (minSwipeDistance * 1.5);
     
+    // Only trigger if a clear swipe direction is detected
     if (isLeftSwipe) {
       // Swipe left detected - show Gate Pass
+      console.log('Swipe LEFT detected - Opening Gate Pass');
       const slot = slots[activeSlot];
       setSelectedSlotForGatePass(activeSlot);
       setGatePassVehicleNumber('');
@@ -538,13 +544,21 @@ const CashInEntry = ({ onBack }) => {
       setShowGatePass(true);
     } else if (isRightSwipe) {
       // Swipe right detected - show Challan preview
+      console.log('Swipe RIGHT detected - Opening Challan');
       setShowChallanPreview(true);
     } else if (isUpSwipe) {
       // Swipe up detected - show Invoice preview
+      console.log('Swipe UP detected - Opening Invoice');
       generateInvoiceForSlot(activeSlot);
       setSelectedSlotForBill(activeSlot);
       setShowBillModal(true);
     }
+    
+    // Reset touch state
+    setSlotsTouchStart(null);
+    setSlotsTouchEnd(null);
+    setSlotsTouchStartY(null);
+    setSlotsTouchEndY(null);
   };
 
   // Generate Challan function
