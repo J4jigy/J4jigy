@@ -130,26 +130,26 @@ const Challan = () => {
           <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-0">
             <CardContent className="p-3">
               <p className="text-xs text-blue-100">Total</p>
-              <p className="text-lg font-bold text-white">{totalChallans}</p>
-              <p className="text-xs text-blue-200 mt-1">{totalChallans} challans</p>
+              <p className="text-lg font-bold text-white">{totalCount}</p>
+              <p className="text-xs text-blue-200 mt-1">{totalCount} {activeTab === 'challan' ? 'challans' : 'gate passes'}</p>
             </CardContent>
           </Card>
           <Card className="bg-gradient-to-br from-green-600 to-green-700 border-0">
             <CardContent className="p-3">
               <p className="text-xs text-green-100">Completed</p>
-              <p className="text-lg font-bold text-white">{completedChallans}</p>
+              <p className="text-lg font-bold text-white">{completedCount}</p>
             </CardContent>
           </Card>
           <Card className="bg-gradient-to-br from-orange-600 to-orange-700 border-0">
             <CardContent className="p-3">
               <p className="text-xs text-orange-100">Pending</p>
-              <p className="text-lg font-bold text-white">{pendingChallans}</p>
+              <p className="text-lg font-bold text-white">{pendingCount}</p>
             </CardContent>
           </Card>
           <Card className="bg-gradient-to-br from-red-600 to-red-700 border-0">
             <CardContent className="p-3">
               <p className="text-xs text-red-100">Rejected</p>
-              <p className="text-lg font-bold text-white">{rejectedChallans}</p>
+              <p className="text-lg font-bold text-white">{rejectedCount}</p>
             </CardContent>
           </Card>
         </div>
