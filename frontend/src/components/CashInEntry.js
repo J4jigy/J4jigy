@@ -1702,6 +1702,55 @@ const CashInEntry = ({ onBack }) => {
         </DialogContent>
       </Dialog>
 
+      {/* Contact List Modal */}
+      <Dialog open={showContactListModal} onOpenChange={setShowContactListModal}>
+        <DialogContent className="bg-slate-800 border-slate-700">
+          <DialogHeader>
+            <DialogTitle className="text-white">{selectedCategory} - Select Contact</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-2 max-h-96 overflow-y-auto">
+            {contactList.length > 0 ? (
+              contactList.map((contact) => (
+                <Button
+                  key={contact.id || contact._id}
+                  onClick={() => {
+                    setSelectedCustomer(contact.name);
+                    setShowContactListModal(false);
+                  }}
+                  className="w-full justify-start bg-slate-700 hover:bg-slate-600 text-white text-sm py-3"
+                >
+                  <Users className="w-4 h-4 mr-2" />
+                  <div className="flex flex-col items-start">
+                    <span className="font-semibold">{contact.name}</span>
+                    {contact.phone && (
+                      <span className="text-xs text-slate-400">{contact.phone}</span>
+                    )}
+                  </div>
+                </Button>
+              ))
+            ) : (
+              <div className="text-center py-8 text-slate-400">
+                <Users className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                <p>No contacts found in this category</p>
+                <p className="text-xs mt-2">Add contacts from the Customers/Suppliers page</p>
+              </div>
+            )}
+          </div>
+          <div className="border-t border-slate-700 pt-3 mt-3">
+            <Button
+              onClick={() => {
+                setSelectedCustomer(selectedCategory);
+                setShowContactListModal(false);
+              }}
+              className="w-full bg-blue-600 hover:bg-blue-700"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Use "{selectedCategory}" (No Contact)
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Finance Modal */}
       <Dialog open={showFinanceModal} onOpenChange={setShowFinanceModal}>
         <DialogContent className="bg-slate-800 border-slate-700">
