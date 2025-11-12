@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, Building, Calendar, IndianRupee, CheckCircle, AlertCircle, TrendingUp, TrendingDown } from 'lucide-react';
+import { ArrowLeft, Building, Calendar, IndianRupee, CheckCircle, AlertCircle, TrendingUp, TrendingDown, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
