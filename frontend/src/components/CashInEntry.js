@@ -1237,7 +1237,7 @@ const CashInEntry = ({ onBack }) => {
 
         {/* Gate Pass Dialog - Shows when swiped up on slots */}
         {showGatePass && selectedSlotForGatePass !== null && (
-          <div className="bg-white border-2 border-green-500 rounded-lg p-3 space-y-2 animate-in slide-in-from-bottom">
+          <div className="bg-white border-2 border-green-500 rounded-lg p-3 space-y-2 animate-in slide-in-from-left duration-300 ease-out">
             {/* Gate Pass Header */}
             <div className="flex items-center justify-between border-b-2 border-green-500 pb-2">
               <div className="flex items-center gap-2">
