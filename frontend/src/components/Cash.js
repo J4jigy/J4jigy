@@ -203,6 +203,13 @@ export default function Cash() {
         <div className="text-center text-slate-400 text-sm">
           Page {currentPage} / {totalPages}
         </div>
+
+        {/* Floating Add Button */}
+        <button
+          className="fixed bottom-20 right-8 bg-green-600 hover:bg-green-700 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg hover:shadow-xl transition-all z-50"
+        >
+          <Plus className="w-6 h-6" />
+        </button>
       </div>
     </div>
   );
