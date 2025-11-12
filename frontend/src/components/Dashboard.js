@@ -439,11 +439,11 @@ It's completely free to try!`;
     { name: 'Customers', subtitle: 'Debtors', icon: Users, iconColor: 'text-green-400', permissions: ['customers_manage', 'customers_view'] },
     { name: 'Suppliers', subtitle: 'Creditors', icon: Truck, iconColor: 'text-indigo-400', permissions: ['suppliers_manage', 'suppliers_view'] },
     { name: 'Daily Sales', subtitle: 'Report', icon: TrendingUp, iconColor: 'text-cyan-400', permissions: ['reports_view', 'cash_view'] },
-    { name: 'Company', subtitle: 'Purchase', icon: ShoppingCart, iconColor: 'text-orange-400', permissions: ['expenses_manage'] },
-    { name: 'Stock', subtitle: 'Management', icon: Package, iconColor: 'text-orange-400', permissions: ['inventory_manage', 'inventory_view'] },
-    { name: 'Staff', subtitle: '', icon: Users, iconColor: 'text-purple-400', permissions: ['staff_manage'] },
-    { name: 'Challan Gate Pass', subtitle: '', icon: ClipboardList, iconColor: 'text-cyan-400', permissions: ['reports_view'] },
-    { name: 'Bills &', subtitle: 'Invoices', icon: FileBarChart, iconColor: 'text-yellow-400', permissions: ['reports_view'] },
+    { name: 'Company', subtitle: 'Purchase', icon: ShoppingCart, iconColor: 'text-orange-400', permissions: ['expenses_manage'], showAddButton: true },
+    { name: 'Stock', subtitle: 'Management', icon: Package, iconColor: 'text-orange-400', permissions: ['inventory_manage', 'inventory_view'], showAddButton: true },
+    { name: 'Staff', subtitle: '', icon: Users, iconColor: 'text-purple-400', permissions: ['staff_manage'], showAddButton: true },
+    { name: 'Challan Gate Pass', subtitle: '', icon: ClipboardList, iconColor: 'text-cyan-400', permissions: ['reports_view'], showAddButton: true },
+    { name: 'Bills &', subtitle: 'Invoices', icon: FileBarChart, iconColor: 'text-yellow-400', permissions: ['reports_view'], showAddButton: true },
   ];
 
   const financeTiles = [
