@@ -769,263 +769,137 @@ It's completely free to try!`;
 
                 {/* Scrollable Content */}
                 <div className="overflow-y-auto px-4 py-4 space-y-4" style={{ maxHeight: 'calc(65vh - 80px)' }}>
-              {/* User Information */}
-              <div className="bg-slate-700 p-4 rounded-lg space-y-3">
-                <div className="flex items-center gap-3">
-                  <UserCircle className="w-12 h-12 text-blue-400" />
+                  {/* User Info Card */}
+                  <div className="bg-slate-700 p-4 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <UserCircle className="w-12 h-12 text-blue-400" />
+                      <div>
+                        <h3 className="text-white font-semibold">{user?.username || 'User'}</h3>
+                        <p className="text-slate-400 text-sm">{userRole ? standardRoles[userRole]?.label : 'Member'}</p>
+                        <p className="text-slate-400 text-xs">{user?.phone}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Account Settings */}
                   <div>
-                    <h3 className="text-white font-semibold text-lg">{user?.username || 'User'}</h3>
-                    <p className="text-slate-400 text-sm">{userRole ? standardRoles[userRole]?.label : 'Member'}</p>
-                  </div>
-                </div>
-                
-                <div className="border-t border-slate-600 pt-3 space-y-2">
-                  {user?.email && (
-                    <div className="flex justify-between">
-                      <span className="text-slate-400 text-sm">Email</span>
-                      <span className="text-slate-200 text-sm">{user.email}</span>
+                    <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                      <UserCircle className="w-4 h-4 text-cyan-400" />
+                      Account Settings
+                    </h4>
+                    <div className="space-y-2">
+                      <Button 
+                        onClick={() => {
+                          setShowProfileDialog(false);
+                          setShowBusinessProfileDialog(true);
+                        }} 
+                        variant="ghost" 
+                        className="w-full text-slate-200 hover:bg-slate-700 justify-start h-10"
+                      >
+                        <Edit2 className="w-4 h-4 mr-2" />
+                        Edit Profile
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full text-slate-200 hover:bg-slate-700 justify-start h-10"
+                      >
+                        <Shield className="w-4 h-4 mr-2" />
+                        Change Password
+                      </Button>
                     </div>
-                  )}
-                  {user?.phone && (
-                    <div className="flex justify-between">
-                      <span className="text-slate-400 text-sm">Phone</span>
-                      <span className="text-slate-200 text-sm">{user.phone}</span>
-                    </div>
-                  )}
-                  <div className="flex justify-between">
-                    <span className="text-slate-400 text-sm">Active Business</span>
-                    <span className="text-slate-200 text-sm">{activeBusiness?.name}</span>
                   </div>
-                </div>
-              </div>
 
-              {/* Business Profile Section */}
-              <div className="border-t border-slate-600 pt-4">
-                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-                  <Building className="w-4 h-4 text-cyan-400" />
-                  Business Profile
-                </h4>
-                <div className="space-y-2">
-                  <Button 
-                    onClick={() => {
-                      setShowProfileDialog(false);
-                      setShowBusinessProfileDialog(true);
-                    }} 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <Edit2 className="w-4 h-4 mr-2" />
-                    Edit Business Details
-                  </Button>
-                  <Button 
-                    onClick={() => {
-                      setShowProfileDialog(false);
-                      handleNavigate('/staff');
-                    }} 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <Users className="w-4 h-4 mr-2" />
-                    Manage Staff
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <Receipt className="w-4 h-4 mr-2" />
-                    Tax & GST Settings
-                  </Button>
-                  <Button 
-                    onClick={() => {
-                      setShowProfileDialog(false);
-                      handleNavigate('/fuel-dispenser');
-                    }} 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <Fuel className="w-4 h-4 mr-2" />
-                    Fuel Dispenser Setup
-                  </Button>
-                </div>
-              </div>
+                  {/* Permissions */}
+                  <div className="border-t border-slate-700 pt-3">
+                    <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                      <ShieldCheck className="w-4 h-4 text-purple-400" />
+                      Permissions
+                    </h4>
+                    <div className="space-y-2">
+                      <Button 
+                        onClick={() => {
+                          setShowProfileDialog(false);
+                          handleNavigate('/staff');
+                        }} 
+                        variant="ghost" 
+                        className="w-full text-slate-200 hover:bg-slate-700 justify-start h-10"
+                      >
+                        <Users className="w-4 h-4 mr-2" />
+                        Manage Staff & Roles
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full text-slate-200 hover:bg-slate-700 justify-start h-10"
+                      >
+                        <Settings className="w-4 h-4 mr-2" />
+                        Access Control
+                      </Button>
+                    </div>
+                  </div>
 
-              {/* Reports & Analytics Section */}
-              <div className="border-t border-slate-600 pt-4">
-                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-                  <BarChart3 className="w-4 h-4 text-purple-400" />
-                  Reports & Analytics
-                </h4>
-                <div className="space-y-2">
-                  <Button 
-                    onClick={() => {
-                      setShowProfileDialog(false);
-                      handleNavigate('/daily-sales');
-                    }} 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <TrendingUp className="w-4 h-4 mr-2" />
-                    Daily Sales Report
-                  </Button>
-                  <Button 
-                    onClick={() => {
-                      setShowProfileDialog(false);
-                      handleNavigate('/profit-loss');
-                    }} 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <PieChart className="w-4 h-4 mr-2" />
-                    Profit & Loss
-                  </Button>
-                  <Button 
-                    onClick={() => {
-                      setShowProfileDialog(false);
-                      handleNavigate('/balance-sheet');
-                    }} 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <FileBarChart className="w-4 h-4 mr-2" />
-                    Balance Sheet
-                  </Button>
-                </div>
-              </div>
+                  {/* Settings */}
+                  <div className="border-t border-slate-700 pt-3">
+                    <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                      <Settings className="w-4 h-4 text-orange-400" />
+                      Settings
+                    </h4>
+                    <div className="space-y-2">
+                      <Button 
+                        variant="ghost" 
+                        className="w-full text-slate-200 hover:bg-slate-700 justify-start h-10"
+                      >
+                        <Calendar className="w-4 h-4 mr-2" />
+                        Notifications
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full text-slate-200 hover:bg-slate-700 justify-start h-10"
+                      >
+                        <Download className="w-4 h-4 mr-2" />
+                        Backup & Export
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full text-slate-200 hover:bg-slate-700 justify-start h-10"
+                      >
+                        <Zap className="w-4 h-4 mr-2" />
+                        App Preferences
+                      </Button>
+                    </div>
+                  </div>
 
-              {/* Settings Section */}
-              <div className="border-t border-slate-600 pt-4">
-                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-                  <Settings className="w-4 h-4 text-orange-400" />
-                  Settings
-                </h4>
-                <div className="space-y-2">
-                  <Button 
-                    onClick={() => {
-                      setShowProfileDialog(false);
-                      handleNavigate('/calendar-reminders');
-                    }} 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <Calendar className="w-4 h-4 mr-2" />
-                    Reminders & Notifications
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Backup & Export Data
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <Upload className="w-4 h-4 mr-2" />
-                    Import Data
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <Shield className="w-4 h-4 mr-2" />
-                    Privacy & Security
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <Zap className="w-4 h-4 mr-2" />
-                    App Preferences
-                  </Button>
-                </div>
-              </div>
+                  {/* Help & Support */}
+                  <div className="border-t border-slate-700 pt-3">
+                    <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                      <MessageCircle className="w-4 h-4 text-green-400" />
+                      Help & Support
+                    </h4>
+                    <div className="space-y-2">
+                      <Button 
+                        variant="ghost" 
+                        className="w-full text-slate-200 hover:bg-slate-700 justify-start h-10"
+                      >
+                        <FileBarChart className="w-4 h-4 mr-2" />
+                        User Guide
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full text-slate-200 hover:bg-slate-700 justify-start h-10"
+                      >
+                        <Send className="w-4 h-4 mr-2" />
+                        Contact Support
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        className="w-full text-slate-200 hover:bg-slate-700 justify-start h-10"
+                      >
+                        <Star className="w-4 h-4 mr-2" />
+                        Rate App
+                      </Button>
+                    </div>
+                  </div>
 
-              {/* Help & Support Section */}
-              <div className="border-t border-slate-600 pt-4">
-                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-                  <MessageCircle className="w-4 h-4 text-green-400" />
-                  Help & Support
-                </h4>
-                <div className="space-y-2">
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <FileBarChart className="w-4 h-4 mr-2" />
-                    User Guide & Tutorials
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <Send className="w-4 h-4 mr-2" />
-                    Contact Support
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <MessageCircle className="w-4 h-4 mr-2" />
-                    Live Chat Support
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <Star className="w-4 h-4 mr-2" />
-                    Rate & Review App
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <Gift className="w-4 h-4 mr-2" />
-                    What's New
-                  </Button>
-                </div>
-              </div>
-
-              {/* Community & Social Section */}
-              <div className="border-t border-slate-600 pt-4">
-                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-                  <Users className="w-4 h-4 text-pink-400" />
-                  Community
-                </h4>
-                <div className="space-y-2">
-                  <Button 
-                    onClick={() => {
-                      setShowProfileDialog(false);
-                      handleNavigate('/community');
-                    }} 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <Star className="w-4 h-4 mr-2" />
-                    Community Ratings
-                  </Button>
-                  <Button 
-                    onClick={() => {
-                      setShowProfileDialog(false);
-                      setShowInviteDialog(true);
-                    }} 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <Share2 className="w-4 h-4 mr-2" />
-                    Invite Friends
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-slate-600 text-slate-200 hover:bg-slate-700 justify-start"
-                  >
-                    <Users className="w-4 h-4 mr-2" />
-                    Join WhatsApp Group
-                  </Button>
-                </div>
-              </div>
-
-              {/* Admin Panel */}
+                  {/* Admin Panel (Only for Admins) */}
               {(user?.is_admin || user?.role === 'admin' || user?.role === 'super_admin') && (
                 <div className="border-t border-slate-600 pt-4">
                   <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
