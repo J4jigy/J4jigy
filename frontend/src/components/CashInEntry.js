@@ -1285,7 +1285,6 @@ const CashInEntry = ({ onBack }) => {
                   onChange={(e) => setGatePassVehicleNumber(e.target.value.toUpperCase())}
                   placeholder="e.g., MH12AB1234"
                   className="w-full bg-white border-2 border-green-400 text-black h-8 text-sm font-bold px-2 rounded placeholder:text-slate-400 focus:border-green-600 focus:outline-none uppercase"
-                  autoFocus
                 />
               </div>
 
