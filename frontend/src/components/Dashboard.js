@@ -1474,7 +1474,7 @@ It's completely free to try!`;
       </Dialog>
 
       {/* Floating Buttons */}
-      {showFloatingChat && (
+      {showFloatingChat && !showProfileDialog && (
         <div className="fixed bottom-28 right-8 z-50 flex flex-col gap-3">
           {/* Share/WhatsApp Button */}
           <Button
