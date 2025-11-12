@@ -1146,7 +1146,7 @@ const CashInEntry = ({ onBack }) => {
 
         {/* Challan Preview - Shows when swiped right on slots */}
         {showChallanPreview && (
-          <div className="bg-white border-2 border-cyan-500 rounded-lg p-3 space-y-2 animate-in slide-in-from-right">
+          <div className="bg-white border-2 border-cyan-500 rounded-lg p-3 space-y-2 animate-in slide-in-from-right duration-300 ease-out">
             {/* Challan Header */}
             <div className="flex items-center justify-between border-b-2 border-cyan-500 pb-2">
               <div className="flex items-center gap-2">
