@@ -82,11 +82,11 @@ const Challan = () => {
               <ArrowLeft className="w-4 h-4" />
             </Button>
             <div>
-              <h1 className="text-lg font-bold">Challan Receipt</h1>
+              <h1 className="text-lg font-bold">Challan Gate Pass</h1>
               <p className="text-xs text-slate-400">{activeBusiness.name}</p>
             </div>
           </div>
-          <Button size="sm" className="bg-cyan-600 hover:bg-cyan-700">
+          <Button size="sm" className={activeTab === 'challan' ? 'bg-cyan-600 hover:bg-cyan-700' : 'bg-green-600 hover:bg-green-700'}>
             <Plus className="w-4 h-4 mr-1" />
             New
           </Button>
@@ -94,6 +94,37 @@ const Challan = () => {
       </div>
 
       <div className="px-4 py-4">
+        {/* Tabs */}
+        <div className="flex gap-2 mb-4">
+          <button
+            onClick={() => {
+              setActiveTab('challan');
+              setFilterStatus('all');
+              setChallanType('all');
+            }}
+            className={`flex-1 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all ${
+              activeTab === 'challan'
+                ? 'bg-gradient-to-r from-cyan-600 to-cyan-700 text-white shadow-lg'
+                : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+            }`}
+          >
+            Challan
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab('gatepass');
+              setFilterStatus('all');
+              setChallanType('all');
+            }}
+            className={`flex-1 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all ${
+              activeTab === 'gatepass'
+                ? 'bg-gradient-to-r from-green-600 to-green-700 text-white shadow-lg'
+                : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+            }`}
+          >
+            Gate Pass
+          </button>
+        </div>
         {/* Stats Cards */}
         <div className="grid grid-cols-2 gap-3 mb-4">
           <Card className="bg-gradient-to-br from-blue-600 to-blue-700 border-0">
