@@ -900,39 +900,42 @@ It's completely free to try!`;
                   </div>
 
                   {/* Admin Panel (Only for Admins) */}
-              {(user?.is_admin || user?.role === 'admin' || user?.role === 'super_admin') && (
-                <div className="border-t border-slate-600 pt-4">
-                  <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
-                    <Shield className="w-4 h-4 text-purple-400" />
-                    Admin Panel
-                  </h4>
-                  <div className="space-y-2">
-                    <Button onClick={() => handleNavigate('/admin')} className="w-full bg-purple-600 hover:bg-purple-700">
-                      <Shield className="w-4 h-4 mr-2" />
-                      Security Dashboard
-                    </Button>
-                    <Button onClick={handleCreateInviteCode} className="w-full bg-blue-600 hover:bg-blue-700">
-                      <Plus className="w-4 h-4 mr-2" />
-                      Create Invite Code
-                    </Button>
-                    <Button onClick={handleViewInviteCodes} variant="outline" className="w-full border-slate-600 text-slate-200">
-                      <Settings className="w-4 h-4 mr-2" />
-                      View Invite Codes
+                  {(user?.is_admin || user?.role === 'admin' || user?.role === 'super_admin') && (
+                    <div className="border-t border-slate-700 pt-3">
+                      <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                        <Shield className="w-4 h-4 text-red-400" />
+                        Admin Panel
+                      </h4>
+                      <div className="space-y-2">
+                        <Button 
+                          onClick={() => {
+                            setShowProfileDialog(false);
+                            handleNavigate('/admin');
+                          }} 
+                          variant="ghost" 
+                          className="w-full text-slate-200 hover:bg-slate-700 justify-start h-10"
+                        >
+                          <Shield className="w-4 h-4 mr-2" />
+                          Security Dashboard
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Logout Button */}
+                  <div className="border-t border-slate-700 pt-3 pb-2">
+                    <Button 
+                      onClick={onLogout} 
+                      className="w-full bg-red-600 hover:bg-red-700 h-11"
+                    >
+                      <ArrowLeft className="w-4 h-4 mr-2" />
+                      Logout
                     </Button>
                   </div>
                 </div>
-              )}
-
-              {/* Logout Button */}
-              <div className="border-t border-slate-600 pt-4">
-                <Button onClick={onLogout} variant="destructive" className="w-full">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Logout
-                </Button>
               </div>
             </div>
-          </DialogContent>
-        </Dialog>
+          )}
         </div>
       </div>
 
