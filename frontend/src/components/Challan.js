@@ -156,23 +156,24 @@ const Challan = () => {
 
         {/* Filters */}
         <div className="grid grid-cols-2 gap-3 mb-4">
-          <Card className="bg-slate-800 border-slate-700">
-            <CardContent className="p-3">
-              <Select value={challanType} onValueChange={setChallanType}>
-                <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
-                  <SelectValue placeholder="Challan Type" />
-                </SelectTrigger>
-                <SelectContent className="bg-slate-700 border-slate-600">
-                  <SelectItem value="all">All Types</SelectItem>
-                  <SelectItem value="delivery">Delivery</SelectItem>
-                  <SelectItem value="purchase">Purchase</SelectItem>
-                  <SelectItem value="gate">Gate Pass</SelectItem>
-                  <SelectItem value="payment">Payment</SelectItem>
-                </SelectContent>
-              </Select>
-            </CardContent>
-          </Card>
-          <Card className="bg-slate-800 border-slate-700">
+          {activeTab === 'challan' && (
+            <Card className="bg-slate-800 border-slate-700">
+              <CardContent className="p-3">
+                <Select value={challanType} onValueChange={setChallanType}>
+                  <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                    <SelectValue placeholder="Challan Type" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-slate-700 border-slate-600">
+                    <SelectItem value="all">All Types</SelectItem>
+                    <SelectItem value="delivery">Delivery</SelectItem>
+                    <SelectItem value="purchase">Purchase</SelectItem>
+                    <SelectItem value="payment">Payment</SelectItem>
+                  </SelectContent>
+                </Select>
+              </CardContent>
+            </Card>
+          )}
+          <Card className={`bg-slate-800 border-slate-700 ${activeTab === 'gatepass' ? 'col-span-2' : ''}`}>
             <CardContent className="p-3">
               <Select value={filterStatus} onValueChange={setFilterStatus}>
                 <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
