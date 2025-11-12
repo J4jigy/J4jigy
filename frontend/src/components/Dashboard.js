@@ -746,29 +746,32 @@ It's completely free to try!`;
             <UserCircle className="w-6 h-6 text-slate-400" />
           </Button>
 
-          {/* Profile Drawer - Half Page Sliding from Bottom */}
+          {/* Profile Drawer - Sliding from Right */}
           {showProfileDialog && (
             <div 
               className="fixed inset-0 z-50 bg-black/50"
               onClick={() => setShowProfileDialog(false)}
             >
               <div 
-                className="fixed bottom-0 left-0 right-0 bg-slate-800 rounded-t-2xl border-t-2 border-slate-700 animate-in slide-in-from-bottom duration-300 ease-out"
-                style={{ maxHeight: '65vh' }}
+                className="fixed top-0 right-0 bottom-0 bg-slate-800 border-l-2 border-slate-700 animate-in slide-in-from-right duration-300 ease-out shadow-2xl"
+                style={{ width: '80%', maxWidth: '400px' }}
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* Drawer Handle */}
-                <div className="flex justify-center pt-3 pb-2">
-                  <div className="w-12 h-1 bg-slate-600 rounded-full"></div>
-                </div>
-
                 {/* Header */}
-                <div className="px-4 pb-3 border-b border-slate-700">
+                <div className="px-4 py-4 border-b border-slate-700 flex items-center justify-between">
                   <h2 className="text-white text-lg font-bold">Profile</h2>
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    onClick={() => setShowProfileDialog(false)}
+                    className="text-slate-400 hover:text-white"
+                  >
+                    <X className="w-5 h-5" />
+                  </Button>
                 </div>
 
                 {/* Scrollable Content */}
-                <div className="overflow-y-auto px-4 py-4 space-y-4" style={{ maxHeight: 'calc(65vh - 80px)' }}>
+                <div className="overflow-y-auto px-4 py-4 space-y-4" style={{ height: 'calc(100vh - 64px)' }}>
                   {/* User Info Card */}
                   <div className="bg-slate-700 p-4 rounded-lg">
                     <div className="flex items-center gap-3">
