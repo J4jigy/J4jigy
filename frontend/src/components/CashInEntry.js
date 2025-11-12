@@ -712,7 +712,7 @@ const CashInEntry = ({ onBack }) => {
     }
   };
 
-  const handleCategorySelect = (category) => {
+  const handleCategorySelect = async (category) => {
     // Check if "Customers / Debtors (देनदार)" is selected
     if (category === 'Customers / Debtors (देनदार)') {
       setShowBusinessModal(false);
@@ -727,20 +727,55 @@ const CashInEntry = ({ onBack }) => {
       return;
     }
     
-    // Set the selected customer directly for business and finance options
-    setSelectedCustomer(category);
-    setShowBusinessModal(false);
-    
-    // Auto-create contact based on category type
+    // Determine contact type based on category
     let contactType = 'customer'; // default
     if (category.includes('Supplier') || category.includes('Creditor')) {
       contactType = 'supplier';
     } else if (category.includes('Staff')) {
       contactType = 'staff';
+    } else if (category === 'Debtors (देनदार)') {
+      contactType = 'debtor';
+    } else if (category === 'Customers') {
+      contactType = 'customer';
     }
     
-    // Create contact in background
-    createContact(category, contactType);
+    // Fetch contacts from backend filtered by category/type
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/contacts?type=${contactType}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (response.ok) {
+        const contacts = await response.json();
+        
+        if (contacts && contacts.length > 0) {
+          // Show contact list dialog
+          setContactList(contacts);
+          setSelectedCategory(category);
+          setShowBusinessModal(false);
+          setShowContactListModal(true);
+        } else {
+          // No contacts found, allow direct category selection
+          setSelectedCustomer(category);
+          setShowBusinessModal(false);
+          createContact(category, contactType);
+        }
+      } else {
+        // Fallback: use category name directly if API fails
+        setSelectedCustomer(category);
+        setShowBusinessModal(false);
+        createContact(category, contactType);
+      }
+    } catch (error) {
+      console.error('Error fetching contacts:', error);
+      // Fallback: use category name directly
+      setSelectedCustomer(category);
+      setShowBusinessModal(false);
+      createContact(category, contactType);
+    }
   };
 
   const handleNameSelect = (name) => {
