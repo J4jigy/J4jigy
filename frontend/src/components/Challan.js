@@ -190,36 +190,45 @@ const Challan = () => {
           </Card>
         </div>
 
-        {/* Challan List */}
+        {/* List - Challan or Gate Pass */}
         <div className="space-y-3">
-          {filteredChallans.map(challan => (
-            <Card key={challan.id} className={`bg-slate-800 border-slate-700 ${
-              challan.status === 'rejected' ? 'border-red-500' : ''
+          {filteredData.map(item => (
+            <Card key={item.id} className={`bg-slate-800 border-slate-700 ${
+              item.status === 'rejected' ? 'border-red-500' : ''
             }`}>
               <CardContent className="p-3">
                 <div className="flex justify-between items-start mb-2">
                   <div>
-                    <p className="text-sm font-bold text-white">{challan.id}</p>
-                    <p className="text-xs text-slate-400">{challan.party}</p>
-                    <p className={`text-xs font-medium mt-1 ${getTypeColor(challan.type)}`}>
-                      {getTypeLabel(challan.type)} Challan
-                    </p>
+                    <p className="text-sm font-bold text-white">{item.id}</p>
+                    <p className="text-xs text-slate-400">{item.party}</p>
+                    {activeTab === 'challan' && item.type && (
+                      <p className={`text-xs font-medium mt-1 ${getTypeColor(item.type)}`}>
+                        {getTypeLabel(item.type)} Challan
+                      </p>
+                    )}
+                    {activeTab === 'gatepass' && item.vehicleNumber && (
+                      <p className="text-xs font-medium mt-1 text-green-400">
+                        Vehicle: {item.vehicleNumber}
+                      </p>
+                    )}
                   </div>
                   <div className="text-right">
-                    {challan.amount > 0 && (
-                      <p className="text-sm font-bold text-cyan-400">₹{challan.amount.toLocaleString()}</p>
+                    {item.amount > 0 && (
+                      <p className={`text-sm font-bold ${activeTab === 'challan' ? 'text-cyan-400' : 'text-green-400'}`}>
+                        ₹{item.amount.toLocaleString()}
+                      </p>
                     )}
-                    {challan.status === 'completed' && (
+                    {item.status === 'completed' && (
                       <span className="text-xs bg-green-900/50 text-green-300 px-2 py-0.5 rounded flex items-center gap-1 mt-1">
                         <CheckCircle className="w-3 h-3" /> Completed
                       </span>
                     )}
-                    {challan.status === 'pending' && (
+                    {item.status === 'pending' && (
                       <span className="text-xs bg-orange-900/50 text-orange-300 px-2 py-0.5 rounded flex items-center gap-1 mt-1">
                         <Clock className="w-3 h-3" /> Pending
                       </span>
                     )}
-                    {challan.status === 'rejected' && (
+                    {item.status === 'rejected' && (
                       <span className="text-xs bg-red-900/50 text-red-300 px-2 py-0.5 rounded flex items-center gap-1 mt-1">
                         <AlertCircle className="w-3 h-3" /> Rejected
                       </span>
@@ -227,8 +236,8 @@ const Challan = () => {
                   </div>
                 </div>
                 <div className="flex justify-between items-center text-xs text-slate-400 mb-2">
-                  <span>Date: {challan.date}</span>
-                  <span>Items: {challan.items}</span>
+                  <span>Date: {item.date}</span>
+                  <span>Items: {item.items}</span>
                 </div>
                 <div className="flex gap-2">
                   <Button size="sm" variant="ghost" className="flex-1 text-blue-400 hover:bg-blue-900/30 h-7 text-xs">
