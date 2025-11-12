@@ -458,7 +458,7 @@ It's completely free to try!`;
   ];
 
   const personalTiles = [
-    { name: 'Offers &', subtitle: 'Discounts', icon: Gift, iconColor: 'text-red-400', permissions: [] }, // Available to all
+    { name: 'Offers &', subtitle: 'Discounts', icon: Gift, iconColor: 'text-red-400', permissions: [], showAddButton: true }, // Available to all
     { name: 'Scan', subtitle: 'Documents', icon: ScanLine, iconColor: 'text-cyan-400', permissions: [] }, // Available to all
     { name: 'To Do List', subtitle: '', icon: CheckSquare, iconColor: 'text-green-400', permissions: [] }, // Available to all
     { name: 'Calendar', subtitle: '', icon: Calendar, iconColor: 'text-pink-400', permissions: [] }, // Available to all
