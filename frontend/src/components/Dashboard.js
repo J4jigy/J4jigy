@@ -736,17 +736,39 @@ It's completely free to try!`;
             </div>
           )}
           
-          <Dialog open={showProfileDialog} onOpenChange={setShowProfileDialog}>
-            <DialogTrigger asChild>
-              <Button variant="ghost" size="sm" data-testid="profile-icon">
-                <UserCircle className="w-6 h-6 text-slate-400" />
-              </Button>
-            </DialogTrigger>
-          <DialogContent className="bg-slate-800 border-slate-700">
-            <DialogHeader>
-              <DialogTitle className="text-white">User Profile</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
+          {/* Profile Button */}
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            data-testid="profile-icon"
+            onClick={() => setShowProfileDialog(true)}
+          >
+            <UserCircle className="w-6 h-6 text-slate-400" />
+          </Button>
+
+          {/* Profile Drawer - Half Page Sliding from Bottom */}
+          {showProfileDialog && (
+            <div 
+              className="fixed inset-0 z-50 bg-black/50"
+              onClick={() => setShowProfileDialog(false)}
+            >
+              <div 
+                className="fixed bottom-0 left-0 right-0 bg-slate-800 rounded-t-2xl border-t-2 border-slate-700 animate-in slide-in-from-bottom duration-300 ease-out"
+                style={{ maxHeight: '65vh' }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Drawer Handle */}
+                <div className="flex justify-center pt-3 pb-2">
+                  <div className="w-12 h-1 bg-slate-600 rounded-full"></div>
+                </div>
+
+                {/* Header */}
+                <div className="px-4 pb-3 border-b border-slate-700">
+                  <h2 className="text-white text-lg font-bold">Profile</h2>
+                </div>
+
+                {/* Scrollable Content */}
+                <div className="overflow-y-auto px-4 py-4 space-y-4" style={{ maxHeight: 'calc(65vh - 80px)' }}>
               {/* User Information */}
               <div className="bg-slate-700 p-4 rounded-lg space-y-3">
                 <div className="flex items-center gap-3">
