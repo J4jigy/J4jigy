@@ -1410,6 +1410,38 @@ const CashInEntry = ({ onBack }) => {
           </CardContent>
         </Card>
 
+        {/* MS and HSD Sub-sections (Optional) */}
+        <div className="grid grid-cols-2 gap-2">
+          <div>
+            <Label className="text-xs text-slate-400 mb-1">MS (Optional)</Label>
+            <Input
+              type="number"
+              value={slots[activeSlot]?.ms || ''}
+              onChange={(e) => {
+                setSlots(prev => prev.map((slot, idx) => 
+                  idx === activeSlot ? { ...slot, ms: e.target.value } : slot
+                ));
+              }}
+              placeholder="0"
+              className="bg-slate-800 border-slate-700 text-white h-9 text-sm"
+            />
+          </div>
+          <div>
+            <Label className="text-xs text-slate-400 mb-1">HSD (Optional)</Label>
+            <Input
+              type="number"
+              value={slots[activeSlot]?.hsd || ''}
+              onChange={(e) => {
+                setSlots(prev => prev.map((slot, idx) => 
+                  idx === activeSlot ? { ...slot, hsd: e.target.value } : slot
+                ));
+              }}
+              placeholder="0"
+              className="bg-slate-800 border-slate-700 text-white h-9 text-sm"
+            />
+          </div>
+        </div>
+
         {/* Payment Mode Tabs - enlarged buttons, full width across screen */}
         <div className="grid grid-cols-4 gap-2">
           {['Credit', 'Cash', 'Online', 'Cheque'].map((mode) => (
