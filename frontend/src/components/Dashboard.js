@@ -1814,7 +1814,7 @@ It's completely free to try!`;
               setShowTopFloatingPanel(newState);
               setShowBottomFloatingPanel(newState);
             }}
-            className={`w-4 h-14 rounded-md bg-slate-700/90 hover:bg-slate-600 border border-slate-600 shadow-lg flex items-center justify-start pl-0.5 backdrop-blur-sm transition-all duration-200 ${
+            className={`w-4 h-20 rounded-md bg-slate-700/90 hover:bg-slate-600 border border-slate-600 shadow-lg flex items-center justify-start pl-0.5 backdrop-blur-sm transition-all duration-200 ${
               (showTopFloatingPanel || showBottomFloatingPanel) ? 'bg-blue-600 hover:bg-blue-700 border-blue-500' : ''
             }`}
           >
