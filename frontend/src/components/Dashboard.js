@@ -1718,7 +1718,7 @@ It's completely free to try!`;
             }`}
             style={{ width: '240px' }}
           >
-            <div className="p-4 space-y-4">
+            <div className="p-4">
               {/* Quick Actions Section */}
               <div>
                 <h3 className="text-white font-semibold text-sm mb-3">Quick Actions</h3>
@@ -1758,50 +1758,6 @@ It's completely free to try!`;
                   <div>
                     <p className="text-white text-sm font-medium">Chat</p>
                     <p className="text-slate-400 text-xs">Messages & Groups</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Divider */}
-              <div className="border-t border-slate-700"></div>
-
-              {/* Quick Entry Section */}
-              <div>
-                <h3 className="text-white font-semibold text-sm mb-3">Quick Entry</h3>
-                
-                {/* Cash In Option */}
-                <div 
-                  onClick={() => {
-                    handleNavigate('/cash-in');
-                    setShowTopFloatingPanel(false);
-                    setShowBottomFloatingPanel(false);
-                  }}
-                  className="flex items-center gap-3 p-2 hover:bg-slate-700 rounded-lg cursor-pointer transition-colors border border-green-500/30 bg-green-500/10 mb-2"
-                >
-                  <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center">
-                    <Plus className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-white text-sm font-medium">Cash In</p>
-                    <p className="text-slate-400 text-xs">Add income entry</p>
-                  </div>
-                </div>
-
-                {/* Cash Out Option */}
-                <div 
-                  onClick={() => {
-                    handleNavigate('/cash-out');
-                    setShowTopFloatingPanel(false);
-                    setShowBottomFloatingPanel(false);
-                  }}
-                  className="flex items-center gap-3 p-2 hover:bg-slate-700 rounded-lg cursor-pointer transition-colors border border-red-500/30 bg-red-500/10"
-                >
-                  <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center">
-                    <Minus className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <p className="text-white text-sm font-medium">Cash Out</p>
-                    <p className="text-slate-400 text-xs">Add expense entry</p>
                   </div>
                 </div>
               </div>
