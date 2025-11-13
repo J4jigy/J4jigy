@@ -1422,67 +1422,138 @@ const CashInEntry = ({ onBack }) => {
           </CardContent>
         </Card>
 
-        {/* Optional Sub-Sections - Not Mandatory */}
-        <div className="space-y-2">
-          {/* Products Sub-sections */}
-          <div className="grid grid-cols-2 gap-2">
-            <div className="bg-slate-700 p-2 rounded">
-              <label className="text-xs text-slate-400">MS (Petrol)</label>
-              <input
-                type="number"
-                value={msAmount}
-                onChange={(e) => setMsAmount(e.target.value)}
-                placeholder="0"
-                className="w-full bg-slate-800 border-slate-600 text-white text-sm h-8 px-2 rounded mt-1"
-              />
-            </div>
-            <div className="bg-slate-700 p-2 rounded">
-              <label className="text-xs text-slate-400">HSD (Diesel)</label>
-              <input
-                type="number"
-                value={hsdAmount}
-                onChange={(e) => setHsdAmount(e.target.value)}
-                placeholder="0"
-                className="w-full bg-slate-800 border-slate-600 text-white text-sm h-8 px-2 rounded mt-1"
-              />
-            </div>
-          </div>
+        {/* Optional Default Sub-Sections - Visible but Not Mandatory */}
+        <div className="space-y-3">
+          
+          {/* Product Section - MS */}
+          <Card className="bg-slate-800/50 border-slate-700">
+            <CardContent className="p-3">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-white font-semibold text-sm">Product</h3>
+                <Button size="sm" className="bg-green-600 hover:bg-green-700 h-8 text-xs">
+                  <Plus className="w-3 h-3 mr-1" />
+                  Add Product
+                </Button>
+              </div>
+              <div className="bg-slate-900/50 rounded p-3 border border-slate-700">
+                <p className="text-sm font-semibold text-white mb-1">Total Sales Amount</p>
+                <input
+                  type="number"
+                  value={msAmount}
+                  onChange={(e) => setMsAmount(e.target.value)}
+                  placeholder="Total Sales Amount"
+                  className="w-full bg-slate-700 border-slate-600 text-white text-sm h-10 px-3 rounded placeholder:text-slate-500"
+                />
+              </div>
+            </CardContent>
+          </Card>
 
-          {/* Credit Sale Party */}
-          <div className="bg-slate-700 p-2 rounded">
-            <label className="text-xs text-slate-400">Credit Sale Party (Optional)</label>
-            <input
-              type="text"
-              value={creditSaleParty}
-              onChange={(e) => setCreditSaleParty(e.target.value)}
-              placeholder="Enter party name"
-              className="w-full bg-slate-800 border-slate-600 text-white text-sm h-8 px-2 rounded mt-1"
-            />
-          </div>
+          {/* Credit Sale Section */}
+          <Card className="bg-slate-800/50 border-slate-700">
+            <CardContent className="p-3">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-white font-semibold text-sm">Credit Sale</h3>
+                <Button size="sm" className="bg-green-600 hover:bg-green-700 h-8 text-xs">
+                  <Plus className="w-3 h-3 mr-1" />
+                  Add New Party
+                </Button>
+              </div>
+              <div className="bg-slate-900/50 rounded p-3 border border-slate-700">
+                <p className="text-sm font-semibold text-white mb-1">Total Credit Sales Amount</p>
+                <input
+                  type="number"
+                  value={creditSaleParty}
+                  onChange={(e) => setCreditSaleParty(e.target.value)}
+                  placeholder="Total Credit Sales Amount"
+                  className="w-full bg-slate-700 border-slate-600 text-white text-sm h-10 px-3 rounded placeholder:text-slate-500"
+                />
+              </div>
+            </CardContent>
+          </Card>
 
-          {/* Additional Fields */}
-          <div className="grid grid-cols-2 gap-2">
-            <div className="bg-slate-700 p-2 rounded">
-              <label className="text-xs text-slate-400">Expenses</label>
+          {/* Payment Method Section */}
+          <Card className="bg-slate-800/50 border-slate-700">
+            <CardContent className="p-3">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-white font-semibold text-sm">HP Pay / Paytm / Gpay / Phonepe / Other</h3>
+                <Button size="sm" className="bg-green-600 hover:bg-green-700 h-8 text-xs">
+                  <Plus className="w-3 h-3 mr-1" />
+                  Add Payment
+                </Button>
+              </div>
+              <div className="bg-slate-900/50 rounded p-3 border border-slate-700">
+                <p className="text-sm font-semibold text-white mb-1">Total Online Amount</p>
+                <input
+                  type="number"
+                  value={hsdAmount}
+                  onChange={(e) => setHsdAmount(e.target.value)}
+                  placeholder="Total Online Amount"
+                  className="w-full bg-slate-700 border-slate-600 text-white text-sm h-10 px-3 rounded placeholder:text-slate-500"
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Fuel Card Section */}
+          <Card className="bg-slate-800/50 border-slate-700">
+            <CardContent className="p-3">
+              <h3 className="text-white font-semibold text-sm mb-2">DT Plus / Fleet Card / Xtrapower / Other</h3>
               <input
                 type="number"
-                value={expensesAmount}
-                onChange={(e) => setExpensesAmount(e.target.value)}
-                placeholder="0"
-                className="w-full bg-slate-800 border-slate-600 text-white text-sm h-8 px-2 rounded mt-1"
+                placeholder="Enter fuel card amount"
+                className="w-full bg-slate-700 border-slate-600 text-white text-sm h-10 px-3 rounded placeholder:text-slate-500"
               />
-            </div>
-            <div className="bg-slate-700 p-2 rounded">
-              <label className="text-xs text-slate-400">Lubes</label>
+            </CardContent>
+          </Card>
+
+          {/* Discounts Section */}
+          <Card className="bg-slate-800/50 border-slate-700">
+            <CardContent className="p-3">
+              <h3 className="text-white font-semibold text-sm mb-2">Discounts</h3>
               <input
                 type="number"
-                value={lubesAmount}
-                onChange={(e) => setLubesAmount(e.target.value)}
-                placeholder="0"
-                className="w-full bg-slate-800 border-slate-600 text-white text-sm h-8 px-2 rounded mt-1"
+                placeholder="Enter discounts amount"
+                className="w-full bg-slate-700 border-slate-600 text-white text-sm h-10 px-3 rounded placeholder:text-slate-500"
               />
-            </div>
-          </div>
+            </CardContent>
+          </Card>
+
+          {/* Expenses Section */}
+          <Card className="bg-slate-800/50 border-slate-700">
+            <CardContent className="p-3">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-white font-semibold text-sm">Expenses</h3>
+                <Button size="sm" className="bg-green-600 hover:bg-green-700 h-8 text-xs">
+                  <Plus className="w-3 h-3 mr-1" />
+                  Add Expenses
+                </Button>
+              </div>
+              <div className="text-center py-6 text-slate-400">
+                <div className="text-4xl mb-2">💰</div>
+                <p className="text-sm">No expense entries</p>
+                <p className="text-xs">Click "Add Expenses" to get started</p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Lubes Section */}
+          <Card className="bg-slate-800/50 border-slate-700">
+            <CardContent className="p-3">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-white font-semibold text-sm">Lubes</h3>
+                <Button size="sm" className="bg-green-600 hover:bg-green-700 h-8 text-xs">
+                  <Plus className="w-3 h-3 mr-1" />
+                  Add Lubes
+                </Button>
+              </div>
+              <div className="text-center py-6 text-slate-400">
+                <div className="text-4xl mb-2">🛢️</div>
+                <p className="text-sm">No lube entries</p>
+                <p className="text-xs">Click "Add Lubes" to get started</p>
+              </div>
+            </CardContent>
+          </Card>
+
         </div>
 
         {/* Payment Mode Tabs - enlarged buttons, full width across screen */}
