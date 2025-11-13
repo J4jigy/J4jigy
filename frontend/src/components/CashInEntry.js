@@ -1430,6 +1430,8 @@ const CashInEntry = ({ onBack }) => {
               <label className="text-xs text-slate-400">MS (Petrol)</label>
               <input
                 type="number"
+                value={msAmount}
+                onChange={(e) => setMsAmount(e.target.value)}
                 placeholder="0"
                 className="w-full bg-slate-800 border-slate-600 text-white text-sm h-8 px-2 rounded mt-1"
               />
@@ -1438,6 +1440,8 @@ const CashInEntry = ({ onBack }) => {
               <label className="text-xs text-slate-400">HSD (Diesel)</label>
               <input
                 type="number"
+                value={hsdAmount}
+                onChange={(e) => setHsdAmount(e.target.value)}
                 placeholder="0"
                 className="w-full bg-slate-800 border-slate-600 text-white text-sm h-8 px-2 rounded mt-1"
               />
@@ -1449,6 +1453,8 @@ const CashInEntry = ({ onBack }) => {
             <label className="text-xs text-slate-400">Credit Sale Party (Optional)</label>
             <input
               type="text"
+              value={creditSaleParty}
+              onChange={(e) => setCreditSaleParty(e.target.value)}
               placeholder="Enter party name"
               className="w-full bg-slate-800 border-slate-600 text-white text-sm h-8 px-2 rounded mt-1"
             />
@@ -1460,6 +1466,8 @@ const CashInEntry = ({ onBack }) => {
               <label className="text-xs text-slate-400">Expenses</label>
               <input
                 type="number"
+                value={expensesAmount}
+                onChange={(e) => setExpensesAmount(e.target.value)}
                 placeholder="0"
                 className="w-full bg-slate-800 border-slate-600 text-white text-sm h-8 px-2 rounded mt-1"
               />
@@ -1468,6 +1476,8 @@ const CashInEntry = ({ onBack }) => {
               <label className="text-xs text-slate-400">Lubes</label>
               <input
                 type="number"
+                value={lubesAmount}
+                onChange={(e) => setLubesAmount(e.target.value)}
                 placeholder="0"
                 className="w-full bg-slate-800 border-slate-600 text-white text-sm h-8 px-2 rounded mt-1"
               />
