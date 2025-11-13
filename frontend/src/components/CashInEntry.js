@@ -1415,6 +1415,59 @@ const CashInEntry = ({ onBack }) => {
           </CardContent>
         </Card>
 
+        {/* Optional Sub-Sections - Not Mandatory */}
+        <div className="space-y-2">
+          {/* Products Sub-sections */}
+          <div className="grid grid-cols-2 gap-2">
+            <div className="bg-slate-700 p-2 rounded">
+              <label className="text-xs text-slate-400">MS (Petrol)</label>
+              <input
+                type="number"
+                placeholder="0"
+                className="w-full bg-slate-800 border-slate-600 text-white text-sm h-8 px-2 rounded mt-1"
+              />
+            </div>
+            <div className="bg-slate-700 p-2 rounded">
+              <label className="text-xs text-slate-400">HSD (Diesel)</label>
+              <input
+                type="number"
+                placeholder="0"
+                className="w-full bg-slate-800 border-slate-600 text-white text-sm h-8 px-2 rounded mt-1"
+              />
+            </div>
+          </div>
+
+          {/* Credit Sale Party */}
+          <div className="bg-slate-700 p-2 rounded">
+            <label className="text-xs text-slate-400">Credit Sale Party (Optional)</label>
+            <input
+              type="text"
+              placeholder="Enter party name"
+              className="w-full bg-slate-800 border-slate-600 text-white text-sm h-8 px-2 rounded mt-1"
+            />
+          </div>
+
+          {/* Additional Fields */}
+          <div className="grid grid-cols-2 gap-2">
+            <div className="bg-slate-700 p-2 rounded">
+              <label className="text-xs text-slate-400">Expenses</label>
+              <input
+                type="number"
+                placeholder="0"
+                className="w-full bg-slate-800 border-slate-600 text-white text-sm h-8 px-2 rounded mt-1"
+              />
+            </div>
+            <div className="bg-slate-700 p-2 rounded">
+              <label className="text-xs text-slate-400">Lubes</label>
+              <input
+                type="number"
+                placeholder="0"
+                className="w-full bg-slate-800 border-slate-600 text-white text-sm h-8 px-2 rounded mt-1"
+              />
+            </div>
+          </div>
+        </div>
+
         {/* Payment Mode Tabs - enlarged buttons, full width across screen */}
         <div className="grid grid-cols-4 gap-2">
           {['Credit', 'Cash', 'Online', 'Cheque'].map((mode) => (
