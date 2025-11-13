@@ -29,11 +29,11 @@ print('User ID: ' + userId);
 
 ```bash
 # Test auth endpoint
-curl -X GET "https://petropump-finance.preview.emergentagent.com/api/auth/me" \
+curl -X GET "https://pumpmaster-4.preview.emergentagent.com/api/auth/me" \
   -H "Authorization: Bearer YOUR_SESSION_TOKEN"
 
 # Test protected endpoints
-curl -X GET "https://petropump-finance.preview.emergentagent.com/api/dashboard/summary" \
+curl -X GET "https://pumpmaster-4.preview.emergentagent.com/api/dashboard/summary" \
   -H "Authorization: Bearer YOUR_SESSION_TOKEN"
 ```
 
@@ -50,7 +50,7 @@ await page.context.add_cookies([{
     "secure": true,
     "sameSite": "None"
 }]);
-await page.goto("https://petropump-finance.preview.emergentagent.com");
+await page.goto("https://pumpmaster-4.preview.emergentagent.com");
 ```
 
 ## Critical Fix: ID Schema
