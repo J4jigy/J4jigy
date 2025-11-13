@@ -11,7 +11,7 @@ import { Badge } from './ui/badge';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
-import { Home, UserCircle, ShieldCheck, Users, Truck, Star, ShoppingCart, Zap, Building, Coins, Receipt, Package, PieChart, BarChart3, Gift, MessageCircle, Send, Plus, Minus, Shield, Settings, ChevronDown, CheckSquare, Share2, Copy, ArrowLeft, ScanLine, FileBarChart, Landmark, Fuel, Download, Upload, TrendingUp, ClipboardList, ArrowDownRight, ArrowUpRight, Calendar, Calculator, Edit2, X, CreditCard } from 'lucide-react';
+import { Home, UserCircle, ShieldCheck, Users, Truck, Star, ShoppingCart, Zap, Building, Coins, Receipt, Package, PieChart, BarChart3, Gift, MessageCircle, Send, Plus, Minus, Shield, Settings, ChevronDown, ChevronLeft, ChevronRight, CheckSquare, Share2, Copy, ArrowLeft, ScanLine, FileBarChart, Landmark, Fuel, Download, Upload, TrendingUp, ClipboardList, ArrowDownRight, ArrowUpRight, Calendar, Calculator, Edit2, X, CreditCard } from 'lucide-react';
 import EnhancedChat from './EnhancedChat';
 
 // Build API base (same-origin on preview)
