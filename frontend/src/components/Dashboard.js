@@ -1230,7 +1230,14 @@ It's completely free to try!`;
           </TabsList>
 
           {['business', 'finance', 'personal'].map((tab) => (
-            <TabsContent key={tab} value={tab} className="mt-0">
+            <TabsContent 
+              key={tab} 
+              value={tab} 
+              className="mt-0"
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}
+            >
               <div className="grid grid-cols-3 gap-3 px-4">
                 {getTilesForTab(tab).map((tile, idx) => {
                   const IconComponent = tile.icon;
