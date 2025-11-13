@@ -961,6 +961,192 @@ It's completely free to try!`;
               </div>
             </div>
           )}
+
+          {/* Subscription Dialog */}
+          {showSubscriptionDialog && (
+            <Dialog open={showSubscriptionDialog} onOpenChange={setShowSubscriptionDialog}>
+              <DialogContent className="bg-slate-800 text-white border-slate-700 max-w-2xl max-h-[90vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle className="text-white text-xl flex items-center gap-2">
+                    <CreditCard className="w-6 h-6 text-blue-400" />
+                    Subscription Management
+                  </DialogTitle>
+                </DialogHeader>
+                
+                <div className="space-y-6 mt-4">
+                  {/* Current Plan */}
+                  <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-6 rounded-lg border-2 border-blue-500">
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <h3 className="text-white font-bold text-lg">Professional Plan</h3>
+                        <p className="text-blue-100 text-sm">Your current subscription</p>
+                      </div>
+                      <Badge className="bg-green-500 text-white">Active</Badge>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 text-white">
+                      <div>
+                        <p className="text-blue-100 text-xs">Price</p>
+                        <p className="font-bold text-lg">₹999/month</p>
+                      </div>
+                      <div>
+                        <p className="text-blue-100 text-xs">Renewal Date</p>
+                        <p className="font-semibold">Jan 15, 2025</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Features Included */}
+                  <div className="bg-slate-700 p-4 rounded-lg">
+                    <h4 className="text-white font-semibold mb-3">Features Included</h4>
+                    <ul className="space-y-2 text-slate-300 text-sm">
+                      <li className="flex items-center gap-2">
+                        <CheckSquare className="w-4 h-4 text-green-400" />
+                        Unlimited Cash In/Out Entries
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckSquare className="w-4 h-4 text-green-400" />
+                        Multi-User Access (Up to 10 users)
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckSquare className="w-4 h-4 text-green-400" />
+                        Advanced Reporting & Analytics
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckSquare className="w-4 h-4 text-green-400" />
+                        Invoice & Gate Pass Generation
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckSquare className="w-4 h-4 text-green-400" />
+                        Data Backup & Export
+                      </li>
+                      <li className="flex items-center gap-2">
+                        <CheckSquare className="w-4 h-4 text-green-400" />
+                        Priority Customer Support
+                      </li>
+                    </ul>
+                  </div>
+
+                  {/* Billing History */}
+                  <div className="bg-slate-700 p-4 rounded-lg">
+                    <h4 className="text-white font-semibold mb-3">Billing History</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-sm bg-slate-800 p-3 rounded">
+                        <div>
+                          <p className="text-white font-medium">Dec 15, 2024</p>
+                          <p className="text-slate-400 text-xs">Professional Plan</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-white font-semibold">₹999</p>
+                          <Button variant="ghost" size="sm" className="text-blue-400 hover:text-blue-300 h-6 px-2 text-xs">
+                            <Download className="w-3 h-3 mr-1" />
+                            Invoice
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between text-sm bg-slate-800 p-3 rounded">
+                        <div>
+                          <p className="text-white font-medium">Nov 15, 2024</p>
+                          <p className="text-slate-400 text-xs">Professional Plan</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-white font-semibold">₹999</p>
+                          <Button variant="ghost" size="sm" className="text-blue-400 hover:text-blue-300 h-6 px-2 text-xs">
+                            <Download className="w-3 h-3 mr-1" />
+                            Invoice
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between text-sm bg-slate-800 p-3 rounded">
+                        <div>
+                          <p className="text-white font-medium">Oct 15, 2024</p>
+                          <p className="text-slate-400 text-xs">Professional Plan</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-white font-semibold">₹999</p>
+                          <Button variant="ghost" size="sm" className="text-blue-400 hover:text-blue-300 h-6 px-2 text-xs">
+                            <Download className="w-3 h-3 mr-1" />
+                            Invoice
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Upgrade Options */}
+                  <div className="bg-slate-700 p-4 rounded-lg">
+                    <h4 className="text-white font-semibold mb-3">Upgrade Options</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      {/* Basic Plan */}
+                      <div className="bg-slate-800 p-4 rounded-lg border-2 border-slate-600">
+                        <h5 className="text-white font-bold mb-1">Basic Plan</h5>
+                        <p className="text-2xl font-bold text-white mb-2">₹499<span className="text-sm text-slate-400">/month</span></p>
+                        <ul className="space-y-1 text-slate-300 text-xs mb-3">
+                          <li className="flex items-center gap-1">
+                            <CheckSquare className="w-3 h-3 text-green-400" />
+                            50 Entries/month
+                          </li>
+                          <li className="flex items-center gap-1">
+                            <CheckSquare className="w-3 h-3 text-green-400" />
+                            Single User Access
+                          </li>
+                          <li className="flex items-center gap-1">
+                            <CheckSquare className="w-3 h-3 text-green-400" />
+                            Basic Reports
+                          </li>
+                        </ul>
+                        <Button variant="outline" className="w-full text-white border-slate-600" size="sm">
+                          Downgrade
+                        </Button>
+                      </div>
+
+                      {/* Enterprise Plan */}
+                      <div className="bg-gradient-to-br from-purple-600 to-purple-700 p-4 rounded-lg border-2 border-purple-500">
+                        <h5 className="text-white font-bold mb-1">Enterprise Plan</h5>
+                        <p className="text-2xl font-bold text-white mb-2">₹2,499<span className="text-sm text-purple-100">/month</span></p>
+                        <ul className="space-y-1 text-purple-100 text-xs mb-3">
+                          <li className="flex items-center gap-1">
+                            <CheckSquare className="w-3 h-3 text-white" />
+                            Unlimited Everything
+                          </li>
+                          <li className="flex items-center gap-1">
+                            <CheckSquare className="w-3 h-3 text-white" />
+                            Unlimited Users
+                          </li>
+                          <li className="flex items-center gap-1">
+                            <CheckSquare className="w-3 h-3 text-white" />
+                            Dedicated Support
+                          </li>
+                          <li className="flex items-center gap-1">
+                            <CheckSquare className="w-3 h-3 text-white" />
+                            Custom Integration
+                          </li>
+                        </ul>
+                        <Button className="w-full bg-white text-purple-700 hover:bg-purple-50" size="sm">
+                          Upgrade Now
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <Button 
+                      variant="outline" 
+                      className="flex-1 text-red-400 border-red-400 hover:bg-red-400/10"
+                    >
+                      Cancel Subscription
+                    </Button>
+                    <Button 
+                      onClick={() => setShowSubscriptionDialog(false)}
+                      className="flex-1 bg-slate-600 hover:bg-slate-500"
+                    >
+                      Close
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          )}
         </div>
       </div>
 
