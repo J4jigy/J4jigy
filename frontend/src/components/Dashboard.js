@@ -1815,11 +1815,11 @@ It's completely free to try!`;
               setShowTopFloatingPanel(newState);
               setShowBottomFloatingPanel(newState);
             }}
-            className={`w-7 h-16 rounded-lg bg-slate-700/90 hover:bg-slate-600 border border-slate-600 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200 ${
+            className={`w-5 h-16 rounded-lg bg-slate-700/90 hover:bg-slate-600 border border-slate-600 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200 ${
               (showTopFloatingPanel || showBottomFloatingPanel) ? 'bg-blue-600 hover:bg-blue-700 border-blue-500' : ''
             }`}
           >
-            <ChevronLeft className={`w-4 h-4 text-white transition-transform duration-300 ${
+            <ChevronLeft className={`w-3 h-3 text-white transition-transform duration-300 ${
               (showTopFloatingPanel || showBottomFloatingPanel) ? 'rotate-180' : ''
             }`} />
           </Button>
