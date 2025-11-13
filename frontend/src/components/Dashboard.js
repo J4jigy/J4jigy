@@ -1710,11 +1710,11 @@ It's completely free to try!`;
 
       {/* Centered Right Side Arrow Buttons with Sliding Panels */}
       {!showProfileDialog && (
-        <div className="fixed top-1/2 right-0 transform -translate-y-1/2 z-50">
+        <div className="fixed top-1/2 right-2 transform -translate-y-1/2 z-50">
           {/* Combined Sliding Panel */}
           <div 
             className={`absolute top-1/2 transform -translate-y-1/2 bg-slate-800/95 backdrop-blur-sm border border-slate-700 rounded-lg shadow-xl transition-all duration-300 ease-in-out ${
-              showTopFloatingPanel || showBottomFloatingPanel ? 'right-16 opacity-100' : 'right-0 opacity-0 pointer-events-none'
+              showTopFloatingPanel || showBottomFloatingPanel ? 'right-14 opacity-100' : 'right-0 opacity-0 pointer-events-none'
             }`}
             style={{ width: '240px' }}
           >
@@ -1808,18 +1808,18 @@ It's completely free to try!`;
             </div>
           </div>
 
-          {/* Arrow Button - Centered on Right */}
+          {/* Arrow Button - Vertical Rectangle */}
           <Button
             onClick={() => {
               const newState = !(showTopFloatingPanel || showBottomFloatingPanel);
               setShowTopFloatingPanel(newState);
               setShowBottomFloatingPanel(newState);
             }}
-            className={`w-6 h-10 rounded-l-full bg-slate-700/90 hover:bg-slate-600 border border-slate-600 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200 ${
+            className={`w-7 h-16 rounded-lg bg-slate-700/90 hover:bg-slate-600 border border-slate-600 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200 ${
               (showTopFloatingPanel || showBottomFloatingPanel) ? 'bg-blue-600 hover:bg-blue-700 border-blue-500' : ''
             }`}
           >
-            <ChevronLeft className={`w-3 h-3 text-white transition-transform duration-300 ${
+            <ChevronLeft className={`w-4 h-4 text-white transition-transform duration-300 ${
               (showTopFloatingPanel || showBottomFloatingPanel) ? 'rotate-180' : ''
             }`} />
           </Button>
