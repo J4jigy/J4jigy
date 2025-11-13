@@ -1218,7 +1218,12 @@ It's completely free to try!`;
       </div>
 
       {/* Tabs and Tiles */}
-      <div className="px-4 mb-1">
+      <div 
+        className="px-4 mb-1"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         <Tabs value={activeTab} onValueChange={(tab) => {
           setActiveTab(tab);
           localStorage.setItem('dashboardActiveTab', tab);
