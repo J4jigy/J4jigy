@@ -1683,31 +1683,6 @@ It's completely free to try!`;
         </DialogContent>
       </Dialog>
 
-      {/* Floating Buttons - Original positions maintained */}
-      {showFloatingChat && !showProfileDialog && (
-        <div className="fixed bottom-28 right-8 z-50 flex flex-col gap-3">
-          {/* Share/WhatsApp Button */}
-          <Button
-            onClick={() => setShowInviteDialog(true)}
-            className="w-14 h-14 rounded-full bg-green-500/20 hover:bg-green-500/40 active:bg-green-500/60 border border-green-400/30 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200"
-          >
-            <Share2 className="w-6 h-6 text-green-400" />
-          </Button>
-          
-          {/* Chat Button */}
-          <Button
-            onClick={() => {
-              setShowChatDialog(true);
-              setShowPeerList(true);
-              fetchContacts();
-            }}
-            className="w-14 h-14 rounded-full bg-blue-500/20 hover:bg-blue-500/40 active:bg-blue-500/60 border border-blue-400/30 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200"
-          >
-            <MessageCircle className="w-6 h-6 text-blue-400" />
-          </Button>
-        </div>
-      )}
-
       {/* Centered Right Side Arrow Buttons with Sliding Panels */}
       {!showProfileDialog && (
         <div className="fixed top-1/2 right-1 transform -translate-y-1/2 z-50">
