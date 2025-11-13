@@ -329,6 +329,43 @@ It's completely free to try!`;
     setShowFloatingChat(true);
   }, []);
 
+  // Swipe handlers for tab switching
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    const tabs = ['business', 'finance', 'personal'];
+    const currentIndex = tabs.indexOf(activeTab);
+    
+    if (isLeftSwipe && currentIndex < tabs.length - 1) {
+      // Swipe left - go to next tab
+      const nextTab = tabs[currentIndex + 1];
+      setActiveTab(nextTab);
+      localStorage.setItem('dashboardActiveTab', nextTab);
+    }
+    
+    if (isRightSwipe && currentIndex > 0) {
+      // Swipe right - go to previous tab
+      const prevTab = tabs[currentIndex - 1];
+      setActiveTab(prevTab);
+      localStorage.setItem('dashboardActiveTab', prevTab);
+    }
+  };
+
   // Listen for chat open events from other components
   useEffect(() => {
     const handleOpenPeerChat = () => {
