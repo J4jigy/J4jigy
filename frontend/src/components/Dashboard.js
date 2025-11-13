@@ -1710,7 +1710,7 @@ It's completely free to try!`;
 
       {/* Centered Right Side Arrow Buttons with Sliding Panels */}
       {!showProfileDialog && (
-        <div className="fixed top-1/2 right-2 transform -translate-y-1/2 z-50">
+        <div className="fixed top-1/2 right-6 transform -translate-y-1/2 z-50">
           {/* Combined Sliding Panel */}
           <div 
             className={`absolute top-1/2 transform -translate-y-1/2 bg-slate-800/95 backdrop-blur-sm border border-slate-700 rounded-lg shadow-xl transition-all duration-300 ease-in-out ${
