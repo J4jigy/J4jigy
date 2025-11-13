@@ -1785,22 +1785,83 @@ It's completely free to try!`;
 
       {/* Cash In/Out Floating Buttons */}
       {!showProfileDialog && (
-      <div className="fixed bottom-6 left-4 right-4">
-        <div className="flex gap-4">
-          <Button 
-            className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 rounded-xl shadow-lg"
-            onClick={() => handleNavigate('/cash-in')}
+      <div className="fixed bottom-6 left-4 right-4 z-40">
+        <div className="relative flex items-center gap-2">
+          {/* Sliding Panel for Bottom Floating Buttons */}
+          <div 
+            className={`absolute bottom-0 left-0 bg-slate-800/95 backdrop-blur-sm border border-slate-700 rounded-lg shadow-xl transition-all duration-300 ease-in-out ${
+              showBottomFloatingPanel ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0 pointer-events-none'
+            }`}
+            style={{ width: '280px' }}
           >
-            <Plus className="w-5 h-5 mr-2" />
-            Cash In
-          </Button>
-          <Button 
-            className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 rounded-xl shadow-lg"
-            onClick={() => handleNavigate('/cash-out')}
+            <div className="p-4 space-y-3">
+              <h3 className="text-white font-semibold text-sm mb-3">Quick Entry</h3>
+              
+              {/* Cash In Option */}
+              <div 
+                onClick={() => {
+                  handleNavigate('/cash-in');
+                  setShowBottomFloatingPanel(false);
+                }}
+                className="flex items-center gap-3 p-3 hover:bg-slate-700 rounded-lg cursor-pointer transition-colors border border-green-500/30 bg-green-500/10"
+              >
+                <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center">
+                  <Plus className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-white text-sm font-medium">Cash In</p>
+                  <p className="text-slate-400 text-xs">Add income entry</p>
+                </div>
+              </div>
+
+              {/* Cash Out Option */}
+              <div 
+                onClick={() => {
+                  handleNavigate('/cash-out');
+                  setShowBottomFloatingPanel(false);
+                }}
+                className="flex items-center gap-3 p-3 hover:bg-slate-700 rounded-lg cursor-pointer transition-colors border border-red-500/30 bg-red-500/10"
+              >
+                <div className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center">
+                  <Minus className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <p className="text-white text-sm font-medium">Cash Out</p>
+                  <p className="text-slate-400 text-xs">Add expense entry</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Arrow Button */}
+          <Button
+            onClick={() => setShowBottomFloatingPanel(!showBottomFloatingPanel)}
+            className={`w-12 h-12 rounded-full bg-slate-700/90 hover:bg-slate-600 border border-slate-600 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200 ${
+              showBottomFloatingPanel ? 'bg-blue-600 hover:bg-blue-700 border-blue-500' : ''
+            }`}
           >
-            <Minus className="w-5 h-5 mr-2" />
-            Cash Out
+            <ChevronRight className={`w-5 h-5 text-white transition-transform duration-300 ${
+              showBottomFloatingPanel ? 'rotate-180' : ''
+            }`} />
           </Button>
+
+          {/* Original Buttons */}
+          <div className="flex gap-4 flex-1">
+            <Button 
+              className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 rounded-xl shadow-lg"
+              onClick={() => handleNavigate('/cash-in')}
+            >
+              <Plus className="w-5 h-5 mr-2" />
+              Cash In
+            </Button>
+            <Button 
+              className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white py-4 rounded-xl shadow-lg"
+              onClick={() => handleNavigate('/cash-out')}
+            >
+              <Minus className="w-5 h-5 mr-2" />
+              Cash Out
+            </Button>
+          </div>
         </div>
       </div>
       )}
