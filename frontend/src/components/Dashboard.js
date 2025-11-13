@@ -330,23 +330,33 @@ It's completely free to try!`;
   }, []);
 
   // Swipe handlers for tab switching
-  const minSwipeDistance = 50;
+  const minSwipeDistance = 75;
+  const [touchStartY, setTouchStartY] = useState(null);
 
   const onTouchStart = (e) => {
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
+    setTouchStartY(e.targetTouches[0].clientY);
   };
 
   const onTouchMove = (e) => {
     setTouchEnd(e.targetTouches[0].clientX);
   };
 
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
+  const onTouchEnd = (e) => {
+    if (!touchStart || !touchEnd || !touchStartY) return;
     
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
+    const horizontalDistance = touchStart - touchEnd;
+    const verticalDistance = touchStartY - e.changedTouches[0].clientY;
+    
+    // Only trigger tab switch if horizontal swipe is dominant
+    if (Math.abs(verticalDistance) > Math.abs(horizontalDistance)) {
+      // Vertical swipe detected, ignore for tab switching
+      return;
+    }
+    
+    const isLeftSwipe = horizontalDistance > minSwipeDistance;
+    const isRightSwipe = horizontalDistance < -minSwipeDistance;
     
     const tabs = ['business', 'finance', 'personal'];
     const currentIndex = tabs.indexOf(activeTab);
@@ -364,6 +374,11 @@ It's completely free to try!`;
       setActiveTab(prevTab);
       localStorage.setItem('dashboardActiveTab', prevTab);
     }
+    
+    // Reset touch tracking
+    setTouchStart(null);
+    setTouchEnd(null);
+    setTouchStartY(null);
   };
 
   // Listen for chat open events from other components
