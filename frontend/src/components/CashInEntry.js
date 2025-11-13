@@ -97,12 +97,7 @@ const CashInEntry = ({ onBack }) => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [showContactListModal, setShowContactListModal] = useState(false);
 
-  // Optional sub-section fields (not mandatory)
-  const [msAmount, setMsAmount] = useState('');
-  const [hsdAmount, setHsdAmount] = useState('');
-  const [creditSaleParty, setCreditSaleParty] = useState('');
-  const [expensesAmount, setExpensesAmount] = useState('');
-  const [lubesAmount, setLubesAmount] = useState('');
+  // Sub-section fields are now part of each slot
 
   const incQty = (name) => {
     // Update selectedItems for current view
