@@ -330,8 +330,9 @@ It's completely free to try!`;
   }, []);
 
   // Swipe handlers for tab switching
-  const minSwipeDistance = 75;
+  const minSwipeDistance = 50;
   const [touchStartY, setTouchStartY] = useState(null);
+  const maxVerticalDistance = 50; // Maximum vertical movement allowed for horizontal swipe
 
   const onTouchStart = (e) => {
     setTouchEnd(null);
@@ -340,39 +341,49 @@ It's completely free to try!`;
   };
 
   const onTouchMove = (e) => {
+    if (!touchStart) return;
     setTouchEnd(e.targetTouches[0].clientX);
   };
 
   const onTouchEnd = (e) => {
-    if (!touchStart || !touchEnd || !touchStartY) return;
+    if (!touchStart || !touchEnd || touchStartY === null) {
+      // Reset and return
+      setTouchStart(null);
+      setTouchEnd(null);
+      setTouchStartY(null);
+      return;
+    }
     
     const horizontalDistance = touchStart - touchEnd;
-    const verticalDistance = touchStartY - e.changedTouches[0].clientY;
+    const verticalDistance = Math.abs(touchStartY - e.changedTouches[0].clientY);
     
-    // Only trigger tab switch if horizontal swipe is dominant
-    if (Math.abs(verticalDistance) > Math.abs(horizontalDistance)) {
-      // Vertical swipe detected, ignore for tab switching
+    // Only trigger tab switch if it's primarily a horizontal swipe
+    if (verticalDistance > maxVerticalDistance) {
+      // Too much vertical movement, this is likely scrolling
+      setTouchStart(null);
+      setTouchEnd(null);
+      setTouchStartY(null);
       return;
     }
     
     const isLeftSwipe = horizontalDistance > minSwipeDistance;
     const isRightSwipe = horizontalDistance < -minSwipeDistance;
     
-    const tabs = ['business', 'finance', 'personal'];
-    const currentIndex = tabs.indexOf(activeTab);
-    
-    if (isLeftSwipe && currentIndex < tabs.length - 1) {
-      // Swipe left - go to next tab
-      const nextTab = tabs[currentIndex + 1];
-      setActiveTab(nextTab);
-      localStorage.setItem('dashboardActiveTab', nextTab);
-    }
-    
-    if (isRightSwipe && currentIndex > 0) {
-      // Swipe right - go to previous tab
-      const prevTab = tabs[currentIndex - 1];
-      setActiveTab(prevTab);
-      localStorage.setItem('dashboardActiveTab', prevTab);
+    if (isLeftSwipe || isRightSwipe) {
+      const tabs = ['business', 'finance', 'personal'];
+      const currentIndex = tabs.indexOf(activeTab);
+      
+      if (isLeftSwipe && currentIndex < tabs.length - 1) {
+        // Swipe left - go to next tab
+        const nextTab = tabs[currentIndex + 1];
+        setActiveTab(nextTab);
+        localStorage.setItem('dashboardActiveTab', nextTab);
+      } else if (isRightSwipe && currentIndex > 0) {
+        // Swipe right - go to previous tab
+        const prevTab = tabs[currentIndex - 1];
+        setActiveTab(prevTab);
+        localStorage.setItem('dashboardActiveTab', prevTab);
+      }
     }
     
     // Reset touch tracking
