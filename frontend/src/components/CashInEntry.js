@@ -56,9 +56,7 @@ const CashInEntry = ({ onBack }) => {
     selectedItems: {},
     invoiceNumber: null,
     invoiceDate: null,
-    invoiceTime: null,
-    ms: '',
-    hsd: ''
+    invoiceTime: null
   }));
   const [slots, setSlots] = useState(initialSlots);
   const [activeSlot, setActiveSlot] = useState(0);
