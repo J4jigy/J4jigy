@@ -36,6 +36,7 @@ export default function Dashboard({ user, onLogout }) {
   const [showProfileDialog, setShowProfileDialog] = useState(false);
   const [showBusinessProfileDialog, setShowBusinessProfileDialog] = useState(false);
   const [showInviteCodesDialog, setShowInviteCodesDialog] = useState(false);
+  const [showSubscriptionDialog, setShowSubscriptionDialog] = useState(false);
   const [inviteCodes, setInviteCodes] = useState([]);
   
   // Use BusinessContext for business management
