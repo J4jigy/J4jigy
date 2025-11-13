@@ -1685,26 +1685,92 @@ It's completely free to try!`;
 
       {/* Floating Buttons */}
       {showFloatingChat && !showProfileDialog && (
-        <div className="fixed bottom-28 right-8 z-50 flex flex-col gap-3">
-          {/* Share/WhatsApp Button */}
-          <Button
-            onClick={() => setShowInviteDialog(true)}
-            className="w-14 h-14 rounded-full bg-green-500/20 hover:bg-green-500/40 active:bg-green-500/60 border border-green-400/30 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200"
+        <div className="fixed bottom-28 right-4 z-50">
+          {/* Sliding Panel for Top Floating Buttons */}
+          <div 
+            className={`absolute bottom-0 bg-slate-800/95 backdrop-blur-sm border border-slate-700 rounded-lg shadow-xl transition-all duration-300 ease-in-out ${
+              showTopFloatingPanel ? 'right-20 opacity-100' : 'right-0 opacity-0 pointer-events-none'
+            }`}
+            style={{ width: '200px' }}
           >
-            <Share2 className="w-6 h-6 text-green-400" />
-          </Button>
-          
-          {/* Chat Button */}
-          <Button
-            onClick={() => {
-              setShowChatDialog(true);
-              setShowPeerList(true); // Show contacts by default
-              fetchContacts(); // Refresh contacts when opening
-            }}
-            className="w-14 h-14 rounded-full bg-blue-500/20 hover:bg-blue-500/40 active:bg-blue-500/60 border border-blue-400/30 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200"
-          >
-            <MessageCircle className="w-6 h-6 text-blue-400" />
-          </Button>
+            <div className="p-4 space-y-3">
+              <h3 className="text-white font-semibold text-sm mb-3">Quick Actions</h3>
+              
+              {/* Share/Invite Option */}
+              <div 
+                onClick={() => {
+                  setShowInviteDialog(true);
+                  setShowTopFloatingPanel(false);
+                }}
+                className="flex items-center gap-3 p-2 hover:bg-slate-700 rounded-lg cursor-pointer transition-colors"
+              >
+                <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
+                  <Share2 className="w-5 h-5 text-green-400" />
+                </div>
+                <div>
+                  <p className="text-white text-sm font-medium">Share</p>
+                  <p className="text-slate-400 text-xs">Invite via WhatsApp</p>
+                </div>
+              </div>
+
+              {/* Chat Option */}
+              <div 
+                onClick={() => {
+                  setShowChatDialog(true);
+                  setShowPeerList(true);
+                  fetchContacts();
+                  setShowTopFloatingPanel(false);
+                }}
+                className="flex items-center gap-3 p-2 hover:bg-slate-700 rounded-lg cursor-pointer transition-colors"
+              >
+                <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+                  <MessageCircle className="w-5 h-5 text-blue-400" />
+                </div>
+                <div>
+                  <p className="text-white text-sm font-medium">Chat</p>
+                  <p className="text-slate-400 text-xs">Messages & Groups</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Floating Buttons Container */}
+          <div className="flex items-center gap-2">
+            {/* Arrow Button */}
+            <Button
+              onClick={() => setShowTopFloatingPanel(!showTopFloatingPanel)}
+              className={`w-10 h-10 rounded-full bg-slate-700/90 hover:bg-slate-600 border border-slate-600 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200 ${
+                showTopFloatingPanel ? 'bg-blue-600 hover:bg-blue-700 border-blue-500' : ''
+              }`}
+            >
+              <ChevronLeft className={`w-5 h-5 text-white transition-transform duration-300 ${
+                showTopFloatingPanel ? 'rotate-180' : ''
+              }`} />
+            </Button>
+
+            {/* Original Floating Buttons */}
+            <div className="flex flex-col gap-3">
+              {/* Share/WhatsApp Button */}
+              <Button
+                onClick={() => setShowInviteDialog(true)}
+                className="w-14 h-14 rounded-full bg-green-500/20 hover:bg-green-500/40 active:bg-green-500/60 border border-green-400/30 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200"
+              >
+                <Share2 className="w-6 h-6 text-green-400" />
+              </Button>
+              
+              {/* Chat Button */}
+              <Button
+                onClick={() => {
+                  setShowChatDialog(true);
+                  setShowPeerList(true);
+                  fetchContacts();
+                }}
+                className="w-14 h-14 rounded-full bg-blue-500/20 hover:bg-blue-500/40 active:bg-blue-500/60 border border-blue-400/30 shadow-lg flex items-center justify-center backdrop-blur-sm transition-all duration-200"
+              >
+                <MessageCircle className="w-6 h-6 text-blue-400" />
+              </Button>
+            </div>
+          </div>
         </div>
       )}
 
