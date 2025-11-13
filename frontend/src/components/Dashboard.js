@@ -872,6 +872,27 @@ It's completely free to try!`;
                     </div>
                   </div>
 
+                  {/* Subscription */}
+                  <div className="border-t border-slate-700 pt-3">
+                    <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
+                      <CreditCard className="w-4 h-4 text-blue-400" />
+                      Subscription
+                    </h4>
+                    <div className="space-y-2">
+                      <Button 
+                        onClick={() => {
+                          setShowProfileDialog(false);
+                          setShowSubscriptionDialog(true);
+                        }}
+                        variant="ghost" 
+                        className="w-full text-slate-200 hover:bg-slate-700 justify-start h-10"
+                      >
+                        <CreditCard className="w-4 h-4 mr-2" />
+                        Manage Subscription
+                      </Button>
+                    </div>
+                  </div>
+
                   {/* Help & Support */}
                   <div className="border-t border-slate-700 pt-3">
                     <h4 className="text-white font-semibold mb-2 flex items-center gap-2">
