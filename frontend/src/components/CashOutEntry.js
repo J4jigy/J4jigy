@@ -240,7 +240,7 @@ const CashOutEntry = ({ onBack }) => {
     }
   }, [selectedLanguage]);
 
-  // Handle voice input with language support
+  // Handle voice input with auto-detected language
   const handleVoiceInput = () => {
     if (!recognition) {
       alert('Voice recognition is not supported in your browser / आपके ब्राउज़र में वॉयस पहचान समर्थित नहीं है');
@@ -255,7 +255,7 @@ const CashOutEntry = ({ onBack }) => {
         recognition.lang = selectedLanguage;
         recognition.start();
         setIsListening(true);
-        console.log('Listening for voice input in:', selectedLanguage);
+        console.log('Listening for voice input in auto-detected language:', selectedLanguage);
       } catch (error) {
         console.error('Error starting recognition:', error);
         alert('कृपया पुनः प्रयास करें / Please try again');
