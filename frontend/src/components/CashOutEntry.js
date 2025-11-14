@@ -263,7 +263,7 @@ const CashOutEntry = ({ onBack }) => {
     }
   };
 
-  // Available Indian languages for voice recognition
+  // Available Indian languages for voice recognition (auto-detected)
   const indianLanguages = [
     { code: 'en-IN', name: 'English (India)', label: 'English' },
     { code: 'hi-IN', name: 'हिन्दी (Hindi)', label: 'हिन्दी' },
