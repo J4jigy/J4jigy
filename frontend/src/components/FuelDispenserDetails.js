@@ -531,16 +531,23 @@ const FuelDispenserDetails = () => {
           {/* Shift Selection */}
           <Card className="bg-slate-800 border-slate-700">
             <CardHeader className="pb-2">
-              <CardTitle className="text-white text-sm font-medium">Shift</CardTitle>
+              <CardTitle className="text-white text-sm font-medium">
+                Shift
+                {formData.shift && (
+                  <span className="ml-2 text-xs text-blue-400">
+                    (Selected: {formData.shift})
+                  </span>
+                )}
+              </CardTitle>
             </CardHeader>
             <CardContent className="pb-3">
               <div className="grid grid-cols-3 gap-3">
                 <Button
                   type="button"
-                  onClick={() => handleInputChange('shift', 'Shift 1')}
-                  className={`h-10 ${
+                  onClick={() => handleShiftChange('Shift 1')}
+                  className={`h-10 font-medium transition-all ${
                     formData.shift === 'Shift 1'
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg'
                       : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
                   }`}
                 >
@@ -548,10 +555,10 @@ const FuelDispenserDetails = () => {
                 </Button>
                 <Button
                   type="button"
-                  onClick={() => handleInputChange('shift', 'Shift 2')}
-                  className={`h-10 ${
+                  onClick={() => handleShiftChange('Shift 2')}
+                  className={`h-10 font-medium transition-all ${
                     formData.shift === 'Shift 2'
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg'
                       : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
                   }`}
                 >
@@ -559,10 +566,10 @@ const FuelDispenserDetails = () => {
                 </Button>
                 <Button
                   type="button"
-                  onClick={() => handleInputChange('shift', 'Shift 3')}
-                  className={`h-10 ${
+                  onClick={() => handleShiftChange('Shift 3')}
+                  className={`h-10 font-medium transition-all ${
                     formData.shift === 'Shift 3'
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg'
                       : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
                   }`}
                 >
