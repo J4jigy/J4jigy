@@ -48,6 +48,10 @@ const CashInEntry = ({ onBack }) => {
   const navigate = useNavigate();
   const { getData, setData, activeBusiness } = useBusiness();
   const [amount, setAmount] = useState('0');
+  // Voice recognition state
+  const [isListening, setIsListening] = useState(false);
+  const [recognition, setRecognition] = useState(null);
+  
   // POS multi-customer slots
   const initialSlots = Array.from({ length: 6 }, (_, i) => ({ 
     id: i, 
