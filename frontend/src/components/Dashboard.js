@@ -329,69 +329,6 @@ It's completely free to try!`;
     setShowFloatingChat(true);
   }, []);
 
-  // Swipe handlers for tab switching
-  const minSwipeDistance = 50;
-  const [touchStartY, setTouchStartY] = useState(null);
-  const maxVerticalDistance = 50; // Maximum vertical movement allowed for horizontal swipe
-
-  const onTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-    setTouchStartY(e.targetTouches[0].clientY);
-  };
-
-  const onTouchMove = (e) => {
-    if (!touchStart) return;
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = (e) => {
-    if (!touchStart || !touchEnd || touchStartY === null) {
-      // Reset and return
-      setTouchStart(null);
-      setTouchEnd(null);
-      setTouchStartY(null);
-      return;
-    }
-    
-    const horizontalDistance = touchStart - touchEnd;
-    const verticalDistance = Math.abs(touchStartY - e.changedTouches[0].clientY);
-    
-    // Only trigger tab switch if it's primarily a horizontal swipe
-    if (verticalDistance > maxVerticalDistance) {
-      // Too much vertical movement, this is likely scrolling
-      setTouchStart(null);
-      setTouchEnd(null);
-      setTouchStartY(null);
-      return;
-    }
-    
-    const isLeftSwipe = horizontalDistance > minSwipeDistance;
-    const isRightSwipe = horizontalDistance < -minSwipeDistance;
-    
-    if (isLeftSwipe || isRightSwipe) {
-      const tabs = ['business', 'finance', 'personal'];
-      const currentIndex = tabs.indexOf(activeTab);
-      
-      if (isLeftSwipe && currentIndex < tabs.length - 1) {
-        // Swipe left - go to next tab
-        const nextTab = tabs[currentIndex + 1];
-        setActiveTab(nextTab);
-        localStorage.setItem('dashboardActiveTab', nextTab);
-      } else if (isRightSwipe && currentIndex > 0) {
-        // Swipe right - go to previous tab
-        const prevTab = tabs[currentIndex - 1];
-        setActiveTab(prevTab);
-        localStorage.setItem('dashboardActiveTab', prevTab);
-      }
-    }
-    
-    // Reset touch tracking
-    setTouchStart(null);
-    setTouchEnd(null);
-    setTouchStartY(null);
-  };
-
   // Listen for chat open events from other components
   useEffect(() => {
     const handleOpenPeerChat = () => {
