@@ -1194,7 +1194,7 @@ It's completely free to try!`;
               value={tab} 
               className="mt-0"
             >
-              <div className="grid grid-cols-3 gap-x-3 gap-y-0 px-4">
+              <div className="grid grid-cols-3 gap-3 px-4">
                 {getTilesForTab(tab).map((tile, idx) => {
                   const IconComponent = tile.icon;
                   return (
