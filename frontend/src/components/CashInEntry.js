@@ -1467,6 +1467,12 @@ const CashInEntry = ({ onBack }) => {
             Scan Barcode
           </Button>
           <Button 
+            onClick={() => console.log('Voice input triggered')}
+            className="w-10 h-10 bg-blue-600 hover:bg-blue-700 rounded-md text-white flex items-center justify-center"
+          >
+            <Mic className="w-5 h-5" />
+          </Button>
+          <Button 
             onClick={handleSave}
             className="flex-1 bg-sky-500 hover:bg-sky-600 h-10 text-sm rounded-md"
           >
