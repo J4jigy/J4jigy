@@ -357,10 +357,10 @@ const CashInEntry = ({ onBack }) => {
     }
   }, [selectedLanguage]);
 
-  // Handle voice input
+  // Handle voice input with language support
   const handleVoiceInput = () => {
     if (!recognition) {
-      alert('Voice recognition is not supported in your browser');
+      alert('Voice recognition is not supported in your browser / आपके ब्राउज़र में वॉयस पहचान समर्थित नहीं है');
       return;
     }
 
@@ -369,14 +369,30 @@ const CashInEntry = ({ onBack }) => {
       setIsListening(false);
     } else {
       try {
+        recognition.lang = selectedLanguage;
         recognition.start();
         setIsListening(true);
-        console.log('Listening for voice input...');
+        console.log('Listening for voice input in:', selectedLanguage);
       } catch (error) {
         console.error('Error starting recognition:', error);
+        alert('कृपया पुनः प्रयास करें / Please try again');
       }
     }
   };
+
+  // Available Indian languages for voice recognition
+  const indianLanguages = [
+    { code: 'en-IN', name: 'English (India)', label: 'English' },
+    { code: 'hi-IN', name: 'हिन्दी (Hindi)', label: 'हिन्दी' },
+    { code: 'ta-IN', name: 'தமிழ் (Tamil)', label: 'தமிழ்' },
+    { code: 'te-IN', name: 'తెలుగు (Telugu)', label: 'తెలుగు' },
+    { code: 'kn-IN', name: 'ಕನ್ನಡ (Kannada)', label: 'ಕನ್ನಡ' },
+    { code: 'ml-IN', name: 'മലയാളം (Malayalam)', label: 'മലയാളം' },
+    { code: 'bn-IN', name: 'বাংলা (Bengali)', label: 'বাংলা' },
+    { code: 'gu-IN', name: 'ગુજરાતી (Gujarati)', label: 'ગુજરાતી' },
+    { code: 'mr-IN', name: 'मराठी (Marathi)', label: 'मराठी' },
+    { code: 'pa-IN', name: 'ਪੰਜਾਬੀ (Punjabi)', label: 'ਪੰਜਾਬੀ' }
+  ];
 
   // Fetch contacts for sharing
   const fetchContacts = async () => {
