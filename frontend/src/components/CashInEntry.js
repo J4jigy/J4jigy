@@ -51,6 +51,7 @@ const CashInEntry = ({ onBack }) => {
   // Voice recognition state
   const [isListening, setIsListening] = useState(false);
   const [recognition, setRecognition] = useState(null);
+  const [selectedLanguage, setSelectedLanguage] = useState('en-IN'); // Default to English (India)
   
   // POS multi-customer slots
   const initialSlots = Array.from({ length: 6 }, (_, i) => ({ 
