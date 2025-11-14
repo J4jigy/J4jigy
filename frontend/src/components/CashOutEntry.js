@@ -139,27 +139,63 @@ const CashOutEntry = ({ onBack }) => {
       }
     }
   }, [activeBusiness.id, getData]); // reload when business changes
-  // Initialize speech recognition
+  // Initialize speech recognition with multi-language support
   useEffect(() => {
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       const recognitionInstance = new SpeechRecognition();
       recognitionInstance.continuous = false;
       recognitionInstance.interimResults = false;
-      recognitionInstance.lang = 'en-US';
+      recognitionInstance.lang = selectedLanguage;
 
       recognitionInstance.onresult = (event) => {
-        const transcript = event.results[0][0].transcript.toLowerCase();
+        const transcript = event.results[0][0].transcript;
         console.log('Voice input:', transcript);
         
-        // Extract numbers from the transcript
+        // Number words mapping for Indian languages
+        const numberWords = {
+          // English
+          'zero': '0', 'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5',
+          'six': '6', 'seven': '7', 'eight': '8', 'nine': '9', 'ten': '10',
+          'twenty': '20', 'thirty': '30', 'forty': '40', 'fifty': '50',
+          'sixty': '60', 'seventy': '70', 'eighty': '80', 'ninety': '90',
+          'hundred': '00', 'thousand': '000',
+          // Hindi numbers
+          'शून्य': '0', 'एक': '1', 'दो': '2', 'तीन': '3', 'चार': '4', 'पांच': '5',
+          'छह': '6', 'सात': '7', 'आठ': '8', 'नौ': '9', 'दस': '10',
+          'बीस': '20', 'तीस': '30', 'चालीस': '40', 'पचास': '50',
+          'साठ': '60', 'सत्तर': '70', 'अस्सी': '80', 'नब्बे': '90',
+          'सौ': '00', 'हजार': '000'
+        };
+
+        let detectedNumber = '';
+        
+        // First try to extract direct digits
         const numberMatch = transcript.match(/\d+/);
         if (numberMatch) {
-          const voiceAmount = numberMatch[0];
-          handleCalculatorInput(voiceAmount);
-          console.log('Amount set to:', voiceAmount);
+          detectedNumber = numberMatch[0];
+        } else {
+          // Try to convert word to number
+          const words = transcript.toLowerCase().split(' ');
+          let tempNumber = '';
+          
+          for (const word of words) {
+            if (numberWords[word]) {
+              tempNumber += numberWords[word];
+            }
+          }
+          
+          if (tempNumber) {
+            detectedNumber = tempNumber;
+          }
+        }
+
+        if (detectedNumber) {
+          handleCalculatorInput(detectedNumber);
+          console.log('Amount set to:', detectedNumber);
         } else {
           console.log('No number detected in:', transcript);
+          alert('कृपया संख्या बोलें / Please speak a number');
         }
         
         setIsListening(false);
@@ -167,6 +203,9 @@ const CashOutEntry = ({ onBack }) => {
 
       recognitionInstance.onerror = (event) => {
         console.error('Speech recognition error:', event.error);
+        if (event.error === 'not-allowed') {
+          alert('माइक्रोफ़ोन अनुमति की आवश्यकता है / Microphone permission required');
+        }
         setIsListening(false);
       };
 
@@ -178,12 +217,12 @@ const CashOutEntry = ({ onBack }) => {
     } else {
       console.log('Speech recognition not supported in this browser');
     }
-  }, []);
+  }, [selectedLanguage]);
 
-  // Handle voice input
+  // Handle voice input with language support
   const handleVoiceInput = () => {
     if (!recognition) {
-      alert('Voice recognition is not supported in your browser');
+      alert('Voice recognition is not supported in your browser / आपके ब्राउज़र में वॉयस पहचान समर्थित नहीं है');
       return;
     }
 
@@ -192,14 +231,30 @@ const CashOutEntry = ({ onBack }) => {
       setIsListening(false);
     } else {
       try {
+        recognition.lang = selectedLanguage;
         recognition.start();
         setIsListening(true);
-        console.log('Listening for voice input...');
+        console.log('Listening for voice input in:', selectedLanguage);
       } catch (error) {
         console.error('Error starting recognition:', error);
+        alert('कृपया पुनः प्रयास करें / Please try again');
       }
     }
   };
+
+  // Available Indian languages for voice recognition
+  const indianLanguages = [
+    { code: 'en-IN', name: 'English (India)', label: 'English' },
+    { code: 'hi-IN', name: 'हिन्दी (Hindi)', label: 'हिन्दी' },
+    { code: 'ta-IN', name: 'தமிழ் (Tamil)', label: 'தமிழ்' },
+    { code: 'te-IN', name: 'తెలుగు (Telugu)', label: 'తెలుగు' },
+    { code: 'kn-IN', name: 'ಕನ್ನಡ (Kannada)', label: 'ಕನ್ನಡ' },
+    { code: 'ml-IN', name: 'മലയാളം (Malayalam)', label: 'മലയാളം' },
+    { code: 'bn-IN', name: 'বাংলা (Bengali)', label: 'বাংলা' },
+    { code: 'gu-IN', name: 'ગુજરાતી (Gujarati)', label: 'ગુજરાતી' },
+    { code: 'mr-IN', name: 'मराठी (Marathi)', label: 'मराठી' },
+    { code: 'pa-IN', name: 'ਪੰਜਾਬੀ (Punjabi)', label: 'ਪੰਜਾਬੀ' }
+  ];
 
   // persist slots and active slot to business-specific storage
   useEffect(() => {
