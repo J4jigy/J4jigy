@@ -924,49 +924,29 @@ const CashOutEntry = ({ onBack }) => {
         )}
 
         {/* Action Buttons - match Cash In sizes */}
-        <div className="space-y-1">
-          {/* Language Selector */}
-          <div className="flex gap-1 overflow-x-auto">
-            {indianLanguages.map((lang) => (
-              <Button
-                key={lang.code}
-                onClick={() => setSelectedLanguage(lang.code)}
-                className={`h-7 px-2 text-xs rounded whitespace-nowrap ${
-                  selectedLanguage === lang.code
-                    ? 'bg-green-600 text-white'
-                    : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
-                }`}
-              >
-                {lang.label}
-              </Button>
-            ))}
-          </div>
-          
-          {/* Main Action Buttons */}
-          <div className="flex gap-1">
-            <Button 
-              onClick={() => setShowBarcodeModal(true)}
-              className="flex-1 bg-purple-600 hover:bg-purple-700 h-10 text-sm rounded-md text-white"
-            >
-              <Barcode className="w-4 h-4 mr-2" />
-              Scan Barcode
-            </Button>
-            <Button 
-              onClick={handleVoiceInput}
-              className={`w-10 h-10 rounded-md text-white flex items-center justify-center ${
-                isListening ? 'bg-red-600 hover:bg-red-700 animate-pulse' : 'bg-blue-600 hover:bg-blue-700'
-              }`}
-              title={`Voice input in ${indianLanguages.find(l => l.code === selectedLanguage)?.name}`}
-            >
-              <Mic className="w-5 h-5" />
-            </Button>
-            <Button 
-              onClick={handleSave}
-              className="flex-1 bg-red-500 hover:bg-red-600 h-10 text-sm rounded-md"
-            >
-              Save
-            </Button>
-          </div>
+        <div className="flex gap-1">
+          <Button 
+            onClick={() => setShowBarcodeModal(true)}
+            className="flex-1 bg-purple-600 hover:bg-purple-700 h-10 text-sm rounded-md text-white"
+          >
+            <Barcode className="w-4 h-4 mr-2" />
+            Scan Barcode
+          </Button>
+          <Button 
+            onClick={handleVoiceInput}
+            className={`w-10 h-10 rounded-md text-white flex items-center justify-center ${
+              isListening ? 'bg-red-600 hover:bg-red-700 animate-pulse' : 'bg-blue-600 hover:bg-blue-700'
+            }`}
+            title={`Voice input (Auto-detected: ${selectedLanguage})`}
+          >
+            <Mic className="w-5 h-5" />
+          </Button>
+          <Button 
+            onClick={handleSave}
+            className="flex-1 bg-red-500 hover:bg-red-600 h-10 text-sm rounded-md"
+          >
+            Save
+          </Button>
         </div>
 
         {/* Calculator - match Cash In sizes */}
