@@ -43,7 +43,28 @@ const CashOutEntry = ({ onBack }) => {
   // Voice recognition state
   const [isListening, setIsListening] = useState(false);
   const [recognition, setRecognition] = useState(null);
-  const [selectedLanguage, setSelectedLanguage] = useState('en-IN'); // Default to English (India)
+  
+  // Auto-detect language from browser/system
+  const getDetectedLanguage = () => {
+    const browserLang = navigator.language || navigator.userLanguage;
+    const supportedLangs = {
+      'en': 'en-IN',
+      'hi': 'hi-IN',
+      'ta': 'ta-IN',
+      'te': 'te-IN',
+      'kn': 'kn-IN',
+      'ml': 'ml-IN',
+      'bn': 'bn-IN',
+      'gu': 'gu-IN',
+      'mr': 'mr-IN',
+      'pa': 'pa-IN'
+    };
+    
+    const langCode = browserLang.split('-')[0];
+    return supportedLangs[langCode] || 'en-IN';
+  };
+  
+  const [selectedLanguage] = useState(getDetectedLanguage());
   
   // POS multi-customer slots
   const initialSlots = Array.from({ length: 6 }, (_, i) => ({ id: i, label: `C${i + 1}`, amount: '0' }));
