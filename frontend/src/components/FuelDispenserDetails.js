@@ -16,6 +16,7 @@ const FuelDispenserDetails = () => {
   const [formData, setFormData] = useState({
     date: new Date().toISOString().split('T')[0], // Current date in YYYY-MM-DD format
     time: new Date().toTimeString().slice(0, 5), // Current time in HH:MM format
+    shift: 'Shift 1', // Default shift selection
     product: '',
     productTypes: {},
     customProducts: [
