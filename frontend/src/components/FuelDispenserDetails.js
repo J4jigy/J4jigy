@@ -93,10 +93,37 @@ const FuelDispenserDetails = () => {
     setExpenseEntries(businessFuelData.expenseEntries);
     setLubeEntries(businessFuelData.lubeEntries);
     
-    // Update formData with custom products
+    // Default products - MS and HSD
+    const defaultProducts = [
+      {
+        name: 'MS',
+        openingMeter: '',
+        closingMeter: '',
+        totalSale: '',
+        rate: '',
+        amount: ''
+      },
+      {
+        name: 'HSD',
+        openingMeter: '',
+        closingMeter: '',
+        totalSale: '',
+        rate: '',
+        amount: ''
+      }
+    ];
+    
+    // Merge default products with custom products, avoiding duplicates
+    const existingProductNames = businessFuelData.customProducts.map(p => p.name);
+    const mergedProducts = [
+      ...defaultProducts.filter(dp => !existingProductNames.includes(dp.name)),
+      ...businessFuelData.customProducts
+    ];
+    
+    // Update formData with merged products
     setFormData(prev => ({
       ...prev,
-      customProducts: businessFuelData.customProducts
+      customProducts: mergedProducts
     }));
   }, [activeBusiness.id, dispenserId, getData]);
 
