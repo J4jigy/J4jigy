@@ -516,6 +516,50 @@ const FuelDispenserDetails = () => {
             </Card>
           </div>
 
+          {/* Shift Selection */}
+          <Card className="bg-slate-800 border-slate-700">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-white text-sm font-medium">Shift</CardTitle>
+            </CardHeader>
+            <CardContent className="pb-3">
+              <div className="grid grid-cols-3 gap-3">
+                <Button
+                  type="button"
+                  onClick={() => handleInputChange('shift', 'Shift 1')}
+                  className={`h-10 ${
+                    formData.shift === 'Shift 1'
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                      : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+                  }`}
+                >
+                  Shift 1
+                </Button>
+                <Button
+                  type="button"
+                  onClick={() => handleInputChange('shift', 'Shift 2')}
+                  className={`h-10 ${
+                    formData.shift === 'Shift 2'
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                      : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+                  }`}
+                >
+                  Shift 2
+                </Button>
+                <Button
+                  type="button"
+                  onClick={() => handleInputChange('shift', 'Shift 3')}
+                  className={`h-10 ${
+                    formData.shift === 'Shift 3'
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                      : 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+                  }`}
+                >
+                  Shift 3
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Product Section with Types */}
           <Card className="bg-slate-800 border-slate-700">
             <CardHeader className="pb-3">
