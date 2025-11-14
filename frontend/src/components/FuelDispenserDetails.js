@@ -451,15 +451,29 @@ const FuelDispenserDetails = () => {
 
   const handleConfirmAndSave = () => {
     // Handle confirm and save logic here
-    console.log('Confirming and saving data for dispenser', dispenserId, formData);
+    console.log('=== CONFIRM & SAVE ===');
+    console.log('Dispenser:', dispenserId);
+    console.log('Selected Shift:', formData.shift);
+    console.log('Date:', formData.date);
+    console.log('Time:', formData.time);
+    console.log('Complete Form Data:', formData);
+    console.log('=====================');
     // You can add API call here
+    alert(`Data saved for ${formData.shift} on ${formData.date} at ${formData.time}`);
     navigate('/fuel-dispenser');
   };
 
   const handleSave = () => {
     // Handle save logic here
-    console.log('Saving data for dispenser', dispenserId, formData);
+    console.log('=== SAVE ===');
+    console.log('Dispenser:', dispenserId);
+    console.log('Selected Shift:', formData.shift);
+    console.log('Date:', formData.date);
+    console.log('Time:', formData.time);
+    console.log('Complete Form Data:', formData);
+    console.log('============');
     // You can add API call here
+    alert(`Data saved for ${formData.shift}`);
     navigate('/fuel-dispenser');
   };
 
