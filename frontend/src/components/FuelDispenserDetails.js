@@ -578,6 +578,19 @@ const FuelDispenserDetails = () => {
                           />
                         </div>
                         <div>
+                          <label className="text-slate-400 text-xs mb-1 block">TESTING</label>
+                          <Input
+                            type="text"
+                            placeholder="TESTING"
+                            value={product.testing || ''}
+                            onChange={(e) => handleCustomProductChange(index, 'testing', e.target.value)}
+                            className="bg-slate-700 border-slate-600 text-white h-8"
+                          />
+                        </div>
+                      </div>
+                      {/* Third row - Rate box */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
                           <label className="text-slate-400 text-xs mb-1 block">Rate</label>
                           <Input
                             type="number"
@@ -587,6 +600,7 @@ const FuelDispenserDetails = () => {
                             className="bg-slate-700 border-slate-600 text-white h-8"
                           />
                         </div>
+                        <div></div> {/* Empty space */}
                       </div>
                       {/* Third row - 1 box */}
                       <div className="grid grid-cols-2 gap-3">
