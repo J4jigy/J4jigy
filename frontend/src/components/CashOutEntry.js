@@ -31,7 +31,8 @@ import {
   Search,
   X,
   Landmark,
-  Truck
+  Truck,
+  Mic
 } from 'lucide-react';
 
 const CashOutEntry = ({ onBack }) => {
