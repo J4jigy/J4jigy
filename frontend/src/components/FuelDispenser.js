@@ -21,8 +21,8 @@ const FuelDispenser = () => {
           variant="ghost" 
           size="sm" 
           onClick={() => {
-            console.log('Fuel Dispenser back arrow clicked - navigating to Cash In screen');
-            navigate('/cash-in');
+            console.log('Fuel Dispenser back arrow clicked - navigating to home page');
+            navigate('/');
           }}
           className="text-white hover:bg-white/10"
         >
