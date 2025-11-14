@@ -168,6 +168,18 @@ const FuelDispenserDetails = () => {
     }));
   };
 
+  // Handle shift selection with proper state management
+  const handleShiftChange = (shiftName) => {
+    console.log(`Shift changed to: ${shiftName}`);
+    setFormData(prev => ({
+      ...prev,
+      shift: shiftName
+    }));
+    
+    // You can add shift-specific data loading here if needed
+    // For example: load shift-specific meter readings, etc.
+  };
+
   const handleCustomProductChange = (index, field, value) => {
     setFormData(prev => {
       const newCustomProducts = [...prev.customProducts];
