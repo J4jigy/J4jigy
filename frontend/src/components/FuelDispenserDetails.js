@@ -18,7 +18,25 @@ const FuelDispenserDetails = () => {
     time: new Date().toTimeString().slice(0, 5), // Current time in HH:MM format
     product: '',
     productTypes: {},
-    customProducts: [], // Empty - no default products
+    customProducts: [
+      // Default products - MS and HSD (optional, not mandatory)
+      {
+        name: 'MS',
+        openingMeter: '',
+        closingMeter: '',
+        totalSale: '',
+        rate: '',
+        amount: ''
+      },
+      {
+        name: 'HSD',
+        openingMeter: '',
+        closingMeter: '',
+        totalSale: '',
+        rate: '',
+        amount: ''
+      }
+    ],
     creditSale: '',
     digitalPayments: '', // HP Pay / Paytm / Gpay / Phonepe / Other
     fuelCards: '', // DT Plus / Fleet Card / Xtrapower / Other
