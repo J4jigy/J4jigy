@@ -602,7 +602,7 @@ const FuelDispenserDetails = () => {
                         </div>
                         <div></div> {/* Empty space */}
                       </div>
-                      {/* Third row - 1 box */}
+                      {/* Fourth row - Total Sales Amount */}
                       <div className="grid grid-cols-2 gap-3">
                         <div>
                           <label className="text-slate-400 text-xs mb-1 block">Total Sales Amount</label>
