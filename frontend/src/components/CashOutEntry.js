@@ -138,6 +138,67 @@ const CashOutEntry = ({ onBack }) => {
       }
     }
   }, [activeBusiness.id, getData]); // reload when business changes
+  // Initialize speech recognition
+  useEffect(() => {
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognitionInstance = new SpeechRecognition();
+      recognitionInstance.continuous = false;
+      recognitionInstance.interimResults = false;
+      recognitionInstance.lang = 'en-US';
+
+      recognitionInstance.onresult = (event) => {
+        const transcript = event.results[0][0].transcript.toLowerCase();
+        console.log('Voice input:', transcript);
+        
+        // Extract numbers from the transcript
+        const numberMatch = transcript.match(/\d+/);
+        if (numberMatch) {
+          const voiceAmount = numberMatch[0];
+          handleCalculatorInput(voiceAmount);
+          console.log('Amount set to:', voiceAmount);
+        } else {
+          console.log('No number detected in:', transcript);
+        }
+        
+        setIsListening(false);
+      };
+
+      recognitionInstance.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        setIsListening(false);
+      };
+
+      recognitionInstance.onend = () => {
+        setIsListening(false);
+      };
+
+      setRecognition(recognitionInstance);
+    } else {
+      console.log('Speech recognition not supported in this browser');
+    }
+  }, []);
+
+  // Handle voice input
+  const handleVoiceInput = () => {
+    if (!recognition) {
+      alert('Voice recognition is not supported in your browser');
+      return;
+    }
+
+    if (isListening) {
+      recognition.stop();
+      setIsListening(false);
+    } else {
+      try {
+        recognition.start();
+        setIsListening(true);
+        console.log('Listening for voice input...');
+      } catch (error) {
+        console.error('Error starting recognition:', error);
+      }
+    }
+  };
 
   // persist slots and active slot to business-specific storage
   useEffect(() => {
