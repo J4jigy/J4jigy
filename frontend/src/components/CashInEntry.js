@@ -39,7 +39,8 @@ import {
   Edit2,
   Save,
   X,
-  Landmark
+  Landmark,
+  Mic
 } from 'lucide-react';
 
 const CashInEntry = ({ onBack }) => {
