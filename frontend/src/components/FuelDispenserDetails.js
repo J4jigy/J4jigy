@@ -196,6 +196,7 @@ const FuelDispenserDetails = () => {
             openingMeter: '',
             closingMeter: '',
             totalSale: '',
+            testing: '',
             rate: '',
             totalSalesAmount: ''
           }
