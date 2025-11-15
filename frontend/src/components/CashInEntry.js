@@ -207,10 +207,9 @@ const CashInEntry = ({ onBack }) => {
   
   // Custom taxes array - editable and dynamic
   const [customTaxes, setCustomTaxes] = useState([
-    { id: 1, name: 'Cess', rate: '0', isEditing: false },
-    { id: 2, name: 'Other Tax', rate: '0', isEditing: false }
+    { id: 1, name: 'Cess', rate: '0', isEditing: false }
   ]);
-  const [nextTaxId, setNextTaxId] = useState(3);
+  const [nextTaxId, setNextTaxId] = useState(2);
   
   // Custom Tax Management Functions
   const handleAddNewTax = () => {
