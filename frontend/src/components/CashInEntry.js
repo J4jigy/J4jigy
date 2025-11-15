@@ -2337,7 +2337,7 @@ const CashInEntry = ({ onBack }) => {
                         </button>
                       </div>
                     )}
-                    {customTaxes.length > 2 && (
+                    {customTaxes.length > 1 && (
                       <button
                         onClick={() => handleRemoveTax(tax.id)}
                         className="text-red-400 hover:text-red-300"
