@@ -2421,6 +2421,44 @@ const CashInEntry = ({ onBack }) => {
                   </div>
                 </div>
 
+                {/* Bank Account Details - Only show for Credit payments */}
+                {slots[selectedSlotForBill]?.paymentMode === 'Credit' && (
+                  <div className="border-2 border-black p-2 bg-blue-50 mt-2">
+                    <div className="font-bold text-black text-xs mb-2 text-center border-b border-black pb-1">
+                      BANK ACCOUNT DETAILS FOR PAYMENT
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-[10px]">
+                      <div>
+                        <span className="text-gray-700 font-semibold">Account Name:</span>
+                        <div className="text-black font-medium">{activeBusiness?.name || 'BUSINESS NAME'}</div>
+                      </div>
+                      <div>
+                        <span className="text-gray-700 font-semibold">Account Number:</span>
+                        <div className="text-black font-medium">{activeBusiness?.bankAccount || '1234567890'}</div>
+                      </div>
+                      <div>
+                        <span className="text-gray-700 font-semibold">Bank Name:</span>
+                        <div className="text-black font-medium">{activeBusiness?.bankName || 'STATE BANK OF INDIA'}</div>
+                      </div>
+                      <div>
+                        <span className="text-gray-700 font-semibold">IFSC Code:</span>
+                        <div className="text-black font-medium">{activeBusiness?.ifscCode || 'SBIN0001234'}</div>
+                      </div>
+                      <div>
+                        <span className="text-gray-700 font-semibold">Branch:</span>
+                        <div className="text-black font-medium">{activeBusiness?.branch || 'Main Branch'}</div>
+                      </div>
+                      <div>
+                        <span className="text-gray-700 font-semibold">UPI ID:</span>
+                        <div className="text-black font-medium">{activeBusiness?.upiId || 'business@upi'}</div>
+                      </div>
+                    </div>
+                    <div className="mt-2 text-center text-[9px] text-gray-700 italic border-t border-gray-300 pt-1">
+                      Please make payment to the above account and share payment receipt
+                    </div>
+                  </div>
+                )}
+
                 {/* Terms & Conditions Footer */}
                 <div className="border-2 border-black p-2 bg-white">
                   <div className="flex justify-between items-center mb-1">
