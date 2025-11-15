@@ -504,6 +504,10 @@ const CashInEntry = ({ onBack }) => {
     setSelectedCreditTerm(term);
     setShowCreditTermsDropdown(false);
     setPaymentModeForActive('Credit');
+    // Save credit period to the active slot
+    setSlots(prev => prev.map((s, idx) => 
+      idx === activeSlot ? { ...s, creditPeriod: term } : s
+    ));
   };
 
   const handleChequeSave = () => {
