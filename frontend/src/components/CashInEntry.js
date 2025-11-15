@@ -40,7 +40,8 @@ import {
   Save,
   X,
   Landmark,
-  Mic
+  Mic,
+  Pencil
 } from 'lucide-react';
 
 const CashInEntry = ({ onBack }) => {
