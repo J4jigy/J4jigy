@@ -2317,6 +2317,12 @@ const CashInEntry = ({ onBack }) => {
                       <span className="text-gray-700">Payment:</span>
                       <span className="text-black text-[10px]">{slots[selectedSlotForBill]?.paymentMode}</span>
                     </div>
+                    {slots[selectedSlotForBill]?.paymentMode === 'Credit' && slots[selectedSlotForBill]?.creditPeriod && (
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">Credit Period:</span>
+                        <span className="text-black text-[10px] font-semibold">{slots[selectedSlotForBill]?.creditPeriod}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between">
                       <span className="text-gray-700">State:</span>
                       <span className="text-black text-[10px]">Maharashtra</span>
