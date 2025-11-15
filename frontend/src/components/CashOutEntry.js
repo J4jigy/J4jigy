@@ -1052,14 +1052,14 @@ const CashOutEntry = ({ onBack }) => {
         </DialogContent>
       </Dialog>
 
-      {/* Vendor Selection Modal (Combined Business + Finance) */}
+      {/* Party Selection Modal (Combined Business + Finance) */}
       <Dialog open={showBusinessModal || showFinanceModal} onOpenChange={(open) => {
         setShowBusinessModal(open);
         setShowFinanceModal(open);
       }}>
         <DialogContent className="bg-slate-800 border-slate-700">
           <DialogHeader>
-            <DialogTitle className="text-white">Vendor Selection</DialogTitle>
+            <DialogTitle className="text-white">Select Party</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             {/* Business Section */}
