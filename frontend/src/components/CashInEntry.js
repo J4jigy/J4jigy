@@ -1259,7 +1259,7 @@ const CashInEntry = ({ onBack }) => {
             onClick={() => setShowBusinessModal(true)}
           >
             <div className="text-left">
-              <div className="text-xs text-slate-400">Select Party</div>
+              <div className="text-xs text-slate-400">Party</div>
               <div className="text-xs">{selectedCustomer || 'Select...'}</div>
             </div>
           </Button>
