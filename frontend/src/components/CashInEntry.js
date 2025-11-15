@@ -2489,13 +2489,21 @@ const CashInEntry = ({ onBack }) => {
                       <span className="text-sm text-black">₹{(() => {
                         const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                         const taxRate = parseFloat(taxSlab);
-                        const taxAmount = (subtotal * taxRate) / 100;
-                        return (subtotal + taxAmount).toFixed(2);
+                        const cessRateVal = parseFloat(cessRate);
+                        const otherTaxRateVal = parseFloat(otherTaxRate);
+                        const totalTaxRate = taxRate + cessRateVal + otherTaxRateVal;
+                        const totalAmount = subtotal * (1 + totalTaxRate / 100);
+                        return totalAmount.toFixed(2);
                       })()}</span>
                     </div>
                     <div className="text-[10px] text-black mt-0.5">
                       <span className="font-semibold">Amount in Words:</span> {(() => {
-                        const total = parseFloat(slots[selectedSlotForBill]?.amount || 0) * (1 + parseFloat(taxSlab) / 100);
+                        const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
+                        const taxRate = parseFloat(taxSlab);
+                        const cessRateVal = parseFloat(cessRate);
+                        const otherTaxRateVal = parseFloat(otherTaxRate);
+                        const totalTaxRate = taxRate + cessRateVal + otherTaxRateVal;
+                        const total = subtotal * (1 + totalTaxRate / 100);
                         return `Rupees ${Math.floor(total)} Only`;
                       })()}
                     </div>
