@@ -2311,64 +2311,85 @@ const CashInEntry = ({ onBack }) => {
               </span>
             </div>
             
-            {/* Cess and Other Tax Selection */}
-            <div className="grid grid-cols-2 gap-2 mt-2">
-              <div>
-                <label className="text-[10px] text-slate-300 mb-0.5 block">Cess (%)</label>
-                <select
-                  value={cessRate}
-                  onChange={(e) => setCessRate(e.target.value)}
-                  className="w-full bg-slate-800 border border-slate-600 text-white rounded px-1.5 py-1 text-xs focus:outline-none focus:border-blue-500"
-                >
-                  <option value="0">0% (No Cess)</option>
-                  <option value="0.5">0.5%</option>
-                  <option value="1">1%</option>
-                  <option value="2">2%</option>
-                  <option value="3">3%</option>
-                  <option value="5">5%</option>
-                  <option value="10">10%</option>
-                </select>
-              </div>
+            {/* Custom Taxes - Editable and Dynamic */}
+            <div className="mt-2 space-y-2">
+              {customTaxes.map((tax, index) => (
+                <div key={tax.id} className="bg-slate-800/30 border border-slate-600 rounded p-2">
+                  <div className="flex items-center justify-between mb-1">
+                    {tax.isEditing ? (
+                      <input
+                        type="text"
+                        value={tax.name}
+                        onChange={(e) => handleTaxNameChange(tax.id, e.target.value)}
+                        onBlur={() => handleTaxNameSave(tax.id)}
+                        onKeyPress={(e) => e.key === 'Enter' && handleTaxNameSave(tax.id)}
+                        className="bg-slate-700 border border-blue-500 text-white rounded px-2 py-0.5 text-[10px] w-24 focus:outline-none"
+                        autoFocus
+                      />
+                    ) : (
+                      <div className="flex items-center gap-1">
+                        <span className="text-[10px] text-slate-300 font-medium">{tax.name}</span>
+                        <button
+                          onClick={() => handleTaxNameEdit(tax.id)}
+                          className="text-blue-400 hover:text-blue-300"
+                        >
+                          <Pencil className="w-3 h-3" />
+                        </button>
+                      </div>
+                    )}
+                    {customTaxes.length > 2 && (
+                      <button
+                        onClick={() => handleRemoveTax(tax.id)}
+                        className="text-red-400 hover:text-red-300"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    )}
+                  </div>
+                  <select
+                    value={tax.rate}
+                    onChange={(e) => handleTaxRateChange(tax.id, e.target.value)}
+                    className="w-full bg-slate-800 border border-slate-600 text-white rounded px-1.5 py-1 text-xs focus:outline-none focus:border-blue-500"
+                  >
+                    <option value="0">0% (No {tax.name})</option>
+                    <option value="0.5">0.5%</option>
+                    <option value="1">1%</option>
+                    <option value="2">2%</option>
+                    <option value="3">3%</option>
+                    <option value="5">5%</option>
+                    <option value="10">10%</option>
+                  </select>
+                </div>
+              ))}
               
-              <div>
-                <label className="text-[10px] text-slate-300 mb-0.5 block">Other Tax (%)</label>
-                <select
-                  value={otherTaxRate}
-                  onChange={(e) => setOtherTaxRate(e.target.value)}
-                  className="w-full bg-slate-800 border border-slate-600 text-white rounded px-1.5 py-1 text-xs focus:outline-none focus:border-blue-500"
-                >
-                  <option value="0">0% (No Tax)</option>
-                  <option value="0.5">0.5%</option>
-                  <option value="1">1%</option>
-                  <option value="2">2%</option>
-                  <option value="3">3%</option>
-                  <option value="5">5%</option>
-                </select>
-              </div>
+              {/* Add New Tax Button */}
+              <button
+                onClick={handleAddNewTax}
+                className="w-full bg-green-600 hover:bg-green-700 text-white rounded px-2 py-1.5 text-xs flex items-center justify-center gap-1 transition-colors"
+              >
+                <Plus className="w-3 h-3" />
+                Add New Tax
+              </button>
             </div>
             
             {/* Total Tax Summary */}
-            <div className="bg-slate-800/50 border border-slate-600 rounded p-1.5 text-[10px] space-y-1">
+            <div className="bg-slate-800/50 border border-slate-600 rounded p-1.5 text-[10px] space-y-1 mt-2">
               <div className="flex justify-between">
                 <span className="text-slate-300">GST:</span>
                 <span className="text-white">{parseFloat(taxSlab)}%</span>
               </div>
-              {parseFloat(cessRate) > 0 && (
-                <div className="flex justify-between">
-                  <span className="text-slate-300">Cess:</span>
-                  <span className="text-white">{parseFloat(cessRate)}%</span>
-                </div>
-              )}
-              {parseFloat(otherTaxRate) > 0 && (
-                <div className="flex justify-between">
-                  <span className="text-slate-300">Other Tax:</span>
-                  <span className="text-white">{parseFloat(otherTaxRate)}%</span>
-                </div>
-              )}
+              {customTaxes.map(tax => (
+                parseFloat(tax.rate) > 0 && (
+                  <div key={tax.id} className="flex justify-between">
+                    <span className="text-slate-300">{tax.name}:</span>
+                    <span className="text-white">{parseFloat(tax.rate)}%</span>
+                  </div>
+                )
+              ))}
               <div className="flex justify-between border-t border-slate-600 pt-1 mt-1">
                 <span className="text-cyan-400 font-semibold">Total Tax Rate:</span>
                 <span className="text-cyan-400 font-semibold">
-                  {(parseFloat(taxSlab) + parseFloat(cessRate) + parseFloat(otherTaxRate)).toFixed(2)}%
+                  {(parseFloat(taxSlab) + customTaxes.reduce((sum, tax) => sum + parseFloat(tax.rate), 0)).toFixed(2)}%
                 </span>
               </div>
             </div>
