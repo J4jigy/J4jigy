@@ -2505,8 +2505,6 @@ const CashInEntry = ({ onBack }) => {
                       const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                       const taxRate = parseFloat(taxSlab);
                       const taxAmount = (subtotal * taxRate) / 100;
-                      const cessAmount = (subtotal * parseFloat(cessRate)) / 100;
-                      const otherTaxAmount = (subtotal * parseFloat(otherTaxRate)) / 100;
                       
                       return (
                         <>
@@ -2529,21 +2527,16 @@ const CashInEntry = ({ onBack }) => {
                             </div>
                           ) : null}
                           
-                          {/* Cess */}
-                          {parseFloat(cessRate) > 0 && (
-                            <div className="flex justify-between text-[10px] text-black">
-                              <span>Cess @ {cessRate}%:</span>
-                              <span>₹{cessAmount.toFixed(2)}</span>
-                            </div>
-                          )}
-                          
-                          {/* Other Tax */}
-                          {parseFloat(otherTaxRate) > 0 && (
-                            <div className="flex justify-between text-[10px] text-black">
-                              <span>Other Tax @ {otherTaxRate}%:</span>
-                              <span>₹{otherTaxAmount.toFixed(2)}</span>
-                            </div>
-                          )}
+                          {/* Custom Taxes */}
+                          {customTaxes.map(tax => {
+                            const customTaxAmount = (subtotal * parseFloat(tax.rate)) / 100;
+                            return parseFloat(tax.rate) > 0 ? (
+                              <div key={tax.id} className="flex justify-between text-[10px] text-black">
+                                <span>{tax.name} @ {tax.rate}%:</span>
+                                <span>₹{customTaxAmount.toFixed(2)}</span>
+                              </div>
+                            ) : null;
+                          })}
                         </>
                       );
                     })()}
