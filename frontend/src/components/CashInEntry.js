@@ -203,8 +203,13 @@ const CashInEntry = ({ onBack }) => {
   // Tax states
   const [taxType, setTaxType] = useState('CGST+SGST'); // CGST+SGST or IGST
   const [taxSlab, setTaxSlab] = useState('0'); // 0, 5, 18, 28
-  const [cessRate, setCessRate] = useState('0'); // Cess rate
-  const [otherTaxRate, setOtherTaxRate] = useState('0'); // Other tax rate
+  
+  // Custom taxes array - editable and dynamic
+  const [customTaxes, setCustomTaxes] = useState([
+    { id: 1, name: 'Cess', rate: '0', isEditing: false },
+    { id: 2, name: 'Other Tax', rate: '0', isEditing: false }
+  ]);
+  const [nextTaxId, setNextTaxId] = useState(3);
   
   // Terms & Conditions states
   const [isEditingTerms, setIsEditingTerms] = useState(false);
