@@ -2262,8 +2262,70 @@ const CashInEntry = ({ onBack }) => {
                     : 'No Tax Applied'}
               </span>
               <span className="text-cyan-400 font-semibold">
-                Total: {parseFloat(taxSlab)}%
+                GST: {parseFloat(taxSlab)}%
               </span>
+            </div>
+            
+            {/* Cess and Other Tax Selection */}
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              <div>
+                <label className="text-[10px] text-slate-300 mb-0.5 block">Cess (%)</label>
+                <select
+                  value={cessRate}
+                  onChange={(e) => setCessRate(e.target.value)}
+                  className="w-full bg-slate-800 border border-slate-600 text-white rounded px-1.5 py-1 text-xs focus:outline-none focus:border-blue-500"
+                >
+                  <option value="0">0% (No Cess)</option>
+                  <option value="0.5">0.5%</option>
+                  <option value="1">1%</option>
+                  <option value="2">2%</option>
+                  <option value="3">3%</option>
+                  <option value="5">5%</option>
+                  <option value="10">10%</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="text-[10px] text-slate-300 mb-0.5 block">Other Tax (%)</label>
+                <select
+                  value={otherTaxRate}
+                  onChange={(e) => setOtherTaxRate(e.target.value)}
+                  className="w-full bg-slate-800 border border-slate-600 text-white rounded px-1.5 py-1 text-xs focus:outline-none focus:border-blue-500"
+                >
+                  <option value="0">0% (No Tax)</option>
+                  <option value="0.5">0.5%</option>
+                  <option value="1">1%</option>
+                  <option value="2">2%</option>
+                  <option value="3">3%</option>
+                  <option value="5">5%</option>
+                </select>
+              </div>
+            </div>
+            
+            {/* Total Tax Summary */}
+            <div className="bg-slate-800/50 border border-slate-600 rounded p-1.5 text-[10px] space-y-1">
+              <div className="flex justify-between">
+                <span className="text-slate-300">GST:</span>
+                <span className="text-white">{parseFloat(taxSlab)}%</span>
+              </div>
+              {parseFloat(cessRate) > 0 && (
+                <div className="flex justify-between">
+                  <span className="text-slate-300">Cess:</span>
+                  <span className="text-white">{parseFloat(cessRate)}%</span>
+                </div>
+              )}
+              {parseFloat(otherTaxRate) > 0 && (
+                <div className="flex justify-between">
+                  <span className="text-slate-300">Other Tax:</span>
+                  <span className="text-white">{parseFloat(otherTaxRate)}%</span>
+                </div>
+              )}
+              <div className="flex justify-between border-t border-slate-600 pt-1 mt-1">
+                <span className="text-cyan-400 font-semibold">Total Tax Rate:</span>
+                <span className="text-cyan-400 font-semibold">
+                  {(parseFloat(taxSlab) + parseFloat(cessRate) + parseFloat(otherTaxRate)).toFixed(2)}%
+                </span>
+              </div>
             </div>
           </div>
           
