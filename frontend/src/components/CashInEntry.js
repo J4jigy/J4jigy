@@ -2439,30 +2439,47 @@ const CashInEntry = ({ onBack }) => {
                       const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                       const taxRate = parseFloat(taxSlab);
                       const taxAmount = (subtotal * taxRate) / 100;
+                      const cessAmount = (subtotal * parseFloat(cessRate)) / 100;
+                      const otherTaxAmount = (subtotal * parseFloat(otherTaxRate)) / 100;
                       
-                      if (taxType === 'CGST+SGST' && taxRate > 0) {
-                        const halfTax = taxAmount / 2;
-                        return (
-                          <>
+                      return (
+                        <>
+                          {/* GST Breakdown */}
+                          {taxType === 'CGST+SGST' && taxRate > 0 ? (
+                            <>
+                              <div className="flex justify-between text-[10px] text-black">
+                                <span>CGST @ {taxRate / 2}%:</span>
+                                <span>₹{(taxAmount / 2).toFixed(2)}</span>
+                              </div>
+                              <div className="flex justify-between text-[10px] text-black">
+                                <span>SGST @ {taxRate / 2}%:</span>
+                                <span>₹{(taxAmount / 2).toFixed(2)}</span>
+                              </div>
+                            </>
+                          ) : taxRate > 0 ? (
                             <div className="flex justify-between text-[10px] text-black">
-                              <span>CGST @ {taxRate / 2}%:</span>
-                              <span>₹{halfTax.toFixed(2)}</span>
+                              <span>IGST @ {taxRate}%:</span>
+                              <span>₹{taxAmount.toFixed(2)}</span>
                             </div>
+                          ) : null}
+                          
+                          {/* Cess */}
+                          {parseFloat(cessRate) > 0 && (
                             <div className="flex justify-between text-[10px] text-black">
-                              <span>SGST @ {taxRate / 2}%:</span>
-                              <span>₹{halfTax.toFixed(2)}</span>
+                              <span>Cess @ {cessRate}%:</span>
+                              <span>₹{cessAmount.toFixed(2)}</span>
                             </div>
-                          </>
-                        );
-                      } else if (taxRate > 0) {
-                        return (
-                          <div className="flex justify-between text-[10px] text-black">
-                            <span>IGST @ {taxRate}%:</span>
-                            <span>₹{taxAmount.toFixed(2)}</span>
-                          </div>
-                        );
-                      }
-                      return null;
+                          )}
+                          
+                          {/* Other Tax */}
+                          {parseFloat(otherTaxRate) > 0 && (
+                            <div className="flex justify-between text-[10px] text-black">
+                              <span>Other Tax @ {otherTaxRate}%:</span>
+                              <span>₹{otherTaxAmount.toFixed(2)}</span>
+                            </div>
+                          )}
+                        </>
+                      );
                     })()}
                   </div>
                   
