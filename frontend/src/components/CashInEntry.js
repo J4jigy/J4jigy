@@ -211,6 +211,46 @@ const CashInEntry = ({ onBack }) => {
   ]);
   const [nextTaxId, setNextTaxId] = useState(3);
   
+  // Custom Tax Management Functions
+  const handleAddNewTax = () => {
+    const newTax = {
+      id: nextTaxId,
+      name: `Tax ${nextTaxId - 2}`,
+      rate: '0',
+      isEditing: false
+    };
+    setCustomTaxes([...customTaxes, newTax]);
+    setNextTaxId(nextTaxId + 1);
+  };
+
+  const handleTaxNameEdit = (id) => {
+    setCustomTaxes(customTaxes.map(tax => 
+      tax.id === id ? { ...tax, isEditing: true } : tax
+    ));
+  };
+
+  const handleTaxNameChange = (id, newName) => {
+    setCustomTaxes(customTaxes.map(tax => 
+      tax.id === id ? { ...tax, name: newName } : tax
+    ));
+  };
+
+  const handleTaxNameSave = (id) => {
+    setCustomTaxes(customTaxes.map(tax => 
+      tax.id === id ? { ...tax, isEditing: false } : tax
+    ));
+  };
+
+  const handleTaxRateChange = (id, rate) => {
+    setCustomTaxes(customTaxes.map(tax => 
+      tax.id === id ? { ...tax, rate: rate } : tax
+    ));
+  };
+
+  const handleRemoveTax = (id) => {
+    setCustomTaxes(customTaxes.filter(tax => tax.id !== id));
+  };
+
   // Terms & Conditions states
   const [isEditingTerms, setIsEditingTerms] = useState(false);
   const [termsText, setTermsText] = useState(
