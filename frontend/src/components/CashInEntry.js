@@ -203,6 +203,8 @@ const CashInEntry = ({ onBack }) => {
   // Tax states
   const [taxType, setTaxType] = useState('CGST+SGST'); // CGST+SGST or IGST
   const [taxSlab, setTaxSlab] = useState('0'); // 0, 5, 18, 28
+  const [cessRate, setCessRate] = useState('0'); // Cess rate
+  const [otherTaxRate, setOtherTaxRate] = useState('0'); // Other tax rate
   
   // Terms & Conditions states
   const [isEditingTerms, setIsEditingTerms] = useState(false);
