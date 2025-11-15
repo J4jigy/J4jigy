@@ -1771,7 +1771,7 @@ const CashInEntry = ({ onBack }) => {
       <Dialog open={showBusinessModal} onOpenChange={setShowBusinessModal}>
         <DialogContent className="bg-slate-800 border-slate-700">
           <DialogHeader>
-            <DialogTitle className="text-white">Customer Selection</DialogTitle>
+            <DialogTitle className="text-white">Select Party</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             {/* Business Section */}
