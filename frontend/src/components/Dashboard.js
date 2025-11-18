@@ -1258,10 +1258,12 @@ It's completely free to try!`;
 
       {/* Tabs and Tiles */}
       <div 
+        ref={tabsRef}
         className="px-4 mb-1"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
+        style={{ touchAction: 'pan-y' }}
       >
         <Tabs value={activeTab} onValueChange={(tab) => {
           setActiveTab(tab);
