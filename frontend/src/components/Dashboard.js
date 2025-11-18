@@ -332,9 +332,15 @@ It's completely free to try!`;
 
   // Swipe handlers for tab switching
   const minSwipeDistance = 50;
-  const maxVerticalDistance = 50;
+  const maxVerticalDistance = 80;
+  const tabsRef = useRef(null);
 
   const onTouchStart = (e) => {
+    // Don't interfere with button/card clicks
+    if (e.target.closest('button') || e.target.closest('[role="button"]')) {
+      return;
+    }
+    
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
     setTouchStartY(e.targetTouches[0].clientY);
@@ -342,7 +348,19 @@ It's completely free to try!`;
 
   const onTouchMove = (e) => {
     if (!touchStart) return;
-    setTouchEnd(e.targetTouches[0].clientX);
+    
+    const currentX = e.targetTouches[0].clientX;
+    const currentY = e.targetTouches[0].clientY;
+    setTouchEnd(currentX);
+    
+    // Detect if this is primarily horizontal swipe
+    const horizontalDistance = Math.abs(touchStart - currentX);
+    const verticalDistance = Math.abs(touchStartY - currentY);
+    
+    // If it's clearly a horizontal swipe, prevent default scrolling
+    if (horizontalDistance > verticalDistance && horizontalDistance > 10) {
+      e.preventDefault();
+    }
   };
 
   const onTouchEnd = (e) => {
