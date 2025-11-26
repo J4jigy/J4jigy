@@ -173,8 +173,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Enhanced Chat Backend APIs"
-    - "Enhanced Chat UI with Media Sharing and Group Management"
+    - "Cash In and Cash Out Transaction Saving Functionality"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
