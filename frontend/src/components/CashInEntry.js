@@ -1189,20 +1189,20 @@ const CashInEntry = ({ onBack }) => {
     }
 
     try {
-      // Prepare transaction data
+      // Prepare items description
+      const itemsDesc = Object.keys(currentSlot.selectedItems || {}).length > 0 
+        ? Object.keys(currentSlot.selectedItems).join(', ')
+        : 'No items';
+      
+      // Prepare transaction data matching backend model
       const transactionData = {
-        description: `Cash In - ${selectedCustomer || currentSlot.label} - ${Object.keys(currentSlot.selectedItems || {}).join(', ') || 'No items'}`,
+        description: `Cash In - ${selectedCustomer || currentSlot.label} - ${itemsDesc} - ${currentSlot.paymentMode}${currentSlot.creditPeriod ? ' (' + currentSlot.creditPeriod + ')' : ''}`,
         amount: parseFloat(currentSlot.amount),
-        debit_account: selectedCustomer || 'Cash',
-        credit_account: activeBusiness?.name || 'Business',
-        date: selectedDate,
-        time: selectedTime,
-        payment_mode: currentSlot.paymentMode,
-        customer: selectedCustomer,
-        items: currentSlot.selectedItems,
-        slot_label: currentSlot.label,
-        credit_period: currentSlot.creditPeriod || null
+        debit_account: selectedCustomer || currentSlot.label || 'Customer',
+        credit_account: activeBusiness?.name || 'Cash'
       };
+
+      console.log('Saving transaction:', transactionData);
 
       // Save to backend
       const response = await axios.post(`${API}/transactions/cash-in`, transactionData);
@@ -1217,16 +1217,19 @@ const CashInEntry = ({ onBack }) => {
           selectedItems: {},
           invoiceNumber: null,
           invoiceDate: null,
-          invoiceTime: null
+          invoiceTime: null,
+          paymentMode: 'Cash',
+          creditPeriod: ''
         } : slot
       ));
       setAmount('0');
       setSelectedCustomer('');
       
-      alert('Transaction saved successfully!');
+      alert('✅ Transaction saved successfully to database!');
     } catch (error) {
       console.error('Error saving transaction:', error);
-      alert('Failed to save transaction. Please try again.');
+      const errorMsg = error.response?.data?.detail || error.message || 'Unknown error';
+      alert(`❌ Failed to save transaction: ${errorMsg}`);
     }
   };
 
