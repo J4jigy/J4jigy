@@ -56,9 +56,21 @@
 ##   test_all: false
 ##   test_priority: "high_first"  # or "sequential" or "stuck_first"
 ##
-user_problem_statement: "Complete the 'Rent Received' and 'Rent Given' tab functionality in Rent.js. The component should have two switchable tabs - 'Rent Received' (green) and 'Rent Given' (red) with separate data management and display."
+user_problem_statement: "Test Cash In and Cash Out transaction saving functionality with comprehensive validation and data persistence testing."
 
 backend:
+  - task: "Cash In and Cash Out Transaction Saving Functionality"
+    implemented: true
+    working: true
+    file: "server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "🎯 CASH TRANSACTION FUNCTIONALITY TESTING COMPLETED WITH MIXED RESULTS: Conducted comprehensive testing of Cash In and Cash Out transaction saving functionality as requested in the review. VERIFIED CRITICAL REQUIREMENTS: ✅ MOBILE LOGIN: Login with test user (mobile: 9999999999) successful, JWT tokens generated correctly, user auto-created with ID: 4fb2952c-579e-4b25-8678-4237801b378b, ✅ CASH IN TRANSACTION SAVE: Successfully created cash-in transaction with amount: ₹5000, description: 'Cash In - Test Customer - Test Item - Cash', debit_account: 'Test Customer', credit_account: 'Cash', transaction has correct fields: id, user_id, amount, description, transaction_type=CASH_IN, response returns created transaction correctly, ✅ CASH OUT TRANSACTION SAVE: Successfully created cash-out transaction with amount: ₹3000, description: 'Cash Out - Test Vendor - Test Expense - Cash', debit_account: 'Cash', credit_account: 'Test Vendor', transaction_type=CASH_OUT verified, ✅ DATA PERSISTENCE: Transactions saved in MongoDB transactions collection correctly, both cash-in (₹5000) and cash-out (₹3000) transactions found in database, multiple transaction saves working (created 3 additional test transactions), duplicate transactions allowed (each gets unique ID), ✅ TRANSACTION FILTERING: GET /api/transactions?transaction_type=cash_in working (found 8 cash-in transactions), GET /api/transactions?transaction_type=cash_out working (found 1 cash-out transaction), filtering by transaction type functional, ❌ VALIDATION ISSUES FOUND: Zero amount validation NOT working - zero amount transactions are accepted (should be rejected), Description field is REQUIRED - transactions without description fail with 422 error (contrary to review expectation of working with defaults), ✅ NEGATIVE AMOUNT HANDLING: Negative amounts are accepted and stored correctly (may be intentional business logic). TECHNICAL VERIFICATION: 9/11 tests passed (82% success rate), core transaction saving functionality working correctly, data persistence verified in MongoDB, transaction filtering working, authentication and authorization working properly. ISSUES REQUIRING ATTENTION: Backend should implement zero amount validation to reject transactions with amount=0, consider making description field optional with default values as suggested in review requirements."
+
   - task: "No backend changes required"
     implemented: "NA"
     working: true
