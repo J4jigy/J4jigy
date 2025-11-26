@@ -723,19 +723,20 @@ const CashOutEntry = ({ onBack }) => {
     }
 
     try {
-      // Prepare transaction data
+      // Prepare items description
+      const itemsDesc = Object.keys(currentSlot.selectedItems || {}).length > 0 
+        ? Object.keys(currentSlot.selectedItems).join(', ')
+        : 'No items';
+      
+      // Prepare transaction data matching backend model
       const transactionData = {
-        description: `Cash Out - ${selectedCustomer || currentSlot.label} - ${Object.keys(currentSlot.selectedItems || {}).join(', ') || 'No items'}`,
+        description: `Cash Out - ${selectedCustomer || currentSlot.label} - ${itemsDesc} - ${currentSlot.paymentMode || paymentMode}`,
         amount: parseFloat(currentSlot.amount),
-        debit_account: activeBusiness?.name || 'Business',
-        credit_account: selectedCustomer || 'Cash',
-        date: selectedDate,
-        time: selectedTime,
-        payment_mode: currentSlot.paymentMode,
-        vendor: selectedCustomer,
-        items: currentSlot.selectedItems,
-        slot_label: currentSlot.label
+        debit_account: activeBusiness?.name || 'Cash',
+        credit_account: selectedCustomer || currentSlot.label || 'Vendor'
       };
+
+      console.log('Saving transaction:', transactionData);
 
       // Save to backend
       const response = await axios.post(`${API}/transactions/cash-out`, transactionData);
@@ -750,16 +751,18 @@ const CashOutEntry = ({ onBack }) => {
           selectedItems: {},
           invoiceNumber: null,
           invoiceDate: null,
-          invoiceTime: null
+          invoiceTime: null,
+          paymentMode: 'Cash'
         } : slot
       ));
       setAmount('0');
       setSelectedCustomer('');
       
-      alert('Transaction saved successfully!');
+      alert('✅ Transaction saved successfully to database!');
     } catch (error) {
       console.error('Error saving transaction:', error);
-      alert('Failed to save transaction. Please try again.');
+      const errorMsg = error.response?.data?.detail || error.message || 'Unknown error';
+      alert(`❌ Failed to save transaction: ${errorMsg}`);
     }
   };
 
