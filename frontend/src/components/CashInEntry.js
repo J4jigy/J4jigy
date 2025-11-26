@@ -1179,15 +1179,55 @@ const CashInEntry = ({ onBack }) => {
   };
 
   // Handle transaction save and reset current slot
-  const handleSave = () => {
-    // Reset current active slot after saving
-    setSlots(prev => prev.map((slot, idx) => 
-      idx === activeSlot ? { ...slot, amount: '0' } : slot
-    ));
-    setAmount('0');
+  const handleSave = async () => {
+    const currentSlot = slots[activeSlot];
     
-    // You can add actual transaction save logic here
-    console.log('Transaction saved, slot reset');
+    // Validate that there's data to save
+    if (!currentSlot.amount || parseFloat(currentSlot.amount) === 0) {
+      alert('Please enter an amount before saving');
+      return;
+    }
+
+    try {
+      // Prepare transaction data
+      const transactionData = {
+        description: `Cash In - ${selectedCustomer || currentSlot.label} - ${Object.keys(currentSlot.selectedItems || {}).join(', ') || 'No items'}`,
+        amount: parseFloat(currentSlot.amount),
+        debit_account: selectedCustomer || 'Cash',
+        credit_account: activeBusiness?.name || 'Business',
+        date: selectedDate,
+        time: selectedTime,
+        payment_mode: currentSlot.paymentMode,
+        customer: selectedCustomer,
+        items: currentSlot.selectedItems,
+        slot_label: currentSlot.label,
+        credit_period: currentSlot.creditPeriod || null
+      };
+
+      // Save to backend
+      const response = await axios.post(`${API}/transactions/cash-in`, transactionData);
+      
+      console.log('Transaction saved successfully:', response.data);
+      
+      // Reset current active slot after successful save
+      setSlots(prev => prev.map((slot, idx) => 
+        idx === activeSlot ? { 
+          ...slot, 
+          amount: '0',
+          selectedItems: {},
+          invoiceNumber: null,
+          invoiceDate: null,
+          invoiceTime: null
+        } : slot
+      ));
+      setAmount('0');
+      setSelectedCustomer('');
+      
+      alert('Transaction saved successfully!');
+    } catch (error) {
+      console.error('Error saving transaction:', error);
+      alert('Failed to save transaction. Please try again.');
+    }
   };
 
   // Memoize filtered products for better performance
