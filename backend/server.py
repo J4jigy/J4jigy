@@ -1571,6 +1571,7 @@ async def scan_invoice(
     current_user: User = Depends(get_current_user)
 ):
     """Scan and extract data from invoice using OpenAI GPT-4 Vision"""
+    import json
     try:
         from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
         
