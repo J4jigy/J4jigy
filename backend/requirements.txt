@@ -76,3 +76,4 @@ watchfiles==1.1.0
 wrapt==1.17.3
 emergentintegrations==0.1.0
 httpx==0.28.1
+emergentintegrations==0.1.0
