@@ -773,6 +773,126 @@ const CashOutEntry = ({ onBack }) => {
     }
   };
 
+  // Invoice scanning functions
+  const handleImageCapture = async (imageDataUrl) => {
+    setIsScanning(true);
+    setScanError(null);
+    
+    try {
+      // Convert data URL to base64 (remove prefix)
+      const base64Image = imageDataUrl.split(',')[1];
+      
+      // Get auth token
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Not authenticated');
+      }
+      
+      // Call backend OCR API
+      const response = await axios.post(
+        `${API}/invoice/scan`,
+        { image_base64: base64Image },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
+      if (response.data.success) {
+        setInvoiceData(response.data);
+        setShowInvoiceScanModal(false);
+        setShowInvoicePreview(true);
+      } else {
+        setScanError(response.data.error || 'Failed to extract invoice data');
+      }
+    } catch (error) {
+      console.error('Invoice scan error:', error);
+      setScanError(error.response?.data?.detail || error.message || 'Failed to scan invoice');
+    } finally {
+      setIsScanning(false);
+    }
+  };
+  
+  const handleCameraCapture = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+      
+      // Create video element
+      const video = document.createElement('video');
+      video.srcObject = stream;
+      video.play();
+      
+      // Wait for video to be ready
+      await new Promise(resolve => {
+        video.onloadedmetadata = resolve;
+      });
+      
+      // Create canvas and capture frame
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0);
+      
+      // Stop camera
+      stream.getTracks().forEach(track => track.stop());
+      
+      // Get image data
+      const imageDataUrl = canvas.toDataURL('image/jpeg', 0.9);
+      await handleImageCapture(imageDataUrl);
+    } catch (error) {
+      console.error('Camera capture error:', error);
+      setScanError('Camera access failed: ' + error.message);
+    }
+  };
+  
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      await handleImageCapture(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+  
+  const applyInvoiceData = () => {
+    if (!invoiceData) return;
+    
+    // Set vendor/party name
+    if (invoiceData.vendor_name) {
+      setSelectedCustomer(invoiceData.vendor_name);
+    }
+    
+    // Set total amount
+    if (invoiceData.total_amount) {
+      const amountStr = String(invoiceData.total_amount);
+      setAmount(amountStr);
+      setSlots(prev => prev.map((slot, idx) => 
+        idx === activeSlot ? { ...slot, amount: amountStr } : slot
+      ));
+    }
+    
+    // Set products as selected items
+    if (invoiceData.products && invoiceData.products.length > 0) {
+      const items = {};
+      invoiceData.products.forEach(product => {
+        items[product.name] = {
+          quantity: product.quantity || 1,
+          price: product.unit_price || 0,
+          total: product.total_price || 0
+        };
+      });
+      
+      setSlots(prev => prev.map((slot, idx) => 
+        idx === activeSlot ? { ...slot, selectedItems: items } : slot
+      ));
+    }
+    
+    // Show success message
+    alert('✅ Invoice data applied successfully!');
+    setShowInvoicePreview(false);
+    setInvoiceData(null);
+  };
+
   return (
     <div className="min-h-screen bg-slate-900 text-white flex flex-col max-h-screen overflow-hidden">
       {/* Header - Red theme for Cash Out */}
