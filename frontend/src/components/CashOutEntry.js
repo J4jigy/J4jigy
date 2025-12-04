@@ -44,6 +44,13 @@ const CashOutEntry = ({ onBack }) => {
   const [isListening, setIsListening] = useState(false);
   const [recognition, setRecognition] = useState(null);
   
+  // Invoice scanning states
+  const [showInvoiceScanModal, setShowInvoiceScanModal] = useState(false);
+  const [showInvoicePreview, setShowInvoicePreview] = useState(false);
+  const [invoiceData, setInvoiceData] = useState(null);
+  const [isScanning, setIsScanning] = useState(false);
+  const [scanError, setScanError] = useState(null);
+  
   // Auto-detect language from browser/system
   const getDetectedLanguage = () => {
     const browserLang = navigator.language || navigator.userLanguage;
