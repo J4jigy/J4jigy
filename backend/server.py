@@ -1549,6 +1549,121 @@ async def create_cash_out(
     )
     return await create_transaction(transaction_data, request, current_user)
 
+# ===================== Invoice OCR Endpoint =====================
+
+class InvoiceOCRRequest(BaseModel):
+    image_base64: str
+    
+class InvoiceOCRResponse(BaseModel):
+    vendor_name: Optional[str] = None
+    gst_number: Optional[str] = None
+    invoice_number: Optional[str] = None
+    invoice_date: Optional[str] = None
+    total_amount: Optional[float] = None
+    products: List[Dict[str, Any]] = []
+    raw_text: Optional[str] = None
+    success: bool = True
+    error: Optional[str] = None
+
+@api_router.post("/invoice/scan", response_model=InvoiceOCRResponse)
+async def scan_invoice(
+    request_data: InvoiceOCRRequest,
+    current_user: User = Depends(get_current_user)
+):
+    """Scan and extract data from invoice using OpenAI GPT-4 Vision"""
+    try:
+        from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
+        
+        # Get API key
+        api_key = os.environ.get('EMERGENT_LLM_KEY')
+        if not api_key:
+            raise HTTPException(status_code=500, detail="EMERGENT_LLM_KEY not configured")
+        
+        # Initialize LLM Chat with GPT-4 Vision
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=f"invoice-scan-{uuid.uuid4()}",
+            system_message="You are an expert at extracting structured data from invoices. Extract all relevant information accurately."
+        ).with_model("openai", "gpt-4o")
+        
+        # Create image content
+        image_content = ImageContent(
+            image_base64=request_data.image_base64
+        )
+        
+        # Detailed prompt for extraction
+        extraction_prompt = """Analyze this invoice image and extract the following information in JSON format:
+
+{
+  "vendor_name": "Name of the vendor/supplier",
+  "gst_number": "GST number if present",
+  "invoice_number": "Invoice number",
+  "invoice_date": "Invoice date in DD/MM/YYYY format",
+  "total_amount": Total amount as a number (without currency symbol),
+  "products": [
+    {
+      "name": "Product name",
+      "quantity": Quantity as number,
+      "unit_price": Unit price as number,
+      "total_price": Total price as number
+    }
+  ]
+}
+
+Important:
+- Extract ALL products listed on the invoice
+- Convert all amounts to numbers (remove ₹, Rs, commas)
+- If any field is not found, use null
+- Be precise with numbers
+- Return ONLY the JSON, no additional text"""
+        
+        # Create message with image
+        user_message = UserMessage(
+            text=extraction_prompt,
+            file_contents=[image_content]
+        )
+        
+        # Send message and get response
+        response_text = await chat.send_message(user_message)
+        
+        # Parse JSON response
+        import json
+        # Extract JSON from response (may have markdown code blocks)
+        response_text = response_text.strip()
+        if response_text.startswith("```json"):
+            response_text = response_text[7:]
+        if response_text.startswith("```"):
+            response_text = response_text[3:]
+        if response_text.endswith("```"):
+            response_text = response_text[:-3]
+        response_text = response_text.strip()
+        
+        extracted_data = json.loads(response_text)
+        
+        # Return structured response
+        return InvoiceOCRResponse(
+            vendor_name=extracted_data.get("vendor_name"),
+            gst_number=extracted_data.get("gst_number"),
+            invoice_number=extracted_data.get("invoice_number"),
+            invoice_date=extracted_data.get("invoice_date"),
+            total_amount=extracted_data.get("total_amount"),
+            products=extracted_data.get("products", []),
+            raw_text=response_text,
+            success=True
+        )
+        
+    except json.JSONDecodeError as e:
+        return InvoiceOCRResponse(
+            success=False,
+            error=f"Failed to parse AI response: {str(e)}",
+            raw_text=response_text if 'response_text' in locals() else None
+        )
+    except Exception as e:
+        return InvoiceOCRResponse(
+            success=False,
+            error=f"Invoice scan failed: {str(e)}"
+        )
+
 # ===================== Admin Endpoints =====================
 
 @api_router.get("/admin/users")
