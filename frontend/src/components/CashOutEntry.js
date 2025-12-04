@@ -1102,6 +1102,13 @@ const CashOutEntry = ({ onBack }) => {
             Scan Barcode
           </Button>
           <Button 
+            onClick={() => setShowInvoiceScanModal(true)}
+            className="flex-1 bg-orange-600 hover:bg-orange-700 h-10 text-sm rounded-md text-white"
+          >
+            <FileText className="w-4 h-4 mr-2" />
+            Scan Invoice
+          </Button>
+          <Button 
             onClick={handleVoiceInput}
             className={`w-10 h-10 rounded-md text-white flex items-center justify-center ${
               isListening ? 'bg-red-600 hover:bg-red-700 animate-pulse' : 'bg-blue-600 hover:bg-blue-700'
