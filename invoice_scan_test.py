@@ -75,7 +75,7 @@ def test_invoice_scan():
     }
     
     try:
-        response = requests.post(f"{BACKEND_URL}/invoice/scan", json=scan_data, headers=headers)
+        response = requests.post(f"{BACKEND_URL}/api/invoice/scan", json=scan_data, headers=headers)
         print(f"Response status: {response.status_code}")
         print(f"Response: {response.text}")
         
