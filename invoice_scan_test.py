@@ -9,8 +9,8 @@ import os
 
 # Test configuration
 BACKEND_URL = "http://localhost:8001"
-TEST_USERNAME = "testuser"
-TEST_PASSWORD = "testpass123"
+TEST_USERNAME = "sarah_johnson"
+TEST_PASSWORD = "SecurePass123!@#"
 
 def create_test_image():
     """Create a simple test image (1x1 pixel PNG) for testing"""
