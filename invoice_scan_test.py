@@ -28,7 +28,10 @@ def test_invoice_scan():
     register_data = {
         "username": TEST_USERNAME,
         "password": TEST_PASSWORD,
-        "mobile": "9876543210"
+        "mobile": "9876543210",
+        "email": "test@example.com",
+        "business_name": "Test Business",
+        "invite_code": "TESTCODE"
     }
     
     try:
