@@ -1628,7 +1628,6 @@ Important:
         response_text = await chat.send_message(user_message)
         
         # Parse JSON response
-        import json
         # Extract JSON from response (may have markdown code blocks)
         response_text = response_text.strip()
         if response_text.startswith("```json"):
