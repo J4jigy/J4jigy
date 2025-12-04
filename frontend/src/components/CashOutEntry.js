@@ -1688,6 +1688,137 @@ const CashOutEntry = ({ onBack }) => {
         </DialogContent>
       </Dialog>
 
+      {/* Invoice Scan Modal */}
+      <Dialog open={showInvoiceScanModal} onOpenChange={setShowInvoiceScanModal}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-md w-full mx-auto my-4">
+          <DialogHeader>
+            <DialogTitle className="text-white flex items-center gap-2">
+              <FileText className="w-5 h-5 text-orange-400" />
+              Scan Invoice
+            </DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            {scanError && (
+              <div className="bg-red-500/20 border border-red-500 rounded p-3">
+                <p className="text-red-200 text-sm">{scanError}</p>
+              </div>
+            )}
+            
+            <div className="grid grid-cols-2 gap-3">
+              <Button
+                onClick={handleCameraCapture}
+                disabled={isScanning}
+                className="bg-blue-600 hover:bg-blue-700 h-12 flex flex-col items-center justify-center"
+              >
+                <Scan className="w-5 h-5 mb-1" />
+                <span className="text-xs">Camera</span>
+              </Button>
+              
+              <label className="cursor-pointer">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                  disabled={isScanning}
+                />
+                <div className="bg-green-600 hover:bg-green-700 h-12 flex flex-col items-center justify-center rounded-md text-white">
+                  <FileText className="w-5 h-5 mb-1" />
+                  <span className="text-xs">Upload</span>
+                </div>
+              </label>
+            </div>
+            
+            {isScanning && (
+              <div className="text-center py-4">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500 mx-auto mb-2"></div>
+                <p className="text-slate-300 text-sm">Processing invoice...</p>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Invoice Preview Modal */}
+      <Dialog open={showInvoicePreview} onOpenChange={setShowInvoicePreview}>
+        <DialogContent className="bg-slate-800 border-slate-700 max-w-md w-full mx-auto my-4 max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-white flex items-center gap-2">
+              <FileText className="w-5 h-5 text-green-400" />
+              Invoice Data Preview
+            </DialogTitle>
+          </DialogHeader>
+          
+          {invoiceData && (
+            <div className="space-y-4">
+              {/* Vendor Information */}
+              {invoiceData.vendor_name && (
+                <div className="bg-slate-700 rounded p-3">
+                  <h3 className="text-sm font-medium text-slate-200 mb-2">Vendor</h3>
+                  <p className="text-white">{invoiceData.vendor_name}</p>
+                  {invoiceData.vendor_address && (
+                    <p className="text-slate-300 text-sm mt-1">{invoiceData.vendor_address}</p>
+                  )}
+                </div>
+              )}
+              
+              {/* Invoice Details */}
+              <div className="bg-slate-700 rounded p-3">
+                <h3 className="text-sm font-medium text-slate-200 mb-2">Invoice Details</h3>
+                {invoiceData.invoice_number && (
+                  <p className="text-slate-300 text-sm">Invoice #: {invoiceData.invoice_number}</p>
+                )}
+                {invoiceData.invoice_date && (
+                  <p className="text-slate-300 text-sm">Date: {invoiceData.invoice_date}</p>
+                )}
+                {invoiceData.total_amount && (
+                  <p className="text-white font-semibold">Total: ₹{invoiceData.total_amount}</p>
+                )}
+              </div>
+              
+              {/* Products */}
+              {invoiceData.products && invoiceData.products.length > 0 && (
+                <div className="bg-slate-700 rounded p-3">
+                  <h3 className="text-sm font-medium text-slate-200 mb-2">Products</h3>
+                  <div className="space-y-2">
+                    {invoiceData.products.map((product, index) => (
+                      <div key={index} className="bg-slate-600 rounded p-2">
+                        <p className="text-white text-sm font-medium">{product.name}</p>
+                        <div className="flex justify-between text-xs text-slate-300">
+                          <span>Qty: {product.quantity || 1}</span>
+                          <span>Price: ₹{product.unit_price || 0}</span>
+                          <span>Total: ₹{product.total_price || 0}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {/* Action Buttons */}
+              <div className="flex gap-3 pt-2">
+                <Button
+                  onClick={applyInvoiceData}
+                  className="flex-1 bg-green-600 hover:bg-green-700"
+                >
+                  Apply Data
+                </Button>
+                <Button
+                  onClick={() => {
+                    setShowInvoicePreview(false);
+                    setInvoiceData(null);
+                  }}
+                  variant="outline"
+                  className="flex-1 border-slate-600 text-slate-200 hover:bg-slate-700"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
       {/* Delete Confirmation Modal */}
       <Dialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
         <DialogContent className="bg-slate-800 border-slate-700 max-w-md w-full mx-auto my-4">
