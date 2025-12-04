@@ -1099,7 +1099,7 @@ const CashOutEntry = ({ onBack }) => {
             className="flex-1 bg-purple-600 hover:bg-purple-700 h-10 text-sm rounded-md text-white"
           >
             <Barcode className="w-4 h-4 mr-2" />
-            Scan Barcode
+            Barcode
           </Button>
           <Button 
             onClick={() => setShowInvoiceScanModal(true)}
