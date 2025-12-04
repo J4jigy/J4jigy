@@ -52,7 +52,7 @@ def test_invoice_scan():
     }
     
     try:
-        response = requests.post(f"{BACKEND_URL}/auth/login", json=login_data)
+        response = requests.post(f"{BACKEND_URL}/api/auth/login", json=login_data)
         if response.status_code == 200:
             token = response.json().get("access_token")
             print("✅ Login successful")
