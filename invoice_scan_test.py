@@ -32,7 +32,7 @@ def test_invoice_scan():
     }
     
     try:
-        response = requests.post(f"{BACKEND_URL}/auth/register", json=register_data)
+        response = requests.post(f"{BACKEND_URL}/api/auth/register", json=register_data)
         if response.status_code == 200:
             print("✅ User registered successfully")
         elif response.status_code == 400 and "already exists" in response.text:
