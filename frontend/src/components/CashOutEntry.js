@@ -1704,7 +1704,18 @@ const CashOutEntry = ({ onBack }) => {
           <div className="space-y-4">
             {scanError && (
               <div className="bg-red-500/20 border border-red-500 rounded p-3">
-                <p className="text-red-200 text-sm">{scanError}</p>
+                <div className="flex items-start gap-2">
+                  <X className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  <div className="flex-1">
+                    <p className="text-red-200 text-sm">{scanError}</p>
+                    <Button
+                      onClick={() => setScanError(null)}
+                      className="mt-2 bg-red-600 hover:bg-red-700 text-white text-xs h-7"
+                    >
+                      Try Again
+                    </Button>
+                  </div>
+                </div>
               </div>
             )}
             
@@ -1863,7 +1874,18 @@ const CashOutEntry = ({ onBack }) => {
           <div className="space-y-4">
             {scanError && (
               <div className="bg-red-500/20 border border-red-500 rounded p-3">
-                <p className="text-red-200 text-sm">{scanError}</p>
+                <div className="flex items-start gap-2">
+                  <X className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
+                  <div className="flex-1">
+                    <p className="text-red-200 text-sm">{scanError}</p>
+                    <Button
+                      onClick={() => setScanError(null)}
+                      className="mt-2 bg-red-600 hover:bg-red-700 text-white text-xs h-7"
+                    >
+                      Try Again
+                    </Button>
+                  </div>
+                </div>
               </div>
             )}
             
