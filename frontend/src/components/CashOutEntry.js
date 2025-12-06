@@ -810,37 +810,41 @@ const CashOutEntry = ({ onBack }) => {
     }
   };
   
-  const handleCameraCapture = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+  const handleCameraCapture = () => {
+    // Create a temporary file input for camera capture
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.capture = 'environment'; // Use rear camera on mobile
+    
+    input.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) {
+        setScanError('No image selected');
+        return;
+      }
       
-      // Create video element
-      const video = document.createElement('video');
-      video.srcObject = stream;
-      video.play();
-      
-      // Wait for video to be ready
-      await new Promise(resolve => {
-        video.onloadedmetadata = resolve;
-      });
-      
-      // Create canvas and capture frame
-      const canvas = document.createElement('canvas');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0);
-      
-      // Stop camera
-      stream.getTracks().forEach(track => track.stop());
-      
-      // Get image data
-      const imageDataUrl = canvas.toDataURL('image/jpeg', 0.9);
-      await handleImageCapture(imageDataUrl);
-    } catch (error) {
-      console.error('Camera capture error:', error);
-      setScanError('Camera access failed: ' + error.message);
-    }
+      try {
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+          await handleImageCapture(event.target.result);
+        };
+        reader.onerror = () => {
+          setScanError('Failed to read image file');
+        };
+        reader.readAsDataURL(file);
+      } catch (error) {
+        console.error('Camera capture error:', error);
+        setScanError('Camera access failed: ' + error.message);
+      }
+    };
+    
+    input.onerror = () => {
+      setScanError('Camera access denied or not available');
+    };
+    
+    // Trigger the file input
+    input.click();
   };
   
   const handleFileUpload = (event) => {
