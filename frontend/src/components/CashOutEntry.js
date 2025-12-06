@@ -1871,13 +1871,17 @@ const CashOutEntry = ({ onBack }) => {
               <Button
                 onClick={handleCameraCapture}
                 disabled={isScanning}
-                className="bg-blue-600 hover:bg-blue-700 h-16 flex flex-col items-center justify-center gap-1"
+                className={`h-16 flex flex-col items-center justify-center gap-1 ${
+                  isScanning 
+                    ? 'bg-blue-400 cursor-not-allowed' 
+                    : 'bg-blue-600 hover:bg-blue-700'
+                }`}
               >
                 <Scan className="w-6 h-6" />
-                <span className="text-sm">Camera</span>
+                <span className="text-sm">{isScanning ? 'Processing...' : 'Camera'}</span>
               </Button>
               
-              <label className="cursor-pointer">
+              <label className={`cursor-pointer ${isScanning ? 'opacity-50 cursor-not-allowed' : ''}`}>
                 <input
                   type="file"
                   accept="image/*"
@@ -1887,9 +1891,13 @@ const CashOutEntry = ({ onBack }) => {
                 />
                 <div className="bg-green-600 hover:bg-green-700 h-16 flex flex-col items-center justify-center gap-1 rounded-md text-white">
                   <FileText className="w-6 h-6" />
-                  <span className="text-sm">Upload</span>
+                  <span className="text-sm">Gallery</span>
                 </div>
               </label>
+            </div>
+            
+            <div className="text-center text-xs text-slate-400 mt-2">
+              📸 Take a clear photo of the invoice or select from gallery
             </div>
             
             {isScanning && (
