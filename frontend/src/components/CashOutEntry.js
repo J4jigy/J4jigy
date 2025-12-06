@@ -1106,7 +1106,7 @@ const CashOutEntry = ({ onBack }) => {
             className="flex-1 bg-orange-600 hover:bg-orange-700 h-10 text-sm rounded-md text-white"
           >
             <FileText className="w-4 h-4 mr-2" />
-            Scan Invoice
+            Invoice
           </Button>
           <Button 
             onClick={handleVoiceInput}
