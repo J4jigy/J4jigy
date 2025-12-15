@@ -847,20 +847,54 @@ const CashOutEntry = ({ onBack }) => {
       console.log('Sending invoice to backend for OCR...');
       console.log('API URL:', API);
       console.log('Full endpoint:', `${API}/invoice/scan`);
+      console.log('Image size (base64):', base64Image.length, 'chars');
       
-      // Call backend OCR API with timeout and better error handling
-      const response = await axios.post(
-        `${API}/invoice/scan`,
-        { image_base64: base64Image },
-        { 
-          headers: { 
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          },
-          timeout: 60000, // 60 second timeout
-          validateStatus: (status) => status < 500 // Don't throw on 4xx errors
+      // Call backend OCR API with retry logic
+      let response;
+      let lastError;
+      const maxRetries = 2;
+      
+      for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+          console.log(`Attempt ${attempt}/${maxRetries}`);
+          
+          response = await axios.post(
+            `${API}/invoice/scan`,
+            { image_base64: base64Image },
+            { 
+              headers: { 
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+              },
+              timeout: 60000, // 60 second timeout
+              validateStatus: (status) => status < 500 // Don't throw on 4xx errors
+            }
+          );
+          
+          console.log('Response received:', response.status);
+          break; // Success, exit retry loop
+          
+        } catch (err) {
+          lastError = err;
+          console.error(`Attempt ${attempt} failed:`, err.message);
+          
+          // Don't retry on authentication errors
+          if (err.response?.status === 401 || err.response?.status === 403) {
+            throw err;
+          }
+          
+          // Wait before retry (except on last attempt)
+          if (attempt < maxRetries) {
+            console.log('Retrying in 2 seconds...');
+            await new Promise(resolve => setTimeout(resolve, 2000));
+          }
         }
-      );
+      }
+      
+      // If all retries failed
+      if (!response && lastError) {
+        throw lastError;
+      }
       
       // Handle different response statuses
       if (response.status === 401) {
