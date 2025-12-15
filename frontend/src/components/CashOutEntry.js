@@ -773,27 +773,75 @@ const CashOutEntry = ({ onBack }) => {
     }
   };
 
+  // Compress image before sending
+  const compressImage = async (imageDataUrl, maxWidth = 1920, quality = 0.8) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        
+        // Calculate new dimensions while maintaining aspect ratio
+        if (width > maxWidth) {
+          height = (height * maxWidth) / width;
+          width = maxWidth;
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        // Convert to base64 with compression
+        const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve(compressedDataUrl);
+      };
+      img.src = imageDataUrl;
+    });
+  };
+
   // Invoice scanning functions
   const handleImageCapture = async (imageDataUrl) => {
     setIsScanning(true);
     setScanError(null);
     
     try {
+      // Compress image to reduce size
+      console.log('Compressing image...');
+      const compressedImage = await compressImage(imageDataUrl);
+      
       // Convert data URL to base64 (remove prefix)
-      const base64Image = imageDataUrl.split(',')[1];
+      const base64Image = compressedImage.split(',')[1];
+      
+      // Check size (warn if > 5MB)
+      const sizeInMB = (base64Image.length * 3) / 4 / (1024 * 1024);
+      console.log(`Image size: ${sizeInMB.toFixed(2)} MB`);
+      
+      if (sizeInMB > 5) {
+        throw new Error('Image too large. Please use a smaller image or lower quality photo.');
+      }
       
       // Get auth token
       const token = localStorage.getItem('token');
       if (!token) {
-        throw new Error('Not authenticated');
+        throw new Error('Not authenticated. Please login again.');
       }
       
-      // Call backend OCR API
+      console.log('Sending invoice to backend for OCR...');
+      
+      // Call backend OCR API with timeout
       const response = await axios.post(
         `${API}/invoice/scan`,
         { image_base64: base64Image },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { 
+          headers: { Authorization: `Bearer ${token}` },
+          timeout: 60000 // 60 second timeout
+        }
       );
+      
+      console.log('OCR Response:', response.data);
       
       if (response.data.success) {
         setInvoiceData(response.data);
@@ -804,7 +852,23 @@ const CashOutEntry = ({ onBack }) => {
       }
     } catch (error) {
       console.error('Invoice scan error:', error);
-      setScanError(error.response?.data?.detail || error.message || 'Failed to scan invoice');
+      
+      // Better error messages
+      let errorMsg = 'Failed to scan invoice';
+      
+      if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+        errorMsg = 'Request timed out. Please check your internet connection and try again.';
+      } else if (error.code === 'ERR_NETWORK' || error.message.includes('Network Error')) {
+        errorMsg = 'Network connection failed. Please check your internet and try again.';
+      } else if (error.response?.status === 401) {
+        errorMsg = 'Authentication failed. Please login again.';
+      } else if (error.response?.status === 500) {
+        errorMsg = 'Server error. Please try again in a moment.';
+      } else if (error.message) {
+        errorMsg = error.message;
+      }
+      
+      setScanError(errorMsg);
     } finally {
       setIsScanning(false);
     }
