@@ -170,7 +170,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Cash In and Cash Out Transaction Saving Functionality"
+    - "Invoice OCR Scanning Endpoint"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
