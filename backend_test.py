@@ -2373,6 +2373,6 @@ def run_chat_api_tests():
     return success
 
 if __name__ == "__main__":
-    # Run comprehensive chat API tests as requested in review
-    success = run_chat_api_tests()
+    # Run invoice OCR tests as requested in review
+    success = run_invoice_ocr_tests()
     sys.exit(0 if success else 1)
