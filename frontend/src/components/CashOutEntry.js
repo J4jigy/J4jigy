@@ -830,16 +830,39 @@ const CashOutEntry = ({ onBack }) => {
       }
       
       console.log('Sending invoice to backend for OCR...');
+      console.log('API URL:', API);
+      console.log('Full endpoint:', `${API}/invoice/scan`);
       
-      // Call backend OCR API with timeout
+      // Call backend OCR API with timeout and better error handling
       const response = await axios.post(
         `${API}/invoice/scan`,
         { image_base64: base64Image },
         { 
-          headers: { Authorization: `Bearer ${token}` },
-          timeout: 60000 // 60 second timeout
+          headers: { 
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          timeout: 60000, // 60 second timeout
+          validateStatus: (status) => status < 500 // Don't throw on 4xx errors
         }
       );
+      
+      // Handle different response statuses
+      if (response.status === 401) {
+        throw new Error('Session expired. Please login again.');
+      }
+      
+      if (response.status === 403) {
+        throw new Error('Access denied. Please check your permissions.');
+      }
+      
+      if (response.status === 422) {
+        throw new Error('Invalid image data. Please try with a different image.');
+      }
+      
+      if (response.status >= 400) {
+        throw new Error(response.data?.detail || 'Server error. Please try again.');
+      }
       
       console.log('OCR Response:', response.data);
       
