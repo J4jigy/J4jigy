@@ -1987,9 +1987,16 @@ const CashOutEntry = ({ onBack }) => {
             </div>
             
             {isScanning && (
-              <div className="text-center py-6">
-                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-orange-500 mx-auto mb-3"></div>
-                <p className="text-slate-300">Processing invoice...</p>
+              <div className="text-center py-6 bg-slate-700/50 rounded-lg">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-orange-500 mx-auto mb-4"></div>
+                <p className="text-white font-medium mb-1">Processing Invoice...</p>
+                <p className="text-slate-400 text-xs px-4">
+                  Using AI to extract vendor, products, and amounts
+                </p>
+                <div className="mt-4 flex items-center justify-center gap-2 text-xs text-slate-400">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
+                  <span>This may take 5-15 seconds</span>
+                </div>
               </div>
             )}
           </div>
