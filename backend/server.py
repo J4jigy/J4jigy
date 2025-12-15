@@ -1666,6 +1666,8 @@ Important:
         
         extracted_data = json.loads(response_text)
         
+        logger.info("Successfully extracted invoice data")
+        
         # Return structured response
         return InvoiceOCRResponse(
             vendor_name=extracted_data.get("vendor_name"),
@@ -1679,15 +1681,41 @@ Important:
         )
         
     except json.JSONDecodeError as e:
+        logger.error(f"JSON parse error: {str(e)}")
         return InvoiceOCRResponse(
             success=False,
-            error=f"Failed to parse AI response: {str(e)}",
+            error="Failed to parse invoice data. Please try with a clearer image.",
             raw_text=response_text if 'response_text' in locals() else None
         )
-    except Exception as e:
+    except ImportError as e:
+        logger.error(f"Import error: {str(e)}")
         return InvoiceOCRResponse(
             success=False,
-            error=f"Invoice scan failed: {str(e)}"
+            error="OCR service initialization failed. Please try again."
+        )
+    except TimeoutError as e:
+        logger.error(f"Timeout error: {str(e)}")
+        return InvoiceOCRResponse(
+            success=False,
+            error="Request timed out. Please try again with a smaller image."
+        )
+    except Exception as e:
+        logger.error(f"Invoice scan error: {str(e)}", exc_info=True)
+        error_msg = str(e)
+        
+        # Provide user-friendly error messages
+        if "rate limit" in error_msg.lower():
+            error_msg = "Too many requests. Please wait a moment and try again."
+        elif "authentication" in error_msg.lower() or "api key" in error_msg.lower():
+            error_msg = "OCR service authentication failed. Please contact support."
+        elif "network" in error_msg.lower() or "connection" in error_msg.lower():
+            error_msg = "Network error. Please check your connection and try again."
+        else:
+            error_msg = "Failed to process invoice. Please try again or use a clearer image."
+        
+        return InvoiceOCRResponse(
+            success=False,
+            error=error_msg
         )
 
 # ===================== Admin Endpoints =====================
