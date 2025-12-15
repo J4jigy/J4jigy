@@ -2262,16 +2262,37 @@ const CashOutEntry = ({ onBack }) => {
               {/* Invoice Details */}
               <div className="bg-slate-700 rounded p-3">
                 <h3 className="text-sm font-semibold text-slate-300 mb-2">Invoice Details</h3>
-                <div className="space-y-1">
-                  {invoiceData.invoice_number && (
-                    <p className="text-slate-300 text-sm">Number: <span className="text-white">{invoiceData.invoice_number}</span></p>
-                  )}
-                  {invoiceData.invoice_date && (
-                    <p className="text-slate-300 text-sm">Date: <span className="text-white">{invoiceData.invoice_date}</span></p>
-                  )}
-                  {invoiceData.total_amount && (
-                    <p className="text-lg font-bold text-green-400 mt-2">Total: ₹{invoiceData.total_amount.toLocaleString()}</p>
-                  )}
+                <div className="space-y-2">
+                  <div>
+                    <label className="text-xs text-slate-400">Invoice Number</label>
+                    <input
+                      type="text"
+                      value={invoiceData.invoice_number || ''}
+                      onChange={(e) => setInvoiceData({...invoiceData, invoice_number: e.target.value})}
+                      placeholder="Invoice number"
+                      className="w-full bg-slate-800 border border-slate-600 text-white rounded px-2 py-1 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-slate-400">Date</label>
+                    <input
+                      type="text"
+                      value={invoiceData.invoice_date || ''}
+                      onChange={(e) => setInvoiceData({...invoiceData, invoice_date: e.target.value})}
+                      placeholder="DD/MM/YYYY"
+                      className="w-full bg-slate-800 border border-slate-600 text-white rounded px-2 py-1 text-sm"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs text-slate-400">Total Amount</label>
+                    <input
+                      type="number"
+                      value={invoiceData.total_amount || ''}
+                      onChange={(e) => setInvoiceData({...invoiceData, total_amount: parseFloat(e.target.value) || 0})}
+                      placeholder="Amount"
+                      className="w-full bg-slate-800 border border-slate-600 text-white rounded px-2 py-1 text-sm font-bold text-green-400"
+                    />
+                  </div>
                 </div>
               </div>
               
