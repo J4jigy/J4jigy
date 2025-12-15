@@ -856,68 +856,131 @@ const CashOutEntry = ({ onBack }) => {
     });
   };
 
-  // Parse invoice text to extract structured data
+  // Parse invoice text to extract structured data with improved patterns
   const parseInvoiceText = (text) => {
     console.log('Parsing invoice text...');
+    console.log('Full text:', text);
     
-    // Extract vendor name (usually first few lines, look for company-like patterns)
-    let vendor_name = null;
+    // Clean up text - remove extra spaces and fix common OCR errors
+    text = text.replace(/\s+/g, ' ').replace(/[|]/g, 'I').replace(/[0O]/g, (match, offset) => {
+      // Smart replacement based on context
+      const before = text.charAt(offset - 1);
+      const after = text.charAt(offset + 1);
+      if (/[A-Z]/i.test(before) || /[A-Z]/i.test(after)) {
+        return 'O';
+      }
+      return '0';
+    });
+    
     const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
     
-    // Try to find vendor name in first 5 lines
-    for (let i = 0; i < Math.min(5, lines.length); i++) {
+    // Extract vendor name (first substantial line that's not a number/date)
+    let vendor_name = null;
+    for (let i = 0; i < Math.min(10, lines.length); i++) {
       const line = lines[i];
-      // Skip lines that are just numbers or dates
-      if (!/^\d+$/.test(line) && !/^\d{2}[-\/]\d{2}[-\/]\d{4}$/.test(line)) {
-        if (line.length > 3 && line.length < 50) {
-          vendor_name = line;
-          break;
-        }
-      }
-    }
-    
-    // Extract GST number (format: 22AAAAA0000A1Z5)
-    const gstMatch = text.match(/\b\d{2}[A-Z]{5}\d{4}[A-Z]\d[Z|z][A-Z\d]\b/i);
-    const gst_number = gstMatch ? gstMatch[0].toUpperCase() : null;
-    
-    // Extract invoice number (look for patterns like INV-123, Invoice #123, etc.)
-    const invoiceNumMatch = text.match(/(?:invoice|inv|bill)[\s#:]*(\w+[-]?\d+)/i);
-    const invoice_number = invoiceNumMatch ? invoiceNumMatch[1] : null;
-    
-    // Extract date (DD/MM/YYYY or DD-MM-YYYY)
-    const dateMatch = text.match(/\b(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})\b/);
-    const invoice_date = dateMatch ? dateMatch[1] : null;
-    
-    // Extract total amount (look for patterns like Total: Rs. 1000, Total 1000, etc.)
-    let total_amount = null;
-    const amountPatterns = [
-      /(?:total|amount|grand total|net amount)[\s:]*(?:rs\.?|₹)?[\s]*(\d+(?:,\d+)*(?:\.\d{2})?)/i,
-      /₹[\s]*(\d+(?:,\d+)*(?:\.\d{2})?)/,
-      /rs\.?[\s]*(\d+(?:,\d+)*(?:\.\d{2})?)/i
-    ];
-    
-    for (const pattern of amountPatterns) {
-      const match = text.match(pattern);
-      if (match) {
-        total_amount = parseFloat(match[1].replace(/,/g, ''));
+      // Look for company-like patterns (capitalized words, multiple words)
+      if (line.length > 5 && line.length < 60 && 
+          !/^\d+$/.test(line) && 
+          !/^\d{2}[-\/]\d{2}[-\/]\d/.test(line) &&
+          !/(invoice|bill|receipt|date|total|amount|qty|price)/i.test(line)) {
+        vendor_name = line;
         break;
       }
     }
     
-    // Extract products (look for item lines with quantities and prices)
-    const products = [];
-    const productPattern = /(.+?)[\s]+(\d+)[\s]+(?:₹|rs\.?)?[\s]*(\d+(?:,\d+)*(?:\.\d{2})?)/gi;
-    let productMatch;
+    // Extract GST number with multiple patterns
+    const gstPatterns = [
+      /\b(\d{2}[A-Z]{5}\d{4}[A-Z]\d[Z|z][A-Z\d])\b/i,
+      /GST[:\s]*(\d{2}[A-Z0-9]{13})/i,
+      /GSTIN[:\s]*(\d{2}[A-Z0-9]{13})/i
+    ];
+    let gst_number = null;
+    for (const pattern of gstPatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        gst_number = match[1].toUpperCase();
+        break;
+      }
+    }
     
-    while ((productMatch = productPattern.exec(text)) !== null) {
-      const [, name, quantity, price] = productMatch;
-      if (name.length > 2 && name.length < 100) {
-        products.push({
-          name: name.trim(),
-          quantity: parseInt(quantity),
-          unit_price: parseFloat(price.replace(/,/g, '')),
-          total_price: parseInt(quantity) * parseFloat(price.replace(/,/g, ''))
-        });
+    // Extract invoice number with multiple patterns
+    const invoicePatterns = [
+      /(?:invoice|inv|bill)[\s#:№]*([A-Z0-9]+-?\d+)/i,
+      /(?:no|number|ref)[\s#:№]*([A-Z0-9]+-?\d+)/i,
+      /\b(INV-?\d+)\b/i,
+      /\b([A-Z]{2,4}\d{4,})\b/
+    ];
+    let invoice_number = null;
+    for (const pattern of invoicePatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        invoice_number = match[1];
+        break;
+      }
+    }
+    
+    // Extract date with multiple formats
+    const datePatterns = [
+      /(?:date|dated)[:\s]*(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})/i,
+      /\b(\d{1,2}[-\/]\d{1,2}[-\/]\d{4})\b/,
+      /\b(\d{4}[-\/]\d{1,2}[-\/]\d{1,2})\b/
+    ];
+    let invoice_date = null;
+    for (const pattern of datePatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        invoice_date = match[1];
+        break;
+      }
+    }
+    
+    // Extract total amount with comprehensive patterns
+    let total_amount = null;
+    const amountPatterns = [
+      /(?:total|grand\s*total|net\s*amount|amount\s*payable)[:\s]*(?:rs\.?|₹|inr)?[\s]*(\d+(?:,\d+)*(?:\.\d{2})?)/i,
+      /(?:balance|due)[:\s]*(?:rs\.?|₹)?[\s]*(\d+(?:,\d+)*(?:\.\d{2})?)/i,
+      /₹[\s]*(\d{1,}(?:,\d+)*(?:\.\d{2})?)\s*$/im,
+      /(?:^|\s)(?:rs\.?|₹)[\s]*(\d{1,}(?:,\d+)*(?:\.\d{2})?)/i
+    ];
+    
+    // Find the largest amount (likely to be total)
+    const amounts = [];
+    for (const pattern of amountPatterns) {
+      const matches = text.matchAll(new RegExp(pattern.source, pattern.flags + 'g'));
+      for (const match of matches) {
+        const amount = parseFloat(match[1].replace(/,/g, ''));
+        if (amount > 0 && amount < 1000000) { // Reasonable range
+          amounts.push(amount);
+        }
+      }
+    }
+    if (amounts.length > 0) {
+      total_amount = Math.max(...amounts);
+    }
+    
+    // Extract products with better patterns
+    const products = [];
+    const productPatterns = [
+      /^(.{3,50}?)\s+(\d{1,4})\s+(?:₹|rs\.?)?\s*(\d+(?:,\d+)*(?:\.\d{2})?)\s+(?:₹|rs\.?)?\s*(\d+(?:,\d+)*(?:\.\d{2})?)/gim,
+      /(.{3,50}?)\s+(?:qty[:\s]*)?(\d{1,4})\s+(?:@|x)?\s*(?:₹|rs\.?)?\s*(\d+(?:,\d+)*)/gi
+    ];
+    
+    for (const pattern of productPatterns) {
+      const matches = text.matchAll(pattern);
+      for (const match of matches) {
+        const name = match[1].trim();
+        const qty = parseInt(match[2]);
+        const price = parseFloat((match[3] || '0').replace(/,/g, ''));
+        const total = match[4] ? parseFloat(match[4].replace(/,/g, '')) : qty * price;
+        
+        if (name.length > 2 && name.length < 100 && qty > 0 && price > 0) {
+          products.push({
+            name: name,
+            quantity: qty,
+            unit_price: price,
+            total_price: total
+          });
+        }
       }
     }
     
@@ -927,7 +990,12 @@ const CashOutEntry = ({ onBack }) => {
       invoice_number,
       invoice_date,
       total_amount,
-      products
+      products,
+      confidence: {
+        vendor: vendor_name ? 'medium' : 'low',
+        total: total_amount ? 'high' : 'low',
+        products: products.length > 0 ? 'medium' : 'low'
+      }
     };
   };
 
