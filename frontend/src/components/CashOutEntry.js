@@ -790,7 +790,7 @@ const CashOutEntry = ({ onBack }) => {
       
       // Call backend OCR API
       const response = await axios.post(
-        `${API}/api/invoice/scan`,
+        `${API}/invoice/scan`,
         { image_base64: base64Image },
         { headers: { Authorization: `Bearer ${token}` } }
       );
