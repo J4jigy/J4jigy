@@ -802,142 +802,149 @@ const CashOutEntry = ({ onBack }) => {
     });
   };
 
-  // Invoice scanning functions
+  // Parse invoice text to extract structured data
+  const parseInvoiceText = (text) => {
+    console.log('Parsing invoice text...');
+    
+    // Extract vendor name (usually first few lines, look for company-like patterns)
+    let vendor_name = null;
+    const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+    
+    // Try to find vendor name in first 5 lines
+    for (let i = 0; i < Math.min(5, lines.length); i++) {
+      const line = lines[i];
+      // Skip lines that are just numbers or dates
+      if (!/^\d+$/.test(line) && !/^\d{2}[-\/]\d{2}[-\/]\d{4}$/.test(line)) {
+        if (line.length > 3 && line.length < 50) {
+          vendor_name = line;
+          break;
+        }
+      }
+    }
+    
+    // Extract GST number (format: 22AAAAA0000A1Z5)
+    const gstMatch = text.match(/\b\d{2}[A-Z]{5}\d{4}[A-Z]\d[Z|z][A-Z\d]\b/i);
+    const gst_number = gstMatch ? gstMatch[0].toUpperCase() : null;
+    
+    // Extract invoice number (look for patterns like INV-123, Invoice #123, etc.)
+    const invoiceNumMatch = text.match(/(?:invoice|inv|bill)[\s#:]*(\w+[-]?\d+)/i);
+    const invoice_number = invoiceNumMatch ? invoiceNumMatch[1] : null;
+    
+    // Extract date (DD/MM/YYYY or DD-MM-YYYY)
+    const dateMatch = text.match(/\b(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})\b/);
+    const invoice_date = dateMatch ? dateMatch[1] : null;
+    
+    // Extract total amount (look for patterns like Total: Rs. 1000, Total 1000, etc.)
+    let total_amount = null;
+    const amountPatterns = [
+      /(?:total|amount|grand total|net amount)[\s:]*(?:rs\.?|₹)?[\s]*(\d+(?:,\d+)*(?:\.\d{2})?)/i,
+      /₹[\s]*(\d+(?:,\d+)*(?:\.\d{2})?)/,
+      /rs\.?[\s]*(\d+(?:,\d+)*(?:\.\d{2})?)/i
+    ];
+    
+    for (const pattern of amountPatterns) {
+      const match = text.match(pattern);
+      if (match) {
+        total_amount = parseFloat(match[1].replace(/,/g, ''));
+        break;
+      }
+    }
+    
+    // Extract products (look for item lines with quantities and prices)
+    const products = [];
+    const productPattern = /(.+?)[\s]+(\d+)[\s]+(?:₹|rs\.?)?[\s]*(\d+(?:,\d+)*(?:\.\d{2})?)/gi;
+    let productMatch;
+    
+    while ((productMatch = productPattern.exec(text)) !== null) {
+      const [, name, quantity, price] = productMatch;
+      if (name.length > 2 && name.length < 100) {
+        products.push({
+          name: name.trim(),
+          quantity: parseInt(quantity),
+          unit_price: parseFloat(price.replace(/,/g, '')),
+          total_price: parseInt(quantity) * parseFloat(price.replace(/,/g, ''))
+        });
+      }
+    }
+    
+    return {
+      vendor_name,
+      gst_number,
+      invoice_number,
+      invoice_date,
+      total_amount,
+      products
+    };
+  };
+
+  // Invoice scanning functions using Tesseract.js (client-side OCR)
   const handleImageCapture = async (imageDataUrl) => {
     setIsScanning(true);
     setScanError(null);
     
     try {
-      // Check network connectivity first
-      if (!navigator.onLine) {
-        throw new Error('No internet connection. Please check your network and try again.');
-      }
+      console.log('Starting OCR with Tesseract.js (client-side)...');
       
-      // Test backend connectivity
-      try {
-        console.log('Testing backend connectivity...');
-        await axios.get(`${API}/ping`, { timeout: 5000 });
-        console.log('Backend is reachable');
-      } catch (pingError) {
-        console.error('Backend ping failed:', pingError);
-        throw new Error('Cannot reach server. Please check your internet connection.');
-      }
+      // Import Tesseract dynamically
+      const Tesseract = (await import('tesseract.js')).default;
       
-      // Compress image to reduce size
+      // Compress image to reduce processing time
       console.log('Compressing image...');
       const compressedImage = await compressImage(imageDataUrl);
       
-      // Convert data URL to base64 (remove prefix)
-      const base64Image = compressedImage.split(',')[1];
+      console.log('Running OCR on image...');
       
-      // Check size (warn if > 5MB)
-      const sizeInMB = (base64Image.length * 3) / 4 / (1024 * 1024);
-      console.log(`Image size: ${sizeInMB.toFixed(2)} MB`);
-      
-      if (sizeInMB > 5) {
-        throw new Error('Image too large. Please use a smaller image or lower quality photo.');
-      }
-      
-      // Get auth token
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('Not authenticated. Please login again.');
-      }
-      
-      console.log('Sending invoice to backend for OCR...');
-      console.log('API URL:', API);
-      console.log('Full endpoint:', `${API}/invoice/scan`);
-      console.log('Image size (base64):', base64Image.length, 'chars');
-      
-      // Call backend OCR API with retry logic
-      let response;
-      let lastError;
-      const maxRetries = 2;
-      
-      for (let attempt = 1; attempt <= maxRetries; attempt++) {
-        try {
-          console.log(`Attempt ${attempt}/${maxRetries}`);
-          
-          response = await axios.post(
-            `${API}/invoice/scan`,
-            { image_base64: base64Image },
-            { 
-              headers: { 
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-              },
-              timeout: 60000, // 60 second timeout
-              validateStatus: (status) => status < 500 // Don't throw on 4xx errors
+      // Run Tesseract OCR
+      const { data: { text } } = await Tesseract.recognize(
+        compressedImage,
+        'eng',
+        {
+          logger: (m) => {
+            if (m.status === 'recognizing text') {
+              console.log(`OCR Progress: ${Math.round(m.progress * 100)}%`);
             }
-          );
-          
-          console.log('Response received:', response.status);
-          break; // Success, exit retry loop
-          
-        } catch (err) {
-          lastError = err;
-          console.error(`Attempt ${attempt} failed:`, err.message);
-          
-          // Don't retry on authentication errors
-          if (err.response?.status === 401 || err.response?.status === 403) {
-            throw err;
-          }
-          
-          // Wait before retry (except on last attempt)
-          if (attempt < maxRetries) {
-            console.log('Retrying in 2 seconds...');
-            await new Promise(resolve => setTimeout(resolve, 2000));
           }
         }
+      );
+      
+      console.log('OCR Complete! Extracted text length:', text.length);
+      console.log('Extracted text:', text.substring(0, 500)); // Log first 500 chars
+      
+      if (!text || text.trim().length < 10) {
+        throw new Error('Could not extract text from image. Please use a clearer photo.');
       }
       
-      // If all retries failed
-      if (!response && lastError) {
-        throw lastError;
-      }
+      // Parse the extracted text
+      const extractedData = parseInvoiceText(text);
+      console.log('Parsed data:', extractedData);
       
-      // Handle different response statuses
-      if (response.status === 401) {
-        throw new Error('Session expired. Please login again.');
-      }
+      // Create invoice data object
+      const invoiceData = {
+        vendor_name: extractedData.vendor_name,
+        gst_number: extractedData.gst_number,
+        invoice_number: extractedData.invoice_number,
+        invoice_date: extractedData.invoice_date,
+        total_amount: extractedData.total_amount,
+        products: extractedData.products,
+        raw_text: text,
+        success: true
+      };
       
-      if (response.status === 403) {
-        throw new Error('Access denied. Please check your permissions.');
-      }
+      setInvoiceData(invoiceData);
+      setShowInvoiceScanModal(false);
+      setShowInvoicePreview(true);
       
-      if (response.status === 422) {
-        throw new Error('Invalid image data. Please try with a different image.');
-      }
-      
-      if (response.status >= 400) {
-        throw new Error(response.data?.detail || 'Server error. Please try again.');
-      }
-      
-      console.log('OCR Response:', response.data);
-      
-      if (response.data.success) {
-        setInvoiceData(response.data);
-        setShowInvoiceScanModal(false);
-        setShowInvoicePreview(true);
-      } else {
-        setScanError(response.data.error || 'Failed to extract invoice data');
-      }
     } catch (error) {
       console.error('Invoice scan error:', error);
       
-      // Better error messages
       let errorMsg = 'Failed to scan invoice';
       
-      if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
-        errorMsg = 'Request timed out. Please check your internet connection and try again.';
-      } else if (error.code === 'ERR_NETWORK' || error.message.includes('Network Error')) {
-        errorMsg = 'Network connection failed. Please check your internet and try again.';
-      } else if (error.response?.status === 401) {
-        errorMsg = 'Authentication failed. Please login again.';
-      } else if (error.response?.status === 500) {
-        errorMsg = 'Server error. Please try again in a moment.';
-      } else if (error.message) {
+      if (error.message.includes('Could not extract text')) {
         errorMsg = error.message;
+      } else if (error.message.includes('Failed to fetch')) {
+        errorMsg = 'Failed to load OCR library. Please check your internet connection.';
+      } else {
+        errorMsg = 'OCR processing failed. Please try with a clearer image.';
       }
       
       setScanError(errorMsg);
