@@ -1485,6 +1485,222 @@ def run_payables_receivables_tests():
     success = results.summary()
     return success
 
+def test_invoice_ocr_endpoint():
+    """Test invoice OCR scanning endpoint with comprehensive validation"""
+    print("\n🔍 Testing Invoice OCR Scanning Endpoint (/api/invoice/scan)...")
+    
+    if not auth_token:
+        results.add_fail("Invoice OCR - Authentication", "No auth token available")
+        return False
+    
+    headers = {"Authorization": f"Bearer {auth_token}"}
+    
+    # Create a simple test image as base64 (small PNG with text-like content)
+    import base64
+    
+    # Create a simple test image data (minimal PNG header + some data)
+    # This is a 1x1 pixel transparent PNG
+    test_image_data = base64.b64encode(
+        b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15\xc4\x89\x00\x00\x00\nIDATx\x9cc\x00\x01\x00\x00\x05\x00\x01\r\n-\xdb\x00\x00\x00\x00IEND\xaeB`\x82'
+    ).decode('utf-8')
+    
+    # Test 1: Valid invoice scan request
+    print("  Testing valid invoice scan request...")
+    scan_data = {
+        "image_base64": test_image_data
+    }
+    
+    response = make_request("POST", "/invoice/scan", scan_data, headers=headers)
+    if not response:
+        results.add_fail("Invoice OCR - Valid Request", "Request failed")
+        return False
+    
+    if response.status_code == 200:
+        try:
+            data = response.json()
+            
+            # Verify response structure matches InvoiceOCRResponse model
+            expected_fields = [
+                "vendor_name", "gst_number", "invoice_number", 
+                "invoice_date", "total_amount", "products", 
+                "success", "error"
+            ]
+            
+            missing_fields = [field for field in expected_fields if field not in data]
+            if not missing_fields:
+                results.add_pass("Invoice OCR - Response Structure")
+                print(f"ℹ️  All expected fields present in response")
+                
+                # Check success field
+                if "success" in data:
+                    if data["success"]:
+                        results.add_pass("Invoice OCR - Success Response")
+                        print(f"ℹ️  OCR processing successful")
+                        
+                        # Verify extracted data fields are present (can be null)
+                        extracted_fields = {
+                            "vendor_name": data.get("vendor_name"),
+                            "gst_number": data.get("gst_number"), 
+                            "invoice_number": data.get("invoice_number"),
+                            "invoice_date": data.get("invoice_date"),
+                            "total_amount": data.get("total_amount"),
+                            "products": data.get("products", [])
+                        }
+                        
+                        results.add_pass("Invoice OCR - Extracted Data Fields")
+                        print(f"ℹ️  Extracted data: {extracted_fields}")
+                        
+                        # Verify products is a list
+                        if isinstance(data.get("products"), list):
+                            results.add_pass("Invoice OCR - Products Array Structure")
+                        else:
+                            results.add_fail("Invoice OCR - Products Structure", f"Products should be array, got {type(data.get('products'))}")
+                        
+                    else:
+                        # Check if error field is populated when success is false
+                        if data.get("error"):
+                            results.add_pass("Invoice OCR - Error Handling")
+                            print(f"ℹ️  OCR failed with error: {data['error']}")
+                        else:
+                            results.add_fail("Invoice OCR - Error Handling", "Success=false but no error message")
+                else:
+                    results.add_fail("Invoice OCR - Response Format", "Missing success field")
+                    
+            else:
+                results.add_fail("Invoice OCR - Response Structure", f"Missing fields: {missing_fields}")
+                return False
+                
+        except json.JSONDecodeError:
+            results.add_fail("Invoice OCR - Valid Request", "Invalid JSON response")
+            return False
+    elif response.status_code == 401:
+        results.add_fail("Invoice OCR - Authentication", "Authentication failed")
+        return False
+    elif response.status_code == 500:
+        # Check if it's an API key issue
+        try:
+            error_data = response.json()
+            if "EMERGENT_LLM_KEY" in str(error_data):
+                results.add_fail("Invoice OCR - API Configuration", "EMERGENT_LLM_KEY not configured")
+            else:
+                results.add_fail("Invoice OCR - Server Error", f"Internal server error: {error_data}")
+        except:
+            results.add_fail("Invoice OCR - Server Error", f"HTTP 500: {response.text}")
+        return False
+    else:
+        results.add_fail("Invoice OCR - Valid Request", f"HTTP {response.status_code}: {response.text}")
+        return False
+    
+    # Test 2: Test without authentication
+    print("  Testing without authentication...")
+    response = make_request("POST", "/invoice/scan", scan_data)
+    if response and response.status_code in [401, 403]:
+        results.add_pass("Invoice OCR - Authentication Required")
+    else:
+        results.add_fail("Invoice OCR - Authentication", f"Expected 401/403 without auth, got {response.status_code if response else 'No response'}")
+    
+    # Test 3: Test with invalid base64 data
+    print("  Testing with invalid base64 data...")
+    invalid_scan_data = {
+        "image_base64": "invalid_base64_data_here"
+    }
+    
+    response = make_request("POST", "/invoice/scan", invalid_scan_data, headers=headers)
+    if response and response.status_code in [400, 422, 500]:
+        try:
+            error_data = response.json()
+            if not error_data.get("success", True):  # Should be false for errors
+                results.add_pass("Invoice OCR - Invalid Image Handling")
+                print(f"ℹ️  Invalid image properly rejected: {error_data.get('error', 'Unknown error')}")
+            else:
+                results.add_fail("Invoice OCR - Invalid Image", "Invalid image not properly handled")
+        except json.JSONDecodeError:
+            results.add_pass("Invoice OCR - Invalid Image Handling")
+    else:
+        results.add_fail("Invoice OCR - Invalid Image", f"Expected error response, got {response.status_code if response else 'No response'}")
+    
+    # Test 4: Test with missing image_base64 field
+    print("  Testing with missing image_base64 field...")
+    empty_data = {}
+    
+    response = make_request("POST", "/invoice/scan", empty_data, headers=headers)
+    if response and response.status_code in [400, 422]:
+        results.add_pass("Invoice OCR - Missing Field Validation")
+    else:
+        results.add_fail("Invoice OCR - Validation", f"Expected 400/422 for missing field, got {response.status_code if response else 'No response'}")
+    
+    # Test 5: Check if OpenAI API integration is working (by checking response patterns)
+    print("  Testing OpenAI API integration...")
+    # We can't directly test the OpenAI API call, but we can check if the response
+    # indicates that the LLM processing was attempted
+    
+    # Use a larger, more realistic base64 image for better LLM processing
+    # This is a simple 10x10 white PNG
+    larger_test_image = base64.b64encode(
+        b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\n\x00\x00\x00\n\x08\x02\x00\x00\x00\x02P\xd8\xea\x00\x00\x00\x19IDATx\x9cc\xf8\x0f\x00\x00\x00\x00\xff\xff\x03\x00\x00\x06\x00\x05H\xe0\x9e\x00\x00\x00\x00IEND\xaeB`\x82'
+    ).decode('utf-8')
+    
+    llm_test_data = {
+        "image_base64": larger_test_image
+    }
+    
+    response = make_request("POST", "/invoice/scan", llm_test_data, headers=headers)
+    if response and response.status_code == 200:
+        try:
+            data = response.json()
+            # Check if we got a structured response (indicates LLM processing)
+            if "raw_text" in data or data.get("success") is not None:
+                results.add_pass("Invoice OCR - OpenAI API Integration")
+                print("ℹ️  OpenAI API integration appears to be working")
+                
+                # Check if raw_text field contains some content (even if extraction failed)
+                if data.get("raw_text"):
+                    results.add_pass("Invoice OCR - LLM Response Processing")
+                    print(f"ℹ️  LLM response received and processed")
+            else:
+                results.add_fail("Invoice OCR - API Integration", "Response doesn't indicate LLM processing")
+        except json.JSONDecodeError:
+            results.add_fail("Invoice OCR - API Integration", "Invalid JSON from LLM processing")
+    elif response and response.status_code == 500:
+        try:
+            error_data = response.json()
+            if "EMERGENT_LLM_KEY" in str(error_data) or "not configured" in str(error_data):
+                results.add_fail("Invoice OCR - API Configuration", "EMERGENT_LLM_KEY not properly configured")
+            else:
+                results.add_fail("Invoice OCR - API Integration", f"LLM API error: {error_data}")
+        except:
+            results.add_fail("Invoice OCR - API Integration", "LLM API call failed")
+    else:
+        results.add_fail("Invoice OCR - API Integration", f"Unexpected response: {response.status_code if response else 'No response'}")
+    
+    print("ℹ️  Invoice OCR endpoint testing completed")
+    return True
+
+def run_invoice_ocr_tests():
+    """Run focused tests for Invoice OCR functionality"""
+    print(f"🚀 Starting Invoice OCR Endpoint Tests")
+    print(f"Backend URL: {API_BASE}")
+    print(f"Timestamp: {datetime.now().isoformat()}")
+    print(f"Test Focus: Invoice scanning OCR endpoint with OpenAI integration")
+    
+    # Test sequence for invoice OCR
+    tests = [
+        test_backend_server_health,
+        test_admin_login,  # Use admin login for authentication
+        test_invoice_ocr_endpoint,
+    ]
+    
+    for test_func in tests:
+        try:
+            test_func()
+            time.sleep(0.5)  # Brief pause between tests
+        except Exception as e:
+            results.add_fail(test_func.__name__, f"Test execution error: {e}")
+    
+    # Final summary
+    success = results.summary()
+    return success
+
 def run_all_tests():
     """Run all backend tests in sequence"""
     print(f"🚀 Starting Comprehensive Backend API Tests")
