@@ -56,7 +56,7 @@
 ##   test_all: false
 ##   test_priority: "high_first"  # or "sequential" or "stuck_first"
 ##
-user_problem_statement: "Test Cash In and Cash Out transaction saving functionality with comprehensive validation and data persistence testing."
+user_problem_statement: "Test the invoice scanning OCR endpoint with a sample invoice image"
 
 backend:
   - task: "Cash In and Cash Out Transaction Saving Functionality"
