@@ -808,6 +808,11 @@ const CashOutEntry = ({ onBack }) => {
     setScanError(null);
     
     try {
+      // Check network connectivity first
+      if (!navigator.onLine) {
+        throw new Error('No internet connection. Please check your network and try again.');
+      }
+      
       // Compress image to reduce size
       console.log('Compressing image...');
       const compressedImage = await compressImage(imageDataUrl);
