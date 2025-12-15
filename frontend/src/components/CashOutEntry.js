@@ -773,8 +773,8 @@ const CashOutEntry = ({ onBack }) => {
     }
   };
 
-  // Compress image before sending
-  const compressImage = async (imageDataUrl, maxWidth = 1920, quality = 0.8) => {
+  // Compress and preprocess image for better OCR accuracy
+  const preprocessImageForOCR = async (imageDataUrl, maxWidth = 1920) => {
     return new Promise((resolve) => {
       const img = new Image();
       img.onload = () => {
@@ -792,9 +792,63 @@ const CashOutEntry = ({ onBack }) => {
         canvas.height = height;
         
         const ctx = canvas.getContext('2d');
+        
+        // Draw original image
         ctx.drawImage(img, 0, 0, width, height);
         
-        // Convert to base64 with compression
+        // Get image data for preprocessing
+        const imageData = ctx.getImageData(0, 0, width, height);
+        const data = imageData.data;
+        
+        // Convert to grayscale and enhance contrast
+        for (let i = 0; i < data.length; i += 4) {
+          // Convert to grayscale
+          const gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+          
+          // Apply threshold for better text recognition (make text darker, background whiter)
+          const threshold = 128;
+          const value = gray > threshold ? 255 : Math.max(0, gray - 30);
+          
+          data[i] = value;     // Red
+          data[i + 1] = value; // Green
+          data[i + 2] = value; // Blue
+        }
+        
+        // Put processed image back
+        ctx.putImageData(imageData, 0, 0);
+        
+        // Sharpen the image
+        ctx.filter = 'contrast(1.5) brightness(1.1)';
+        ctx.drawImage(canvas, 0, 0);
+        
+        // Convert to base64
+        const processedDataUrl = canvas.toDataURL('image/jpeg', 0.95);
+        resolve(processedDataUrl);
+      };
+      img.src = imageDataUrl;
+    });
+  };
+  
+  // Compress image (for non-OCR use)
+  const compressImage = async (imageDataUrl, maxWidth = 1920, quality = 0.8) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+        
+        if (width > maxWidth) {
+          height = (height * maxWidth) / width;
+          width = maxWidth;
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
         const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
         resolve(compressedDataUrl);
       };
