@@ -813,6 +813,16 @@ const CashOutEntry = ({ onBack }) => {
         throw new Error('No internet connection. Please check your network and try again.');
       }
       
+      // Test backend connectivity
+      try {
+        console.log('Testing backend connectivity...');
+        await axios.get(`${API}/ping`, { timeout: 5000 });
+        console.log('Backend is reachable');
+      } catch (pingError) {
+        console.error('Backend ping failed:', pingError);
+        throw new Error('Cannot reach server. Please check your internet connection.');
+      }
+      
       // Compress image to reduce size
       console.log('Compressing image...');
       const compressedImage = await compressImage(imageDataUrl);
