@@ -1048,23 +1048,30 @@ const CashOutEntry = ({ onBack }) => {
       const extractedData = parseInvoiceText(text);
       console.log('Parsed data:', extractedData);
       
-      // Check if we got meaningful data
-      if (!extractedData.vendor_name && !extractedData.total_amount) {
-        throw new Error('Could not identify invoice details. Please try:\n- Taking photo in better lighting\n- Getting closer to invoice\n- Keeping invoice flat');
+      // More lenient validation - just need SOME data
+      const hasAnyData = extractedData.vendor_name || 
+                        extractedData.total_amount || 
+                        extractedData.invoice_number || 
+                        extractedData.gst_number ||
+                        (extractedData.products && extractedData.products.length > 0);
+      
+      if (!hasAnyData && text.length < 50) {
+        throw new Error('Could not extract enough text from image. Please try:\n- Better lighting\n- Clear focus\n- Closer to invoice\n- Flat surface');
       }
       
-      // Create invoice data object
+      // Create invoice data object - show whatever we found
       const invoiceData = {
-        vendor_name: extractedData.vendor_name,
-        gst_number: extractedData.gst_number,
-        invoice_number: extractedData.invoice_number,
-        invoice_date: extractedData.invoice_date,
-        total_amount: extractedData.total_amount,
-        products: extractedData.products,
+        vendor_name: extractedData.vendor_name || '',
+        gst_number: extractedData.gst_number || '',
+        invoice_number: extractedData.invoice_number || '',
+        invoice_date: extractedData.invoice_date || '',
+        total_amount: extractedData.total_amount || 0,
+        products: extractedData.products || [],
         raw_text: text,
         confidence: extractedData.confidence,
         ocr_confidence: confidence,
-        success: true
+        success: true,
+        partial_extraction: !extractedData.vendor_name || !extractedData.total_amount
       };
       
       setInvoiceData(invoiceData);
