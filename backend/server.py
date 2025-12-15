@@ -1572,13 +1572,39 @@ async def scan_invoice(
 ):
     """Scan and extract data from invoice using OpenAI GPT-4 Vision"""
     import json
+    import logging
+    
+    logger = logging.getLogger(__name__)
+    logger.info(f"Invoice scan request from user: {current_user['email']}")
+    
     try:
         from emergentintegrations.llm.chat import LlmChat, UserMessage, ImageContent
+        
+        # Validate image data
+        if not request_data.image_base64 or len(request_data.image_base64) < 100:
+            return InvoiceOCRResponse(
+                success=False,
+                error="Invalid image data. Please try capturing the image again."
+            )
+        
+        # Check image size
+        image_size_mb = len(request_data.image_base64) * 3 / 4 / (1024 * 1024)
+        logger.info(f"Image size: {image_size_mb:.2f} MB")
+        
+        if image_size_mb > 10:
+            return InvoiceOCRResponse(
+                success=False,
+                error="Image too large (>10MB). Please compress the image and try again."
+            )
         
         # Get API key
         api_key = os.environ.get('EMERGENT_LLM_KEY')
         if not api_key:
-            raise HTTPException(status_code=500, detail="EMERGENT_LLM_KEY not configured")
+            logger.error("EMERGENT_LLM_KEY not configured")
+            return InvoiceOCRResponse(
+                success=False,
+                error="OCR service not configured. Please contact support."
+            )
         
         # Initialize LLM Chat with GPT-4 Vision
         chat = LlmChat(
