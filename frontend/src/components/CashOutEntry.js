@@ -2233,16 +2233,31 @@ const CashOutEntry = ({ onBack }) => {
           
           {invoiceData && (
             <div className="space-y-4">
+              {/* Accuracy Notice */}
+              <div className="bg-blue-500/20 border border-blue-500 rounded p-2 text-xs text-blue-200">
+                💡 Tip: Review and edit the extracted data before applying. OCR accuracy: {invoiceData.ocr_confidence ? Math.round(invoiceData.ocr_confidence) : 'N/A'}%
+              </div>
+              
               {/* Vendor Information */}
-              {invoiceData.vendor_name && (
-                <div className="bg-slate-700 rounded p-3">
-                  <h3 className="text-sm font-semibold text-slate-300 mb-2">Vendor/Party</h3>
-                  <p className="text-white font-medium">{invoiceData.vendor_name}</p>
-                  {invoiceData.gst_number && (
-                    <p className="text-slate-300 text-sm mt-1">GST: {invoiceData.gst_number}</p>
-                  )}
-                </div>
-              )}
+              <div className="bg-slate-700 rounded p-3">
+                <h3 className="text-sm font-semibold text-slate-300 mb-2">Vendor/Party</h3>
+                <input
+                  type="text"
+                  value={invoiceData.vendor_name || ''}
+                  onChange={(e) => setInvoiceData({...invoiceData, vendor_name: e.target.value})}
+                  placeholder="Enter vendor name"
+                  className="w-full bg-slate-800 border border-slate-600 text-white rounded px-2 py-1 text-sm"
+                />
+                {invoiceData.gst_number && (
+                  <input
+                    type="text"
+                    value={invoiceData.gst_number || ''}
+                    onChange={(e) => setInvoiceData({...invoiceData, gst_number: e.target.value})}
+                    placeholder="GST Number"
+                    className="w-full bg-slate-800 border border-slate-600 text-white rounded px-2 py-1 text-sm mt-2"
+                  />
+                )}
+              </div>
               
               {/* Invoice Details */}
               <div className="bg-slate-700 rounded p-3">
