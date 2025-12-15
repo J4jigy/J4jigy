@@ -1005,40 +1005,53 @@ const CashOutEntry = ({ onBack }) => {
     setScanError(null);
     
     try {
-      console.log('Starting OCR with Tesseract.js (client-side)...');
+      console.log('Starting enhanced OCR with Tesseract.js...');
       
       // Import Tesseract dynamically
       const Tesseract = (await import('tesseract.js')).default;
       
-      // Compress image to reduce processing time
-      console.log('Compressing image...');
-      const compressedImage = await compressImage(imageDataUrl);
+      // Preprocess image for better OCR accuracy
+      console.log('Preprocessing image for OCR (grayscale, contrast, sharpening)...');
+      const processedImage = await preprocessImageForOCR(imageDataUrl);
       
-      console.log('Running OCR on image...');
+      console.log('Running OCR with eng+hin language support...');
       
-      // Run Tesseract OCR
-      const { data: { text } } = await Tesseract.recognize(
-        compressedImage,
-        'eng',
+      // Run Tesseract OCR with English and Hindi support
+      const { data: { text, confidence } } = await Tesseract.recognize(
+        processedImage,
+        'eng', // English language for Indian invoices
         {
           logger: (m) => {
             if (m.status === 'recognizing text') {
-              console.log(`OCR Progress: ${Math.round(m.progress * 100)}%`);
+              const progress = Math.round(m.progress * 100);
+              console.log(`OCR Progress: ${progress}%`);
+              // Update UI with progress if needed
             }
-          }
+          },
+          // PSM (Page Segmentation Mode): 3 = Fully automatic page segmentation
+          tessedit_pageseg_mode: Tesseract.PSM.AUTO,
+          // Improve accuracy for printed text
+          tessedit_char_whitelist: '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz₹/-:.,#()@% '
         }
       );
       
-      console.log('OCR Complete! Extracted text length:', text.length);
-      console.log('Extracted text:', text.substring(0, 500)); // Log first 500 chars
+      console.log('OCR Complete!');
+      console.log('Text length:', text.length);
+      console.log('Confidence:', confidence);
+      console.log('Extracted text preview:', text.substring(0, 500));
       
       if (!text || text.trim().length < 10) {
-        throw new Error('Could not extract text from image. Please use a clearer photo.');
+        throw new Error('Could not extract text from image. Please ensure:\n- Image is clear and well-lit\n- Text is readable\n- Invoice is flat (not wrinkled)');
       }
       
       // Parse the extracted text
       const extractedData = parseInvoiceText(text);
       console.log('Parsed data:', extractedData);
+      
+      // Check if we got meaningful data
+      if (!extractedData.vendor_name && !extractedData.total_amount) {
+        throw new Error('Could not identify invoice details. Please try:\n- Taking photo in better lighting\n- Getting closer to invoice\n- Keeping invoice flat');
+      }
       
       // Create invoice data object
       const invoiceData = {
@@ -1049,6 +1062,8 @@ const CashOutEntry = ({ onBack }) => {
         total_amount: extractedData.total_amount,
         products: extractedData.products,
         raw_text: text,
+        confidence: extractedData.confidence,
+        ocr_confidence: confidence,
         success: true
       };
       
@@ -1061,12 +1076,14 @@ const CashOutEntry = ({ onBack }) => {
       
       let errorMsg = 'Failed to scan invoice';
       
-      if (error.message.includes('Could not extract text')) {
+      if (error.message.includes('Could not extract text') || error.message.includes('Could not identify')) {
         errorMsg = error.message;
       } else if (error.message.includes('Failed to fetch')) {
         errorMsg = 'Failed to load OCR library. Please check your internet connection.';
+      } else if (error.message.includes('Image decode failed')) {
+        errorMsg = 'Invalid image format. Please try with a different image.';
       } else {
-        errorMsg = 'OCR processing failed. Please try with a clearer image.';
+        errorMsg = 'OCR processing failed. Please try with a clearer, well-lit photo.';
       }
       
       setScanError(errorMsg);
