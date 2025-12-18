@@ -43,7 +43,7 @@ import ScanDocuments from './components/ScanDocuments';
 import { BusinessProvider } from './contexts/BusinessContext';
 import { RoleProvider } from './contexts/RoleContext';
 
-const API = process.env.REACT_APP_BACKEND_URL ? `${process.env.REACT_APP_BACKEND_URL}/api` : '/api';
+const API = 'https://invoice-reader-9.preview.emergentagent.com/api';
 
 // Login Component - One-Click Demo Login
 const LoginPage = ({ onLogin }) => {
