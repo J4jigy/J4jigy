@@ -2156,8 +2156,16 @@ const CashOutEntry = ({ onBack }) => {
           {invoiceData && (
             <div className="space-y-4">
               {/* Accuracy Notice */}
-              <div className="bg-blue-500/20 border border-blue-500 rounded p-2 text-xs text-blue-200">
-                💡 Tip: Review and edit the extracted data before applying. OCR accuracy: {invoiceData.ocr_confidence ? Math.round(invoiceData.ocr_confidence) : 'N/A'}%
+              <div className={`border rounded p-2 text-xs ${
+                invoiceData.partial_extraction 
+                  ? 'bg-yellow-500/20 border-yellow-500 text-yellow-200' 
+                  : 'bg-blue-500/20 border-blue-500 text-blue-200'
+              }`}>
+                {invoiceData.partial_extraction ? (
+                  <>⚠️ Partial data extracted. Please review and complete missing fields below.</>
+                ) : (
+                  <>💡 Tip: Review and edit the extracted data before applying. OCR accuracy: {invoiceData.ocr_confidence ? Math.round(invoiceData.ocr_confidence) : 'N/A'}%</>
+                )}
               </div>
               
               {/* Vendor Information */}
