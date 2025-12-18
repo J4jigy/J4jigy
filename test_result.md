@@ -169,8 +169,7 @@ metadata:
   test_sequence: 2
 
 test_plan:
-  current_focus:
-    - "Invoice OCR Scanning Endpoint"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
