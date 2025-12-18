@@ -45,48 +45,33 @@ import { RoleProvider } from './contexts/RoleContext';
 
 const API = process.env.REACT_APP_BACKEND_URL ? `${process.env.REACT_APP_BACKEND_URL}/api` : '/api';
 
-// Login Component
+// Login Component - One-Click Demo Login
 const LoginPage = ({ onLogin }) => {
-  const [mobileNumber, setMobileNumber] = useState('');
-  const [countryCode, setCountryCode] = useState('+91');
-  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+  const handleDemoLogin = async () => {
     setLoading(true);
     setError('');
 
-    // Validate mobile number
-    if (mobileNumber.length !== 10 || !/^\d+$/.test(mobileNumber)) {
-      setError('Please enter a valid 10-digit mobile number');
-      setLoading(false);
-      return;
-    }
-
     try {
-      console.log('Attempting login with mobile:', `${countryCode}${mobileNumber}`);
+      console.log('Attempting demo login...');
       
-      // Mobile login request to backend (creates user if doesn't exist)
+      // Demo login with pre-configured credentials
       const response = await axios.post(`${API}/auth/mobile-login`, {
-        mobile: `${countryCode}${mobileNumber}`
+        mobile: '+919999999999'
       });
 
-      console.log('Login response received:', response.data);
+      console.log('Demo login successful:', response.data);
 
-      // Store remember me preference
-      if (rememberMe) {
-        localStorage.setItem('rememberMe', 'true');
-      } else {
-        localStorage.removeItem('rememberMe');
-      }
+      // Auto-enable remember me for demo account
+      localStorage.setItem('rememberMe', 'true');
       
       onLogin(response.data.access_token, response.data.user);
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('Demo login error:', error);
       const detail = error.response?.data?.detail || error.response?.data?.error;
-      const message = detail || 'Login failed. Please try again.';
+      const message = detail || 'Demo login failed. Please try again.';
       setError(message);
     } finally {
       setLoading(false);
@@ -94,82 +79,58 @@ const LoginPage = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md bg-slate-800 border-slate-700">
-        <CardContent className="p-6">
-          <div className="text-center mb-6">
-            <h1 className="text-2xl font-bold text-white mb-2">
-              Welcome Back
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
+      <Card className="w-full max-w-md bg-slate-800/90 border-slate-700 backdrop-blur-sm shadow-2xl">
+        <CardContent className="p-8">
+          <div className="text-center mb-8">
+            <div className="mb-4">
+              <div className="w-20 h-20 bg-blue-600 rounded-full mx-auto flex items-center justify-center">
+                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+            </div>
+            <h1 className="text-3xl font-bold text-white mb-2">
+              Welcome to Petrol Pump POS
             </h1>
-            <p className="text-slate-400">
-              Enter your mobile number to continue
+            <p className="text-slate-300 text-lg">
+              One-click access to your dashboard
             </p>
           </div>
 
           {error && (
-            <div className="bg-red-900/50 border border-red-700 text-red-100 px-4 py-2 rounded-md mb-4">
+            <div className="bg-red-900/50 border border-red-700 text-red-100 px-4 py-3 rounded-md mb-6 text-center">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <Label htmlFor="mobile" className="text-slate-200">Mobile Number</Label>
-              <div className="flex gap-2 mt-1">
-                <Select value={countryCode} onValueChange={setCountryCode}>
-                  <SelectTrigger className="w-24 bg-slate-700 border-slate-600 text-white text-sm">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="+91">🇮🇳 +91</SelectItem>
-                    <SelectItem value="+1">🇺🇸 +1</SelectItem>
-                    <SelectItem value="+44">🇬🇧 +44</SelectItem>
-                    <SelectItem value="+86">🇨🇳 +86</SelectItem>
-                    <SelectItem value="+81">🇯🇵 +81</SelectItem>
-                    <SelectItem value="+82">🇰🇷 +82</SelectItem>
-                    <SelectItem value="+65">🇸🇬 +65</SelectItem>
-                    <SelectItem value="+971">🇦🇪 +971</SelectItem>
-                    <SelectItem value="+966">🇸🇦 +966</SelectItem>
-                    <SelectItem value="+61">🇦🇺 +61</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Input
-                  id="mobile"
-                  type="tel"
-                  value={mobileNumber}
-                  onChange={(e) => setMobileNumber(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                  placeholder="Enter mobile number"
-                  required
-                  maxLength={10}
-                  className="flex-1 bg-slate-700 border-slate-600 text-white text-lg"
-                />
+          <Button 
+            onClick={handleDemoLogin}
+            disabled={loading}
+            className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-lg py-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200"
+          >
+            {loading ? (
+              <div className="flex items-center justify-center gap-3">
+                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Signing In...</span>
               </div>
-            </div>
+            ) : (
+              <div className="flex items-center justify-center gap-3">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                </svg>
+                <span>Demo Login</span>
+              </div>
+            )}
+          </Button>
 
-            <div className="flex items-center gap-2">
-              <input
-                id="rememberMe"
-                type="checkbox"
-                checked={rememberMe}
-                onChange={(e) => setRememberMe(e.target.checked)}
-                className="w-4 h-4 bg-slate-700 border-slate-600 rounded"
-              />
-              <Label htmlFor="rememberMe" className="text-slate-300 cursor-pointer">
-                Remember me
-              </Label>
-            </div>
-
-            <Button 
-              type="submit" 
-              disabled={loading || mobileNumber.length !== 10}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-            >
-              {loading ? 'Signing In...' : 'Sign In'}
-            </Button>
-          </form>
-
-          <div className="mt-4 text-center text-slate-400 text-sm">
-            Secure login with mobile number only
+          <div className="mt-6 text-center">
+            <p className="text-slate-400 text-sm">
+              🔒 Instant access • No password required
+            </p>
           </div>
         </CardContent>
       </Card>
