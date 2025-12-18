@@ -2170,15 +2170,13 @@ const CashOutEntry = ({ onBack }) => {
                   placeholder="Enter vendor name"
                   className="w-full bg-slate-800 border border-slate-600 text-white rounded px-2 py-1 text-sm"
                 />
-                {invoiceData.gst_number && (
-                  <input
-                    type="text"
-                    value={invoiceData.gst_number || ''}
-                    onChange={(e) => setInvoiceData({...invoiceData, gst_number: e.target.value})}
-                    placeholder="GST Number"
-                    className="w-full bg-slate-800 border border-slate-600 text-white rounded px-2 py-1 text-sm mt-2"
-                  />
-                )}
+                <input
+                  type="text"
+                  value={invoiceData.gst_number || ''}
+                  onChange={(e) => setInvoiceData({...invoiceData, gst_number: e.target.value})}
+                  placeholder="GST Number (optional)"
+                  className="w-full bg-slate-800 border border-slate-600 text-white rounded px-2 py-1 text-sm mt-2"
+                />
               </div>
               
               {/* Invoice Details */}
