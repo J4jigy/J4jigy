@@ -1048,18 +1048,8 @@ const CashOutEntry = ({ onBack }) => {
       const extractedData = parseInvoiceText(text);
       console.log('Parsed data:', extractedData);
       
-      // More lenient validation - just need SOME data
-      const hasAnyData = extractedData.vendor_name || 
-                        extractedData.total_amount || 
-                        extractedData.invoice_number || 
-                        extractedData.gst_number ||
-                        (extractedData.products && extractedData.products.length > 0);
-      
-      if (!hasAnyData && text.length < 50) {
-        throw new Error('Could not extract enough text from image. Please try:\n- Better lighting\n- Clear focus\n- Closer to invoice\n- Flat surface');
-      }
-      
-      // Create invoice data object - show whatever we found
+      // Create invoice data object - show whatever we found (even if partial)
+      // The preview modal will allow users to manually fill in missing fields
       const invoiceData = {
         vendor_name: extractedData.vendor_name || '',
         gst_number: extractedData.gst_number || '',
@@ -1073,6 +1063,8 @@ const CashOutEntry = ({ onBack }) => {
         success: true,
         partial_extraction: !extractedData.vendor_name || !extractedData.total_amount
       };
+      
+      console.log('Invoice data prepared (partial extraction allowed):', invoiceData);
       
       setInvoiceData(invoiceData);
       setShowInvoiceScanModal(false);
