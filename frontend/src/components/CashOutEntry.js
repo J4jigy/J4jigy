@@ -1377,18 +1377,18 @@ const CashOutEntry = ({ onBack }) => {
           </div>
         )}
 
-        {/* Action Buttons - match Cash In sizes */}
-        <div className="flex gap-1">
+        {/* Action Buttons - Barcode, Invoice, Save equal size, Mic stays small */}
+        <div className="grid grid-cols-[1fr_1fr_auto_1fr] gap-1">
           <Button 
             onClick={() => setShowBarcodeModal(true)}
-            className="flex-1 bg-purple-600 hover:bg-purple-700 h-10 text-sm rounded-md text-white"
+            className="bg-purple-600 hover:bg-purple-700 h-10 text-sm rounded-md text-white"
           >
             <Barcode className="w-4 h-4 mr-2" />
             Barcode
           </Button>
           <Button 
             onClick={() => setShowInvoiceScanModal(true)}
-            className="flex-1 bg-orange-600 hover:bg-orange-700 h-10 text-sm rounded-md text-white"
+            className="bg-orange-600 hover:bg-orange-700 h-10 text-sm rounded-md text-white"
           >
             <FileText className="w-4 h-4 mr-2" />
             Invoice
@@ -1404,7 +1404,7 @@ const CashOutEntry = ({ onBack }) => {
           </Button>
           <Button 
             onClick={handleSave}
-            className="flex-1 bg-red-500 hover:bg-red-600 h-10 text-sm rounded-md"
+            className="bg-red-500 hover:bg-red-600 h-10 text-sm rounded-md"
           >
             Save
           </Button>
