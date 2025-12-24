@@ -48,60 +48,13 @@ const API = process.env.REACT_APP_BACKEND_URL ? `${process.env.REACT_APP_BACKEND
 // Login removed - will be developed later
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    // Check for existing user session and auto-login
-    const storedToken = localStorage.getItem('token');
-    const storedUser = localStorage.getItem('user');
-    const rememberMe = localStorage.getItem('rememberMe');
-    
-    if (storedToken && storedUser && rememberMe === 'true') {
-      try {
-        const parsedUser = JSON.parse(storedUser);
-        setToken(storedToken);
-        setUser(parsedUser);
-        // User will automatically see the dashboard without login
-      } catch (error) {
-        console.error('Error loading user session:', error);
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        localStorage.removeItem('rememberMe');
-      }
-    }
-
-    // Listen for storage changes (for logout from another tab)
-    const handleStorageChange = (e) => {
-      if (e.key === 'token') {
-        setToken(e.newValue);
-      }
-      if (e.key === 'user') {
-        try {
-          setUser(e.newValue ? JSON.parse(e.newValue) : null);
-        } catch (err) {
-          console.error('Error parsing user from storage event:', err);
-        }
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
-
-  const handleLogin = (newToken, newUser) => {
-    setToken(newToken);
-    setUser(newUser);
-    localStorage.setItem('token', newToken);
-    localStorage.setItem('user', JSON.stringify(newUser));
-  };
+  // Login removed - direct access to dashboard
+  // Will be developed later
+  const [user] = useState(null);
 
   const handleLogout = () => {
-    setToken(null);
-    setUser(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('rememberMe');
+    // Logout functionality will be implemented later
+    console.log('Logout - to be implemented');
   };
 
   return (
@@ -109,44 +62,40 @@ function App() {
       <RoleProvider>
         <Router>
           <Routes>
-            <Route 
-              path="/" 
-              element={token ? <Dashboard onLogout={handleLogout} user={user} /> : <Navigate to="/login" />} 
-            />
-            <Route path="/login" element={!token ? <LoginPage onLogin={handleLogin} /> : <Navigate to="/" />} />
-            <Route path="/admin" element={token && (user?.role === 'admin' || user?.role === 'super_admin' || user?.is_admin) ? <AdminDashboard user={user} /> : <Navigate to="/login" />} />
-            <Route path="/list/cash" element={token ? <Cash /> : <Navigate to="/login" />} />
-            <Route path="/cash-enhanced" element={token ? <CashEnhanced /> : <Navigate to="/login" />} />
-            <Route path="/bank" element={token ? <Bank /> : <Navigate to="/login" />} />
-            <Route path="/list/:key" element={token ? <ListViewPage /> : <Navigate to="/login" />} />
-            <Route path="/cash-in" element={token ? <CashInEntry /> : <Navigate to="/login" />} />
-            <Route path="/cash-out" element={token ? <CashOutEntry /> : <Navigate to="/login" />} />
-            <Route path="/fuel-dispenser" element={token ? <FuelDispenser /> : <Navigate to="/login" />} />
-            <Route path="/fuel-dispenser/:dispenserId" element={token ? <FuelDispenserDetails /> : <Navigate to="/login" />} />
-            <Route path="/todo" element={token ? <ToDoList /> : <Navigate to="/login" />} />
-            <Route path="/staff" element={token ? <StaffPage /> : <Navigate to="/login" />} />
-            <Route path="/staff-management" element={token ? <StaffManagementPage /> : <Navigate to="/login" />} />
-            <Route path="/payroll-management" element={token ? <PayrollManagement /> : <Navigate to="/login" />} />
-            <Route path="/balance-sheet" element={token ? <BalanceSheet /> : <Navigate to="/login" />} />
-            <Route path="/profit-loss" element={token ? <ProfitLoss /> : <Navigate to="/login" />} />
-            <Route path="/daily-sales-report" element={token ? <DailySalesReport /> : <Navigate to="/login" />} />
-            <Route path="/community-ratings" element={token ? <CommunityRatings /> : <Navigate to="/login" />} />
-            <Route path="/customers-debtors" element={token ? <CustomersDebtors /> : <Navigate to="/login" />} />
-            <Route path="/suppliers-creditors" element={token ? <SuppliersCreditors /> : <Navigate to="/login" />} />
-            <Route path="/stock-management" element={token ? <StockManagement /> : <Navigate to="/login" />} />
-            <Route path="/company-purchase" element={token ? <CompanyPurchase /> : <Navigate to="/login" />} />
-            <Route path="/bills-recharge" element={token ? <BillsRecharge /> : <Navigate to="/login" />} />
-            <Route path="/rent-management" element={token ? <Rent /> : <Navigate to="/login" />} />
-            <Route path="/transport-expense" element={token ? <TransportationExpense /> : <Navigate to="/login" />} />
-            <Route path="/other-expenses" element={token ? <OtherExpenses /> : <Navigate to="/login" />} />
-            <Route path="/challan" element={token ? <Challan /> : <Navigate to="/login" />} />
-            <Route path="/bills-invoices" element={token ? <BillsInvoices /> : <Navigate to="/login" />} />
-            <Route path="/receivables-you-will-receive" element={token ? <ReceivablesYouWillReceive /> : <Navigate to="/login" />} />
-            <Route path="/payables-you-will-give" element={token ? <PayablesYouWillGive /> : <Navigate to="/login" />} />
-            <Route path="/offers-discounts" element={token ? <OffersDiscounts /> : <Navigate to="/login" />} />
-            <Route path="/calendar" element={token ? <CalendarReminder /> : <Navigate to="/login" />} />
-            <Route path="/calculator" element={token ? <Calculator /> : <Navigate to="/login" />} />
-            <Route path="/scan-documents" element={token ? <ScanDocuments /> : <Navigate to="/login" />} />
+            <Route path="/" element={<Dashboard onLogout={handleLogout} user={user} />} />
+            <Route path="/admin" element={<AdminDashboard user={user} />} />
+            <Route path="/list/cash" element={<Cash />} />
+            <Route path="/cash-enhanced" element={<CashEnhanced />} />
+            <Route path="/bank" element={<Bank />} />
+            <Route path="/list/:key" element={<ListViewPage />} />
+            <Route path="/cash-in" element={<CashInEntry />} />
+            <Route path="/cash-out" element={<CashOutEntry />} />
+            <Route path="/fuel-dispenser" element={<FuelDispenser />} />
+            <Route path="/fuel-dispenser/:dispenserId" element={<FuelDispenserDetails />} />
+            <Route path="/todo" element={<ToDoList />} />
+            <Route path="/staff" element={<StaffPage />} />
+            <Route path="/staff-management" element={<StaffManagementPage />} />
+            <Route path="/payroll-management" element={<PayrollManagement />} />
+            <Route path="/balance-sheet" element={<BalanceSheet />} />
+            <Route path="/profit-loss" element={<ProfitLoss />} />
+            <Route path="/daily-sales-report" element={<DailySalesReport />} />
+            <Route path="/community-ratings" element={<CommunityRatings />} />
+            <Route path="/customers-debtors" element={<CustomersDebtors />} />
+            <Route path="/suppliers-creditors" element={<SuppliersCreditors />} />
+            <Route path="/stock-management" element={<StockManagement />} />
+            <Route path="/company-purchase" element={<CompanyPurchase />} />
+            <Route path="/bills-recharge" element={<BillsRecharge />} />
+            <Route path="/rent-management" element={<Rent />} />
+            <Route path="/transport-expense" element={<TransportationExpense />} />
+            <Route path="/other-expenses" element={<OtherExpenses />} />
+            <Route path="/challan" element={<Challan />} />
+            <Route path="/bills-invoices" element={<BillsInvoices />} />
+            <Route path="/receivables-you-will-receive" element={<ReceivablesYouWillReceive />} />
+            <Route path="/payables-you-will-give" element={<PayablesYouWillGive />} />
+            <Route path="/offers-discounts" element={<OffersDiscounts />} />
+            <Route path="/calendar" element={<CalendarReminder />} />
+            <Route path="/calculator" element={<Calculator />} />
+            <Route path="/scan-documents" element={<ScanDocuments />} />
           </Routes>
         </Router>
       </RoleProvider>
