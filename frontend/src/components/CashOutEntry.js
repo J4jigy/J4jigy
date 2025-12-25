@@ -1378,24 +1378,24 @@ const CashOutEntry = ({ onBack }) => {
         )}
 
         {/* Action Buttons - Barcode, Invoice, Save equal size, Mic stays small */}
-        <div className="grid grid-cols-[1fr_1fr_auto_1fr] gap-1">
+        <div className="flex gap-1">
           <Button 
             onClick={() => setShowBarcodeModal(true)}
-            className="bg-purple-600 hover:bg-purple-700 h-10 text-sm rounded-md text-white"
+            className="flex-[1_1_0%] bg-purple-600 hover:bg-purple-700 h-10 text-sm rounded-md text-white"
           >
             <Barcode className="w-4 h-4 mr-2" />
             Barcode
           </Button>
           <Button 
             onClick={() => setShowInvoiceScanModal(true)}
-            className="bg-orange-600 hover:bg-orange-700 h-10 text-sm rounded-md text-white"
+            className="flex-[1_1_0%] bg-orange-600 hover:bg-orange-700 h-10 text-sm rounded-md text-white"
           >
             <FileText className="w-4 h-4 mr-2" />
             Invoice
           </Button>
           <Button 
             onClick={handleVoiceInput}
-            className={`w-10 h-10 rounded-md text-white flex items-center justify-center ${
+            className={`w-10 h-10 flex-shrink-0 rounded-md text-white flex items-center justify-center ${
               isListening ? 'bg-red-600 hover:bg-red-700 animate-pulse' : 'bg-blue-600 hover:bg-blue-700'
             }`}
             title={`Voice input (Auto-detected: ${selectedLanguage})`}
@@ -1404,7 +1404,7 @@ const CashOutEntry = ({ onBack }) => {
           </Button>
           <Button 
             onClick={handleSave}
-            className="bg-red-500 hover:bg-red-600 h-10 text-sm rounded-md"
+            className="flex-[1_1_0%] bg-red-500 hover:bg-red-600 h-10 text-sm rounded-md"
           >
             Save
           </Button>
