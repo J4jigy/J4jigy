@@ -1381,14 +1381,14 @@ const CashOutEntry = ({ onBack }) => {
         <div className="flex gap-1">
           <Button 
             onClick={() => setShowBarcodeModal(true)}
-            className="flex-[1_1_0%] bg-purple-600 hover:bg-purple-700 h-10 text-sm rounded-md text-white"
+            className="flex-1 min-w-0 bg-purple-600 hover:bg-purple-700 h-10 text-sm rounded-md text-white"
           >
             <Barcode className="w-4 h-4 mr-2" />
             Barcode
           </Button>
           <Button 
             onClick={() => setShowInvoiceScanModal(true)}
-            className="flex-[1_1_0%] bg-orange-600 hover:bg-orange-700 h-10 text-sm rounded-md text-white"
+            className="flex-1 min-w-0 bg-orange-600 hover:bg-orange-700 h-10 text-sm rounded-md text-white"
           >
             <FileText className="w-4 h-4 mr-2" />
             Invoice
@@ -1404,7 +1404,7 @@ const CashOutEntry = ({ onBack }) => {
           </Button>
           <Button 
             onClick={handleSave}
-            className="flex-[1_1_0%] bg-red-500 hover:bg-red-600 h-10 text-sm rounded-md"
+            className="flex-1 min-w-0 bg-red-500 hover:bg-red-600 h-10 text-sm rounded-md"
           >
             Save
           </Button>
