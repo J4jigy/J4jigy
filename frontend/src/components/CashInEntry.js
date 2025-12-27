@@ -1971,7 +1971,7 @@ const CashInEntry = ({ onBack }) => {
               className="w-full bg-blue-600 hover:bg-blue-700"
             >
               <Plus className="w-4 h-4 mr-2" />
-              Use "{selectedCategory}" (No Contact)
+              Use &quot;{selectedCategory}&quot; (No Contact)
             </Button>
           </div>
         </DialogContent>
