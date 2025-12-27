@@ -2613,7 +2613,7 @@ const CashInEntry = ({ onBack }) => {
                 <div className="border-2 border-t-0 border-black">
                   <div className="bg-white">
                     {/* Sub-Total */}
-                    <div className="flex justify-between px-3 py-1.5 text-[10px] border-b border-gray-300">
+                    <div className="flex justify-between px-4 py-2 text-sm border-b border-gray-300">
                       <span className="font-semibold text-black">Sub Total:</span>
                       <span className="font-semibold text-black">₹ {parseFloat(slots[selectedSlotForBill]?.amount || 0).toFixed(2)}</span>
                     </div>
@@ -2628,17 +2628,17 @@ const CashInEntry = ({ onBack }) => {
                           {/* GST Breakdown */}
                           {taxType === 'CGST+SGST' && taxRate > 0 ? (
                             <>
-                              <div className="flex justify-between px-3 py-1 text-[10px] border-b border-gray-200">
+                              <div className="flex justify-between px-4 py-1.5 text-xs border-b border-gray-200">
                                 <span className="text-gray-700">CGST @ {(taxRate / 2).toFixed(2)}%:</span>
                                 <span className="text-black">₹ {(taxAmount / 2).toFixed(2)}</span>
                               </div>
-                              <div className="flex justify-between px-3 py-1 text-[10px] border-b border-gray-200">
+                              <div className="flex justify-between px-4 py-1.5 text-xs border-b border-gray-200">
                                 <span className="text-gray-700">SGST @ {(taxRate / 2).toFixed(2)}%:</span>
                                 <span className="text-black">₹ {(taxAmount / 2).toFixed(2)}</span>
                               </div>
                             </>
                           ) : taxRate > 0 ? (
-                            <div className="flex justify-between px-3 py-1 text-[10px] border-b border-gray-200">
+                            <div className="flex justify-between px-4 py-1.5 text-xs border-b border-gray-200">
                               <span className="text-gray-700">IGST @ {taxRate}%:</span>
                               <span className="text-black">₹ {taxAmount.toFixed(2)}</span>
                             </div>
@@ -2648,7 +2648,7 @@ const CashInEntry = ({ onBack }) => {
                           {customTaxes.map(tax => {
                             const customTaxAmount = (subtotal * parseFloat(tax.rate)) / 100;
                             return parseFloat(tax.rate) > 0 ? (
-                              <div key={tax.id} className="flex justify-between px-3 py-1 text-[10px] border-b border-gray-200">
+                              <div key={tax.id} className="flex justify-between px-4 py-1.5 text-xs border-b border-gray-200">
                                 <span className="text-gray-700">{tax.name} @ {tax.rate}%:</span>
                                 <span className="text-black">₹ {customTaxAmount.toFixed(2)}</span>
                               </div>
@@ -2661,9 +2661,9 @@ const CashInEntry = ({ onBack }) => {
                   
                   {/* Grand Total */}
                   <div className="bg-gray-100 border-t-2 border-black">
-                    <div className="flex justify-between px-3 py-2">
-                      <span className="text-sm font-bold text-black">TOTAL AMOUNT:</span>
-                      <span className="text-base font-bold text-black">₹ {(() => {
+                    <div className="flex justify-between px-4 py-3">
+                      <span className="text-base font-bold text-black">TOTAL AMOUNT:</span>
+                      <span className="text-lg font-bold text-black">₹ {(() => {
                         const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                         const taxRate = parseFloat(taxSlab);
                         const customTaxTotal = customTaxes.reduce((sum, tax) => sum + parseFloat(tax.rate), 0);
@@ -2674,9 +2674,9 @@ const CashInEntry = ({ onBack }) => {
                     </div>
                     
                     {/* Amount in Words */}
-                    <div className="px-3 pb-2 text-[10px] text-black border-t border-gray-300 pt-1.5">
+                    <div className="px-4 pb-3 text-xs text-black border-t border-gray-300 pt-2">
                       <span className="font-semibold">Amount (in words):</span>
-                      <div className="mt-0.5 font-medium">{(() => {
+                      <div className="mt-1 font-medium">{(() => {
                         const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                         const taxRate = parseFloat(taxSlab);
                         const customTaxTotal = customTaxes.reduce((sum, tax) => sum + parseFloat(tax.rate), 0);
