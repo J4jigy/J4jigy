@@ -2439,41 +2439,215 @@ const CashInEntry = ({ onBack }) => {
           </div>
           
           {selectedSlotForBill !== null && (
-            <div id="invoice-content" className="bg-white w-full" style={{ maxWidth: '210mm', minHeight: '297mm', margin: '20px auto', padding: '25px', fontSize: '11pt', lineHeight: '1.6' }}>
-              {/* Header with Logo and Company Details */}
-              <div style={{ border: '1px solid black', marginBottom: '20px' }}>
-                <div className="flex items-start gap-5" style={{ padding: '15px' }}>
-                  {/* Logo - 5% width */}
-                  <div style={{ width: '70px', height: '70px', border: '1px solid #999', flexShrink: 0 }} className="flex items-center justify-center bg-white">
-                    <span className="text-sm text-gray-500 font-bold">LOGO</span>
-                  </div>
-                  
-                  {/* Company Details - 45% width */}
-                  <div className="flex-1">
-                    <div style={{ fontSize: '16pt', fontWeight: 'bold', marginBottom: '6px' }}>{activeBusiness?.name || 'BUSINESS NAME'}</div>
-                    <div style={{ fontSize: '10pt', marginBottom: '6px', lineHeight: '1.4' }}>{activeBusiness?.address || 'Address Line 1, Address Line 2'}</div>
-                    <div style={{ fontSize: '10pt', marginBottom: '5px', lineHeight: '1.4' }}>
-                      <span style={{ fontWeight: 'bold' }}>Registered Office:</span> {activeBusiness?.address || 'Registered Address'}
-                    </div>
-                    <div style={{ fontSize: '10pt', marginBottom: '5px', lineHeight: '1.4' }}>
-                      <span style={{ fontWeight: 'bold' }}>CIN:</span> {activeBusiness?.cin || 'L23109MH1952GOI008858'} | 
-                      <span style={{ fontWeight: 'bold', marginLeft: '10px' }}>TIN(VAT):</span> {activeBusiness?.tin || '27000000000'} | 
-                      <span style={{ fontWeight: 'bold', marginLeft: '10px' }}>PAN:</span> {activeBusiness?.pan || 'AAACH0000A'}
-                    </div>
-                    {activeBusiness?.phone && (
-                      <div style={{ fontSize: '10pt', lineHeight: '1.4' }}>
-                        <span style={{ fontWeight: 'bold' }}>Phone:</span> {activeBusiness.phone}
-                        {activeBusiness?.email && <span style={{ marginLeft: '15px' }}><span style={{ fontWeight: 'bold' }}>Email:</span> {activeBusiness.email}</span>}
-                      </div>
-                    )}
+            <div id="invoice-content" className="bg-white w-full" style={{ maxWidth: '210mm', minHeight: '297mm', margin: '0 auto', padding: '20mm', fontSize: '10pt' }}>
+              
+              {/* GST Tax Invoice Header */}
+              <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+                <h1 style={{ fontSize: '20pt', fontWeight: 'bold', margin: '0 0 5px 0' }}>TAX INVOICE</h1>
+                <div style={{ fontSize: '9pt', color: '#666' }}>GST Compliant Invoice</div>
+              </div>
+
+              {/* Supplier and Buyer Details Grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginBottom: '20px', border: '1px solid #333' }}>
+                {/* Supplier Details */}
+                <div style={{ padding: '15px', borderRight: '1px solid #333' }}>
+                  <div style={{ fontSize: '11pt', fontWeight: 'bold', marginBottom: '10px', color: '#000' }}>SUPPLIER DETAILS</div>
+                  <div style={{ fontSize: '10pt', lineHeight: '1.6' }}>
+                    <div style={{ fontWeight: 'bold', fontSize: '11pt', marginBottom: '5px' }}>{activeBusiness?.name || 'Business Name'}</div>
+                    <div>{activeBusiness?.address || 'Business Address Line 1'}</div>
+                    <div>{activeBusiness?.city || 'City'}, {activeBusiness?.state || 'State'} - {activeBusiness?.pincode || '400001'}</div>
+                    <div style={{ marginTop: '8px' }}><span style={{ fontWeight: 'bold' }}>GSTIN:</span> {activeBusiness?.gst || '27XXXXX0000X1Z5'}</div>
+                    <div><span style={{ fontWeight: 'bold' }}>State:</span> {activeBusiness?.state || 'Maharashtra'} | <span style={{ fontWeight: 'bold' }}>Code:</span> 27</div>
+                    <div style={{ marginTop: '5px' }}><span style={{ fontWeight: 'bold' }}>Phone:</span> {activeBusiness?.phone || '+91 1234567890'}</div>
+                    {activeBusiness?.email && <div><span style={{ fontWeight: 'bold' }}>Email:</span> {activeBusiness.email}</div>}
                   </div>
                 </div>
-                
-                {/* Location/Branch */}
-                <div style={{ borderTop: '1px solid black', padding: '10px 15px', backgroundColor: '#f5f5f5' }}>
-                  <div style={{ fontSize: '11pt', fontWeight: 'bold' }}>{activeBusiness?.branch || 'LOCATION / BRANCH NAME'}</div>
+
+                {/* Buyer Details */}
+                <div style={{ padding: '15px' }}>
+                  <div style={{ fontSize: '11pt', fontWeight: 'bold', marginBottom: '10px', color: '#000' }}>BUYER DETAILS</div>
+                  <div style={{ fontSize: '10pt', lineHeight: '1.6' }}>
+                    <div style={{ fontWeight: 'bold', fontSize: '11pt', marginBottom: '5px' }}>{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label || 'Customer Name'}</div>
+                    <div>{activeBusiness?.customerAddress || 'Customer Address Line 1'}</div>
+                    <div>{activeBusiness?.customerCity || 'City'}, {activeBusiness?.customerState || 'Maharashtra'} - {activeBusiness?.customerPincode || '400001'}</div>
+                    <div style={{ marginTop: '8px' }}><span style={{ fontWeight: 'bold' }}>GSTIN:</span> {activeBusiness?.customerGst || 'Unregistered'}</div>
+                    <div><span style={{ fontWeight: 'bold' }}>State:</span> {activeBusiness?.customerState || 'Maharashtra'} | <span style={{ fontWeight: 'bold' }}>Code:</span> 27</div>
+                    <div style={{ marginTop: '5px' }}><span style={{ fontWeight: 'bold' }}>Place of Supply:</span> {activeBusiness?.customerState || 'Maharashtra'}</div>
+                  </div>
                 </div>
               </div>
+
+              {/* Invoice Details */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '10px', marginBottom: '20px', padding: '12px', backgroundColor: '#f8f8f8', border: '1px solid #333' }}>
+                <div>
+                  <div style={{ fontWeight: 'bold', fontSize: '9pt', marginBottom: '3px' }}>Invoice No.</div>
+                  <div style={{ fontSize: '10pt' }}>{slots[selectedSlotForBill]?.invoiceNumber || `INV/${new Date().getFullYear()}/${String(Date.now()).slice(-6)}`}</div>
+                </div>
+                <div>
+                  <div style={{ fontWeight: 'bold', fontSize: '9pt', marginBottom: '3px' }}>Invoice Date</div>
+                  <div style={{ fontSize: '10pt' }}>{slots[selectedSlotForBill]?.invoiceDate || new Date().toLocaleDateString('en-IN')}</div>
+                </div>
+                <div>
+                  <div style={{ fontWeight: 'bold', fontSize: '9pt', marginBottom: '3px' }}>Payment Mode</div>
+                  <div style={{ fontSize: '10pt' }}>{slots[selectedSlotForBill]?.paymentMode || 'Cash'}</div>
+                </div>
+              </div>
+
+              {/* Items Table */}
+              <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '15px', fontSize: '9.5pt' }}>
+                <thead>
+                  <tr style={{ backgroundColor: '#333', color: 'white' }}>
+                    <th style={{ border: '1px solid #333', padding: '10px 8px', textAlign: 'left', width: '5%' }}>S.No</th>
+                    <th style={{ border: '1px solid #333', padding: '10px 8px', textAlign: 'left', width: '35%' }}>Description of Goods/Services</th>
+                    <th style={{ border: '1px solid #333', padding: '10px 8px', textAlign: 'center', width: '12%' }}>HSN/SAC</th>
+                    <th style={{ border: '1px solid #333', padding: '10px 8px', textAlign: 'center', width: '8%' }}>Qty</th>
+                    <th style={{ border: '1px solid #333', padding: '10px 8px', textAlign: 'right', width: '15%' }}>Rate (₹)</th>
+                    <th style={{ border: '1px solid #333', padding: '10px 8px', textAlign: 'right', width: '15%' }}>Taxable Value (₹)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
+                    <tr>
+                      <td style={{ border: '1px solid #ddd', padding: '10px 8px', textAlign: 'center' }}>1</td>
+                      <td style={{ border: '1px solid #ddd', padding: '10px 8px' }}>
+                        {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
+                          ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
+                          : 'Product/Service'}
+                      </td>
+                      <td style={{ border: '1px solid #ddd', padding: '10px 8px', textAlign: 'center' }}>9954</td>
+                      <td style={{ border: '1px solid #ddd', padding: '10px 8px', textAlign: 'center' }}>1</td>
+                      <td style={{ border: '1px solid #ddd', padding: '10px 8px', textAlign: 'right' }}>{parseFloat(slots[selectedSlotForBill]?.amount).toFixed(2)}</td>
+                      <td style={{ border: '1px solid #ddd', padding: '10px 8px', textAlign: 'right', fontWeight: 'bold' }}>{parseFloat(slots[selectedSlotForBill]?.amount).toFixed(2)}</td>
+                    </tr>
+                  ) : (
+                    <tr>
+                      <td colSpan="6" style={{ border: '1px solid #ddd', padding: '20px', textAlign: 'center', color: '#999' }}>No items added</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+
+              {/* Tax Calculation */}
+              <div style={{ display: 'grid', gridTemplateColumns: '60% 40%', gap: '15px', marginBottom: '20px' }}>
+                {/* Left side - Amount in words */}
+                <div style={{ padding: '15px', border: '1px solid #ddd', backgroundColor: '#f8f8f8' }}>
+                  <div style={{ fontWeight: 'bold', fontSize: '10pt', marginBottom: '8px' }}>Amount in Words:</div>
+                  <div style={{ fontSize: '10pt', lineHeight: '1.5' }}>
+                    {(() => {
+                      const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
+                      const taxRate = parseFloat(taxSlab);
+                      const customTaxTotal = customTaxes.reduce((sum, tax) => sum + parseFloat(tax.rate), 0);
+                      const totalTaxRate = taxRate + customTaxTotal;
+                      const total = subtotal * (1 + totalTaxRate / 100);
+                      const rupees = Math.floor(total);
+                      
+                      const convertToWords = (num) => {
+                        const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+                        const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+                        const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+                        
+                        if (num === 0) return 'Zero';
+                        if (num < 10) return ones[num];
+                        if (num >= 10 && num < 20) return teens[num - 10];
+                        if (num >= 20 && num < 100) return tens[Math.floor(num / 10)] + (num % 10 ? ' ' + ones[num % 10] : '');
+                        if (num >= 100 && num < 1000) return ones[Math.floor(num / 100)] + ' Hundred' + (num % 100 ? ' ' + convertToWords(num % 100) : '');
+                        if (num >= 1000 && num < 100000) return convertToWords(Math.floor(num / 1000)) + ' Thousand' + (num % 1000 ? ' ' + convertToWords(num % 1000) : '');
+                        if (num >= 100000) return convertToWords(Math.floor(num / 100000)) + ' Lakh' + (num % 100000 ? ' ' + convertToWords(num % 100000) : '');
+                      };
+                      
+                      return `Indian Rupees ${convertToWords(rupees)} Only`;
+                    })()}
+                  </div>
+                </div>
+
+                {/* Right side - Tax breakdown */}
+                <div style={{ border: '1px solid #333' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '10pt' }}>
+                    <tbody>
+                      <tr style={{ backgroundColor: '#f8f8f8' }}>
+                        <td style={{ padding: '8px', fontWeight: 'bold', borderBottom: '1px solid #ddd' }}>Taxable Amount:</td>
+                        <td style={{ padding: '8px', textAlign: 'right', borderBottom: '1px solid #ddd' }}>₹ {parseFloat(slots[selectedSlotForBill]?.amount || 0).toFixed(2)}</td>
+                      </tr>
+                      {(() => {
+                        const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
+                        const taxRate = parseFloat(taxSlab);
+                        const taxAmount = (subtotal * taxRate) / 100;
+                        
+                        return (
+                          <>
+                            {taxType === 'CGST+SGST' && taxRate > 0 ? (
+                              <>
+                                <tr>
+                                  <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>CGST @ {(taxRate / 2)}%:</td>
+                                  <td style={{ padding: '8px', textAlign: 'right', borderBottom: '1px solid #ddd' }}>₹ {(taxAmount / 2).toFixed(2)}</td>
+                                </tr>
+                                <tr>
+                                  <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>SGST @ {(taxRate / 2)}%:</td>
+                                  <td style={{ padding: '8px', textAlign: 'right', borderBottom: '1px solid #ddd' }}>₹ {(taxAmount / 2).toFixed(2)}</td>
+                                </tr>
+                              </>
+                            ) : taxRate > 0 ? (
+                              <tr>
+                                <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>IGST @ {taxRate}%:</td>
+                                <td style={{ padding: '8px', textAlign: 'right', borderBottom: '1px solid #ddd' }}>₹ {taxAmount.toFixed(2)}</td>
+                              </tr>
+                            ) : null}
+                            
+                            {customTaxes.map(tax => {
+                              const customTaxAmount = (subtotal * parseFloat(tax.rate)) / 100;
+                              return parseFloat(tax.rate) > 0 ? (
+                                <tr key={tax.id}>
+                                  <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>{tax.name} @ {tax.rate}%:</td>
+                                  <td style={{ padding: '8px', textAlign: 'right', borderBottom: '1px solid #ddd' }}>₹ {customTaxAmount.toFixed(2)}</td>
+                                </tr>
+                              ) : null;
+                            })}
+                          </>
+                        );
+                      })()}
+                      <tr style={{ backgroundColor: '#333', color: 'white' }}>
+                        <td style={{ padding: '10px 8px', fontWeight: 'bold', fontSize: '11pt' }}>TOTAL AMOUNT:</td>
+                        <td style={{ padding: '10px 8px', textAlign: 'right', fontWeight: 'bold', fontSize: '11pt' }}>
+                          ₹ {(() => {
+                            const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
+                            const taxRate = parseFloat(taxSlab);
+                            const customTaxTotal = customTaxes.reduce((sum, tax) => sum + parseFloat(tax.rate), 0);
+                            const totalTaxRate = taxRate + customTaxTotal;
+                            return (subtotal * (1 + totalTaxRate / 100)).toFixed(2);
+                          })()}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Terms and Signature */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', marginTop: '30px' }}>
+                {/* Terms & Conditions */}
+                <div>
+                  <div style={{ fontWeight: 'bold', fontSize: '10pt', marginBottom: '8px' }}>Terms & Conditions:</div>
+                  <div style={{ fontSize: '9pt', lineHeight: '1.5', color: '#333' }}>
+                    {termsText || '1. Payment due within 30 days\n2. Goods once sold will not be taken back\n3. Subject to jurisdiction'}
+                  </div>
+                </div>
+
+                {/* Authorized Signature */}
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{ fontWeight: 'bold', fontSize: '10pt', marginBottom: '40px' }}>For {activeBusiness?.name || 'Business Name'}</div>
+                  <div style={{ borderTop: '1px solid #333', display: 'inline-block', paddingTop: '5px', minWidth: '150px' }}>
+                    <div style={{ fontSize: '9pt' }}>Authorized Signatory</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div style={{ marginTop: '30px', textAlign: 'center', fontSize: '8pt', color: '#666', fontStyle: 'italic' }}>
+                This is a computer-generated GST-compliant invoice
+              </div>
+
+            </div>
+          )}
 
               {/* Sold To and Ship To Section */}
               <div style={{ border: '1px solid black', borderTop: 'none', display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
