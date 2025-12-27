@@ -2439,23 +2439,40 @@ const CashInEntry = ({ onBack }) => {
           </div>
           
           {selectedSlotForBill !== null && (
-            <div id="invoice-content" className="space-y-2 bg-white p-2 rounded w-full">
-              {/* GST Invoice Header */}
-              <div className="text-center border-2 border-black p-2">
-                <div className="text-lg font-bold text-black mb-1">{activeBusiness?.name || 'BUSINESS NAME'}</div>
-                {activeBusiness?.address && (
-                  <div className="text-xs text-black">{activeBusiness.address}</div>
-                )}
-                <div className="flex justify-center gap-4 mt-1 text-xs text-black flex-wrap">
-                  {activeBusiness?.phone && (
-                    <span><span className="font-semibold">Phone:</span> {activeBusiness.phone}</span>
-                  )}
-                  {activeBusiness?.gst && (
-                    <span><span className="font-semibold">GSTIN:</span> {activeBusiness.gst}</span>
-                  )}
+            <div id="invoice-content" className="space-y-0 bg-white p-3 rounded w-full max-w-4xl mx-auto">
+              {/* Professional Header with Logo */}
+              <div className="border-2 border-black">
+                <div className="flex items-center justify-between p-3 border-b-2 border-black bg-gray-50">
+                  {/* Logo Placeholder */}
+                  <div className="w-16 h-16 border-2 border-gray-400 flex items-center justify-center bg-white">
+                    <span className="text-[8px] text-gray-400 text-center">LOGO</span>
+                  </div>
+                  
+                  {/* Company Details */}
+                  <div className="flex-1 ml-3 text-center">
+                    <div className="text-lg font-bold text-black uppercase tracking-wide">{activeBusiness?.name || 'BUSINESS NAME'}</div>
+                    {activeBusiness?.address && (
+                      <div className="text-[10px] text-black mt-0.5">{activeBusiness.address}</div>
+                    )}
+                    <div className="text-[9px] text-black mt-1">
+                      Registered Office: {activeBusiness?.address || 'Registered Address Here'}
+                    </div>
+                    <div className="flex justify-center gap-3 mt-1 text-[9px] text-black">
+                      {activeBusiness?.phone && <span>Phone: {activeBusiness.phone}</span>}
+                      {activeBusiness?.email && <span>Email: {activeBusiness.email}</span>}
+                    </div>
+                    {activeBusiness?.gst && (
+                      <div className="text-[9px] text-black mt-0.5">
+                        GSTIN: <span className="font-semibold">{activeBusiness.gst}</span> | 
+                        PAN: <span className="font-semibold">{activeBusiness?.pan || 'XXXXXX1234X'}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className="mt-1 text-base font-bold text-black border-t-2 border-black pt-1">
-                  TAX INVOICE
+                
+                {/* Tax Invoice Title */}
+                <div className="text-center py-1.5 bg-gray-100 border-b-2 border-black">
+                  <div className="text-base font-bold text-black tracking-wider">TAX INVOICE</div>
                 </div>
               </div>
 
