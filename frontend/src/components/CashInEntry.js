@@ -2439,40 +2439,39 @@ const CashInEntry = ({ onBack }) => {
           </div>
           
           {selectedSlotForBill !== null && (
-            <div id="invoice-content" className="space-y-0 bg-white rounded w-full" style={{ maxWidth: '210mm', minHeight: '297mm', margin: '0 auto', padding: '10mm' }}>
-              {/* Professional Header with Logo */}
-              <div className="border-2 border-black">
-                <div className="flex items-center justify-between p-2 border-b-2 border-black bg-gray-50">
-                  {/* Logo Placeholder */}
-                  <div className="w-16 h-16 border-2 border-gray-400 flex items-center justify-center bg-white flex-shrink-0">
-                    <span className="text-[10px] text-gray-400 text-center font-semibold">LOGO</span>
+            <div id="invoice-content" className="bg-white w-full" style={{ maxWidth: '210mm', minHeight: '297mm', margin: '0 auto', padding: '5mm', fontSize: '10px' }}>
+              {/* Header with Logo and Company Details */}
+              <div className="border border-black mb-1">
+                <div className="flex items-start p-2 gap-2">
+                  {/* Logo */}
+                  <div className="w-16 h-16 border border-gray-400 flex items-center justify-center bg-white flex-shrink-0">
+                    <span className="text-[8px] text-gray-500 font-bold">LOGO</span>
                   </div>
                   
                   {/* Company Details */}
-                  <div className="flex-1 ml-3 text-center">
-                    <div className="text-lg font-bold text-black uppercase tracking-wide">{activeBusiness?.name || 'BUSINESS NAME'}</div>
-                    {activeBusiness?.address && (
-                      <div className="text-[10px] text-black mt-0.5">{activeBusiness.address}</div>
-                    )}
-                    <div className="text-[9px] text-black mt-0.5">
-                      Registered Office: {activeBusiness?.address || 'Registered Address Here'}
+                  <div className="flex-1">
+                    <div className="text-sm font-bold text-black uppercase">{activeBusiness?.name || 'BUSINESS NAME'}</div>
+                    <div className="text-[8px] text-black mt-0.5">{activeBusiness?.address || 'Address Line 1, Address Line 2'}</div>
+                    <div className="text-[8px] text-black mt-1">
+                      <span className="font-bold">Registered Office:</span> {activeBusiness?.address || 'Registered Address'}
                     </div>
-                    <div className="flex justify-center gap-3 mt-0.5 text-[9px] text-black">
-                      {activeBusiness?.phone && <span>Phone: {activeBusiness.phone}</span>}
-                      {activeBusiness?.email && <span>Email: {activeBusiness.email}</span>}
+                    <div className="text-[8px] text-black mt-0.5">
+                      <span className="font-bold">CIN:</span> {activeBusiness?.cin || 'L23109MH1952GOI008858'} | 
+                      <span className="font-bold ml-2">TIN(VAT):</span> {activeBusiness?.tin || '27000000000'} | 
+                      <span className="font-bold ml-2">PAN:</span> {activeBusiness?.pan || 'AAACH0000A'}
                     </div>
-                    {activeBusiness?.gst && (
-                      <div className="text-[9px] text-black mt-0.5">
-                        GSTIN: <span className="font-semibold">{activeBusiness.gst}</span> | 
-                        PAN: <span className="font-semibold">{activeBusiness?.pan || 'XXXXXX1234X'}</span>
+                    {activeBusiness?.phone && (
+                      <div className="text-[8px] text-black mt-0.5">
+                        <span className="font-bold">Phone:</span> {activeBusiness.phone}
+                        {activeBusiness?.email && <span className="ml-2"><span className="font-bold">Email:</span> {activeBusiness.email}</span>}
                       </div>
                     )}
                   </div>
                 </div>
                 
-                {/* Tax Invoice Title */}
-                <div className="text-center py-1 bg-gray-100 border-b-2 border-black">
-                  <div className="text-base font-bold text-black tracking-wider">TAX INVOICE</div>
+                {/* Location/Branch */}
+                <div className="border-t border-black px-2 py-0.5 bg-gray-50">
+                  <div className="text-[9px] font-bold text-black">{activeBusiness?.branch || 'LOCATION / BRANCH NAME'}</div>
                 </div>
               </div>
 
