@@ -2652,10 +2652,10 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
               {/* Total Section */}
-              <div className="border border-black border-t-0">
-                <div className="flex justify-between items-center p-2.5 bg-gray-50">
-                  <div className="text-xs">
-                    <span className="font-bold">Value in words:</span> {(() => {
+              <div style={{ border: '0.75px solid black', borderTop: 'none', marginTop: '12px' }}>
+                <div className="flex justify-between items-center" style={{ padding: '10px', backgroundColor: '#f5f5f5' }}>
+                  <div style={{ fontSize: '9pt' }}>
+                    <span style={{ fontWeight: 'bold' }}>Value in words:</span> {(() => {
                       const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                       const taxRate = parseFloat(taxSlab);
                       const customTaxTotal = customTaxes.reduce((sum, tax) => sum + parseFloat(tax.rate), 0);
@@ -2681,8 +2681,8 @@ const CashInEntry = ({ onBack }) => {
                     })()}
                   </div>
                   <div className="text-right">
-                    <div className="text-xs font-bold">TOTAL VALUE</div>
-                    <div className="text-base font-bold">₹ {(() => {
+                    <div style={{ fontSize: '9pt', fontWeight: 'bold' }}>TOTAL VALUE</div>
+                    <div style={{ fontSize: '14pt', fontWeight: 'bold' }}>₹ {(() => {
                       const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                       const taxRate = parseFloat(taxSlab);
                       const customTaxTotal = customTaxes.reduce((sum, tax) => sum + parseFloat(tax.rate), 0);
@@ -2694,63 +2694,61 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
               {/* Quality Testing Section */}
-              <div className="border border-black border-t-0 mt-2">
-                <div className="grid grid-cols-6 text-[10px]">
-                  <div className="border-r border-black p-1">
-                    <div className="font-bold">Comp N Dip</div>
-                  </div>
-                  <div className="border-r border-black p-1">
-                    <div className="font-bold">PL</div>
-                  </div>
-                  <div className="border-r border-black p-1">
-                    <div className="font-bold">Vol</div>
-                  </div>
-                  <div className="border-r border-black p-1">
-                    <div className="font-bold">Sample No</div>
-                  </div>
-                  <div className="border-r border-black p-1">
-                    <div className="font-bold">Density</div>
-                  </div>
-                  <div className="p-1">
-                    <div className="font-bold">Temp</div>
-                  </div>
+              <div style={{ border: '0.75px solid black', borderTop: 'none', marginTop: '12px', display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', fontSize: '9pt' }}>
+                <div style={{ borderRight: '0.75px solid black', padding: '6px' }}>
+                  <div style={{ fontWeight: 'bold' }}>Comp N Dip</div>
+                </div>
+                <div style={{ borderRight: '0.75px solid black', padding: '6px' }}>
+                  <div style={{ fontWeight: 'bold' }}>PL</div>
+                </div>
+                <div style={{ borderRight: '0.75px solid black', padding: '6px' }}>
+                  <div style={{ fontWeight: 'bold' }}>Vol</div>
+                </div>
+                <div style={{ borderRight: '0.75px solid black', padding: '6px' }}>
+                  <div style={{ fontWeight: 'bold' }}>Sample No</div>
+                </div>
+                <div style={{ borderRight: '0.75px solid black', padding: '6px' }}>
+                  <div style={{ fontWeight: 'bold' }}>Density</div>
+                </div>
+                <div style={{ padding: '6px' }}>
+                  <div style={{ fontWeight: 'bold' }}>Temp</div>
                 </div>
               </div>
 
               {/* Received in Good Condition Section */}
-              <div className="border border-black border-t-0 mt-2 p-2">
-                <div className="text-xs font-bold mb-2">Received the products in good condition</div>
-                <div className="grid grid-cols-2 gap-3 text-[9px]">
+              <div style={{ border: '0.75px solid black', borderTop: 'none', marginTop: '12px', padding: '10px' }}>
+                <div style={{ fontSize: '10pt', fontWeight: 'bold', marginBottom: '8px' }}>Received the products in good condition</div>
+                <div className="grid grid-cols-2" style={{ gap: '16px', fontSize: '8.5pt' }}>
                   <div>
-                    <div className="mb-2">
-                      <span className="font-bold">VIDE:</span>
+                    <div style={{ marginBottom: '8px' }}>
+                      <span style={{ fontWeight: 'bold' }}>VIDE:</span>
                     </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      <div><span className="font-bold">INVOICE No:</span> {slots[selectedSlotForBill]?.invoiceNumber}</div>
-                      <div><span className="font-bold">DATE:</span> {slots[selectedSlotForBill]?.invoiceDate}</div>
-                      <div><span className="font-bold">CONT:</span></div>
-                      <div><span className="font-bold">Time:</span> {slots[selectedSlotForBill]?.invoiceTime}</div>
-                      <div><span className="font-bold">Shipment No:</span> SHIP-{String(Date.now()).slice(-8)}</div>
-                      <div><span className="font-bold">DELIVERED TO:</span> {slots[selectedSlotForBill]?.customName}</div>
+                    <div className="grid grid-cols-2" style={{ gap: '8px' }}>
+                      <div><span style={{ fontWeight: 'bold' }}>INVOICE No:</span> {slots[selectedSlotForBill]?.invoiceNumber}</div>
+                      <div><span style={{ fontWeight: 'bold' }}>DATE:</span> {slots[selectedSlotForBill]?.invoiceDate}</div>
+                      <div><span style={{ fontWeight: 'bold' }}>CONT:</span></div>
+                      <div><span style={{ fontWeight: 'bold' }}>Time:</span> {slots[selectedSlotForBill]?.invoiceTime}</div>
+                      <div><span style={{ fontWeight: 'bold' }}>Shipment No:</span> SHIP-{String(Date.now()).slice(-8)}</div>
+                      <div><span style={{ fontWeight: 'bold' }}>DELIVERED TO:</span> {slots[selectedSlotForBill]?.customName}</div>
                     </div>
                   </div>
                   
                   <div>
-                    <div className="mb-2">
-                      <div className="font-bold mb-2">Signature & Seal of Customer / Consignee</div>
-                      <div className="border border-gray-400 h-16 mb-2"></div>
+                    <div style={{ marginBottom: '8px' }}>
+                      <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Signature & Seal of Customer / Consignee</div>
+                      <div style={{ border: '0.75px solid #999', height: '60px', marginBottom: '8px' }}></div>
                     </div>
-                    <div className="grid grid-cols-3 gap-2 text-[9px]">
-                      <div><span className="font-bold">Cheque/DD No.</span></div>
-                      <div><span className="font-bold">DATED</span></div>
-                      <div><span className="font-bold">AMOUNT</span></div>
+                    <div className="grid grid-cols-3" style={{ gap: '8px', fontSize: '8.5pt' }}>
+                      <div><span style={{ fontWeight: 'bold' }}>Cheque/DD No.</span></div>
+                      <div><span style={{ fontWeight: 'bold' }}>DATED</span></div>
+                      <div><span style={{ fontWeight: 'bold' }}>AMOUNT</span></div>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Digital Signature Note */}
-              <div className="text-[9px] text-gray-600 italic mt-2 text-center">
+              <div style={{ fontSize: '8pt', color: '#666', fontStyle: 'italic', marginTop: '10px', textAlign: 'center' }}>
                 This is a computer-generated invoice
               </div>
 
