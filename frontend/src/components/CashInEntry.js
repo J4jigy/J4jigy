@@ -2647,8 +2647,8 @@ const CashInEntry = ({ onBack }) => {
 
               {/* Total Section */}
               <div className="border border-black border-t-0">
-                <div className="flex justify-between items-center p-1.5 bg-gray-50">
-                  <div className="text-[8px]">
+                <div className="flex justify-between items-center p-2.5 bg-gray-50">
+                  <div className="text-xs">
                     <span className="font-bold">Value in words:</span> {(() => {
                       const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                       const taxRate = parseFloat(taxSlab);
@@ -2675,8 +2675,8 @@ const CashInEntry = ({ onBack }) => {
                     })()}
                   </div>
                   <div className="text-right">
-                    <div className="text-[8px] font-bold">TOTAL VALUE</div>
-                    <div className="text-sm font-bold">₹ {(() => {
+                    <div className="text-xs font-bold">TOTAL VALUE</div>
+                    <div className="text-base font-bold">₹ {(() => {
                       const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                       const taxRate = parseFloat(taxSlab);
                       const customTaxTotal = customTaxes.reduce((sum, tax) => sum + parseFloat(tax.rate), 0);
@@ -2687,39 +2687,39 @@ const CashInEntry = ({ onBack }) => {
                 </div>
               </div>
 
-              {/* Quality Testing Section - Optional */}
-              <div className="border border-black border-t-0 mt-1">
-                <div className="grid grid-cols-6 text-[8px]">
-                  <div className="border-r border-black p-0.5">
+              {/* Quality Testing Section */}
+              <div className="border border-black border-t-0 mt-2">
+                <div className="grid grid-cols-6 text-[10px]">
+                  <div className="border-r border-black p-1">
                     <div className="font-bold">Comp N Dip</div>
                   </div>
-                  <div className="border-r border-black p-0.5">
+                  <div className="border-r border-black p-1">
                     <div className="font-bold">PL</div>
                   </div>
-                  <div className="border-r border-black p-0.5">
+                  <div className="border-r border-black p-1">
                     <div className="font-bold">Vol</div>
                   </div>
-                  <div className="border-r border-black p-0.5">
+                  <div className="border-r border-black p-1">
                     <div className="font-bold">Sample No</div>
                   </div>
-                  <div className="border-r border-black p-0.5">
+                  <div className="border-r border-black p-1">
                     <div className="font-bold">Density</div>
                   </div>
-                  <div className="p-0.5">
+                  <div className="p-1">
                     <div className="font-bold">Temp</div>
                   </div>
                 </div>
               </div>
 
               {/* Received in Good Condition Section */}
-              <div className="border border-black border-t-0 mt-1 p-1.5">
-                <div className="text-[9px] font-bold mb-1">Received the products in good condition</div>
-                <div className="grid grid-cols-2 gap-2 text-[7px]">
+              <div className="border border-black border-t-0 mt-2 p-2">
+                <div className="text-xs font-bold mb-2">Received the products in good condition</div>
+                <div className="grid grid-cols-2 gap-3 text-[9px]">
                   <div>
                     <div className="mb-2">
                       <span className="font-bold">VIDE:</span>
                     </div>
-                    <div className="grid grid-cols-2 gap-1">
+                    <div className="grid grid-cols-2 gap-2">
                       <div><span className="font-bold">INVOICE No:</span> {slots[selectedSlotForBill]?.invoiceNumber}</div>
                       <div><span className="font-bold">DATE:</span> {slots[selectedSlotForBill]?.invoiceDate}</div>
                       <div><span className="font-bold">CONT:</span></div>
@@ -2731,10 +2731,10 @@ const CashInEntry = ({ onBack }) => {
                   
                   <div>
                     <div className="mb-2">
-                      <div className="font-bold mb-1">Signature & Seal of Customer / Consignee</div>
-                      <div className="border border-gray-400 h-12 mb-2"></div>
+                      <div className="font-bold mb-2">Signature & Seal of Customer / Consignee</div>
+                      <div className="border border-gray-400 h-16 mb-2"></div>
                     </div>
-                    <div className="grid grid-cols-3 gap-1 text-[7px]">
+                    <div className="grid grid-cols-3 gap-2 text-[9px]">
                       <div><span className="font-bold">Cheque/DD No.</span></div>
                       <div><span className="font-bold">DATED</span></div>
                       <div><span className="font-bold">AMOUNT</span></div>
@@ -2744,7 +2744,7 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
               {/* Digital Signature Note */}
-              <div className="text-[7px] text-gray-600 italic mt-1 text-center">
+              <div className="text-[9px] text-gray-600 italic mt-2 text-center">
                 This is a computer-generated invoice
               </div>
 
