@@ -2478,63 +2478,63 @@ const CashInEntry = ({ onBack }) => {
               {/* Sold To and Ship To Section */}
               <div className="border border-black border-t-0 grid grid-cols-2">
                 {/* Sold To */}
-                <div className="border-r border-black p-1.5">
-                  <div className="font-bold text-[8px] mb-0.5">SOLD TO:</div>
-                  <div className="text-[8px]">
+                <div className="border-r border-black p-2">
+                  <div className="font-bold text-xs mb-1">SOLD TO:</div>
+                  <div className="text-xs">
                     <div><span className="font-bold">Code:</span> {String(Date.now()).slice(-8)}</div>
-                    <div className="font-bold mt-0.5">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</div>
-                    <div className="mt-0.5">{activeBusiness?.customerAddress || 'Customer Address Line 1'}</div>
+                    <div className="font-bold mt-1">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</div>
+                    <div className="mt-1">{activeBusiness?.customerAddress || 'Customer Address Line 1'}</div>
                     <div>{activeBusiness?.customerAddress2 || 'Customer Address Line 2'}</div>
-                    <div className="mt-0.5"><span className="font-bold">State:</span> Maharashtra <span className="font-bold ml-2">State Code:</span> 27</div>
+                    <div className="mt-1"><span className="font-bold">State:</span> Maharashtra <span className="font-bold ml-3">State Code:</span> 27</div>
                   </div>
                 </div>
                 
                 {/* Ship To */}
-                <div className="p-1.5">
-                  <div className="font-bold text-[8px] mb-0.5">SHIP TO:</div>
-                  <div className="text-[8px]">
+                <div className="p-2">
+                  <div className="font-bold text-xs mb-1">SHIP TO:</div>
+                  <div className="text-xs">
                     <div>Same as SOLD TO address</div>
-                    <div className="mt-1"><span className="font-bold">Payment Mode:</span> {slots[selectedSlotForBill]?.paymentMode}</div>
+                    <div className="mt-2"><span className="font-bold">Payment Mode:</span> {slots[selectedSlotForBill]?.paymentMode}</div>
                     {slots[selectedSlotForBill]?.paymentMode === 'Credit' && slots[selectedSlotForBill]?.creditPeriod && (
-                      <div className="mt-0.5"><span className="font-bold">Credit Period:</span> {slots[selectedSlotForBill]?.creditPeriod}</div>
+                      <div className="mt-1"><span className="font-bold">Credit Period:</span> {slots[selectedSlotForBill]?.creditPeriod}</div>
                     )}
                   </div>
                 </div>
               </div>
 
               {/* Invoice Details Row */}
-              <div className="border border-black border-t-0 grid grid-cols-4 text-[8px]">
-                <div className="border-r border-black p-1">
+              <div className="border border-black border-t-0 grid grid-cols-4 text-xs">
+                <div className="border-r border-black p-1.5">
                   <div className="font-bold">INVOICE:</div>
-                  <div>{slots[selectedSlotForBill]?.invoiceNumber || `INV-${selectedSlotForBill + 1}-${String(Date.now()).slice(-6)}`}</div>
+                  <div className="mt-0.5">{slots[selectedSlotForBill]?.invoiceNumber || `INV-${selectedSlotForBill + 1}-${String(Date.now()).slice(-6)}`}</div>
                 </div>
-                <div className="border-r border-black p-1">
+                <div className="border-r border-black p-1.5">
                   <div className="font-bold">DATE:</div>
-                  <div>{slots[selectedSlotForBill]?.invoiceDate || new Date().toLocaleDateString('en-GB')}</div>
+                  <div className="mt-0.5">{slots[selectedSlotForBill]?.invoiceDate || new Date().toLocaleDateString('en-GB')}</div>
                 </div>
-                <div className="border-r border-black p-1">
+                <div className="border-r border-black p-1.5">
                   <div className="font-bold">TIME:</div>
-                  <div>{slots[selectedSlotForBill]?.invoiceTime || new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</div>
+                  <div className="mt-0.5">{slots[selectedSlotForBill]?.invoiceTime || new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</div>
                 </div>
-                <div className="p-1">
+                <div className="p-1.5">
                   <div className="font-bold">SHIPMENT NO:</div>
-                  <div>SHIP-{String(Date.now()).slice(-8)}</div>
+                  <div className="mt-0.5">SHIP-{String(Date.now()).slice(-8)}</div>
                 </div>
               </div>
 
               {/* Vehicle Details Row */}
-              <div className="border border-black border-t-0 grid grid-cols-3 text-[8px]">
-                <div className="border-r border-black p-1">
+              <div className="border border-black border-t-0 grid grid-cols-3 text-xs">
+                <div className="border-r border-black p-1.5">
                   <div className="font-bold">VEHICLE NO:</div>
-                  <div>{activeBusiness?.vehicleNo || 'MH-01-AB-1234'}</div>
+                  <div className="mt-0.5">{activeBusiness?.vehicleNo || 'MH-01-AB-1234'}</div>
                 </div>
-                <div className="border-r border-black p-1">
+                <div className="border-r border-black p-1.5">
                   <div className="font-bold">DRIVER:</div>
-                  <div>{activeBusiness?.driverName || 'Driver Name'}</div>
+                  <div className="mt-0.5">{activeBusiness?.driverName || 'Driver Name'}</div>
                 </div>
-                <div className="p-1">
+                <div className="p-1.5">
                   <div className="font-bold">LOAD NO:</div>
-                  <div>LD-{String(Date.now()).slice(-6)}</div>
+                  <div className="mt-0.5">LD-{String(Date.now()).slice(-6)}</div>
                 </div>
               </div>
 
