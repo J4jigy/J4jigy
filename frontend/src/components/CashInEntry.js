@@ -2739,12 +2739,12 @@ const CashInEntry = ({ onBack }) => {
                   </div>
                 )}
 
-                {/* Terms & Conditions Footer with Signature Blocks */}
+                {/* Terms & Conditions Footer - Compact */}
                 <div className="border-2 border-t-0 border-black bg-white">
                   {/* Terms & Conditions */}
-                  <div className="p-3 border-b border-black">
-                    <div className="flex justify-between items-center mb-2">
-                      <div className="font-semibold text-black text-sm">Terms & Conditions:</div>
+                  <div className="p-2 border-b border-black">
+                    <div className="flex justify-between items-center mb-1">
+                      <div className="font-semibold text-black text-[10px]">Terms & Conditions:</div>
                       {!isEditingTerms ? (
                         <Button
                           onClick={() => {
@@ -2753,28 +2753,28 @@ const CashInEntry = ({ onBack }) => {
                           }}
                           variant="ghost"
                           size="sm"
-                          className="text-xs h-6 px-2 text-blue-600 hover:text-blue-700"
+                          className="text-[9px] h-5 px-1 text-blue-600 hover:text-blue-700"
                         >
                           Edit
                         </Button>
                       ) : (
                         <div className="flex gap-1">
-                          <Button onClick={saveTerms} size="sm" className="h-6 px-2 text-xs bg-green-600 hover:bg-green-700 text-white">
+                          <Button onClick={saveTerms} size="sm" className="h-5 px-1 text-[9px] bg-green-600 hover:bg-green-700 text-white">
                             Save
                           </Button>
-                          <Button onClick={cancelTermsEdit} variant="ghost" size="sm" className="h-6 px-2 text-xs text-gray-600">
+                          <Button onClick={cancelTermsEdit} variant="ghost" size="sm" className="h-5 px-1 text-[9px] text-gray-600">
                             Cancel
                           </Button>
                         </div>
                       )}
                     </div>
                     
-                    <div className="text-xs text-black">
+                    <div className="text-[9px] text-black">
                       {isEditingTerms ? (
                         <textarea
                           value={tempTermsText}
                           onChange={(e) => setTempTermsText(e.target.value)}
-                          className="w-full bg-white border border-gray-300 text-black text-xs p-2 rounded min-h-[60px] focus:outline-none focus:border-blue-500"
+                          className="w-full bg-white border border-gray-300 text-black text-[9px] p-1 rounded min-h-[40px] focus:outline-none focus:border-blue-500"
                           placeholder="Enter terms and conditions..."
                         />
                       ) : (
@@ -2785,62 +2785,62 @@ const CashInEntry = ({ onBack }) => {
                     </div>
                     
                     {/* E. & O.E. */}
-                    <div className="text-[10px] text-gray-600 italic mt-2">
+                    <div className="text-[8px] text-gray-600 italic mt-1">
                       E. & O.E. (Errors and Omissions Excepted)
                     </div>
                   </div>
                   
                   {/* Signature Blocks */}
                   <div className="grid grid-cols-2 divide-x divide-black">
-                    {/* Customer/Consignee Signature */}
-                    <div className="p-3">
-                      <div className="text-xs text-black font-semibold mb-2">
-                        RECEIVED THE PRODUCTS IN GOOD CONDITION
+                    {/* Customer Signature */}
+                    <div className="p-2">
+                      <div className="text-[9px] text-black font-semibold mb-1">
+                        RECEIVED IN GOOD CONDITION
                       </div>
-                      <div className="mt-12 pt-2 border-t border-gray-400">
-                        <div className="text-xs text-black">Signature & Seal of Customer/Consignee</div>
+                      <div className="mt-6 pt-1.5 border-t border-gray-400">
+                        <div className="text-[9px] text-black">Customer/Consignee Signature</div>
                       </div>
-                      <div className="mt-3 text-xs text-gray-700">
-                        <div>Date: _________________</div>
+                      <div className="mt-2 text-[8px] text-gray-700">
+                        <div>Date: ______________</div>
                       </div>
                     </div>
                     
                     {/* Authorized Signatory */}
-                    <div className="p-3">
-                      <div className="text-xs text-black font-semibold mb-2">
+                    <div className="p-2">
+                      <div className="text-[9px] text-black font-semibold mb-1">
                         FOR {(activeBusiness?.name || 'BUSINESS NAME').toUpperCase()}
                       </div>
-                      <div className="mt-12 pt-2 border-t border-gray-400">
-                        <div className="text-xs text-black">Authorized Signatory</div>
+                      <div className="mt-6 pt-1.5 border-t border-gray-400">
+                        <div className="text-[9px] text-black">Authorized Signatory</div>
                       </div>
-                      <div className="mt-3 text-xs text-gray-700">
-                        <div>Driver's Signature: _____________</div>
+                      <div className="mt-2 text-[8px] text-gray-700">
+                        <div>Driver: ______________</div>
                       </div>
                     </div>
                   </div>
                   
                   {/* Payment Details */}
-                  <div className="border-t border-black p-3 bg-gray-50">
-                    <div className="grid grid-cols-3 gap-3 text-xs">
+                  <div className="border-t border-black p-1.5 bg-gray-50">
+                    <div className="grid grid-cols-3 gap-2 text-[8px]">
                       <div>
-                        <span className="text-gray-700 font-medium">Cheque/DD No:</span>
-                        <div className="border-b border-gray-400 mt-1 h-5"></div>
+                        <span className="text-gray-700">Cheque/DD No:</span>
+                        <div className="border-b border-gray-400 mt-0.5 h-3"></div>
                       </div>
                       <div>
-                        <span className="text-gray-700 font-medium">Dated:</span>
-                        <div className="border-b border-gray-400 mt-1 h-5"></div>
+                        <span className="text-gray-700">Dated:</span>
+                        <div className="border-b border-gray-400 mt-0.5 h-3"></div>
                       </div>
                       <div>
-                        <span className="text-gray-700 font-medium">Amount:</span>
-                        <div className="border-b border-gray-400 mt-1 h-5"></div>
+                        <span className="text-gray-700">Amount:</span>
+                        <div className="border-b border-gray-400 mt-0.5 h-3"></div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-              {/* Digital Signature Note (Optional) */}
-              <div className="text-center text-[10px] text-gray-500 italic mt-2">
-                This is a computer-generated invoice and does not require a physical signature
+              {/* Digital Note */}
+              <div className="text-center text-[8px] text-gray-500 italic mt-1">
+                This is a computer-generated invoice
               </div>
 
               {/* Action Buttons */}
