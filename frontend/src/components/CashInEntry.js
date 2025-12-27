@@ -2645,241 +2645,106 @@ const CashInEntry = ({ onBack }) => {
                 )}
               </div>
 
-                {/* Total Section - Compact Format */}
-                <div className="border-2 border-t-0 border-black">
-                  <div className="bg-white">
-                    {/* Sub-Total */}
-                    <div className="flex justify-between px-2 py-1 text-[9px] border-b border-gray-300">
-                      <span className="font-semibold text-black">Sub Total:</span>
-                      <span className="font-semibold text-black">₹ {parseFloat(slots[selectedSlotForBill]?.amount || 0).toFixed(2)}</span>
-                    </div>
-                    
-                    {(() => {
+              {/* Total Section */}
+              <div className="border border-black border-t-0">
+                <div className="flex justify-between items-center p-1.5 bg-gray-50">
+                  <div className="text-[8px]">
+                    <span className="font-bold">Value in words:</span> {(() => {
                       const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                       const taxRate = parseFloat(taxSlab);
-                      const taxAmount = (subtotal * taxRate) / 100;
+                      const customTaxTotal = customTaxes.reduce((sum, tax) => sum + parseFloat(tax.rate), 0);
+                      const totalTaxRate = taxRate + customTaxTotal;
+                      const total = subtotal * (1 + totalTaxRate / 100);
+                      const rupees = Math.floor(total);
                       
-                      return (
-                        <>
-                          {/* GST Breakdown */}
-                          {taxType === 'CGST+SGST' && taxRate > 0 ? (
-                            <>
-                              <div className="flex justify-between px-2 py-0.5 text-[9px] border-b border-gray-200">
-                                <span className="text-gray-700">CGST @ {(taxRate / 2).toFixed(2)}%:</span>
-                                <span className="text-black">₹ {(taxAmount / 2).toFixed(2)}</span>
-                              </div>
-                              <div className="flex justify-between px-2 py-0.5 text-[9px] border-b border-gray-200">
-                                <span className="text-gray-700">SGST @ {(taxRate / 2).toFixed(2)}%:</span>
-                                <span className="text-black">₹ {(taxAmount / 2).toFixed(2)}</span>
-                              </div>
-                            </>
-                          ) : taxRate > 0 ? (
-                            <div className="flex justify-between px-2 py-0.5 text-[9px] border-b border-gray-200">
-                              <span className="text-gray-700">IGST @ {taxRate}%:</span>
-                              <span className="text-black">₹ {taxAmount.toFixed(2)}</span>
-                            </div>
-                          ) : null}
-                          
-                          {/* Custom Taxes */}
-                          {customTaxes.map(tax => {
-                            const customTaxAmount = (subtotal * parseFloat(tax.rate)) / 100;
-                            return parseFloat(tax.rate) > 0 ? (
-                              <div key={tax.id} className="flex justify-between px-2 py-0.5 text-[9px] border-b border-gray-200">
-                                <span className="text-gray-700">{tax.name} @ {tax.rate}%:</span>
-                                <span className="text-black">₹ {customTaxAmount.toFixed(2)}</span>
-                              </div>
-                            ) : null;
-                          })}
-                        </>
-                      );
+                      const convertToWords = (num) => {
+                        const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+                        const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+                        const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+                        
+                        if (num === 0) return 'Zero';
+                        if (num < 10) return ones[num];
+                        if (num >= 10 && num < 20) return teens[num - 10];
+                        if (num >= 20 && num < 100) return tens[Math.floor(num / 10)] + (num % 10 ? ' ' + ones[num % 10] : '');
+                        if (num >= 100 && num < 1000) return ones[Math.floor(num / 100)] + ' Hundred' + (num % 100 ? ' ' + convertToWords(num % 100) : '');
+                        if (num >= 1000 && num < 100000) return convertToWords(Math.floor(num / 1000)) + ' Thousand' + (num % 1000 ? ' ' + convertToWords(num % 1000) : '');
+                        if (num >= 100000) return convertToWords(Math.floor(num / 100000)) + ' Lakh' + (num % 100000 ? ' ' + convertToWords(num % 100000) : '');
+                      };
+                      
+                      return `Rupees ${convertToWords(rupees)} Only`;
                     })()}
                   </div>
-                  
-                  {/* Grand Total */}
-                  <div className="bg-gray-100 border-t-2 border-black">
-                    <div className="flex justify-between px-2 py-1.5">
-                      <span className="text-xs font-bold text-black">TOTAL AMOUNT:</span>
-                      <span className="text-sm font-bold text-black">₹ {(() => {
-                        const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
-                        const taxRate = parseFloat(taxSlab);
-                        const customTaxTotal = customTaxes.reduce((sum, tax) => sum + parseFloat(tax.rate), 0);
-                        const totalTaxRate = taxRate + customTaxTotal;
-                        const totalAmount = subtotal * (1 + totalTaxRate / 100);
-                        return totalAmount.toFixed(2);
-                      })()}</span>
+                  <div className="text-right">
+                    <div className="text-[8px] font-bold">TOTAL VALUE</div>
+                    <div className="text-sm font-bold">₹ {(() => {
+                      const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
+                      const taxRate = parseFloat(taxSlab);
+                      const customTaxTotal = customTaxes.reduce((sum, tax) => sum + parseFloat(tax.rate), 0);
+                      const totalTaxRate = taxRate + customTaxTotal;
+                      return (subtotal * (1 + totalTaxRate / 100)).toFixed(2);
+                    })()}</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quality Testing Section - Optional */}
+              <div className="border border-black border-t-0 mt-1">
+                <div className="grid grid-cols-6 text-[8px]">
+                  <div className="border-r border-black p-0.5">
+                    <div className="font-bold">Comp N Dip</div>
+                  </div>
+                  <div className="border-r border-black p-0.5">
+                    <div className="font-bold">PL</div>
+                  </div>
+                  <div className="border-r border-black p-0.5">
+                    <div className="font-bold">Vol</div>
+                  </div>
+                  <div className="border-r border-black p-0.5">
+                    <div className="font-bold">Sample No</div>
+                  </div>
+                  <div className="border-r border-black p-0.5">
+                    <div className="font-bold">Density</div>
+                  </div>
+                  <div className="p-0.5">
+                    <div className="font-bold">Temp</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Received in Good Condition Section */}
+              <div className="border border-black border-t-0 mt-1 p-1.5">
+                <div className="text-[9px] font-bold mb-1">Received the products in good condition</div>
+                <div className="grid grid-cols-2 gap-2 text-[7px]">
+                  <div>
+                    <div className="mb-2">
+                      <span className="font-bold">VIDE:</span>
                     </div>
-                    
-                    {/* Amount in Words */}
-                    <div className="px-2 pb-1.5 text-[9px] text-black border-t border-gray-300 pt-1">
-                      <span className="font-semibold">Amount (in words):</span>
-                      <div className="mt-0.5">{(() => {
-                        const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
-                        const taxRate = parseFloat(taxSlab);
-                        const customTaxTotal = customTaxes.reduce((sum, tax) => sum + parseFloat(tax.rate), 0);
-                        const totalTaxRate = taxRate + customTaxTotal;
-                        const total = subtotal * (1 + totalTaxRate / 100);
-                        const rupees = Math.floor(total);
-                        const paise = Math.round((total - rupees) * 100);
-                        
-                        const convertToWords = (num) => {
-                          const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
-                          const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-                          const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
-                          
-                          if (num === 0) return 'Zero';
-                          if (num < 10) return ones[num];
-                          if (num >= 10 && num < 20) return teens[num - 10];
-                          if (num >= 20 && num < 100) return tens[Math.floor(num / 10)] + (num % 10 ? ' ' + ones[num % 10] : '');
-                          if (num >= 100 && num < 1000) return ones[Math.floor(num / 100)] + ' Hundred' + (num % 100 ? ' ' + convertToWords(num % 100) : '');
-                          if (num >= 1000 && num < 100000) return convertToWords(Math.floor(num / 1000)) + ' Thousand' + (num % 1000 ? ' ' + convertToWords(num % 1000) : '');
-                          if (num >= 100000) return convertToWords(Math.floor(num / 100000)) + ' Lakh' + (num % 100000 ? ' ' + convertToWords(num % 100000) : '');
-                        };
-                        
-                        return `Rupees ${convertToWords(rupees)}${paise > 0 ? ' and ' + convertToWords(paise) + ' Paise' : ''} Only`;
-                      })()}</div>
+                    <div className="grid grid-cols-2 gap-1">
+                      <div><span className="font-bold">INVOICE No:</span> {slots[selectedSlotForBill]?.invoiceNumber}</div>
+                      <div><span className="font-bold">DATE:</span> {slots[selectedSlotForBill]?.invoiceDate}</div>
+                      <div><span className="font-bold">CONT:</span></div>
+                      <div><span className="font-bold">Time:</span> {slots[selectedSlotForBill]?.invoiceTime}</div>
+                      <div><span className="font-bold">Shipment No:</span> SHIP-{String(Date.now()).slice(-8)}</div>
+                      <div><span className="font-bold">DELIVERED TO:</span> {slots[selectedSlotForBill]?.customName}</div>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div className="mb-2">
+                      <div className="font-bold mb-1">Signature & Seal of Customer / Consignee</div>
+                      <div className="border border-gray-400 h-12 mb-2"></div>
+                    </div>
+                    <div className="grid grid-cols-3 gap-1 text-[7px]">
+                      <div><span className="font-bold">Cheque/DD No.</span></div>
+                      <div><span className="font-bold">DATED</span></div>
+                      <div><span className="font-bold">AMOUNT</span></div>
                     </div>
                   </div>
                 </div>
+              </div>
 
-                {/* Bank Account Details - Only show for Credit payments */}
-                {slots[selectedSlotForBill]?.paymentMode === 'Credit' && (
-                  <div className="border-2 border-black p-2 bg-blue-50 mt-2">
-                    <div className="font-bold text-black text-xs mb-2 text-center border-b border-black pb-1">
-                      BANK ACCOUNT DETAILS FOR PAYMENT
-                    </div>
-                    <div className="grid grid-cols-2 gap-2 text-[10px]">
-                      <div>
-                        <span className="text-gray-700 font-semibold">Account Name:</span>
-                        <div className="text-black font-medium">{activeBusiness?.name || 'BUSINESS NAME'}</div>
-                      </div>
-                      <div>
-                        <span className="text-gray-700 font-semibold">Account Number:</span>
-                        <div className="text-black font-medium">{activeBusiness?.bankAccount || '1234567890'}</div>
-                      </div>
-                      <div>
-                        <span className="text-gray-700 font-semibold">Bank Name:</span>
-                        <div className="text-black font-medium">{activeBusiness?.bankName || 'STATE BANK OF INDIA'}</div>
-                      </div>
-                      <div>
-                        <span className="text-gray-700 font-semibold">IFSC Code:</span>
-                        <div className="text-black font-medium">{activeBusiness?.ifscCode || 'SBIN0001234'}</div>
-                      </div>
-                      <div>
-                        <span className="text-gray-700 font-semibold">Branch:</span>
-                        <div className="text-black font-medium">{activeBusiness?.branch || 'Main Branch'}</div>
-                      </div>
-                      <div>
-                        <span className="text-gray-700 font-semibold">UPI ID:</span>
-                        <div className="text-black font-medium">{activeBusiness?.upiId || 'business@upi'}</div>
-                      </div>
-                    </div>
-                    <div className="mt-2 text-center text-[9px] text-gray-700 italic border-t border-gray-300 pt-1">
-                      Please make payment to the above account and share payment receipt
-                    </div>
-                  </div>
-                )}
-
-                {/* Terms & Conditions Footer - Compact */}
-                <div className="border-2 border-t-0 border-black bg-white">
-                  {/* Terms & Conditions */}
-                  <div className="p-2 border-b border-black">
-                    <div className="flex justify-between items-center mb-1">
-                      <div className="font-semibold text-black text-[10px]">Terms & Conditions:</div>
-                      {!isEditingTerms ? (
-                        <Button
-                          onClick={() => {
-                            setTempTermsText(termsText);
-                            setIsEditingTerms(true);
-                          }}
-                          variant="ghost"
-                          size="sm"
-                          className="text-[9px] h-5 px-1 text-blue-600 hover:text-blue-700"
-                        >
-                          Edit
-                        </Button>
-                      ) : (
-                        <div className="flex gap-1">
-                          <Button onClick={saveTerms} size="sm" className="h-5 px-1 text-[9px] bg-green-600 hover:bg-green-700 text-white">
-                            Save
-                          </Button>
-                          <Button onClick={cancelTermsEdit} variant="ghost" size="sm" className="h-5 px-1 text-[9px] text-gray-600">
-                            Cancel
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                    
-                    <div className="text-[9px] text-black">
-                      {isEditingTerms ? (
-                        <textarea
-                          value={tempTermsText}
-                          onChange={(e) => setTempTermsText(e.target.value)}
-                          className="w-full bg-white border border-gray-300 text-black text-[9px] p-1 rounded min-h-[40px] focus:outline-none focus:border-blue-500"
-                          placeholder="Enter terms and conditions..."
-                        />
-                      ) : (
-                        <div className="whitespace-pre-line">
-                          {termsText}
-                        </div>
-                      )}
-                    </div>
-                    
-                    {/* E. & O.E. */}
-                    <div className="text-[8px] text-gray-600 italic mt-1">
-                      E. & O.E. (Errors and Omissions Excepted)
-                    </div>
-                  </div>
-                  
-                  {/* Signature Blocks */}
-                  <div className="grid grid-cols-2 divide-x divide-black">
-                    {/* Customer Signature */}
-                    <div className="p-2">
-                      <div className="text-[9px] text-black font-semibold mb-1">
-                        RECEIVED IN GOOD CONDITION
-                      </div>
-                      <div className="mt-6 pt-1.5 border-t border-gray-400">
-                        <div className="text-[9px] text-black">Customer/Consignee Signature</div>
-                      </div>
-                      <div className="mt-2 text-[8px] text-gray-700">
-                        <div>Date: ______________</div>
-                      </div>
-                    </div>
-                    
-                    {/* Authorized Signatory */}
-                    <div className="p-2">
-                      <div className="text-[9px] text-black font-semibold mb-1">
-                        FOR {(activeBusiness?.name || 'BUSINESS NAME').toUpperCase()}
-                      </div>
-                      <div className="mt-6 pt-1.5 border-t border-gray-400">
-                        <div className="text-[9px] text-black">Authorized Signatory</div>
-                      </div>
-                      <div className="mt-2 text-[8px] text-gray-700">
-                        <div>Driver: ______________</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Payment Details */}
-                  <div className="border-t border-black p-1.5 bg-gray-50">
-                    <div className="grid grid-cols-3 gap-2 text-[8px]">
-                      <div>
-                        <span className="text-gray-700">Cheque/DD No:</span>
-                        <div className="border-b border-gray-400 mt-0.5 h-3"></div>
-                      </div>
-                      <div>
-                        <span className="text-gray-700">Dated:</span>
-                        <div className="border-b border-gray-400 mt-0.5 h-3"></div>
-                      </div>
-                      <div>
-                        <span className="text-gray-700">Amount:</span>
-                        <div className="border-b border-gray-400 mt-0.5 h-3"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              {/* Digital Note */}
-              <div className="text-center text-[8px] text-gray-500 italic mt-1">
+              {/* Digital Signature Note */}
+              <div className="text-[7px] text-gray-600 italic mt-1 text-center">
                 This is a computer-generated invoice
               </div>
 
