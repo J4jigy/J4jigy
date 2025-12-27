@@ -2541,35 +2541,35 @@ const CashInEntry = ({ onBack }) => {
               {/* Items Table */}
               <div className="border border-black border-t-0">
                 {/* Table Header */}
-                <div className="bg-gray-100 grid grid-cols-12 border-b border-black" style={{fontSize: '8px'}}>
-                  <div className="col-span-1 p-0.5 text-center border-r border-black font-bold">SR.NO.</div>
-                  <div className="col-span-3 p-0.5 border-r border-black font-bold">DESCRIPTION</div>
-                  <div className="col-span-1 p-0.5 text-center border-r border-black font-bold">ITEM CODE</div>
-                  <div className="col-span-1 p-0.5 text-center border-r border-black font-bold">ST.CD</div>
-                  <div className="col-span-2 p-0.5 text-center border-r border-black font-bold">QTY.VOLUME</div>
-                  <div className="col-span-1 p-0.5 text-center border-r border-black font-bold">UT</div>
-                  <div className="col-span-2 p-0.5 text-right border-r border-black font-bold">RATE PER UNIT</div>
-                  <div className="col-span-1 p-0.5 text-right font-bold">EXTENDED AMOUNT</div>
+                <div className="bg-gray-100 grid grid-cols-12 border-b border-black text-[10px]">
+                  <div className="col-span-1 py-1.5 px-1 text-center border-r border-black font-bold">SR.NO.</div>
+                  <div className="col-span-3 py-1.5 px-1 border-r border-black font-bold">DESCRIPTION</div>
+                  <div className="col-span-1 py-1.5 px-1 text-center border-r border-black font-bold">ITEM CODE</div>
+                  <div className="col-span-1 py-1.5 px-1 text-center border-r border-black font-bold">ST.CD</div>
+                  <div className="col-span-2 py-1.5 px-1 text-center border-r border-black font-bold">QTY.VOLUME</div>
+                  <div className="col-span-1 py-1.5 px-1 text-center border-r border-black font-bold">UT</div>
+                  <div className="col-span-2 py-1.5 px-1 text-right border-r border-black font-bold">RATE PER UNIT</div>
+                  <div className="col-span-1 py-1.5 px-1 text-right font-bold">EXTENDED AMOUNT</div>
                 </div>
                 
                 {/* Table Body */}
                 {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
                   <>
-                    <div className="grid grid-cols-12 border-b border-black" style={{fontSize: '8px'}}>
-                      <div className="col-span-1 p-1 text-center border-r border-black">1</div>
-                      <div className="col-span-3 p-1 border-r border-black">
+                    <div className="grid grid-cols-12 border-b border-black text-[10px]">
+                      <div className="col-span-1 py-2 px-1 text-center border-r border-black">1</div>
+                      <div className="col-span-3 py-2 px-1 border-r border-black">
                         <div className="font-bold">
                           {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
                             ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
                             : 'Product/Service'}
                         </div>
                       </div>
-                      <div className="col-span-1 p-1 text-center border-r border-black">9954</div>
-                      <div className="col-span-1 p-1 text-center border-r border-black">27</div>
-                      <div className="col-span-2 p-1 text-right border-r border-black">1.00</div>
-                      <div className="col-span-1 p-1 text-center border-r border-black">PCS</div>
-                      <div className="col-span-2 p-1 text-right border-r border-black">{parseFloat(slots[selectedSlotForBill]?.amount).toFixed(2)}</div>
-                      <div className="col-span-1 p-1 text-right">{parseFloat(slots[selectedSlotForBill]?.amount).toFixed(2)}</div>
+                      <div className="col-span-1 py-2 px-1 text-center border-r border-black">9954</div>
+                      <div className="col-span-1 py-2 px-1 text-center border-r border-black">27</div>
+                      <div className="col-span-2 py-2 px-1 text-right border-r border-black">1.00</div>
+                      <div className="col-span-1 py-2 px-1 text-center border-r border-black">PCS</div>
+                      <div className="col-span-2 py-2 px-1 text-right border-r border-black">{parseFloat(slots[selectedSlotForBill]?.amount).toFixed(2)}</div>
+                      <div className="col-span-1 py-2 px-1 text-right">{parseFloat(slots[selectedSlotForBill]?.amount).toFixed(2)}</div>
                     </div>
                     
                     {/* Tax Rows */}
@@ -2582,39 +2582,39 @@ const CashInEntry = ({ onBack }) => {
                         <>
                           {taxType === 'CGST+SGST' && taxRate > 0 && (
                             <>
-                              <div className="grid grid-cols-12 border-b border-black" style={{fontSize: '8px'}}>
-                                <div className="col-span-1 p-0.5 text-center border-r border-black"></div>
-                                <div className="col-span-3 p-0.5 border-r border-black pl-4">CGST @ {(taxRate / 2).toFixed(2)}%</div>
-                                <div className="col-span-1 p-0.5 border-r border-black"></div>
-                                <div className="col-span-1 p-0.5 border-r border-black"></div>
-                                <div className="col-span-2 p-0.5 border-r border-black"></div>
-                                <div className="col-span-1 p-0.5 border-r border-black"></div>
-                                <div className="col-span-2 p-0.5 border-r border-black"></div>
-                                <div className="col-span-1 p-0.5 text-right">{(taxAmount / 2).toFixed(2)}</div>
+                              <div className="grid grid-cols-12 border-b border-black text-[10px]">
+                                <div className="col-span-1 py-1.5 px-1 text-center border-r border-black"></div>
+                                <div className="col-span-3 py-1.5 px-1 border-r border-black pl-6">CGST @ {(taxRate / 2).toFixed(2)}%</div>
+                                <div className="col-span-1 py-1.5 px-1 border-r border-black"></div>
+                                <div className="col-span-1 py-1.5 px-1 border-r border-black"></div>
+                                <div className="col-span-2 py-1.5 px-1 border-r border-black"></div>
+                                <div className="col-span-1 py-1.5 px-1 border-r border-black"></div>
+                                <div className="col-span-2 py-1.5 px-1 border-r border-black"></div>
+                                <div className="col-span-1 py-1.5 px-1 text-right">{(taxAmount / 2).toFixed(2)}</div>
                               </div>
-                              <div className="grid grid-cols-12 border-b border-black" style={{fontSize: '8px'}}>
-                                <div className="col-span-1 p-0.5 text-center border-r border-black"></div>
-                                <div className="col-span-3 p-0.5 border-r border-black pl-4">SGST @ {(taxRate / 2).toFixed(2)}%</div>
-                                <div className="col-span-1 p-0.5 border-r border-black"></div>
-                                <div className="col-span-1 p-0.5 border-r border-black"></div>
-                                <div className="col-span-2 p-0.5 border-r border-black"></div>
-                                <div className="col-span-1 p-0.5 border-r border-black"></div>
-                                <div className="col-span-2 p-0.5 border-r border-black"></div>
-                                <div className="col-span-1 p-0.5 text-right">{(taxAmount / 2).toFixed(2)}</div>
+                              <div className="grid grid-cols-12 border-b border-black text-[10px]">
+                                <div className="col-span-1 py-1.5 px-1 text-center border-r border-black"></div>
+                                <div className="col-span-3 py-1.5 px-1 border-r border-black pl-6">SGST @ {(taxRate / 2).toFixed(2)}%</div>
+                                <div className="col-span-1 py-1.5 px-1 border-r border-black"></div>
+                                <div className="col-span-1 py-1.5 px-1 border-r border-black"></div>
+                                <div className="col-span-2 py-1.5 px-1 border-r border-black"></div>
+                                <div className="col-span-1 py-1.5 px-1 border-r border-black"></div>
+                                <div className="col-span-2 py-1.5 px-1 border-r border-black"></div>
+                                <div className="col-span-1 py-1.5 px-1 text-right">{(taxAmount / 2).toFixed(2)}</div>
                               </div>
                             </>
                           )}
                           
                           {taxType === 'IGST' && taxRate > 0 && (
-                            <div className="grid grid-cols-12 border-b border-black" style={{fontSize: '8px'}}>
-                              <div className="col-span-1 p-0.5 text-center border-r border-black"></div>
-                              <div className="col-span-3 p-0.5 border-r border-black pl-4">IGST @ {taxRate}%</div>
-                              <div className="col-span-1 p-0.5 border-r border-black"></div>
-                              <div className="col-span-1 p-0.5 border-r border-black"></div>
-                              <div className="col-span-2 p-0.5 border-r border-black"></div>
-                              <div className="col-span-1 p-0.5 border-r border-black"></div>
-                              <div className="col-span-2 p-0.5 border-r border-black"></div>
-                              <div className="col-span-1 p-0.5 text-right">{taxAmount.toFixed(2)}</div>
+                            <div className="grid grid-cols-12 border-b border-black text-[10px]">
+                              <div className="col-span-1 py-1.5 px-1 text-center border-r border-black"></div>
+                              <div className="col-span-3 py-1.5 px-1 border-r border-black pl-6">IGST @ {taxRate}%</div>
+                              <div className="col-span-1 py-1.5 px-1 border-r border-black"></div>
+                              <div className="col-span-1 py-1.5 px-1 border-r border-black"></div>
+                              <div className="col-span-2 py-1.5 px-1 border-r border-black"></div>
+                              <div className="col-span-1 py-1.5 px-1 border-r border-black"></div>
+                              <div className="col-span-2 py-1.5 px-1 border-r border-black"></div>
+                              <div className="col-span-1 py-1.5 px-1 text-right">{taxAmount.toFixed(2)}</div>
                             </div>
                           )}
                           
@@ -2622,15 +2622,15 @@ const CashInEntry = ({ onBack }) => {
                           {customTaxes.map(tax => {
                             const customTaxAmount = (subtotal * parseFloat(tax.rate)) / 100;
                             return parseFloat(tax.rate) > 0 ? (
-                              <div key={tax.id} className="grid grid-cols-12 border-b border-black" style={{fontSize: '8px'}}>
-                                <div className="col-span-1 p-0.5 text-center border-r border-black"></div>
-                                <div className="col-span-3 p-0.5 border-r border-black pl-4">{tax.name} @ {tax.rate}%</div>
-                                <div className="col-span-1 p-0.5 border-r border-black"></div>
-                                <div className="col-span-1 p-0.5 border-r border-black"></div>
-                                <div className="col-span-2 p-0.5 border-r border-black"></div>
-                                <div className="col-span-1 p-0.5 border-r border-black"></div>
-                                <div className="col-span-2 p-0.5 border-r border-black"></div>
-                                <div className="col-span-1 p-0.5 text-right">{customTaxAmount.toFixed(2)}</div>
+                              <div key={tax.id} className="grid grid-cols-12 border-b border-black text-[10px]">
+                                <div className="col-span-1 py-1.5 px-1 text-center border-r border-black"></div>
+                                <div className="col-span-3 py-1.5 px-1 border-r border-black pl-6">{tax.name} @ {tax.rate}%</div>
+                                <div className="col-span-1 py-1.5 px-1 border-r border-black"></div>
+                                <div className="col-span-1 py-1.5 px-1 border-r border-black"></div>
+                                <div className="col-span-2 py-1.5 px-1 border-r border-black"></div>
+                                <div className="col-span-1 py-1.5 px-1 border-r border-black"></div>
+                                <div className="col-span-2 py-1.5 px-1 border-r border-black"></div>
+                                <div className="col-span-1 py-1.5 px-1 text-right">{customTaxAmount.toFixed(2)}</div>
                               </div>
                             ) : null;
                           })}
@@ -2639,7 +2639,7 @@ const CashInEntry = ({ onBack }) => {
                     })()}
                   </>
                 ) : (
-                  <div className="p-2 text-center text-gray-500 text-[8px]">
+                  <div className="p-3 text-center text-gray-500 text-xs">
                     No items added
                   </div>
                 )}
