@@ -2570,36 +2570,36 @@ const CashInEntry = ({ onBack }) => {
                 </div>
               </div>
 
-              {/* Items Table - Professional Format */}
+              {/* Items Table - Compact Professional Format */}
               <div className="border-2 border-t-0 border-black">
                 {/* Table Header */}
-                <div className="bg-gray-200 grid grid-cols-12 gap-0 text-xs font-bold text-black border-b-2 border-black">
-                  <div className="col-span-1 p-2 text-center border-r border-black">S.No</div>
-                  <div className="col-span-4 p-2 border-r border-black">Description of Goods</div>
-                  <div className="col-span-1 p-2 text-center border-r border-black">HSN/SAC</div>
-                  <div className="col-span-1 p-2 text-center border-r border-black">Qty</div>
-                  <div className="col-span-1 p-2 text-center border-r border-black">Unit</div>
-                  <div className="col-span-2 p-2 text-right border-r border-black">Rate (₹)</div>
-                  <div className="col-span-2 p-2 text-right">Amount (₹)</div>
+                <div className="bg-gray-200 grid grid-cols-12 gap-0 text-[9px] font-bold text-black border-b-2 border-black">
+                  <div className="col-span-1 py-1 px-1 text-center border-r border-black">S.No</div>
+                  <div className="col-span-4 py-1 px-1 border-r border-black">Description of Goods</div>
+                  <div className="col-span-1 py-1 px-1 text-center border-r border-black">HSN/SAC</div>
+                  <div className="col-span-1 py-1 px-1 text-center border-r border-black">Qty</div>
+                  <div className="col-span-1 py-1 px-1 text-center border-r border-black">Unit</div>
+                  <div className="col-span-2 py-1 px-1 text-right border-r border-black">Rate (₹)</div>
+                  <div className="col-span-2 py-1 px-1 text-right">Amount (₹)</div>
                 </div>
                 
                 {/* Table Body */}
                 {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
-                  <div className="grid grid-cols-12 gap-0 text-xs bg-white min-h-[80px]">
-                    <div className="col-span-1 p-2 text-center text-black border-r border-black flex items-center justify-center">1</div>
-                    <div className="col-span-4 p-2 text-black border-r border-black break-words flex items-center">
+                  <div className="grid grid-cols-12 gap-0 text-[9px] bg-white">
+                    <div className="col-span-1 py-2 px-1 text-center text-black border-r border-black">1</div>
+                    <div className="col-span-4 py-2 px-1 text-black border-r border-black break-words">
                       {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
                         ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
                         : 'Service/Product'}
                     </div>
-                    <div className="col-span-1 p-2 text-center text-gray-700 border-r border-black flex items-center justify-center">9954</div>
-                    <div className="col-span-1 p-2 text-center text-gray-700 border-r border-black flex items-center justify-center">1</div>
-                    <div className="col-span-1 p-2 text-center text-gray-700 border-r border-black flex items-center justify-center">Pcs</div>
-                    <div className="col-span-2 p-2 text-right text-gray-700 border-r border-black flex items-center justify-end">{parseFloat(slots[selectedSlotForBill]?.amount).toFixed(2)}</div>
-                    <div className="col-span-2 p-2 text-right text-black font-semibold flex items-center justify-end">{parseFloat(slots[selectedSlotForBill]?.amount).toFixed(2)}</div>
+                    <div className="col-span-1 py-2 px-1 text-center text-gray-700 border-r border-black">9954</div>
+                    <div className="col-span-1 py-2 px-1 text-center text-gray-700 border-r border-black">1</div>
+                    <div className="col-span-1 py-2 px-1 text-center text-gray-700 border-r border-black">Pcs</div>
+                    <div className="col-span-2 py-2 px-1 text-right text-gray-700 border-r border-black">{parseFloat(slots[selectedSlotForBill]?.amount).toFixed(2)}</div>
+                    <div className="col-span-2 py-2 px-1 text-right text-black font-semibold">{parseFloat(slots[selectedSlotForBill]?.amount).toFixed(2)}</div>
                   </div>
                 ) : (
-                  <div className="p-6 text-center text-gray-500 text-xs bg-white min-h-[80px] flex items-center justify-center">
+                  <div className="py-3 text-center text-gray-500 text-[9px] bg-white">
                     No items added to this invoice
                   </div>
                 )}
