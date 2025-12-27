@@ -2439,39 +2439,39 @@ const CashInEntry = ({ onBack }) => {
           </div>
           
           {selectedSlotForBill !== null && (
-            <div id="invoice-content" className="bg-white w-full" style={{ maxWidth: '210mm', minHeight: '297mm', margin: '0 auto', padding: '5mm', fontSize: '10px' }}>
+            <div id="invoice-content" className="bg-white w-full" style={{ maxWidth: '210mm', minHeight: '297mm', margin: '0 auto', padding: '10mm', fontSize: '11px' }}>
               {/* Header with Logo and Company Details */}
-              <div className="border border-black mb-1">
-                <div className="flex items-start p-2 gap-2">
+              <div className="border border-black mb-2">
+                <div className="flex items-start p-3 gap-3">
                   {/* Logo */}
-                  <div className="w-16 h-16 border border-gray-400 flex items-center justify-center bg-white flex-shrink-0">
-                    <span className="text-[8px] text-gray-500 font-bold">LOGO</span>
+                  <div className="w-20 h-20 border border-gray-400 flex items-center justify-center bg-white flex-shrink-0">
+                    <span className="text-xs text-gray-500 font-bold">LOGO</span>
                   </div>
                   
                   {/* Company Details */}
                   <div className="flex-1">
-                    <div className="text-sm font-bold text-black uppercase">{activeBusiness?.name || 'BUSINESS NAME'}</div>
-                    <div className="text-[8px] text-black mt-0.5">{activeBusiness?.address || 'Address Line 1, Address Line 2'}</div>
-                    <div className="text-[8px] text-black mt-1">
+                    <div className="text-base font-bold text-black uppercase">{activeBusiness?.name || 'BUSINESS NAME'}</div>
+                    <div className="text-xs text-black mt-1">{activeBusiness?.address || 'Address Line 1, Address Line 2'}</div>
+                    <div className="text-xs text-black mt-1.5">
                       <span className="font-bold">Registered Office:</span> {activeBusiness?.address || 'Registered Address'}
                     </div>
-                    <div className="text-[8px] text-black mt-0.5">
+                    <div className="text-xs text-black mt-1">
                       <span className="font-bold">CIN:</span> {activeBusiness?.cin || 'L23109MH1952GOI008858'} | 
                       <span className="font-bold ml-2">TIN(VAT):</span> {activeBusiness?.tin || '27000000000'} | 
                       <span className="font-bold ml-2">PAN:</span> {activeBusiness?.pan || 'AAACH0000A'}
                     </div>
                     {activeBusiness?.phone && (
-                      <div className="text-[8px] text-black mt-0.5">
+                      <div className="text-xs text-black mt-1">
                         <span className="font-bold">Phone:</span> {activeBusiness.phone}
-                        {activeBusiness?.email && <span className="ml-2"><span className="font-bold">Email:</span> {activeBusiness.email}</span>}
+                        {activeBusiness?.email && <span className="ml-3"><span className="font-bold">Email:</span> {activeBusiness.email}</span>}
                       </div>
                     )}
                   </div>
                 </div>
                 
                 {/* Location/Branch */}
-                <div className="border-t border-black px-2 py-0.5 bg-gray-50">
-                  <div className="text-[9px] font-bold text-black">{activeBusiness?.branch || 'LOCATION / BRANCH NAME'}</div>
+                <div className="border-t border-black px-3 py-1 bg-gray-50">
+                  <div className="text-xs font-bold text-black">{activeBusiness?.branch || 'LOCATION / BRANCH NAME'}</div>
                 </div>
               </div>
 
