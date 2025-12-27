@@ -2609,13 +2609,15 @@ const CashInEntry = ({ onBack }) => {
                 )}
               </div>
 
-                {/* Total Section - GST Format */}
-                <div className="border-2 border-black">
-                  <div className="bg-white p-2 space-y-0.5">
-                    <div className="flex justify-between text-[10px] text-black">
-                      <span className="font-semibold">Taxable Amount:</span>
-                      <span className="font-semibold">₹{parseFloat(slots[selectedSlotForBill]?.amount || 0).toFixed(2)}</span>
+                {/* Total Section - Professional Format */}
+                <div className="border-2 border-t-0 border-black">
+                  <div className="bg-white">
+                    {/* Sub-Total */}
+                    <div className="flex justify-between px-3 py-1.5 text-[10px] border-b border-gray-300">
+                      <span className="font-semibold text-black">Sub Total:</span>
+                      <span className="font-semibold text-black">₹ {parseFloat(slots[selectedSlotForBill]?.amount || 0).toFixed(2)}</span>
                     </div>
+                    
                     {(() => {
                       const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                       const taxRate = parseFloat(taxSlab);
@@ -2626,29 +2628,29 @@ const CashInEntry = ({ onBack }) => {
                           {/* GST Breakdown */}
                           {taxType === 'CGST+SGST' && taxRate > 0 ? (
                             <>
-                              <div className="flex justify-between text-[10px] text-black">
-                                <span>CGST @ {taxRate / 2}%:</span>
-                                <span>₹{(taxAmount / 2).toFixed(2)}</span>
+                              <div className="flex justify-between px-3 py-1 text-[10px] border-b border-gray-200">
+                                <span className="text-gray-700">CGST @ {(taxRate / 2).toFixed(2)}%:</span>
+                                <span className="text-black">₹ {(taxAmount / 2).toFixed(2)}</span>
                               </div>
-                              <div className="flex justify-between text-[10px] text-black">
-                                <span>SGST @ {taxRate / 2}%:</span>
-                                <span>₹{(taxAmount / 2).toFixed(2)}</span>
+                              <div className="flex justify-between px-3 py-1 text-[10px] border-b border-gray-200">
+                                <span className="text-gray-700">SGST @ {(taxRate / 2).toFixed(2)}%:</span>
+                                <span className="text-black">₹ {(taxAmount / 2).toFixed(2)}</span>
                               </div>
                             </>
                           ) : taxRate > 0 ? (
-                            <div className="flex justify-between text-[10px] text-black">
-                              <span>IGST @ {taxRate}%:</span>
-                              <span>₹{taxAmount.toFixed(2)}</span>
+                            <div className="flex justify-between px-3 py-1 text-[10px] border-b border-gray-200">
+                              <span className="text-gray-700">IGST @ {taxRate}%:</span>
+                              <span className="text-black">₹ {taxAmount.toFixed(2)}</span>
                             </div>
                           ) : null}
                           
-                          {/* Custom Taxes */}
+                          {/* Custom Taxes (Cess, etc.) */}
                           {customTaxes.map(tax => {
                             const customTaxAmount = (subtotal * parseFloat(tax.rate)) / 100;
                             return parseFloat(tax.rate) > 0 ? (
-                              <div key={tax.id} className="flex justify-between text-[10px] text-black">
-                                <span>{tax.name} @ {tax.rate}%:</span>
-                                <span>₹{customTaxAmount.toFixed(2)}</span>
+                              <div key={tax.id} className="flex justify-between px-3 py-1 text-[10px] border-b border-gray-200">
+                                <span className="text-gray-700">{tax.name} @ {tax.rate}%:</span>
+                                <span className="text-black">₹ {customTaxAmount.toFixed(2)}</span>
                               </div>
                             ) : null;
                           })}
@@ -2657,10 +2659,11 @@ const CashInEntry = ({ onBack }) => {
                     })()}
                   </div>
                   
-                  <div className="bg-gray-100 border-t-2 border-black p-2">
-                    <div className="flex justify-between text-xs font-bold text-black">
-                      <span>TOTAL AMOUNT:</span>
-                      <span className="text-sm text-black">₹{(() => {
+                  {/* Grand Total */}
+                  <div className="bg-gray-100 border-t-2 border-black">
+                    <div className="flex justify-between px-3 py-2">
+                      <span className="text-sm font-bold text-black">TOTAL AMOUNT:</span>
+                      <span className="text-base font-bold text-black">₹ {(() => {
                         const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                         const taxRate = parseFloat(taxSlab);
                         const customTaxTotal = customTaxes.reduce((sum, tax) => sum + parseFloat(tax.rate), 0);
@@ -2669,15 +2672,35 @@ const CashInEntry = ({ onBack }) => {
                         return totalAmount.toFixed(2);
                       })()}</span>
                     </div>
-                    <div className="text-[10px] text-black mt-0.5">
-                      <span className="font-semibold">Amount in Words:</span> {(() => {
+                    
+                    {/* Amount in Words */}
+                    <div className="px-3 pb-2 text-[10px] text-black border-t border-gray-300 pt-1.5">
+                      <span className="font-semibold">Amount (in words):</span>
+                      <div className="mt-0.5 font-medium">{(() => {
                         const subtotal = parseFloat(slots[selectedSlotForBill]?.amount || 0);
                         const taxRate = parseFloat(taxSlab);
                         const customTaxTotal = customTaxes.reduce((sum, tax) => sum + parseFloat(tax.rate), 0);
                         const totalTaxRate = taxRate + customTaxTotal;
                         const total = subtotal * (1 + totalTaxRate / 100);
-                        return `Rupees ${Math.floor(total)} Only`;
-                      })()}
+                        const rupees = Math.floor(total);
+                        const paise = Math.round((total - rupees) * 100);
+                        
+                        const convertToWords = (num) => {
+                          const ones = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+                          const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+                          const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+                          
+                          if (num === 0) return 'Zero';
+                          if (num < 10) return ones[num];
+                          if (num >= 10 && num < 20) return teens[num - 10];
+                          if (num >= 20 && num < 100) return tens[Math.floor(num / 10)] + (num % 10 ? ' ' + ones[num % 10] : '');
+                          if (num >= 100 && num < 1000) return ones[Math.floor(num / 100)] + ' Hundred' + (num % 100 ? ' ' + convertToWords(num % 100) : '');
+                          if (num >= 1000 && num < 100000) return convertToWords(Math.floor(num / 1000)) + ' Thousand' + (num % 1000 ? ' ' + convertToWords(num % 1000) : '');
+                          if (num >= 100000) return convertToWords(Math.floor(num / 100000)) + ' Lakh' + (num % 100000 ? ' ' + convertToWords(num % 100000) : '');
+                        };
+                        
+                        return `Rupees ${convertToWords(rupees)}${paise > 0 ? ' and ' + convertToWords(paise) + ' Paise' : ''} Only (Incl. of Taxes)`;
+                      })()}</div>
                     </div>
                   </div>
                 </div>
