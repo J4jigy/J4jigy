@@ -2439,39 +2439,39 @@ const CashInEntry = ({ onBack }) => {
           </div>
           
           {selectedSlotForBill !== null && (
-            <div id="invoice-content" className="bg-white w-full" style={{ maxWidth: '210mm', minHeight: '297mm', margin: '0 auto', padding: '10mm', fontSize: '11px' }}>
+            <div id="invoice-content" className="bg-white w-full" style={{ maxWidth: '210mm', minHeight: '297mm', margin: '20px auto', padding: '20px', fontSize: '10pt', lineHeight: '1.4' }}>
               {/* Header with Logo and Company Details */}
-              <div className="border border-black mb-2">
-                <div className="flex items-start p-3 gap-3">
-                  {/* Logo */}
-                  <div className="w-20 h-20 border border-gray-400 flex items-center justify-center bg-white flex-shrink-0">
+              <div style={{ border: '0.75px solid black', marginBottom: '15px' }}>
+                <div className="flex items-start gap-4" style={{ padding: '10px' }}>
+                  {/* Logo - 5% width */}
+                  <div style={{ width: '60px', height: '60px', border: '0.75px solid #999', flexShrink: 0 }} className="flex items-center justify-center bg-white">
                     <span className="text-xs text-gray-500 font-bold">LOGO</span>
                   </div>
                   
-                  {/* Company Details */}
+                  {/* Company Details - 45% width */}
                   <div className="flex-1">
-                    <div className="text-base font-bold text-black uppercase">{activeBusiness?.name || 'BUSINESS NAME'}</div>
-                    <div className="text-xs text-black mt-1">{activeBusiness?.address || 'Address Line 1, Address Line 2'}</div>
-                    <div className="text-xs text-black mt-1.5">
-                      <span className="font-bold">Registered Office:</span> {activeBusiness?.address || 'Registered Address'}
+                    <div style={{ fontSize: '14pt', fontWeight: 'bold', marginBottom: '4px' }}>{activeBusiness?.name || 'BUSINESS NAME'}</div>
+                    <div style={{ fontSize: '8pt', marginBottom: '4px' }}>{activeBusiness?.address || 'Address Line 1, Address Line 2'}</div>
+                    <div style={{ fontSize: '8pt', marginBottom: '3px' }}>
+                      <span style={{ fontWeight: 'bold' }}>Registered Office:</span> {activeBusiness?.address || 'Registered Address'}
                     </div>
-                    <div className="text-xs text-black mt-1">
-                      <span className="font-bold">CIN:</span> {activeBusiness?.cin || 'L23109MH1952GOI008858'} | 
-                      <span className="font-bold ml-2">TIN(VAT):</span> {activeBusiness?.tin || '27000000000'} | 
-                      <span className="font-bold ml-2">PAN:</span> {activeBusiness?.pan || 'AAACH0000A'}
+                    <div style={{ fontSize: '8pt', marginBottom: '3px' }}>
+                      <span style={{ fontWeight: 'bold' }}>CIN:</span> {activeBusiness?.cin || 'L23109MH1952GOI008858'} | 
+                      <span style={{ fontWeight: 'bold', marginLeft: '8px' }}>TIN(VAT):</span> {activeBusiness?.tin || '27000000000'} | 
+                      <span style={{ fontWeight: 'bold', marginLeft: '8px' }}>PAN:</span> {activeBusiness?.pan || 'AAACH0000A'}
                     </div>
                     {activeBusiness?.phone && (
-                      <div className="text-xs text-black mt-1">
-                        <span className="font-bold">Phone:</span> {activeBusiness.phone}
-                        {activeBusiness?.email && <span className="ml-3"><span className="font-bold">Email:</span> {activeBusiness.email}</span>}
+                      <div style={{ fontSize: '8pt' }}>
+                        <span style={{ fontWeight: 'bold' }}>Phone:</span> {activeBusiness.phone}
+                        {activeBusiness?.email && <span style={{ marginLeft: '12px' }}><span style={{ fontWeight: 'bold' }}>Email:</span> {activeBusiness.email}</span>}
                       </div>
                     )}
                   </div>
                 </div>
                 
                 {/* Location/Branch */}
-                <div className="border-t border-black px-3 py-1 bg-gray-50">
-                  <div className="text-xs font-bold text-black">{activeBusiness?.branch || 'LOCATION / BRANCH NAME'}</div>
+                <div style={{ borderTop: '0.75px solid black', padding: '6px 10px', backgroundColor: '#f5f5f5' }}>
+                  <div style={{ fontSize: '9pt', fontWeight: 'bold' }}>{activeBusiness?.branch || 'LOCATION / BRANCH NAME'}</div>
                 </div>
               </div>
 
