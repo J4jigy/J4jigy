@@ -2539,39 +2539,39 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
               {/* Items Table */}
-              <div style={{ border: '0.75px solid black', borderTop: 'none', marginTop: '15px' }}>
+              <div style={{ border: '1px solid black', borderTop: 'none', marginTop: '20px' }}>
                 {/* Table Header */}
-                <div style={{ backgroundColor: '#f0f0f0', display: 'grid', gridTemplateColumns: '5% 25% 8% 4% 8% 3% 15% 20% 12%', borderBottom: '0.75px solid black', fontSize: '8.5pt', fontWeight: 'bold', height: '25px', alignItems: 'center' }}>
-                  <div style={{ textAlign: 'center', borderRight: '0.75px solid black', padding: '0 4px' }}>SR.NO.</div>
-                  <div style={{ borderRight: '0.75px solid black', padding: '0 6px' }}>DESCRIPTION</div>
-                  <div style={{ textAlign: 'center', borderRight: '0.75px solid black', padding: '0 4px' }}>ITEM CODE</div>
-                  <div style={{ textAlign: 'center', borderRight: '0.75px solid black', padding: '0 4px' }}>ST.CD</div>
-                  <div style={{ textAlign: 'center', borderRight: '0.75px solid black', padding: '0 4px' }}>QTY.VOLUME</div>
-                  <div style={{ textAlign: 'center', borderRight: '0.75px solid black', padding: '0 4px' }}>UT</div>
-                  <div style={{ textAlign: 'center', borderRight: '0.75px solid black', padding: '0 6px' }}>RATE PER UNIT</div>
-                  <div style={{ textAlign: 'center', borderRight: '0.75px solid black', padding: '0 6px' }}>EXTENDED AMOUNT</div>
-                  <div style={{ textAlign: 'center', padding: '0 6px' }}>in INR</div>
+                <div style={{ backgroundColor: '#f0f0f0', display: 'grid', gridTemplateColumns: '5% 25% 8% 4% 8% 3% 15% 20% 12%', borderBottom: '1px solid black', fontSize: '10pt', fontWeight: 'bold', minHeight: '35px', alignItems: 'center' }}>
+                  <div style={{ textAlign: 'center', borderRight: '1px solid black', padding: '8px 6px' }}>SR.NO.</div>
+                  <div style={{ borderRight: '1px solid black', padding: '8px 10px' }}>DESCRIPTION</div>
+                  <div style={{ textAlign: 'center', borderRight: '1px solid black', padding: '8px 6px' }}>ITEM CODE</div>
+                  <div style={{ textAlign: 'center', borderRight: '1px solid black', padding: '8px 6px' }}>ST.CD</div>
+                  <div style={{ textAlign: 'center', borderRight: '1px solid black', padding: '8px 6px' }}>QTY.VOLUME</div>
+                  <div style={{ textAlign: 'center', borderRight: '1px solid black', padding: '8px 6px' }}>UT</div>
+                  <div style={{ textAlign: 'center', borderRight: '1px solid black', padding: '8px 10px' }}>RATE PER UNIT</div>
+                  <div style={{ textAlign: 'center', borderRight: '1px solid black', padding: '8px 10px' }}>EXTENDED AMOUNT</div>
+                  <div style={{ textAlign: 'center', padding: '8px 10px' }}>in INR</div>
                 </div>
                 
                 {/* Table Body */}
                 {parseFloat(slots[selectedSlotForBill]?.amount) > 0 ? (
                   <>
-                    <div style={{ display: 'grid', gridTemplateColumns: '5% 25% 8% 4% 8% 3% 15% 20% 12%', borderBottom: '0.75px solid black', fontSize: '9pt', minHeight: '22px', alignItems: 'center' }}>
-                      <div style={{ textAlign: 'center', borderRight: '0.75px solid black', padding: '4px' }}>1</div>
-                      <div style={{ borderRight: '0.75px solid black', padding: '4px 6px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '5% 25% 8% 4% 8% 3% 15% 20% 12%', borderBottom: '1px solid black', fontSize: '10pt', minHeight: '32px', alignItems: 'center' }}>
+                      <div style={{ textAlign: 'center', borderRight: '1px solid black', padding: '8px 6px' }}>1</div>
+                      <div style={{ borderRight: '1px solid black', padding: '8px 10px' }}>
                         <div style={{ fontWeight: 'bold' }}>
                           {Object.entries(slots[selectedSlotForBill]?.selectedItems || {}).length > 0
                             ? Object.keys(slots[selectedSlotForBill]?.selectedItems).join(', ')
                             : 'Product/Service'}
                         </div>
                       </div>
-                      <div style={{ textAlign: 'center', borderRight: '0.75px solid black', padding: '4px' }}>9954</div>
-                      <div style={{ textAlign: 'center', borderRight: '0.75px solid black', padding: '4px' }}>27</div>
-                      <div style={{ textAlign: 'right', borderRight: '0.75px solid black', padding: '4px' }}>1.00</div>
-                      <div style={{ textAlign: 'center', borderRight: '0.75px solid black', padding: '4px' }}>PCS</div>
-                      <div style={{ textAlign: 'right', borderRight: '0.75px solid black', padding: '4px 6px' }}>{parseFloat(slots[selectedSlotForBill]?.amount).toFixed(2)}</div>
-                      <div style={{ textAlign: 'right', borderRight: '0.75px solid black', padding: '4px 6px' }}>{parseFloat(slots[selectedSlotForBill]?.amount).toFixed(2)}</div>
-                      <div style={{ textAlign: 'right', padding: '4px 6px' }}></div>
+                      <div style={{ textAlign: 'center', borderRight: '1px solid black', padding: '8px 6px' }}>9954</div>
+                      <div style={{ textAlign: 'center', borderRight: '1px solid black', padding: '8px 6px' }}>27</div>
+                      <div style={{ textAlign: 'right', borderRight: '1px solid black', padding: '8px 6px' }}>1.00</div>
+                      <div style={{ textAlign: 'center', borderRight: '1px solid black', padding: '8px 6px' }}>PCS</div>
+                      <div style={{ textAlign: 'right', borderRight: '1px solid black', padding: '8px 10px' }}>{parseFloat(slots[selectedSlotForBill]?.amount).toFixed(2)}</div>
+                      <div style={{ textAlign: 'right', borderRight: '1px solid black', padding: '8px 10px' }}>{parseFloat(slots[selectedSlotForBill]?.amount).toFixed(2)}</div>
+                      <div style={{ textAlign: 'right', padding: '8px 10px' }}></div>
                     </div>
                     
                     {/* Tax Rows */}
@@ -2584,41 +2584,41 @@ const CashInEntry = ({ onBack }) => {
                         <>
                           {taxType === 'CGST+SGST' && taxRate > 0 && (
                             <>
-                              <div style={{ display: 'grid', gridTemplateColumns: '5% 25% 8% 4% 8% 3% 15% 20% 12%', borderBottom: '0.75px solid black', fontSize: '9pt', minHeight: '20px', alignItems: 'center' }}>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ borderRight: '0.75px solid black', paddingLeft: '30px', padding: '3px 6px' }}>CGST @ {(taxRate / 2).toFixed(2)}%</div>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ textAlign: 'right', borderRight: '0.75px solid black', padding: '3px 6px' }}>{(taxAmount / 2).toFixed(2)}</div>
+                              <div style={{ display: 'grid', gridTemplateColumns: '5% 25% 8% 4% 8% 3% 15% 20% 12%', borderBottom: '1px solid black', fontSize: '10pt', minHeight: '28px', alignItems: 'center' }}>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ borderRight: '1px solid black', paddingLeft: '35px', padding: '6px 10px' }}>CGST @ {(taxRate / 2).toFixed(2)}%</div>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ textAlign: 'right', borderRight: '1px solid black', padding: '6px 10px' }}>{(taxAmount / 2).toFixed(2)}</div>
                                 <div></div>
                               </div>
-                              <div style={{ display: 'grid', gridTemplateColumns: '5% 25% 8% 4% 8% 3% 15% 20% 12%', borderBottom: '0.75px solid black', fontSize: '9pt', minHeight: '20px', alignItems: 'center' }}>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ borderRight: '0.75px solid black', paddingLeft: '30px', padding: '3px 6px' }}>SGST @ {(taxRate / 2).toFixed(2)}%</div>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ textAlign: 'right', borderRight: '0.75px solid black', padding: '3px 6px' }}>{(taxAmount / 2).toFixed(2)}</div>
+                              <div style={{ display: 'grid', gridTemplateColumns: '5% 25% 8% 4% 8% 3% 15% 20% 12%', borderBottom: '1px solid black', fontSize: '10pt', minHeight: '28px', alignItems: 'center' }}>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ borderRight: '1px solid black', paddingLeft: '35px', padding: '6px 10px' }}>SGST @ {(taxRate / 2).toFixed(2)}%</div>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ textAlign: 'right', borderRight: '1px solid black', padding: '6px 10px' }}>{(taxAmount / 2).toFixed(2)}</div>
                                 <div></div>
                               </div>
                             </>
                           )}
                           
                           {taxType === 'IGST' && taxRate > 0 && (
-                            <div style={{ display: 'grid', gridTemplateColumns: '5% 25% 8% 4% 8% 3% 15% 20% 12%', borderBottom: '0.75px solid black', fontSize: '9pt', minHeight: '20px', alignItems: 'center' }}>
-                              <div style={{ borderRight: '0.75px solid black' }}></div>
-                              <div style={{ borderRight: '0.75px solid black', paddingLeft: '30px', padding: '3px 6px' }}>IGST @ {taxRate}%</div>
-                              <div style={{ borderRight: '0.75px solid black' }}></div>
-                              <div style={{ borderRight: '0.75px solid black' }}></div>
-                              <div style={{ borderRight: '0.75px solid black' }}></div>
-                              <div style={{ borderRight: '0.75px solid black' }}></div>
-                              <div style={{ borderRight: '0.75px solid black' }}></div>
-                              <div style={{ textAlign: 'right', borderRight: '0.75px solid black', padding: '3px 6px' }}>{taxAmount.toFixed(2)}</div>
+                            <div style={{ display: 'grid', gridTemplateColumns: '5% 25% 8% 4% 8% 3% 15% 20% 12%', borderBottom: '1px solid black', fontSize: '10pt', minHeight: '28px', alignItems: 'center' }}>
+                              <div style={{ borderRight: '1px solid black' }}></div>
+                              <div style={{ borderRight: '1px solid black', paddingLeft: '35px', padding: '6px 10px' }}>IGST @ {taxRate}%</div>
+                              <div style={{ borderRight: '1px solid black' }}></div>
+                              <div style={{ borderRight: '1px solid black' }}></div>
+                              <div style={{ borderRight: '1px solid black' }}></div>
+                              <div style={{ borderRight: '1px solid black' }}></div>
+                              <div style={{ borderRight: '1px solid black' }}></div>
+                              <div style={{ textAlign: 'right', borderRight: '1px solid black', padding: '6px 10px' }}>{taxAmount.toFixed(2)}</div>
                               <div></div>
                             </div>
                           )}
@@ -2627,15 +2627,15 @@ const CashInEntry = ({ onBack }) => {
                           {customTaxes.map(tax => {
                             const customTaxAmount = (subtotal * parseFloat(tax.rate)) / 100;
                             return parseFloat(tax.rate) > 0 ? (
-                              <div key={tax.id} style={{ display: 'grid', gridTemplateColumns: '5% 25% 8% 4% 8% 3% 15% 20% 12%', borderBottom: '0.75px solid black', fontSize: '9pt', minHeight: '20px', alignItems: 'center' }}>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ borderRight: '0.75px solid black', paddingLeft: '30px', padding: '3px 6px' }}>{tax.name} @ {tax.rate}%</div>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ borderRight: '0.75px solid black' }}></div>
-                                <div style={{ textAlign: 'right', borderRight: '0.75px solid black', padding: '3px 6px' }}>{customTaxAmount.toFixed(2)}</div>
+                              <div key={tax.id} style={{ display: 'grid', gridTemplateColumns: '5% 25% 8% 4% 8% 3% 15% 20% 12%', borderBottom: '1px solid black', fontSize: '10pt', minHeight: '28px', alignItems: 'center' }}>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ borderRight: '1px solid black', paddingLeft: '35px', padding: '6px 10px' }}>{tax.name} @ {tax.rate}%</div>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ borderRight: '1px solid black' }}></div>
+                                <div style={{ textAlign: 'right', borderRight: '1px solid black', padding: '6px 10px' }}>{customTaxAmount.toFixed(2)}</div>
                                 <div></div>
                               </div>
                             ) : null;
@@ -2645,7 +2645,7 @@ const CashInEntry = ({ onBack }) => {
                     })()}
                   </>
                 ) : (
-                  <div style={{ padding: '12px', textAlign: 'center', color: '#999', fontSize: '9pt' }}>
+                  <div style={{ padding: '20px', textAlign: 'center', color: '#999', fontSize: '10pt' }}>
                     No items added
                   </div>
                 )}
