@@ -2743,54 +2743,109 @@ const CashInEntry = ({ onBack }) => {
                   </div>
                 )}
 
-                {/* Terms & Conditions Footer */}
-                <div className="border-2 border-black p-2 bg-white">
-                  <div className="flex justify-between items-center mb-1">
-                    <div className="font-semibold text-black text-[10px]">Terms & Conditions:</div>
-                    {!isEditingTerms ? (
-                      <Button
-                        onClick={() => {
-                          setTempTermsText(termsText);
-                          setIsEditingTerms(true);
-                        }}
-                        variant="ghost"
-                        size="sm"
-                        className="text-[10px] h-5 px-1 text-blue-600 hover:text-blue-700"
-                      >
-                        Edit
-                      </Button>
-                    ) : (
-                      <div className="flex gap-1">
-                        <Button onClick={saveTerms} size="sm" className="h-5 px-1 text-[10px] bg-green-600 hover:bg-green-700 text-white">
-                          Save
+                {/* Terms & Conditions Footer with Signature Blocks */}
+                <div className="border-2 border-t-0 border-black bg-white">
+                  {/* Terms & Conditions */}
+                  <div className="p-2 border-b border-black">
+                    <div className="flex justify-between items-center mb-1">
+                      <div className="font-semibold text-black text-[10px]">Terms & Conditions:</div>
+                      {!isEditingTerms ? (
+                        <Button
+                          onClick={() => {
+                            setTempTermsText(termsText);
+                            setIsEditingTerms(true);
+                          }}
+                          variant="ghost"
+                          size="sm"
+                          className="text-[9px] h-5 px-1 text-blue-600 hover:text-blue-700"
+                        >
+                          Edit
                         </Button>
-                        <Button onClick={cancelTermsEdit} variant="ghost" size="sm" className="h-5 px-1 text-[10px] text-gray-600">
-                          Cancel
-                        </Button>
-                      </div>
-                    )}
+                      ) : (
+                        <div className="flex gap-1">
+                          <Button onClick={saveTerms} size="sm" className="h-5 px-1 text-[9px] bg-green-600 hover:bg-green-700 text-white">
+                            Save
+                          </Button>
+                          <Button onClick={cancelTermsEdit} variant="ghost" size="sm" className="h-5 px-1 text-[9px] text-gray-600">
+                            Cancel
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="text-[9px] text-black">
+                      {isEditingTerms ? (
+                        <textarea
+                          value={tempTermsText}
+                          onChange={(e) => setTempTermsText(e.target.value)}
+                          className="w-full bg-white border border-gray-300 text-black text-[9px] p-1 rounded min-h-[50px] focus:outline-none focus:border-blue-500"
+                          placeholder="Enter terms and conditions..."
+                        />
+                      ) : (
+                        <div className="whitespace-pre-line">
+                          {termsText}
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* E. & O.E. */}
+                    <div className="text-[8px] text-gray-600 italic mt-1">
+                      E. & O.E. (Errors and Omissions Excepted)
+                    </div>
                   </div>
                   
-                  <div className="text-[10px] text-black">
-                    {isEditingTerms ? (
-                      <textarea
-                        value={tempTermsText}
-                        onChange={(e) => setTempTermsText(e.target.value)}
-                        className="w-full bg-white border border-gray-300 text-black text-[10px] p-1 rounded min-h-[60px] focus:outline-none focus:border-blue-500"
-                        placeholder="Enter terms and conditions..."
-                      />
-                    ) : (
-                      <div className="whitespace-pre-line">
-                        {termsText}
+                  {/* Signature Blocks */}
+                  <div className="grid grid-cols-2 divide-x divide-black">
+                    {/* Customer/Consignee Signature */}
+                    <div className="p-2">
+                      <div className="text-[9px] text-black font-semibold mb-1">
+                        RECEIVED THE PRODUCTS IN GOOD CONDITION
                       </div>
-                    )}
+                      <div className="mt-8 pt-2 border-t border-gray-400">
+                        <div className="text-[9px] text-black">Signature & Seal of Customer/Consignee</div>
+                      </div>
+                      <div className="mt-3 text-[9px] text-gray-700">
+                        <div>Date: _________________</div>
+                      </div>
+                    </div>
+                    
+                    {/* Authorized Signatory */}
+                    <div className="p-2">
+                      <div className="text-[9px] text-black font-semibold mb-1">
+                        FOR {(activeBusiness?.name || 'BUSINESS NAME').toUpperCase()}
+                      </div>
+                      <div className="mt-8 pt-2 border-t border-gray-400">
+                        <div className="text-[9px] text-black">Authorized Signatory</div>
+                      </div>
+                      <div className="mt-3 text-[9px] text-gray-700">
+                        <div>Driver's Signature: _____________</div>
+                      </div>
+                    </div>
                   </div>
                   
-                  <div className="text-right mt-2">
-                    <div className="text-[10px] text-black">For <span className="font-semibold text-black">{activeBusiness?.name || 'BUSINESS NAME'}</span></div>
-                    <div className="mt-4 text-[10px] text-black border-t border-black pt-1 inline-block">Authorized Signatory</div>
+                  {/* Payment Details */}
+                  <div className="border-t border-black p-2 bg-gray-50">
+                    <div className="grid grid-cols-3 gap-2 text-[9px]">
+                      <div>
+                        <span className="text-gray-700">Cheque/DD No:</span>
+                        <div className="border-b border-gray-400 mt-0.5"></div>
+                      </div>
+                      <div>
+                        <span className="text-gray-700">Dated:</span>
+                        <div className="border-b border-gray-400 mt-0.5"></div>
+                      </div>
+                      <div>
+                        <span className="text-gray-700">Amount:</span>
+                        <div className="border-b border-gray-400 mt-0.5"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
+
+              {/* Digital Signature Note (Optional) */}
+              <div className="text-center text-[8px] text-gray-500 italic mt-1">
+                This is a computer-generated invoice and does not require a physical signature
+              </div>
 
               {/* Action Buttons */}
               <div className="flex justify-center gap-2 mt-4 w-full">
