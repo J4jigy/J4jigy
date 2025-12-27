@@ -2476,65 +2476,65 @@ const CashInEntry = ({ onBack }) => {
               </div>
 
               {/* Sold To and Ship To Section */}
-              <div style={{ border: '0.75px solid black', borderTop: 'none', display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
+              <div style={{ border: '1px solid black', borderTop: 'none', display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
                 {/* Sold To */}
-                <div style={{ borderRight: '0.75px solid black', padding: '10px' }}>
-                  <div style={{ fontSize: '9pt', fontWeight: 'bold', marginBottom: '6px' }}>SOLD TO:</div>
-                  <div style={{ fontSize: '9pt' }}>
+                <div style={{ borderRight: '1px solid black', padding: '15px' }}>
+                  <div style={{ fontSize: '11pt', fontWeight: 'bold', marginBottom: '10px' }}>SOLD TO:</div>
+                  <div style={{ fontSize: '10pt', lineHeight: '1.6' }}>
                     <div><span style={{ fontWeight: 'bold' }}>Code:</span> {String(Date.now()).slice(-8)}</div>
-                    <div style={{ fontWeight: 'bold', marginTop: '4px', marginBottom: '4px' }}>{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</div>
+                    <div style={{ fontWeight: 'bold', marginTop: '6px', marginBottom: '6px' }}>{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</div>
                     <div>{activeBusiness?.customerAddress || 'Customer Address Line 1'}</div>
                     <div>{activeBusiness?.customerAddress2 || 'Customer Address Line 2'}</div>
-                    <div style={{ marginTop: '4px' }}><span style={{ fontWeight: 'bold' }}>State:</span> Maharashtra <span style={{ fontWeight: 'bold', marginLeft: '12px' }}>State Code:</span> 27</div>
+                    <div style={{ marginTop: '6px' }}><span style={{ fontWeight: 'bold' }}>State:</span> Maharashtra <span style={{ fontWeight: 'bold', marginLeft: '15px' }}>State Code:</span> 27</div>
                   </div>
                 </div>
                 
                 {/* Ship To */}
-                <div style={{ padding: '10px' }}>
-                  <div style={{ fontSize: '9pt', fontWeight: 'bold', marginBottom: '6px' }}>SHIP TO:</div>
-                  <div style={{ fontSize: '9pt' }}>
+                <div style={{ padding: '15px' }}>
+                  <div style={{ fontSize: '11pt', fontWeight: 'bold', marginBottom: '10px' }}>SHIP TO:</div>
+                  <div style={{ fontSize: '10pt', lineHeight: '1.6' }}>
                     <div>Same as SOLD TO address</div>
-                    <div style={{ marginTop: '8px' }}><span style={{ fontWeight: 'bold' }}>Payment Mode:</span> {slots[selectedSlotForBill]?.paymentMode}</div>
+                    <div style={{ marginTop: '10px' }}><span style={{ fontWeight: 'bold' }}>Payment Mode:</span> {slots[selectedSlotForBill]?.paymentMode}</div>
                     {slots[selectedSlotForBill]?.paymentMode === 'Credit' && slots[selectedSlotForBill]?.creditPeriod && (
-                      <div style={{ marginTop: '4px' }}><span style={{ fontWeight: 'bold' }}>Credit Period:</span> {slots[selectedSlotForBill]?.creditPeriod}</div>
+                      <div style={{ marginTop: '6px' }}><span style={{ fontWeight: 'bold' }}>Credit Period:</span> {slots[selectedSlotForBill]?.creditPeriod}</div>
                     )}
                   </div>
                 </div>
               </div>
 
               {/* Invoice Details Row */}
-              <div style={{ border: '0.75px solid black', borderTop: 'none', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', fontSize: '9pt' }}>
-                <div style={{ borderRight: '0.75px solid black', padding: '8px' }}>
-                  <div style={{ fontWeight: 'bold' }}>INVOICE:</div>
-                  <div style={{ marginTop: '3px' }}>{slots[selectedSlotForBill]?.invoiceNumber || `INV-${selectedSlotForBill + 1}-${String(Date.now()).slice(-6)}`}</div>
+              <div style={{ border: '1px solid black', borderTop: 'none', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', fontSize: '10pt' }}>
+                <div style={{ borderRight: '1px solid black', padding: '12px' }}>
+                  <div style={{ fontWeight: 'bold', marginBottom: '6px' }}>INVOICE:</div>
+                  <div>{slots[selectedSlotForBill]?.invoiceNumber || `INV-${selectedSlotForBill + 1}-${String(Date.now()).slice(-6)}`}</div>
                 </div>
-                <div style={{ borderRight: '0.75px solid black', padding: '8px' }}>
-                  <div style={{ fontWeight: 'bold' }}>DATE:</div>
-                  <div style={{ marginTop: '3px' }}>{slots[selectedSlotForBill]?.invoiceDate || new Date().toLocaleDateString('en-GB')}</div>
+                <div style={{ borderRight: '1px solid black', padding: '12px' }}>
+                  <div style={{ fontWeight: 'bold', marginBottom: '6px' }}>DATE:</div>
+                  <div>{slots[selectedSlotForBill]?.invoiceDate || new Date().toLocaleDateString('en-GB')}</div>
                 </div>
-                <div style={{ borderRight: '0.75px solid black', padding: '8px' }}>
-                  <div style={{ fontWeight: 'bold' }}>TIME:</div>
-                  <div style={{ marginTop: '3px' }}>{slots[selectedSlotForBill]?.invoiceTime || new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</div>
+                <div style={{ borderRight: '1px solid black', padding: '12px' }}>
+                  <div style={{ fontWeight: 'bold', marginBottom: '6px' }}>TIME:</div>
+                  <div>{slots[selectedSlotForBill]?.invoiceTime || new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</div>
                 </div>
-                <div style={{ padding: '8px' }}>
-                  <div style={{ fontWeight: 'bold' }}>SHIPMENT NO:</div>
-                  <div style={{ marginTop: '3px' }}>SHIP-{String(Date.now()).slice(-8)}</div>
+                <div style={{ padding: '12px' }}>
+                  <div style={{ fontWeight: 'bold', marginBottom: '6px' }}>SHIPMENT NO:</div>
+                  <div>SHIP-{String(Date.now()).slice(-8)}</div>
                 </div>
               </div>
 
               {/* Vehicle Details Row */}
-              <div style={{ border: '0.75px solid black', borderTop: 'none', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', fontSize: '9pt' }}>
-                <div style={{ borderRight: '0.75px solid black', padding: '8px' }}>
-                  <div style={{ fontWeight: 'bold' }}>VEHICLE NO:</div>
-                  <div style={{ marginTop: '3px' }}>{activeBusiness?.vehicleNo || 'MH-01-AB-1234'}</div>
+              <div style={{ border: '1px solid black', borderTop: 'none', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', fontSize: '10pt' }}>
+                <div style={{ borderRight: '1px solid black', padding: '12px' }}>
+                  <div style={{ fontWeight: 'bold', marginBottom: '6px' }}>VEHICLE NO:</div>
+                  <div>{activeBusiness?.vehicleNo || 'MH-01-AB-1234'}</div>
                 </div>
-                <div style={{ borderRight: '0.75px solid black', padding: '8px' }}>
-                  <div style={{ fontWeight: 'bold' }}>DRIVER:</div>
-                  <div style={{ marginTop: '3px' }}>{activeBusiness?.driverName || 'Driver Name'}</div>
+                <div style={{ borderRight: '1px solid black', padding: '12px' }}>
+                  <div style={{ fontWeight: 'bold', marginBottom: '6px' }}>DRIVER:</div>
+                  <div>{activeBusiness?.driverName || 'Driver Name'}</div>
                 </div>
-                <div style={{ padding: '8px' }}>
-                  <div style={{ fontWeight: 'bold' }}>LOAD NO:</div>
-                  <div style={{ marginTop: '3px' }}>LD-{String(Date.now()).slice(-6)}</div>
+                <div style={{ padding: '12px' }}>
+                  <div style={{ fontWeight: 'bold', marginBottom: '6px' }}>LOAD NO:</div>
+                  <div>LD-{String(Date.now()).slice(-6)}</div>
                 </div>
               </div>
 
