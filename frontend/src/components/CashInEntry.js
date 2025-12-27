@@ -2476,46 +2476,99 @@ const CashInEntry = ({ onBack }) => {
                 </div>
               </div>
 
-              {/* Invoice Details - Two Columns */}
-              <div className="grid grid-cols-2 gap-0 border-2 border-black">
-                {/* Left Column - Invoice Details */}
-                <div className="p-2 border-r border-black">
-                  <div className="text-xs space-y-0.5">
+              {/* Invoice Details and Party Information */}
+              <div className="border-2 border-t-0 border-black grid grid-cols-2">
+                {/* Left Section - Invoice Details */}
+                <div className="border-r border-black">
+                  <div className="bg-gray-100 px-2 py-1 border-b border-black">
+                    <div className="text-[10px] font-bold text-black">INVOICE DETAILS</div>
+                  </div>
+                  <div className="p-2 space-y-1 text-[10px]">
                     <div className="flex justify-between">
                       <span className="text-gray-700">Invoice No:</span>
-                      <span className="text-black font-semibold text-[10px]">{slots[selectedSlotForBill]?.invoiceNumber || `INV-${selectedSlotForBill + 1}-${String(Date.now()).slice(-6)}`}</span>
+                      <span className="text-black font-semibold">{slots[selectedSlotForBill]?.invoiceNumber || `INV-${selectedSlotForBill + 1}-${String(Date.now()).slice(-6)}`}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-700">Date:</span>
-                      <span className="text-black text-[10px]">{slots[selectedSlotForBill]?.invoiceDate || new Date().toLocaleDateString('en-GB')}</span>
+                      <span className="text-black">{slots[selectedSlotForBill]?.invoiceDate || new Date().toLocaleDateString('en-GB')}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-700">Time:</span>
-                      <span className="text-black text-[10px]">{slots[selectedSlotForBill]?.invoiceTime || new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
+                      <span className="text-black">{slots[selectedSlotForBill]?.invoiceTime || new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Shipment No:</span>
+                      <span className="text-black font-semibold">SHIP-{String(Date.now()).slice(-8)}</span>
+                    </div>
+                  </div>
+                  
+                  {/* Vehicle & Driver Details */}
+                  <div className="border-t border-black">
+                    <div className="bg-gray-100 px-2 py-1 border-b border-black">
+                      <div className="text-[10px] font-bold text-black">VEHICLE & DRIVER DETAILS</div>
+                    </div>
+                    <div className="p-2 space-y-1 text-[10px]">
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">Vehicle No:</span>
+                        <span className="text-black">{activeBusiness?.vehicleNo || 'MH-01-AB-1234'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">Driver Name:</span>
+                        <span className="text-black">{activeBusiness?.driverName || 'Driver Name'}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-700">Load No:</span>
+                        <span className="text-black">LD-{String(Date.now()).slice(-6)}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
                 
-                {/* Right Column - Customer Details */}
-                <div className="p-2">
-                  <div className="text-xs space-y-0.5">
-                    <div className="flex justify-between">
-                      <span className="text-gray-700">Customer:</span>
-                      <span className="text-black font-semibold text-[10px] truncate max-w-[120px]">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</span>
+                {/* Right Section - Customer Details */}
+                <div>
+                  <div className="bg-gray-100 px-2 py-1 border-b border-black">
+                    <div className="text-[10px] font-bold text-black">SOLD TO</div>
+                  </div>
+                  <div className="p-2 space-y-1 text-[10px]">
+                    <div>
+                      <span className="text-gray-700">Customer Code:</span>
+                      <span className="text-black font-semibold ml-1">{String(Date.now()).slice(-8)}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-700">Payment:</span>
-                      <span className="text-black text-[10px]">{slots[selectedSlotForBill]?.paymentMode}</span>
+                    <div>
+                      <span className="text-gray-700">Name:</span>
+                      <div className="text-black font-semibold">{slots[selectedSlotForBill]?.customName || slots[selectedSlotForBill]?.label}</div>
                     </div>
-                    {slots[selectedSlotForBill]?.paymentMode === 'Credit' && slots[selectedSlotForBill]?.creditPeriod && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-700">Credit Period:</span>
-                        <span className="text-black text-[10px] font-semibold">{slots[selectedSlotForBill]?.creditPeriod}</span>
-                      </div>
-                    )}
+                    <div>
+                      <span className="text-gray-700">Address:</span>
+                      <div className="text-black">{activeBusiness?.customerAddress || 'Customer Address'}</div>
+                    </div>
                     <div className="flex justify-between">
                       <span className="text-gray-700">State:</span>
-                      <span className="text-black text-[10px]">Maharashtra</span>
+                      <span className="text-black">Maharashtra</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">State Code:</span>
+                      <span className="text-black">27</span>
+                    </div>
+                  </div>
+                  
+                  {/* Ship To Section */}
+                  <div className="border-t border-black">
+                    <div className="bg-gray-100 px-2 py-1 border-b border-black">
+                      <div className="text-[10px] font-bold text-black">SHIP TO</div>
+                    </div>
+                    <div className="p-2 space-y-1 text-[10px]">
+                      <div className="text-black">Same as billing address</div>
+                      <div className="flex justify-between mt-1">
+                        <span className="text-gray-700">Payment Mode:</span>
+                        <span className="text-black font-semibold">{slots[selectedSlotForBill]?.paymentMode}</span>
+                      </div>
+                      {slots[selectedSlotForBill]?.paymentMode === 'Credit' && slots[selectedSlotForBill]?.creditPeriod && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-700">Credit Period:</span>
+                          <span className="text-black font-semibold">{slots[selectedSlotForBill]?.creditPeriod}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
